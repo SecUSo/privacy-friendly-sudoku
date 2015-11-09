@@ -51,7 +51,7 @@ public class GameController {
 
     public boolean isSolved() {
         boolean solved = true;
-
+        /*
         for(int i = 0; i < size; i++) {
 
             List<Integer> set = new ArrayList<Integer>();
@@ -66,7 +66,7 @@ public class GameController {
             if(!checkList() solved = false;
             if(!checkList(gameField.getColumn(i))) solved = false;
             if(!checkList(gameField.getSection(i))) solved = false;
-        }
+        }*/
         return solved;
     }
 
@@ -76,13 +76,13 @@ public class GameController {
      * @return true if every cell has a value and every value occurs only once
      */
     private boolean checkList(GameCell[] list) {
-        List<Integer> set = new ArrayList<Integer>();
+        /*List<Integer> set = new ArrayList<Integer>();
         for(GameCell c : list) {
             if(set.contains(c.getValue())) {
 
                 errorList.add(new CheckError());
             }
-        }
+        }*/
         return false;
     }
 
