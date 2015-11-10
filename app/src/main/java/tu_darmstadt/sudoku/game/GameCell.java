@@ -5,8 +5,8 @@ package tu_darmstadt.sudoku.game;
  */
 public class GameCell {
 
-    private int row = -1;
-    private int col = -1;
+    private int row = 0;
+    private int col = 0;
     private int value = 0;
     private boolean fixed = false;
     private boolean notes[];
@@ -24,14 +24,12 @@ public class GameCell {
         this.row = row;
         this.col = col;
         this.size = size;
-        clearNotes();
         if(0 < val && val <= size) {
             setValue(val);
             setFixed(true);
         } else {
             setValue(0);
             setFixed(false);
-
         }
     }
 
@@ -40,7 +38,7 @@ public class GameCell {
      * @param val the value to be assigned to the cell.
      */
     public void setValue(int val) {
-        clearNotes();
+        deleteNotes();
         value = val;
     }
 
@@ -60,10 +58,19 @@ public class GameCell {
      * Toggle notes in this cell, if cell isn't fixed.
      * @param val the value to be toggled.
      */
-    public void setNotes(int val) {
-        // only possible to set notes if cell isn't fixed.
-        // TODO .. put logic here?
-        notes[val - 1] = !notes[val - 1];
+    public void toggleNote(int val) {
+        if(!isFixed())
+            notes[val - 1] = !notes[val - 1];
+    }
+
+    public void setNote(int val) {
+        if(!isFixed())
+            notes[val - 1] = true;
+    }
+
+    public void deleteNote(int val) {
+        if(!isFixed())
+            notes[val - 1] = false;
     }
 
     public boolean[] getNotes() {
@@ -73,7 +80,7 @@ public class GameCell {
     /**
      * Clear the notes array (set everything to false).
      */
-    public void clearNotes() {
+    public void deleteNotes() {
         notes = new boolean[size];
     }
 
@@ -81,7 +88,47 @@ public class GameCell {
         return fixed;
     }
 
-    public void setFixed(boolean b) {
+    private void setFixed(boolean b) {
         fixed = b;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if(!(other instanceof GameCell)) return false;
+        if(((GameCell) other).getCol() != this.getCol()) return false;
+        if(((GameCell) other).getRow() != this.getRow()) return false;
+        if(((GameCell) other).isFixed() != this.isFixed()) return false;
+        if(((GameCell) other).getValue() != this.getValue()) return false;
+        if(((GameCell) other).getNotes().length != this.getNotes().length) return false;
+        for(int i = 0; i < notes.length; i++) {
+            if(((GameCell) other).getNotes()[i] != this.getNotes()[i]) return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("{("); sb.append(row); sb.append("|"); sb.append(col); sb.append(")");
+        sb.append(" ");
+        if(value == 0) {
+            sb.append("[");
+            boolean addedNotes = false;
+            for(int i = 0; i < size; i++) {
+                if(notes[i]) {
+                    if(addedNotes) {
+                        sb.append(" ,");
+                    }
+                    sb.append(i+1);
+                    addedNotes = true;
+                }
+            }
+            sb.append("]");
+        } else {
+            sb.append(value);
+        }
+        sb.append("}");
+
+        return sb.toString();
     }
 }

@@ -1,21 +1,27 @@
 package tu_darmstadt.sudoku.game;
 
+import java.util.LinkedList;
+
 /**
- * Created by Chris on 06.11.2015.
+ * Created by Christopher Beckmann on 06.11.2015.
  */
 public class GameField {
 
+    //private int id;
+    private int sectionHeight;
+    private int sectionWidth;
+    //private List additionalSections
     private int size;
     private GameCell[][] field;
 
     public GameField() {
-        this(9);
+        this(GameType.Default_9x9);
     }
 
-    public GameField(int size) {
-        this.size = size;
-        field = new GameCell[size][size];
+    public GameField(GameType type) {
+        setGameType(type);
 
+        field = new GameCell[size][size];
 
 
         // TODO: this is a placeholder, because we don't have real levels yet.
@@ -32,6 +38,19 @@ public class GameField {
                          { 7, 0, 0,  0, 1, 0,  3, 0, 5 }};
 
         initCells(level);
+    }
+
+    private void setGameType(GameType type) {
+        switch(type) {
+            case Default_9x9:
+                this.size = 9;
+                this.sectionHeight = 3;
+                this.sectionWidth = 3;
+                break;
+            case Unspecified:
+            default:
+                throw new IllegalArgumentException("GameType can not be unspecified.");
+        }
     }
 
     public void initCells(int[][] level) {
@@ -51,31 +70,34 @@ public class GameField {
         return field;
     }
 
-    public GameCell[] getRow(int row) {
-        return field[row];
+    public LinkedList<GameCell> getRow(int row) {
+        LinkedList<GameCell> result = new LinkedList<GameCell>();
+        for(GameCell c : field[row]) {
+            result.add(c);
+        }
+        return result;
     }
 
-    public GameCell[] getColumn(int col) {
-        GameCell[] result = new GameCell[size];
+    public LinkedList<GameCell> getColumn(int col) {
+        LinkedList<GameCell> result = new LinkedList<GameCell>();
         for(int i = 0; i < size ; i++) {    // row
             for(int j = 0 ; j < size ; j++) {   // col
                 if(j == col) {
-                    result[i] = field[i][j];
+                    result.add(field[i][j]);
                 }
             }
         }
         return result;
     }
 
-    public GameCell[] getSection(int sec) {
-        GameCell[] result = new GameCell[size];
-        int c = 0;
+    public LinkedList<GameCell> getSection(int sec) {
+        LinkedList<GameCell> result = new LinkedList<GameCell>();
         for(int i = 0; i < size ; i++) {    // row
             for(int j = 0 ; j < size ; j++) {   // col
-                if(Math.floor(i/3)*3 + Math.floor(j/3) == sec) {
-                    result[c++] = field[i][j];
+                if((int)(Math.floor(i/sectionHeight)*sectionHeight + Math.floor(j/sectionWidth)) == sec) {
+                    result.add(field[i][j]);
                 }
-                if(c > size) {
+                if(result.size() >= sectionHeight*sectionWidth) {
                     break;
                 }
             }
@@ -83,10 +105,34 @@ public class GameField {
         return result;
     }
 
+    public LinkedList<GameCell> getSection(int row, int col) {
+        int sec = (int) (Math.floor(row / sectionHeight) * sectionHeight + Math.floor(col / sectionWidth));
+        return getSection(sec);
+    }
 
+    public int getSize() {
+        return size;
+    }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
 
+        sb.append("GameField: "); sb.append("\n");
 
+        for(int i = 0; i < size; i++) {
 
+            for(int j = 0; j < size; j++) {
+                if(j % sectionWidth == 0) {
+                    sb.append("\t");
+                }
 
+                sb.append(getField()[i][j]);
+                sb.append(" ");
+            }
+
+            sb.append("\n");
+        }
+        return sb.toString();
+    }
 }
