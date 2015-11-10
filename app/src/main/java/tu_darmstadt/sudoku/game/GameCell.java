@@ -109,10 +109,10 @@ public class GameCell {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("{("); sb.append(row); sb.append("|"); sb.append(col); sb.append(")");
-        sb.append(" ");
+
+        sb.append("[");
         if(value == 0) {
-            sb.append("[");
+            sb.append("{");
             boolean addedNotes = false;
             for(int i = 0; i < size; i++) {
                 if(notes[i]) {
@@ -123,11 +123,14 @@ public class GameCell {
                     addedNotes = true;
                 }
             }
-            sb.append("]");
+            sb.append("}");
         } else {
             sb.append(value);
         }
-        sb.append("}");
+
+        sb.append(" ");
+        sb.append("("); sb.append(row); sb.append("|"); sb.append(col); sb.append(")");
+        sb.append("]");
 
         return sb.toString();
     }

@@ -1,5 +1,7 @@
 package tu_darmstadt.sudoku.controller;
 
+import android.util.Log;
+
 import tu_darmstadt.sudoku.game.*;
 
 import java.util.LinkedList;
@@ -13,7 +15,7 @@ public class GameController {
 
     private int size;
     private GameField gameField;
-    private ArrayList<CheckError> errorList = new ArrayList<CheckError>();
+    private CellConflictList errorList = new CellConflictList();
     private GameSettings settings = new GameSettings();
 
 //    private SudokuSolver solver;
@@ -79,8 +81,8 @@ public class GameController {
     public boolean isSolved() {
         boolean solved = true;
 
-        // this will automatically build the CheckError list. so we reset it before we call the checks
-        errorList = new ArrayList<CheckError>();
+        // this will automatically build the CellConflict list. so we reset it before we call the checks
+        errorList = new CellConflictList();
 
         for(int i = 0; i < size; i++) {
             if(!checkList(gameField.getRow(i))) solved = false;
@@ -98,7 +100,7 @@ public class GameController {
      */
     private boolean checkList(List<GameCell> list) {
         boolean isNothingEmpty = true;
-        CheckError lastFound = null;
+        CellConflict lastFound = null;
 
         for(int i = 0; i < list.size(); i++) {
             for(int j = i + 1; j < list.size(); j++) {
@@ -112,42 +114,14 @@ public class GameController {
                 // Same value in one set should not exist
                 if(c1.getValue() != 0 && c1.getValue() == c2.getValue()) {
                     // we found an error..
-
-                    LinkedList<CheckError> removeList = new LinkedList<CheckError>();
-
-                    // check if one of the cells is already in conflict with something else
-                    if(errorList.size() == 0) {
-                        lastFound = new CheckError(c1, c2);
-                        errorList.add(lastFound);
-                    }
-                    for(CheckError ce : errorList) {
-                        if(ce.contains(c1) || ce.contains(c2)) {
-                            ce.add(c1);
-                            ce.add(c2);
-
-                            if(lastFound != null && !lastFound.equals(ce)) {
-                                lastFound.merge(ce);
-                                removeList.add(ce);
-                            } else {
-                                lastFound = ce;
-                            }
-                        } else {
-                            lastFound = new CheckError(c1, c2);
-                            errorList.add(lastFound);
-                        }
-                    }
-
-                    // remove the empty errors, that have been merged.
-                    for(CheckError ce : removeList) {
-                        errorList.remove(ce);
-                    }
+                    errorList.add(new CellConflict(c1, c2));
                 }
             }
         }
         return isNothingEmpty ? (errorList.size() == 0) : false;
     }
 
-    public List<CheckError> getErrorList() {
+    public List<CellConflict> getErrorList() {
         return errorList;
     }
 
