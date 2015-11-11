@@ -1,14 +1,17 @@
 package tu_darmstadt.sudoku.game;
 
+import java.util.Arrays;
+
 /**
  * Created by Chris on 06.11.2015.
  */
-public class GameCell {
+public class GameCell implements Cloneable {
 
     private int row = 0;
     private int col = 0;
     private int value = 0;
     private boolean fixed = false;
+    private int noteCount = 0;
     private boolean notes[];
     private int size = 0;
 
@@ -59,18 +62,28 @@ public class GameCell {
      * @param val the value to be toggled.
      */
     public void toggleNote(int val) {
-        if(!isFixed())
+        if(!isFixed()) {
+            noteCount = notes[val - 1] ? noteCount - 1 : noteCount + 1;
             notes[val - 1] = !notes[val - 1];
+        }
     }
 
     public void setNote(int val) {
-        if(!isFixed())
+        if(!isFixed()) {
+            noteCount = notes[val - 1] ? noteCount : noteCount + 1;
             notes[val - 1] = true;
+        }
     }
 
     public void deleteNote(int val) {
-        if(!isFixed())
+        if(!isFixed()) {
+            noteCount = notes[val - 1] ? noteCount - 1 : noteCount;
             notes[val - 1] = false;
+        }
+    }
+
+    public int getNoteCount() {
+        return noteCount;
     }
 
     public boolean[] getNotes() {
@@ -81,6 +94,7 @@ public class GameCell {
      * Clear the notes array (set everything to false).
      */
     public void deleteNotes() {
+        noteCount = 0;
         notes = new boolean[size];
     }
 
@@ -133,5 +147,20 @@ public class GameCell {
         sb.append("]");
 
         return sb.toString();
+    }
+
+    public Boolean reset() {
+        if(isFixed()) {
+            return false;
+        }
+        setValue(0);
+        return true;
+    }
+
+    @Override
+    public GameCell clone() throws CloneNotSupportedException {
+        GameCell clone = (GameCell) super.clone();
+        clone.notes = (notes == null) ? null : Arrays.copyOf(notes, notes.length);
+        return clone;
     }
 }

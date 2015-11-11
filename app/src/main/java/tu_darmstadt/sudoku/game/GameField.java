@@ -1,11 +1,12 @@
 package tu_darmstadt.sudoku.game;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 
 /**
  * Created by Christopher Beckmann on 06.11.2015.
  */
-public class GameField {
+public class GameField implements Cloneable {
 
     //private int id;
     private int sectionHeight;
@@ -49,6 +50,9 @@ public class GameField {
                 break;
             case Unspecified:
             default:
+                this.size = 1;
+                this.sectionHeight = 1;
+                this.sectionWidth = 1;
                 throw new IllegalArgumentException("GameType can not be unspecified.");
         }
     }
@@ -90,19 +94,15 @@ public class GameField {
         return result;
     }
 
-    public LinkedList<GameCell> getSection(int sec) {
-        LinkedList<GameCell> result = new LinkedList<GameCell>();
-        for(int i = 0; i < size ; i++) {    // row
-            for(int j = 0 ; j < size ; j++) {   // col
-                if((int)(Math.floor(i/sectionHeight)*sectionHeight + Math.floor(j/sectionWidth)) == sec) {
-                    result.add(field[i][j]);
+    public LinkedList<GameCell> getSection(final int sec) {
+        return actionOnCells(new ICellAction<LinkedList<GameCell>>() {
+            @Override
+            public LinkedList<GameCell> action(GameCell gc, LinkedList<GameCell> existing) {
+                if((int)(Math.floor(gc.getRow()/sectionHeight)*sectionHeight + Math.floor(gc.getCol()/sectionWidth)) == sec) {
+                    existing.add(gc);
                 }
-                if(result.size() >= sectionHeight*sectionWidth) {
-                    break;
-                }
-            }
-        }
-        return result;
+                return existing;
+            }}, new LinkedList<GameCell>());
     }
 
     public LinkedList<GameCell> getSection(int row, int col) {
@@ -114,16 +114,40 @@ public class GameField {
         return size;
     }
 
+    public <T> T actionOnCells(ICellAction<T> ca, T existing) {
+        for(int i = 0; i < field.length; i++) {
+            for(int j = 0; j < field[i].length; j++) {
+                existing = ca.action(field[i][j], existing);
+            }
+        }
+        return existing;
+    }
+
+    @Override
+    public GameField clone() throws CloneNotSupportedException {
+        GameField clone = (GameField) super.clone();
+
+        GameCell[][] cloneField = new GameCell[size][size];
+        for(int i = 0; i < size; i++) {
+            for(int j = 0; j < size; j++) {
+                cloneField[i][j] = field[i][j].clone();
+            }
+        }
+        clone.field = cloneField;
+
+        return clone;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
 
-        sb.append("GameField: "); sb.append("\n");
+        sb.append("[GameField: \n");
 
-        for(int i = 0; i < size; i++) {
+        for (int i = 0; i < size; i++) {
 
-            for(int j = 0; j < size; j++) {
-                if(j % sectionWidth == 0) {
+            for (int j = 0; j < size; j++) {
+                if (j % sectionWidth == 0) {
                     sb.append("\t");
                 }
 
@@ -131,7 +155,7 @@ public class GameField {
                 sb.append(" ");
             }
 
-            sb.append("\n");
+            sb.append("]");
         }
         return sb.toString();
     }

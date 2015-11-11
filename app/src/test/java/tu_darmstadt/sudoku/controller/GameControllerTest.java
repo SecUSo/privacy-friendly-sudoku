@@ -1,10 +1,7 @@
 package tu_darmstadt.sudoku.controller;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-
-import tu_darmstadt.sudoku.game.GameType;
 
 import static org.junit.Assert.*;
 
@@ -152,5 +149,46 @@ public class GameControllerTest {
         assertFalse(controller.isSolved());
         assertEquals(2, controller.getErrorList().size());
         assertEquals(result, controller.getErrorList().toString());
+    }
+
+    @Test
+    public void deleteTest() {
+        controller.setValue(1, 2, 5);
+        assertEquals(5, controller.getValue(1, 2));
+        controller.deleteValue(1, 2);
+        assertEquals(0, controller.getValue(1, 2));
+    }
+
+    @Test
+    public void createNoteTest() {
+        controller.setNote(1, 2, 5);
+        controller.setNote(1, 2, 9);
+
+        boolean[] result = {false, false, false, false, true, false, false, false, true};
+
+        assertArrayEquals(result, controller.getNotes(1, 2));
+    }
+
+    @Test
+    public void deleteNoteTest() {
+        controller.setNote(1, 2, 5);
+        controller.setNote(1, 2, 9);
+        controller.deleteNote(1, 2, 5);
+
+        boolean[] result = {false, false, false, false, false, false, false, false, true};
+
+        assertArrayEquals(result, controller.getNotes(1, 2));
+    }
+
+    @Test
+    public void toggleNoteTest() {
+        controller.toggleNote(1,2,5);
+        controller.toggleNote(1,2,9);
+        controller.toggleNote(1,2,5);
+        controller.toggleNote(1,2,4);
+
+        boolean[] result = {false, false, false, true, false, false, false, false, true};
+
+        assertArrayEquals(result, controller.getNotes(1, 2));
     }
 }

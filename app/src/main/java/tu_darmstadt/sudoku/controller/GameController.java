@@ -1,12 +1,15 @@
 package tu_darmstadt.sudoku.controller;
 
-import android.util.Log;
-
-import tu_darmstadt.sudoku.game.*;
-
 import java.util.LinkedList;
 import java.util.List;
-import java.util.ArrayList;
+
+import tu_darmstadt.sudoku.game.CellConflict;
+import tu_darmstadt.sudoku.game.CellConflictList;
+import tu_darmstadt.sudoku.game.GameCell;
+import tu_darmstadt.sudoku.game.GameField;
+import tu_darmstadt.sudoku.game.GameSettings;
+import tu_darmstadt.sudoku.game.GameType;
+import tu_darmstadt.sudoku.game.ICellAction;
 
 /**
  * Created by Chris on 06.11.2015.
@@ -17,8 +20,9 @@ public class GameController {
     private GameField gameField;
     private CellConflictList errorList = new CellConflictList();
     private GameSettings settings = new GameSettings();
+    private LinkedList<IModelChangeListener> listeners = new LinkedList<>();
 
-//    private SudokuSolver solver;
+//    private Default9x9Solver solver;
 //    private SudokuGenerator generator;
 
     public GameController() {
@@ -36,6 +40,8 @@ public class GameController {
         }
     }*/
 
+
+
     public void setValue(int row, int col, int value) {
         GameCell cell = gameField.getCell(row, col);
         if (!cell.isFixed() && isValidNumber(value)) {
@@ -47,13 +53,14 @@ public class GameController {
                 updateList.addAll(gameField.getRow(cell.getRow()));
                 updateList.addAll(gameField.getColumn(cell.getCol()));
                 updateList.addAll(gameField.getSection(cell.getRow(), cell.getCol()));
-                deleteNote(updateList, value);
+                deleteNotes(updateList, value);
             }
-
         }
     }
 
-    public void deleteNote(List<GameCell> updateList, int value) {
+
+
+    public void deleteNotes(List<GameCell> updateList, int value) {
         for(GameCell c : updateList) {
             c.deleteNote(value);
         }
@@ -125,6 +132,50 @@ public class GameController {
         return errorList;
     }
 
+    public void resetLevel() {
+        gameField.actionOnCells(new ICellAction<Boolean>() {
+            @Override
+            public Boolean action(GameCell gc, Boolean existing) {
+                gc.reset();
+                return true;
+            }
+        }, true);
+        notifyListeners();
+    }
+
+    public boolean deleteValue(int row, int col) {
+        GameCell c = gameField.getCell(row,col);
+        if(!c.isFixed()) {
+            c.setValue(0);
+            notifyListeners();
+            return true;
+        }
+        return false;
+    }
+
+    public void setNote(int row, int col, int value) {
+        GameCell c = gameField.getCell(row,col);
+        c.setNote(value);
+        notifyListeners();
+    }
+
+    public boolean[] getNotes(int row, int col) {
+        GameCell c = gameField.getCell(row,col);
+        return c.getNotes().clone();
+    }
+
+    public void deleteNote(int row, int col, int value) {
+        GameCell c = gameField.getCell(row,col);
+        c.deleteNote(value);
+        notifyListeners();
+    }
+
+    public void toggleNote(int row, int col, int value) {
+        GameCell c = gameField.getCell(row,col);
+        c.toggleNote(value);
+        notifyListeners();
+    }
+
     /** Debug only method
      *
      * @return the Field represented as a String
@@ -132,4 +183,17 @@ public class GameController {
     public String getFieldAsString() {
         return gameField.toString();
     }
+
+    public void registerListener(IModelChangeListener l) {
+        if(!listeners.contains(l)) {
+            listeners.add(l);
+        }
+    }
+
+    public void notifyListeners() {
+        for(IModelChangeListener l : listeners) {
+            l.onModelChanged();
+        }
+    }
+
 }
