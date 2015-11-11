@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="@string/pref_highlighting_selection">
+        <SwitchPreference android:id="@+id/pref_highlighting_selection_values"
+            android:key="example_switch"
+            android:title="@string/pref_title_social_recommendations"
+            android:summary="@string/pref_description_social_recommendations"
+            android:defaultValue="true"/>
+    </PreferenceCategory>
+</PreferenceScreen>
