@@ -23,6 +23,7 @@ public class GameField implements Cloneable {
         this.size = size;
 
         field = new GameCell[size][size];
+        initCells(null);
     }
 
     public void initCells(int[][] level) {

@@ -2,6 +2,7 @@ package tu_darmstadt.sudoku.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -21,15 +22,15 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
     SudokuFieldLayout layout;
     
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_view);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        //TODO: set view for game
-
-
+        layout = (SudokuFieldLayout)findViewById(R.id.sudokuLayout);
+        layout.setGame(gameController);
         /*
         // DEBUG
         String debug = gameController.getFieldAsString();

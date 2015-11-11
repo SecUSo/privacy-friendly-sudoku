@@ -6,13 +6,21 @@ import android.graphics.Paint;
 import android.provider.ContactsContract;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import java.util.jar.Attributes;
+
+import tu_darmstadt.sudoku.game.GameCell;
 
 /**
  * Created by TMZ_LToP on 10.11.2015.
  */
 public class SudokuCellView extends View {
+
+    GameCell mGameCell;
+    int mWidth;
+
 
     public SudokuCellView(Context context) {
         super(context);
@@ -23,30 +31,30 @@ public class SudokuCellView extends View {
 
     }
 
-    int pubx =0 ;
-    int puby =0 ;
-
-    public void setPos(int x,int y) {
-        //dpi = (width * 160)/density getRecourses().getDisplayMetrics().density
-
-        pubx = x;
-        puby = y;
-
+    public void setValues (int width, GameCell gameCell) {
+        mGameCell = gameCell;
+        mWidth=width;
     }
 
 
     @Override
     public void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        int row = mGameCell.getRow();
+        int col = mGameCell.getCol();
 
-        int width = getWidth() - getPaddingRight();
-        int height = getHeight() - getPaddingBottom();
+        this.setLayoutParams(new RelativeLayout.LayoutParams(mWidth, mWidth));
 
-        int paddingLeft = getPaddingLeft();
-        int paddingTop = getPaddingTop();
-
-        canvas.drawRect(pubx,puby,pubx+100,puby+100,new Paint());
-
-
+        canvas.drawRect(col*mWidth, row*mWidth, (col+1)*mWidth+1, (row+1)*mWidth+1,new Paint());
     }
+
+    public int getColumn() {
+        return mGameCell.getCol();
+    }
+
+    public int getRow() {
+        return mGameCell.getRow();
+    }
+
+
 }
