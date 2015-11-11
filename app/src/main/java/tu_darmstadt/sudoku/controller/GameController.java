@@ -17,6 +17,8 @@ import tu_darmstadt.sudoku.game.ICellAction;
 public class GameController {
 
     private int size;
+    private int sectionHeight;
+    private int sectionWidth;
     private GameField gameField;
     private CellConflictList errorList = new CellConflictList();
     private GameSettings settings = new GameSettings();
@@ -30,8 +32,8 @@ public class GameController {
     }
 
     public GameController(GameType type) {
-        gameField = new GameField(type);
-        size = gameField.getSize();
+        setGameType(type);
+        gameField = new GameField(size, sectionHeight, sectionWidth);
     }
 
     /*public boolean loadLevel(GameField level) {
@@ -40,7 +42,41 @@ public class GameController {
         }
     }*/
 
+    private void setGameType(GameType type) {
+        switch(type) {
+            case Default_9x9:
+                this.size = 9;
+                this.sectionHeight = 3;
+                this.sectionWidth = 3;
+                break;
+            case Default_12x12:
+                this.size = 12;
+                this.sectionHeight = 3;
+                this.sectionWidth = 4;
+                break;
+            case Default_6x6:
+                this.size = 6;
+                this.sectionHeight = 2;
+                this.sectionWidth = 3;
+                break;
+            case Unspecified:
+            default:
+                this.size = 1;
+                this.sectionHeight = 1;
+                this.sectionWidth = 1;
+                throw new IllegalArgumentException("GameType can not be unspecified.");
+        }
+    }
 
+    /** Use with care.
+     */
+    public GameCell getGameCell(int row, int col) {
+        return gameField.getCell(row,col);
+    }
+
+    public boolean isSolved() {
+        return gameField.isSolved(new LinkedList<CellConflict>());
+    }
 
     public void setValue(int row, int col, int value) {
         GameCell cell = gameField.getCell(row, col);
@@ -57,8 +93,6 @@ public class GameController {
             }
         }
     }
-
-
 
     public void deleteNotes(List<GameCell> updateList, int value) {
         for(GameCell c : updateList) {
@@ -83,49 +117,6 @@ public class GameController {
      */
     public boolean isValidNumber(int val) {
         return 0 < val && val <= size;
-    }
-
-    public boolean isSolved() {
-        boolean solved = true;
-
-        // this will automatically build the CellConflict list. so we reset it before we call the checks
-        errorList = new CellConflictList();
-
-        for(int i = 0; i < size; i++) {
-            if(!checkList(gameField.getRow(i))) solved = false;
-            if(!checkList(gameField.getColumn(i))) solved = false;
-            if(!checkList(gameField.getSection(i))) solved = false;
-        }
-        return solved;
-    }
-
-    /**
-     * Checks the given list if every number occurs only once.
-     * This method will automatically build the errorList.
-     * @param list the list of {@link GameCell}s that is supposed to be tested.
-     * @return true if every cell has a value and every value occurs only once
-     */
-    private boolean checkList(List<GameCell> list) {
-        boolean isNothingEmpty = true;
-        CellConflict lastFound = null;
-
-        for(int i = 0; i < list.size(); i++) {
-            for(int j = i + 1; j < list.size(); j++) {
-                GameCell c1 = list.get(i);
-                GameCell c2 = list.get(j);
-
-                if(c1.getValue() == 0 || c2.getValue() == 0) {
-                    isNothingEmpty = false;
-                }
-
-                // Same value in one set should not exist
-                if(c1.getValue() != 0 && c1.getValue() == c2.getValue()) {
-                    // we found an error..
-                    errorList.add(new CellConflict(c1, c2));
-                }
-            }
-        }
-        return isNothingEmpty ? (errorList.size() == 0) : false;
     }
 
     public List<CellConflict> getErrorList() {

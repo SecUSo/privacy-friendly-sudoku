@@ -2,6 +2,7 @@ package tu_darmstadt.sudoku.game;
 
 import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by Christopher Beckmann on 06.11.2015.
@@ -12,56 +13,36 @@ public class GameField implements Cloneable {
     private int sectionHeight;
     private int sectionWidth;
     //private List additionalSections
+    private CellConflictList errorList = new CellConflictList();
     private int size;
     private GameCell[][] field;
 
-    public GameField() {
-        this(GameType.Default_9x9);
-    }
-
-    public GameField(GameType type) {
-        setGameType(type);
+    public GameField(int size, int sectionHeight, int sectionWidth) {
+        this.sectionHeight = sectionHeight;
+        this.sectionWidth = sectionWidth;
+        this.size = size;
 
         field = new GameCell[size][size];
-
-
-        // TODO: this is a placeholder, because we don't have real levels yet.
-        int[][] level = {{ 5, 0, 1,  9, 0, 0,  0, 0, 0 },
-                         { 2, 0, 0,  0, 0, 4,  9, 5, 0 },
-                         { 3, 9, 0,  7, 0, 0,  0, 2, 6 },
-
-                         { 0, 3, 0,  0, 0, 1,  0, 7, 2 },
-                         { 0, 0, 6,  0, 5, 7,  0, 0, 0 },
-                         { 0, 7, 2,  0, 0, 9,  0, 4, 1 },
-
-                         { 0, 0, 0,  0, 7, 0,  4, 0, 9 },
-                         { 6, 4, 0,  0, 0, 0,  0, 0, 0 },
-                         { 7, 0, 0,  0, 1, 0,  3, 0, 5 }};
-
-        initCells(level);
-    }
-
-    private void setGameType(GameType type) {
-        switch(type) {
-            case Default_9x9:
-                this.size = 9;
-                this.sectionHeight = 3;
-                this.sectionWidth = 3;
-                break;
-            case Unspecified:
-            default:
-                this.size = 1;
-                this.sectionHeight = 1;
-                this.sectionWidth = 1;
-                throw new IllegalArgumentException("GameType can not be unspecified.");
-        }
     }
 
     public void initCells(int[][] level) {
+        // TODO: this is a placeholder, because we don't have real levels yet.
+        int[][] placeholder = {{ 5, 0, 1,  9, 0, 0,  0, 0, 0 },
+                { 2, 0, 0,  0, 0, 4,  9, 5, 0 },
+                { 3, 9, 0,  7, 0, 0,  0, 2, 6 },
+
+                { 0, 3, 0,  0, 0, 1,  0, 7, 2 },
+                { 0, 0, 6,  0, 5, 7,  0, 0, 0 },
+                { 0, 7, 2,  0, 0, 9,  0, 4, 1 },
+
+                { 0, 0, 0,  0, 7, 0,  4, 0, 9 },
+                { 6, 4, 0,  0, 0, 0,  0, 0, 0 },
+                { 7, 0, 0,  0, 1, 0,  3, 0, 5 }};
+
         // Initit the game field
         for(int i = 0; i < size; i++) {
             for(int j = 0; j < size; j++) {
-                field[i][j] = new GameCell(i,j,size,level[i][j]);
+                field[i][j] = new GameCell(i,j,size,placeholder[i][j]);
             }
         }
     }
@@ -98,11 +79,12 @@ public class GameField implements Cloneable {
         return actionOnCells(new ICellAction<LinkedList<GameCell>>() {
             @Override
             public LinkedList<GameCell> action(GameCell gc, LinkedList<GameCell> existing) {
-                if((int)(Math.floor(gc.getRow()/sectionHeight)*sectionHeight + Math.floor(gc.getCol()/sectionWidth)) == sec) {
+                if ((int) (Math.floor(gc.getRow() / sectionHeight) * sectionHeight + Math.floor(gc.getCol() / sectionWidth)) == sec) {
                     existing.add(gc);
                 }
                 return existing;
-            }}, new LinkedList<GameCell>());
+            }
+        }, new LinkedList<GameCell>());
     }
 
     public LinkedList<GameCell> getSection(int row, int col) {
@@ -121,6 +103,55 @@ public class GameField implements Cloneable {
             }
         }
         return existing;
+    }
+
+    public boolean isSolved(final List<CellConflict> errorList) {
+        boolean solved = true;
+
+        if(errorList == null) {
+            throw new IllegalArgumentException("ErrorList may not be null.");
+        }
+        errorList.clear();
+
+        // this will automatically build the CellConflict list. so we reset it before we call the checks
+
+        for(int i = 0; i < size; i++) {
+            if(!checkList(getRow(i), errorList)) solved = false;
+            if(!checkList(getColumn(i), errorList)) solved = false;
+            if(!checkList(getSection(i), errorList)) solved = false;
+        }
+        return solved;
+    }
+
+    /**
+     * Checks the given list if every number occurs only once.
+     * This method will automatically build the errorList.
+     * @param list the list of {@link GameCell}s that is supposed to be tested.
+     * @return true if every cell has a value and every value occurs only once
+     */
+    private boolean checkList(final List<GameCell> list, final List<CellConflict> errorList) {
+        boolean isNothingEmpty = true;
+        CellConflict lastFound = null;
+
+        for(int i = 0; i < list.size(); i++) {
+            for(int j = i + 1; j < list.size(); j++) {
+                GameCell c1 = list.get(i);
+                GameCell c2 = list.get(j);
+
+                if(c1.getValue() == 0 || c2.getValue() == 0) {
+                    isNothingEmpty = false;
+                }
+
+                // Same value in one set should not exist
+                if(c1.getValue() != 0 && c1.getValue() == c2.getValue()) {
+                    // we found an error..
+                    if(errorList != null) {
+                        errorList.add(new CellConflict(c1, c2));
+                    }
+                }
+            }
+        }
+        return isNothingEmpty ? (errorList.size() == 0) : false;
     }
 
     @Override

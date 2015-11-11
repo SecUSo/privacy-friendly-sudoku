@@ -7,7 +7,7 @@ public enum GameType {
     Unspecified,
     Default_9x9,
     Default_9x6,
-    Default_12x9,
+    Default_12x12,
     Default_6x6
 
 

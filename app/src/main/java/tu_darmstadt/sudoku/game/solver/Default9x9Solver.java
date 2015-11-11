@@ -1,5 +1,8 @@
 package tu_darmstadt.sudoku.game.solver;
 
+import java.util.LinkedList;
+
+import tu_darmstadt.sudoku.game.CellConflict;
 import tu_darmstadt.sudoku.game.GameCell;
 import tu_darmstadt.sudoku.game.GameField;
 import tu_darmstadt.sudoku.game.ICellAction;
@@ -25,8 +28,12 @@ public class Default9x9Solver implements ISolver {
 
     public boolean solve() {
 
+        if(gameField.isSolved(new LinkedList<CellConflict>())) {
+            return true;
+        }
+
         checkSolvedCells();
-        /*
+
         if(showPossibles()) return solve();
 
         if(searchHiddenSingles()) return solve();
@@ -41,15 +48,7 @@ public class Default9x9Solver implements ISolver {
 
         if(searchBoxLineReduction()) return solve();
 
-        selectBestCell();
-        */
-
-
-
-
-
-
-        return true;
+        return false;
     }
 
     @Override
@@ -59,6 +58,44 @@ public class Default9x9Solver implements ISolver {
 
     public GameField getGameField() {
         return gameField;
+    }
+
+    public boolean showPossibles() {
+        LinkedList<GameCell> list = new LinkedList<GameCell>();
+        for(int i = 0; i < gameField.getSize(); i++) {
+            for(int j = 0; j < gameField.getSize(); j++) {
+                GameCell gc = gameField.getCell(i,j);
+                if(!gc.hasValue()) {
+                    list.clear();
+                    list.addAll(gameField.getRow(i));
+                    list.addAll(gameField.getColumn(j));
+                    list.addAll(gameField.getSection(i,j));
+                    for(int k = 0; k < gameField.getSize(); k++) {
+                        for(GameCell c : list) {
+                            gc.deleteNote(c.getValue());
+                        }
+                    }
+                }
+
+            }
+        }
+        return false;
+    }
+
+    public boolean searchNakedPairsTriples() {
+        return false;
+    }
+    public boolean searchHiddenPairsTriples() {
+        return false;
+    }
+    public boolean searchNakedQuads() {
+        return false;
+    }
+    public boolean searchPointingPairs() {
+        return false;
+    }
+    public boolean searchBoxLineReduction() {
+        return false;
     }
 
     private boolean checkSolvedCells() {

@@ -106,6 +106,10 @@ public class GameCell implements Cloneable {
         fixed = b;
     }
 
+    public boolean hasValue() {
+        return value > 0;
+    }
+
     @Override
     public boolean equals(Object other) {
         if(!(other instanceof GameCell)) return false;
