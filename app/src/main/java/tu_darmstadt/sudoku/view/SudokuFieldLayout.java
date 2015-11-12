@@ -1,14 +1,12 @@
 package tu_darmstadt.sudoku.view;
 
 import android.content.Context;
-import android.support.design.widget.Snackbar;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.util.AttributeSet;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import tu_darmstadt.sudoku.controller.GameController;
 
@@ -18,6 +16,9 @@ import tu_darmstadt.sudoku.controller.GameController;
 public class SudokuFieldLayout extends RelativeLayout {
 
     private GameController gameController;
+    private int sectionHeight;
+    private int sectionWidth;
+    private int gameCellWidth;
 
     public SudokuCellView [][] gamecells;
     AttributeSet attrs;
@@ -25,6 +26,7 @@ public class SudokuFieldLayout extends RelativeLayout {
     public SudokuFieldLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.attrs=attrs;
+        setBackgroundColor(Color.argb(255, 200, 200, 200));
     }
 
     public void setGame(GameController gc) {
@@ -37,11 +39,12 @@ public class SudokuFieldLayout extends RelativeLayout {
             public void onClick(View v) {
                 if (v instanceof SudokuCellView) {
                     SudokuCellView view = (SudokuCellView) v;
-                    Toast t = Toast.makeText(getContext(), "(" + view.getRow() + " " + view.getColumn() + ")", Toast.LENGTH_SHORT);
-                    t.show();
                 }
             }
         };
+
+        sectionHeight = gameController.getSectionHeight();
+        sectionWidth = gameController.getSectionWidth();
 
         for (int i = 0; i < gameController.getSize(); i++) {
             for (int j = 0; j < gameController.getSize(); j++) {
@@ -52,15 +55,35 @@ public class SudokuFieldLayout extends RelativeLayout {
     }
 
     @Override
+    public void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+
+        Paint p = new Paint();
+        p.setColor(Color.BLACK);
+        p.setStrokeWidth(2);
+
+        // TODO: Draw Borders
+        //canvas.drawLine(0, 0, 0, getHeight(), p);
+        for(int i = 0; i <= (gameController.getSize()/sectionWidth); i++) {
+            for(int j = -2; j < 2; j++) {
+                canvas.drawLine((i * getWidth() / sectionWidth) + j, 0, (i * getWidth() / sectionWidth) + j, getHeight(), p);
+            }
+        }
+        for(int i = 0; i <= (gameController.getSize()/sectionHeight); i++) {
+            canvas.drawLine(0, i*getHeight() / sectionHeight, getHeight(), i*getHeight() / sectionHeight, p);
+        }
+    }
+
+    @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         super.onLayout(changed,l,t,r,b);
 
         if(changed && gameController != null) {
-            int width = (Math.min(r-l, b-t)) / gameController.getSize();
+            gameCellWidth = (Math.min(r-l, b-t)) / gameController.getSize();
 
             for (int i = 0; i < gameController.getSize(); i++) {
                 for (int j = 0; j < gameController.getSize(); j++) {
-                    gamecells[i][j].setValues(width, gameController.getSectionHeight(), gameController.getSectionWidth(), gameController.getGameCell(i, j));
+                    gamecells[i][j].setValues(gameCellWidth, sectionHeight, sectionWidth, gameController.getGameCell(i, j));
                 }
             }
         }

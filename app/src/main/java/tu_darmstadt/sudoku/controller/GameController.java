@@ -34,6 +34,14 @@ public class GameController {
     public GameController(GameType type) {
         setGameType(type);
         gameField = new GameField(size, sectionHeight, sectionWidth);
+        setValue(0, 1, 8);        setValue(0, 4, 2);
+        setValue(1, 1, 6);        setValue(1, 2, 7);
+        setValue(2, 4, 8);        setValue(2, 5, 5);
+        setValue(3, 4, 4);        setValue(3, 6, 6);
+        setValue(4, 7, 9);        setValue(4, 8, 3);
+        setValue(6, 0, 1);        setValue(6, 1, 5);
+        setValue(7, 2, 8);        setValue(7, 3, 5);
+        setValue(8, 2, 9);        setValue(8, 3, 4);
     }
 
     /*public boolean loadLevel(GameField level) {

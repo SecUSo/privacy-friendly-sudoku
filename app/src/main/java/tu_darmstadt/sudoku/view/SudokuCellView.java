@@ -25,7 +25,10 @@ public class SudokuCellView extends View {
     int mWidth;
     int mSectionHeight;
     int mSectionWidth;
+    int mRow;
+    int mCol;
     boolean touched;
+    boolean selected;
 
 
     public SudokuCellView(Context context) {
@@ -34,25 +37,26 @@ public class SudokuCellView extends View {
 
     public SudokuCellView(Context context, AttributeSet attrs){
         super(context, attrs);
+    }
 
+    public void setSelected(boolean b) {
+        this.selected = b;
     }
 
     public void setValues (int width, int sectionHeight, int sectionWidth, GameCell gameCell) {
         mSectionHeight = sectionHeight;
         mSectionWidth = sectionWidth;
         mGameCell = gameCell;
-        mWidth=width;
-        setWillNotDraw(false);
+        mWidth = width;
+        mRow = gameCell.getRow();
+        mCol = gameCell.getCol();
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent motionEvent) {
         if(mGameCell == null) return false;
 
-        //this.setBackgroundColor(Color.CYAN);
         touched = true;
-        Toast t = Toast.makeText(getContext(), mGameCell.toString(), Toast.LENGTH_SHORT);
-        t.show();
 
         return true;
     }
@@ -60,32 +64,30 @@ public class SudokuCellView extends View {
     @Override
     public void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(mWidth, mWidth);
+        params.topMargin = mRow*mWidth;
+        params.leftMargin = mCol*mWidth;
+        this.setLayoutParams(params);
+
         if(mGameCell == null) {
             return;
         }
-        int row = mGameCell.getRow();
-        int col = mGameCell.getCol();
+        drawBackground(canvas);
+        drawValue(canvas);
+    }
 
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(mWidth, mWidth);
-        params.topMargin = row*mWidth;
-        params.leftMargin = col*mWidth;
-        this.setLayoutParams(params);
-
+    public void drawBackground(Canvas canvas) {
         Paint p = new Paint();
-        p.setColor(Color.GRAY);
-        RectF rect = new RectF(0, 0, mWidth, mWidth);
-        canvas.drawRect(rect, p);
         p.setColor(Color.WHITE);
-        RectF rectInner = new RectF(2, 2, mWidth-2, mWidth-2);
-        canvas.drawRect(rectInner, p);
+        RectF rect = new RectF(3, 3, mWidth-3, mWidth-3);
+        canvas.drawRect(rect, p);
 
         if(touched) {
             p.setColor(Color.GREEN);
-            RectF rectTouched = new RectF(2, 2, mWidth-2, mWidth-2);
+            RectF rectTouched = new RectF(3, 3, mWidth-3, mWidth-3);
             canvas.drawRect(rectTouched, p);
         }
-
-        drawValue(canvas);
     }
 
     public void drawValue(Canvas canvas) {
@@ -102,11 +104,11 @@ public class SudokuCellView extends View {
     }
 
     public int getColumn() {
-        return mGameCell.getCol();
+        return mCol;
     }
 
     public int getRow() {
-        return mGameCell.getRow();
+        return mRow;
     }
 
 
