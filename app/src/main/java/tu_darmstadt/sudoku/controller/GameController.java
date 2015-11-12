@@ -41,6 +41,16 @@ public class GameController {
         this.gameType = type;
         setGameType(type);
         gameField = new GameField(size, sectionHeight, sectionWidth);
+        setValue(0, 1, 8);        setValue(0, 4, 2);
+        setValue(0, 5, 6);        setValue(0, 6, 7);
+        setValue(0, 7, 3);        setValue(0, 8, 4);
+        setNote(6, 3, 1); setNote(6, 3, 2); setNote(6, 3, 3); setNote(6, 3, 4);
+        setNote(6, 3, 5); setNote(6, 3, 6); setNote(6, 3, 7); setNote(6, 3, 8);
+        setNote(6, 3, 9);
+
+        setNote(7, 3, 2); setNote(7, 3, 3); setNote(7, 3, 4);
+        setNote(7, 3, 5);  setNote(7, 3, 7); setNote(7, 3, 8);
+        setNote(7, 3, 9);
     }
 
     private GameField solve(GameField gameField) {

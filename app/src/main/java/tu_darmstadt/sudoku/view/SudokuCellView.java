@@ -10,6 +10,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.jar.Attributes;
@@ -120,9 +121,30 @@ public class SudokuCellView extends View {
     }
 
     public void drawValue(Canvas canvas) {
-        if(mGameCell.getValue() == 0) return;
-
         Paint p = new Paint();
+        int j= 3;
+        int k = 3;
+        if(mGameCell.getValue() == 0) {
+            for (int i = 0; i < mGameCell.getNotes().length; i++) {
+                if (mGameCell.getNotes()[i]) {
+                    p.setTypeface(Typeface.SANS_SERIF);
+                    p.setTextSize(mWidth * 3 / 12);
+                    p.setTextAlign(Paint.Align.RIGHT);
+                    canvas.drawText(String.valueOf(i+1),(mWidth*1/12)*k,(mWidth*1/12)*j,p);
+                    k+=4;
+                    if (k > 11) {
+                        k = 3;
+                        j +=4;
+                    }
+                    /*canvas.drawText(String.valueOf(1), (mWidth * 1 / 12)*3, (mWidth* 1 / 12)*3, p);
+                    canvas.drawText(String.valueOf(2),(mWidth*1/12)*7, (mWidth* 1 / 12)*7,p );
+                    canvas.drawText(String.valueOf(3),(mWidth*1/12)*11, (mWidth* 1 / 12)*11,p );*/
+                }
+            }
+            return;
+        }
+
+
         if (mGameCell.isFixed()) {
             p.setTypeface(Typeface.DEFAULT_BOLD);
         }
