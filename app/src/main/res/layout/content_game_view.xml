@@ -12,7 +12,7 @@
     <tu_darmstadt.sudoku.view.SudokuFieldLayout
         android:id="@+id/sudokuLayout"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-    </tu_darmstadt.sudoku.view.SudokuFieldLayout>
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:background="@color/colorPrimary" />
 </RelativeLayout>

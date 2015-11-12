@@ -6,6 +6,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -16,13 +17,10 @@ import tu_darmstadt.sudoku.controller.GameController;
  */
 public class SudokuFieldLayout extends RelativeLayout {
 
-
     private GameController gameController;
 
     public SudokuCellView [][] gamecells;
     AttributeSet attrs;
-
-
 
     public SudokuFieldLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -48,9 +46,6 @@ public class SudokuFieldLayout extends RelativeLayout {
         for (int i = 0; i < gameController.getSize(); i++) {
             for (int j = 0; j < gameController.getSize(); j++) {
                 gamecells[i][j] = new SudokuCellView(getContext(), attrs);
-                gamecells[i][j].setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-                gamecells[i][j].setOnClickListener(listener);
-                if(i != 8 || j != 7) continue;
                 addView(gamecells[i][j]);
             }
         }
@@ -60,13 +55,12 @@ public class SudokuFieldLayout extends RelativeLayout {
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         super.onLayout(changed,l,t,r,b);
 
-        if(changed) {
-            int width = (Math.min(getWidth(), getHeight())) / gameController.getSize();
-            //width -= 20;
+        if(changed && gameController != null) {
+            int width = (Math.min(r-l, b-t)) / gameController.getSize();
 
             for (int i = 0; i < gameController.getSize(); i++) {
                 for (int j = 0; j < gameController.getSize(); j++) {
-                    gamecells[i][j].setValues(width, gameController.getGameCell(i, j));
+                    gamecells[i][j].setValues(width, gameController.getSectionHeight(), gameController.getSectionWidth(), gameController.getGameCell(i, j));
                 }
             }
         }

@@ -8,8 +8,8 @@
     tools:context="tu_darmstadt.sudoku.view.MainActivity">
 
     <TextView android:id="@+id/testString"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:editable="true"
         android:clickable="true"
         android:onClick="onClicktext"

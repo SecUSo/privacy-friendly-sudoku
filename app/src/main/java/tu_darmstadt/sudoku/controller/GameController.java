@@ -181,6 +181,14 @@ public class GameController {
         }
     }
 
+    public int getSectionHeight() {
+        return sectionHeight;
+    }
+
+    public int getSectionWidth() {
+        return sectionWidth;
+    }
+
     public void notifyListeners() {
         for(IModelChangeListener l : listeners) {
             l.onModelChanged();
