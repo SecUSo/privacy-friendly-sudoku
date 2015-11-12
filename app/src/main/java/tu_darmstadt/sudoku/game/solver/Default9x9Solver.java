@@ -1,6 +1,7 @@
 package tu_darmstadt.sudoku.game.solver;
 
 import java.util.LinkedList;
+import java.util.List;
 
 import tu_darmstadt.sudoku.game.CellConflict;
 import tu_darmstadt.sudoku.game.GameCell;
@@ -14,16 +15,42 @@ public class Default9x9Solver implements ISolver {
 
     private GameField gameField = null;
 
-    Default9x9Solver(GameField gameField) {
+    public Default9x9Solver(GameField gf) {
         try {
-            if(gameField == null) {
+            if(gf == null) {
                 throw new IllegalArgumentException("GameField may not be null.");
             }
 
-            this.gameField = gameField.clone();
+            gameField = gf.clone();
         } catch(CloneNotSupportedException e) {
             throw new IllegalArgumentException("This GameField is not cloneable.", e);
         }
+
+        gameField.reset();
+        if(!isSolvable(gameField)) {
+            throw new IllegalArgumentException("This GameField is not solveable.");
+        }
+
+    }
+
+    public boolean isSolvable(GameField gameField) {
+        for(int i = 0; i < gameField.getSize(); i++) {
+            if(hasErrors(gameField.getRow(i))) return false;
+            if(hasErrors(gameField.getColumn(i))) return false;
+            if(hasErrors(gameField.getSection(i))) return false;
+        }
+        return true;
+    }
+
+    public boolean hasErrors(LinkedList<GameCell> list) {
+        LinkedList<Integer> checked = new LinkedList<Integer>();
+        for(GameCell c : list) {
+            if(checked.contains(c.getValue())) {
+                return true;
+            }
+            checked.add(c.getValue());
+        }
+        return false;
     }
 
     public boolean solve() {
@@ -53,6 +80,7 @@ public class Default9x9Solver implements ISolver {
 
     @Override
     public boolean calculateNextPossibleStep() {
+
         return false;
     }
 
@@ -102,9 +130,8 @@ public class Default9x9Solver implements ISolver {
         return gameField.actionOnCells(new ICellAction<Boolean>() {
             @Override
             public Boolean action(GameCell gc, Boolean existing) {
-                boolean oneNote = false;
                 int value = -1;
-                if(gc.getNoteCount() == 1) {
+                if(!gc.hasValue() && gc.getNoteCount() == 1) {
                     for(int i = 0; i < gameField.getSize(); i++) {
                         if(gc.getNotes()[i]) {
                             value = i;

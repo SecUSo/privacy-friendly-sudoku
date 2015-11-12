@@ -26,6 +26,16 @@ public class GameField implements Cloneable {
         initCells(null);
     }
 
+    public void reset() {
+        actionOnCells(new ICellAction<Boolean>() {
+            @Override
+            public Boolean action(GameCell gc, Boolean existing) {
+                gc.reset();
+                return true;
+            }
+        }, true);
+    }
+
     public void initCells(int[][] level) {
         // TODO: this is a placeholder, because we don't have real levels yet.
         int[][] placeholder = {{ 5, 0, 1,  9, 0, 0,  0, 0, 0 },
@@ -56,24 +66,28 @@ public class GameField implements Cloneable {
         return field;
     }
 
-    public LinkedList<GameCell> getRow(int row) {
-        LinkedList<GameCell> result = new LinkedList<GameCell>();
-        for(GameCell c : field[row]) {
-            result.add(c);
-        }
-        return result;
+    public LinkedList<GameCell> getRow(final int row) {
+        return actionOnCells(new ICellAction<LinkedList<GameCell>>() {
+            @Override
+            public LinkedList<GameCell> action(GameCell gc, LinkedList<GameCell> existing) {
+                if(gc.getRow() == row) {
+                    existing.add(gc);
+                }
+                return existing;
+            }
+        }, new LinkedList<GameCell>());
     }
 
-    public LinkedList<GameCell> getColumn(int col) {
-        LinkedList<GameCell> result = new LinkedList<GameCell>();
-        for(int i = 0; i < size ; i++) {    // row
-            for(int j = 0 ; j < size ; j++) {   // col
-                if(j == col) {
-                    result.add(field[i][j]);
+    public LinkedList<GameCell> getColumn(final int col) {
+        return actionOnCells(new ICellAction<LinkedList<GameCell>>() {
+            @Override
+            public LinkedList<GameCell> action(GameCell gc, LinkedList<GameCell> existing) {
+                if(gc.getCol() == col) {
+                    existing.add(gc);
                 }
+                return existing;
             }
-        }
-        return result;
+        }, new LinkedList<GameCell>());
     }
 
     public LinkedList<GameCell> getSection(final int sec) {

@@ -10,6 +10,8 @@ import tu_darmstadt.sudoku.game.GameField;
 import tu_darmstadt.sudoku.game.GameSettings;
 import tu_darmstadt.sudoku.game.GameType;
 import tu_darmstadt.sudoku.game.ICellAction;
+import tu_darmstadt.sudoku.game.solver.Default9x9Solver;
+import tu_darmstadt.sudoku.game.solver.ISolver;
 
 /**
  * Created by Chris on 06.11.2015.
@@ -20,9 +22,13 @@ public class GameController {
     private int sectionHeight;
     private int sectionWidth;
     private GameField gameField;
+    private ISolver solver;
+    private GameType gameType;
+    private int selectedRow;
+    private int selectedCol;
     private CellConflictList errorList = new CellConflictList();
     private GameSettings settings = new GameSettings();
-    private LinkedList<IModelChangeListener> listeners = new LinkedList<>();
+    //private LinkedList<IModelChangeListener> listeners = new LinkedList<>();
 
 //    private Default9x9Solver solver;
 //    private SudokuGenerator generator;
@@ -32,16 +38,24 @@ public class GameController {
     }
 
     public GameController(GameType type) {
+        this.gameType = type;
         setGameType(type);
         gameField = new GameField(size, sectionHeight, sectionWidth);
-        setValue(0, 1, 8);        setValue(0, 4, 2);
-        setValue(1, 1, 6);        setValue(1, 2, 7);
-        setValue(2, 4, 8);        setValue(2, 5, 5);
-        setValue(3, 4, 4);        setValue(3, 6, 6);
-        setValue(4, 7, 9);        setValue(4, 8, 3);
-        setValue(6, 0, 1);        setValue(6, 1, 5);
-        setValue(7, 2, 8);        setValue(7, 3, 5);
-        setValue(8, 2, 9);        setValue(8, 3, 4);
+    }
+
+    private GameField solve(GameField gameField) {
+        switch(gameType) {
+            case Default_9x9:
+                solver = new Default9x9Solver(gameField);
+                break;
+            default:
+                throw new UnsupportedOperationException("No Solver for this GameType defined.");
+        }
+
+        if(solver.solve()) {
+            return solver.getGameField();
+        }
+        return null;
     }
 
     /*public boolean loadLevel(GameField level) {
@@ -102,6 +116,19 @@ public class GameController {
         }
     }
 
+    public LinkedList<GameCell> getConnectedCells(int row, int col, boolean connectedSec, boolean connectedRow, boolean connectedCol) {
+        LinkedList<GameCell> list = new LinkedList<>();
+
+        if(connectedRow) list.addAll(gameField.getRow(row));
+        list.remove(gameField.getCell(row, col));
+        if(connectedCol) list.addAll(gameField.getColumn(col));
+        list.remove(gameField.getCell(row, col));
+        if(connectedSec) list.addAll(gameField.getSection(row, col));
+        list.remove(gameField.getCell(row, col));
+
+        return list;
+    }
+
     public void deleteNotes(List<GameCell> updateList, int value) {
         for(GameCell c : updateList) {
             c.deleteNote(value);
@@ -132,21 +159,15 @@ public class GameController {
     }
 
     public void resetLevel() {
-        gameField.actionOnCells(new ICellAction<Boolean>() {
-            @Override
-            public Boolean action(GameCell gc, Boolean existing) {
-                gc.reset();
-                return true;
-            }
-        }, true);
-        notifyListeners();
+        gameField.reset();
+        //notifyListeners();
     }
 
     public boolean deleteValue(int row, int col) {
         GameCell c = gameField.getCell(row,col);
         if(!c.isFixed()) {
             c.setValue(0);
-            notifyListeners();
+            //notifyListeners();
             return true;
         }
         return false;
@@ -155,7 +176,7 @@ public class GameController {
     public void setNote(int row, int col, int value) {
         GameCell c = gameField.getCell(row,col);
         c.setNote(value);
-        notifyListeners();
+        //notifyListeners();
     }
 
     public boolean[] getNotes(int row, int col) {
@@ -166,13 +187,13 @@ public class GameController {
     public void deleteNote(int row, int col, int value) {
         GameCell c = gameField.getCell(row,col);
         c.deleteNote(value);
-        notifyListeners();
+        //notifyListeners();
     }
 
     public void toggleNote(int row, int col, int value) {
         GameCell c = gameField.getCell(row,col);
         c.toggleNote(value);
-        notifyListeners();
+        //notifyListeners();
     }
 
     /** Debug only method
@@ -183,11 +204,20 @@ public class GameController {
         return gameField.toString();
     }
 
-    public void registerListener(IModelChangeListener l) {
-        if(!listeners.contains(l)) {
-            listeners.add(l);
-        }
+    public void selectCell(int row, int col) {
+        this.selectedRow = row;
+        this.selectedCol = col;
     }
+
+    public void setSelectedValue(int value) {
+        setValue(selectedRow, selectedCol, value);
+    }
+
+//    public void registerListener(IModelChangeListener l) {
+//        if(!listeners.contains(l)) {
+//            listeners.add(l);
+//        }
+//    }
 
     public int getSectionHeight() {
         return sectionHeight;
@@ -197,10 +227,10 @@ public class GameController {
         return sectionWidth;
     }
 
-    public void notifyListeners() {
-        for(IModelChangeListener l : listeners) {
-            l.onModelChanged();
-        }
-    }
+//    public void notifyListeners() {
+//        for(IModelChangeListener l : listeners) {
+//            l.onModelChanged();
+//        }
+//    }
 
 }

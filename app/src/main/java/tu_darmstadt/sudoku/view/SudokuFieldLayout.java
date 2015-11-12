@@ -5,10 +5,16 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.RelativeLayout;
 
+import java.util.List;
+
 import tu_darmstadt.sudoku.controller.GameController;
+import tu_darmstadt.sudoku.game.GameCell;
+import tu_darmstadt.sudoku.game.GameSettings;
+import tu_darmstadt.sudoku.view.highlighting.CellHighlightTypes;
 
 /**
  * Created by Timm Lippert on 11.11.2015.
@@ -19,6 +25,7 @@ public class SudokuFieldLayout extends RelativeLayout {
     private int sectionHeight;
     private int sectionWidth;
     private int gameCellWidth;
+    private int gameCellHeight;
 
     public SudokuCellView [][] gamecells;
     AttributeSet attrs;
@@ -34,12 +41,33 @@ public class SudokuFieldLayout extends RelativeLayout {
         gameController = gc;
         gamecells = new SudokuCellView[gc.getSize()][gc.getSize()];
 
-        OnClickListener listener = new OnClickListener() {
+        OnTouchListener listener = new OnTouchListener() {
             @Override
-            public void onClick(View v) {
-                if (v instanceof SudokuCellView) {
-                    SudokuCellView view = (SudokuCellView) v;
+            public boolean onTouch(View v, MotionEvent event) {
+                if(v instanceof SudokuCellView) {
+
+                    SudokuCellView scv = ((SudokuCellView) v);
+
+                    int row = scv.getRow();
+                    int col = scv.getCol();
+
+                    // Reset everything
+                    for(int i = 0; i < gameController.getSize(); i++) {
+                        for(int j = 0; j < gameController.getSize(); j++) {
+                            gamecells[i][j].setHighlightType(CellHighlightTypes.Default);
+                        }
+                    }
+                    // Set connected Fields
+                    for(GameCell c : gameController.getConnectedCells(row,col, GameSettings.getHighlightConnectedRow(), GameSettings.getHighlightConnectedColumn(), GameSettings.getHighlightConnectedSection())) {
+                        gamecells[c.getRow()][c.getCol()].setHighlightType(CellHighlightTypes.Connected);
+                    }
+                    // Select touched Cell
+                    gameController.selectCell(row, col);
+                    scv.setHighlightType(CellHighlightTypes.Selected);
+
+
                 }
+                return false;
             }
         };
 
@@ -49,6 +77,7 @@ public class SudokuFieldLayout extends RelativeLayout {
         for (int i = 0; i < gameController.getSize(); i++) {
             for (int j = 0; j < gameController.getSize(); j++) {
                 gamecells[i][j] = new SudokuCellView(getContext(), attrs);
+                gamecells[i][j].setOnTouchListener(listener);
                 addView(gamecells[i][j]);
             }
         }
@@ -58,19 +87,22 @@ public class SudokuFieldLayout extends RelativeLayout {
     public void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
+        if(gameController == null) return;
+
         Paint p = new Paint();
         p.setColor(Color.BLACK);
         p.setStrokeWidth(2);
 
         // TODO: Draw Borders
-        //canvas.drawLine(0, 0, 0, getHeight(), p);
         for(int i = 0; i <= (gameController.getSize()/sectionWidth); i++) {
             for(int j = -2; j < 2; j++) {
                 canvas.drawLine((i * getWidth() / sectionWidth) + j, 0, (i * getWidth() / sectionWidth) + j, getHeight(), p);
             }
         }
         for(int i = 0; i <= (gameController.getSize()/sectionHeight); i++) {
-            canvas.drawLine(0, i*getHeight() / sectionHeight, getHeight(), i*getHeight() / sectionHeight, p);
+            for(int j = -2; j < 2; j++) {
+                canvas.drawLine(0, (i * getHeight() / sectionHeight) + j, getHeight(), (i * getHeight() / sectionHeight) + j, p);
+            }
         }
     }
 
@@ -80,10 +112,11 @@ public class SudokuFieldLayout extends RelativeLayout {
 
         if(changed && gameController != null) {
             gameCellWidth = (Math.min(r-l, b-t)) / gameController.getSize();
+            gameCellHeight = (Math.min(r-l, b-t)) / gameController.getSize();
 
             for (int i = 0; i < gameController.getSize(); i++) {
                 for (int j = 0; j < gameController.getSize(); j++) {
-                    gamecells[i][j].setValues(gameCellWidth, sectionHeight, sectionWidth, gameController.getGameCell(i, j));
+                    gamecells[i][j].setValues(gameCellWidth, gameCellHeight, sectionHeight, sectionWidth, gameController.getGameCell(i, j));
                 }
             }
         }

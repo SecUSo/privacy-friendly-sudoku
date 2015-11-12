@@ -15,6 +15,7 @@ import android.widget.Toast;
 import java.util.jar.Attributes;
 
 import tu_darmstadt.sudoku.game.GameCell;
+import tu_darmstadt.sudoku.view.highlighting.CellHighlightTypes;
 
 /**
  * Created by TMZ_LToP on 10.11.2015.
@@ -23,12 +24,13 @@ public class SudokuCellView extends View {
 
     GameCell mGameCell;
     int mWidth;
+    int mHeight;
     int mSectionHeight;
     int mSectionWidth;
     int mRow;
     int mCol;
-    boolean touched;
     boolean selected;
+    CellHighlightTypes highlightType = CellHighlightTypes.Default;
 
 
     public SudokuCellView(Context context) {
@@ -43,51 +45,78 @@ public class SudokuCellView extends View {
         this.selected = b;
     }
 
-    public void setValues (int width, int sectionHeight, int sectionWidth, GameCell gameCell) {
+    public void setValues (int width, int height, int sectionHeight, int sectionWidth, GameCell gameCell) {
         mSectionHeight = sectionHeight;
         mSectionWidth = sectionWidth;
         mGameCell = gameCell;
         mWidth = width;
+        mHeight = height;
         mRow = gameCell.getRow();
         mCol = gameCell.getCol();
     }
 
-    @Override
+    public void setHighlightType(CellHighlightTypes highlightType) {
+        this.highlightType = highlightType;
+    }
+
+    /*@Override
     public boolean onTouchEvent(MotionEvent motionEvent) {
         if(mGameCell == null) return false;
 
-        touched = true;
+        if(motionEvent.getAction() == motionEvent.ACTION_DOWN) {
+            highlightType = CellHighlightTypes.Selected;
+        }
 
         return true;
-    }
+    }*/
 
     @Override
     public void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(mWidth, mWidth);
-        params.topMargin = mRow*mWidth;
+        // Set Layout
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(mWidth, mHeight);
+        params.topMargin = mRow*mHeight;
         params.leftMargin = mCol*mWidth;
         this.setLayoutParams(params);
 
-        if(mGameCell == null) {
-            return;
-        }
-        drawBackground(canvas);
-        drawValue(canvas);
+        // Draw single Field
+        drawInfo(canvas);
     }
 
-    public void drawBackground(Canvas canvas) {
+    private void drawInfo(Canvas canvas) {
         Paint p = new Paint();
-        p.setColor(Color.WHITE);
-        RectF rect = new RectF(3, 3, mWidth-3, mWidth-3);
-        canvas.drawRect(rect, p);
-
-        if(touched) {
-            p.setColor(Color.GREEN);
-            RectF rectTouched = new RectF(3, 3, mWidth-3, mWidth-3);
-            canvas.drawRect(rectTouched, p);
+        switch(highlightType) {
+            case Default:
+                p.setColor(Color.WHITE);
+                break;
+            case Error:
+                p.setColor(Color.RED);
+                break;
+            case Selected:
+                p.setColor(Color.GREEN);
+                break;
+            case Connected:
+                p.setColor(Color.argb(55, 255, 255, 0));
+                break;
+            case Highlighted:
+                p.setColor(Color.YELLOW);
+                break;
+            default:
+                p.setColor(Color.WHITE);
         }
+
+
+        drawBackground(canvas, 3, 3, mWidth - 3, mHeight - 3, p);
+        // if there is no mGameCell .. we can not retrieve the information to draw
+        if(mGameCell != null) {
+            drawValue(canvas);
+        }
+    }
+
+    public void drawBackground(Canvas canvas, int left, int top, int right, int bottom, Paint p) {
+        RectF rect = new RectF(left, top, right, bottom);
+        canvas.drawRect(rect, p);
     }
 
     public void drawValue(Canvas canvas) {
@@ -98,18 +127,15 @@ public class SudokuCellView extends View {
             p.setTypeface(Typeface.DEFAULT_BOLD);
         }
         p.setAntiAlias(true);
-        p.setTextSize(Math.min(mWidth * 3 / 4, mWidth * 3 / 4));
+        p.setTextSize(Math.min(mHeight * 3 / 4, mHeight * 3 / 4));
         p.setTextAlign(Paint.Align.CENTER);
-        canvas.drawText(String.valueOf(mGameCell.getValue()), mWidth/2, mWidth/2 + mWidth/4, p);
-    }
-
-    public int getColumn() {
-        return mCol;
+        canvas.drawText(String.valueOf(mGameCell.getValue()), mHeight/2, mHeight/2 + mHeight/4, p);
     }
 
     public int getRow() {
         return mRow;
     }
-
-
+    public int getCol() {
+        return mCol;
+    }
 }
