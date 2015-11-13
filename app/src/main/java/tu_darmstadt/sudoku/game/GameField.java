@@ -57,6 +57,7 @@ public class GameField implements Cloneable {
                 oneDimension[i*size+j] = placeholder[i][j];
             }
         }
+        initCells(oneDimension);
     }
 
     public void initCells(int[] level) {
