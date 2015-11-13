@@ -53,11 +53,21 @@ public class SudokuFieldLayout extends RelativeLayout {
                     int row = scv.getRow();
                     int col = scv.getCol();
 
+                    gameController.selectCell(row, col);
+                    row = gameController.getSelectedRow();
+                    col = gameController.getSelectedCol();
+
                     // Reset everything
                     for(int i = 0; i < gameController.getSize(); i++) {
                         for(int j = 0; j < gameController.getSize(); j++) {
                             gamecells[i][j].setHighlightType(CellHighlightTypes.Default);
                         }
+                    }
+
+                    if(row == -1 || col == -1) {
+                        // we clicked on the same cell 2 times.
+                        // means it got deselected and we dont highlight any cells.
+                        return false;
                     }
                     // Set connected Fields
 
@@ -70,7 +80,6 @@ public class SudokuFieldLayout extends RelativeLayout {
                         gamecells[c.getRow()][c.getCol()].setHighlightType(CellHighlightTypes.Connected);
                     }
                     // Select touched Cell
-                    gameController.selectCell(row, col);
                     scv.setHighlightType(CellHighlightTypes.Selected);
 
 

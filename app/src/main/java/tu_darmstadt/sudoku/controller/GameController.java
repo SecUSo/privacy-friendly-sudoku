@@ -63,14 +63,24 @@ public class GameController {
         this.sectionHeight = sectionHeight;
         this.sectionWidth = sectionWidth;
         this.gameField = new GameField(size, sectionHeight, sectionWidth);
+
+        if(fixedValues == null) throw new IllegalArgumentException("fixedValues may not be null.");
+
         gameField.initCells(fixedValues);
 
         // now set the values that are not fixed
-        for(int i = 0; i < size*size; i++) {
-            int row = (int)Math.floor(i/size);
-            int col = i%size;
-            setValue(row, col, setValues[i]);
+        if (setValues != null) {
+            for (int i = 0; i < size * size; i++) {
+                int row = (int) Math.floor(i / size);
+                int col = i % size;
+                setValue(row, col, setValues[i]);
+            }
         }
+
+        if(setNotes != null) {
+            // set notes.
+        }
+
     }
 
     public void setSettings(SharedPreferences pref) {
@@ -129,7 +139,7 @@ public class GameController {
     /** Use with care.
      */
     public GameCell getGameCell(int row, int col) {
-        return gameField.getCell(row,col);
+        return gameField.getCell(row, col);
     }
 
     public boolean isSolved() {
@@ -240,13 +250,36 @@ public class GameController {
         return gameField.toString();
     }
 
+    public int getSelectedRow() {
+        return selectedRow;
+    }
+
+    public int getSelectedCol() {
+        return selectedCol;
+    }
+
     public void selectCell(int row, int col) {
-        this.selectedRow = row;
-        this.selectedCol = col;
+        if(selectedRow == row && selectedCol == col) {
+            // if we select the same field 2ce -> deselect it
+            selectedRow = -1;
+            selectedCol = -1;
+        } else {
+            // else we set it to the new selected field
+            selectedRow = row;
+            selectedCol = col;
+        }
     }
 
     public void setSelectedValue(int value) {
-        setValue(selectedRow, selectedCol, value);
+        if(selectedRow != -1 && selectedCol != -1) setValue(selectedRow, selectedCol, value);
+    }
+
+    public void deleteSelectedValue() {
+        if(selectedRow != -1 && selectedCol != -1) setValue(selectedRow, selectedCol, 0);
+    }
+
+    public void toggleSelectedNote(int value) {
+        if(selectedRow != -1 && selectedCol != -1) toggleNote(selectedRow, selectedCol, value);
     }
 
 //    public void registerListener(IModelChangeListener l) {

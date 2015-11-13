@@ -51,14 +51,16 @@ public class GameField implements Cloneable {
                 { 7, 0, 0,  0, 1, 0,  3, 0, 5 }};
 
         // Initit the game field
+        int[] oneDimension = new int[size*size];
         for(int i = 0; i < size; i++) {
             for(int j = 0; j < size; j++) {
-                field[i][j] = new GameCell(i,j,size,placeholder[i][j]);
+                oneDimension[i*size+j] = placeholder[i][j];
             }
         }
     }
 
     public void initCells(int[] level) {
+        int count = 0;
         if(level.length != size*size) {
             throw new IllegalArgumentException("Levelarray must have length of "+size*size+".");
         }
@@ -66,8 +68,10 @@ public class GameField implements Cloneable {
         for(int i = 0; i < size*size; i++) {
             int row = (int)Math.floor(i/size);
             int col = i%size;
+            if(level[i] != 0) count++;
             field[row][col] = new GameCell(row,col,size,level[i]);
         }
+        if(count < 17) throw new IllegalArgumentException("There must be at least 17 fixed values.");
     }
 
     public GameCell getCell(int row, int col) {
