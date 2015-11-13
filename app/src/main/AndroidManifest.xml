@@ -22,7 +22,7 @@
         </activity>
         <activity
             android:screenOrientation="portrait"
-            android:name=".GameActivity"
+            android:name="tu_darmstadt.sudoku.ui.GameActivity"
             android:label="@string/title_activity_game_view"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
