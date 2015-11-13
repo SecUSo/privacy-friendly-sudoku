@@ -17,18 +17,20 @@
         android:clickable="true"
         android:gravity="center"/>
     <tu_darmstadt.sudoku.view.SudokuKeyboardLayout
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_alignParentBottom="true"
         android:id="@+id/sudokuKeyboardLayout"
         android:orientation="vertical"
         android:gravity="top"
+
         >
         <tu_darmstadt.sudoku.view.SudokuKeyboardLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
-
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
             android:layout_weight="1"
             android:gravity="center">
             <tu_darmstadt.sudoku.view.SudokuButton
