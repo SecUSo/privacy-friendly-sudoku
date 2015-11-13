@@ -2,15 +2,12 @@
 
     <!-- These settings headers are only used on tablets. -->
 
-    <header android:fragment="tu_darmstadt.sudoku.view.SettingsActivity$GeneralPreferenceFragment"
-        android:title="@string/pref_header_general" android:icon="@drawable/ic_info_black_24dp" />
+    <header android:fragment="tu_darmstadt.sudoku.ui.SettingsActivity$GamePreferenceFragment"
+        android:title="@string/pref_header_game" android:icon="@drawable/ic_info_black_24dp" />
 
     <header
-        android:fragment="tu_darmstadt.sudoku.view.SettingsActivity$NotificationPreferenceFragment"
-        android:title="@string/pref_header_notifications"
+        android:fragment="tu_darmstadt.sudoku.ui.SettingsActivity$HighlightingPreferenceFragment"
+        android:title="Highlighting"
         android:icon="@drawable/ic_notifications_black_24dp" />
-
-    <header android:fragment="tu_darmstadt.sudoku.view.SettingsActivity$DataSyncPreferenceFragment"
-        android:title="@string/pref_header_data_sync" android:icon="@drawable/ic_sync_black_24dp" />
 
 </preference-headers>

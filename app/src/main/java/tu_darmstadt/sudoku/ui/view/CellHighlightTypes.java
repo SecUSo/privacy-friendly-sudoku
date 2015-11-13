@@ -1,4 +1,4 @@
-package tu_darmstadt.sudoku.view.highlighting;
+package tu_darmstadt.sudoku.ui.view;
 
 /**
  * Created by Chris on 12.11.2015.
