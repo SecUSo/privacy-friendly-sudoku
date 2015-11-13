@@ -16,4 +16,109 @@
         android:layout_height="wrap_content"
         android:clickable="true"
         android:gravity="center"/>
+    <tu_darmstadt.sudoku.view.SudokuKeyboardLayout
+        android:layout_width="fill_parent"
+        android:layout_height="200dp"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/sudokuKeyboardLayout"
+        android:orientation="vertical"
+        android:gravity="top"
+        >
+        <tu_darmstadt.sudoku.view.SudokuKeyboardLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+
+            android:layout_weight="1"
+            android:gravity="center">
+            <tu_darmstadt.sudoku.view.SudokuButton
+                android:id="@+id/button1"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_weight="6"
+                android:text="1"/>
+            <tu_darmstadt.sudoku.view.SudokuButton
+                android:id="@+id/button2"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_weight="6"
+                android:text="2"/>
+            <tu_darmstadt.sudoku.view.SudokuButton
+                android:id="@+id/button3"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_weight="6"
+                android:text="3"/>
+            <tu_darmstadt.sudoku.view.SudokuButton
+                android:id="@+id/button4"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_weight="6"
+                android:text="4"/>
+            <tu_darmstadt.sudoku.view.SudokuButton
+                android:id="@+id/button5"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_weight="6"
+                android:text="5"/>
+            <tu_darmstadt.sudoku.view.SudokuButton
+                android:id="@+id/button6"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_weight="6"
+                android:text="6"/>
+
+
+
+
+        </tu_darmstadt.sudoku.view.SudokuKeyboardLayout>
+
+        <tu_darmstadt.sudoku.view.SudokuKeyboardLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="top"
+            android:layout_weight="1">
+            <tu_darmstadt.sudoku.view.SudokuButton
+                android:id="@+id/button7"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_weight="6"
+                android:text="7"/>
+            <tu_darmstadt.sudoku.view.SudokuButton
+                android:id="@+id/button8"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_weight="6"
+                android:text="8"/>
+            <tu_darmstadt.sudoku.view.SudokuButton
+                android:id="@+id/button9"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_weight="6"
+                android:text="9"/>
+            <tu_darmstadt.sudoku.view.SudokuButton
+                android:id="@+id/buttonNote"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_weight="6"
+                android:text="not"/>
+            <tu_darmstadt.sudoku.view.SudokuButton
+                android:id="@+id/buttonDel"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_weight="6"
+                android:text="Del"/>
+            <tu_darmstadt.sudoku.view.SudokuButton
+                android:id="@+id/buttonDum"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_weight="6"
+                android:text="dum"/>
+
+        </tu_darmstadt.sudoku.view.SudokuKeyboardLayout>
+
+    </tu_darmstadt.sudoku.view.SudokuKeyboardLayout>
+
+
 </RelativeLayout>

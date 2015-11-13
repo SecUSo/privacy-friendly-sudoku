@@ -131,14 +131,14 @@ public class SudokuCellView extends View {
                     p.setTextSize(mWidth * 3 / 12);
                     p.setTextAlign(Paint.Align.RIGHT);
                     canvas.drawText(String.valueOf(i+1),(mWidth*1/12)*k,(mWidth*1/12)*j,p);
-                    k+=4;
-                    if (k > 11) {
-                        k = 3;
-                        j +=4;
-                    }
                     /*canvas.drawText(String.valueOf(1), (mWidth * 1 / 12)*3, (mWidth* 1 / 12)*3, p);
                     canvas.drawText(String.valueOf(2),(mWidth*1/12)*7, (mWidth* 1 / 12)*7,p );
                     canvas.drawText(String.valueOf(3),(mWidth*1/12)*11, (mWidth* 1 / 12)*11,p );*/
+                }
+                k+=4;
+                if (k > 11) {
+                    k = 3;
+                    j +=4;
                 }
             }
             return;

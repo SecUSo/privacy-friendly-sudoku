@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
 
 import tu_darmstadt.sudoku.controller.GameController;
@@ -20,7 +21,7 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
 
     GameController gameController = new GameController(GameType.Default_9x9);
     SudokuFieldLayout layout;
-    
+    SudokuButton [] buttons;
 
 
     @Override
@@ -31,6 +32,8 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(toolbar);
         layout = (SudokuFieldLayout)findViewById(R.id.sudokuLayout);
         layout.setGame(gameController);
+        buttons = new SudokuButton[12];
+
         /*
         // DEBUG
         String debug = gameController.getFieldAsString();
