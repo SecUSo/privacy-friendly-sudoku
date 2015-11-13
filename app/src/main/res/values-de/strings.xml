@@ -17,7 +17,13 @@
     <string name="action_settings">Einstellungen</string>
 
     <!-- Strings related to Highlight -->
-    <string name="pref_highlighting_selection">Auswahl</string>
+    <string name="pref_highlighting_selection">Feld Auswahl</string>
     <string name="pref_highlighting_selection_values">Werte</string>
+
+    <!-- About Page -->
+    <string name="privacy_friendly">Diese App gehört zur Gruppe der Privacy Friendly Apps.</string>
+    <string name="more_info">Mehr Informationen unter:</string>
+    <string name="about_affiliation">In Zusammenarbeit mit:</string>
+    <string name="about_author">Autor: \nChristopher Beckmann, Timm Lippert</string>
 
 </resources>

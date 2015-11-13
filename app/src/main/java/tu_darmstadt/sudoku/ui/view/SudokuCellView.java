@@ -1,4 +1,4 @@
-package tu_darmstadt.sudoku.view;
+package tu_darmstadt.sudoku.ui.view;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -7,16 +7,10 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import java.util.jar.Attributes;
 
 import tu_darmstadt.sudoku.game.GameCell;
-import tu_darmstadt.sudoku.view.highlighting.CellHighlightTypes;
 
 /**
  * Created by TMZ_LToP on 10.11.2015.
@@ -98,7 +92,10 @@ public class SudokuCellView extends View {
                 p.setColor(Color.GREEN);
                 break;
             case Connected:
-                p.setColor(Color.argb(55, 255, 255, 0));
+                p.setColor(Color.WHITE);
+                drawBackground(canvas, 3, 3, mWidth - 3, mHeight - 3, p);
+                p.setColor(Color.YELLOW);
+                p.setAlpha(100);
                 break;
             case Highlighted:
                 p.setColor(Color.YELLOW);
@@ -128,7 +125,7 @@ public class SudokuCellView extends View {
             for (int i = 0; i < mGameCell.getNotes().length; i++) {
                 if (mGameCell.getNotes()[i]) {
                     p.setTypeface(Typeface.SANS_SERIF);
-                    p.setTextSize(mWidth * 3 / 12);
+                    p.setTextSize(mWidth/4);
                     p.setTextAlign(Paint.Align.RIGHT);
                     canvas.drawText(String.valueOf(i+1),(mWidth*1/12)*k,(mWidth*1/12)*j,p);
                     /*canvas.drawText(String.valueOf(1), (mWidth * 1 / 12)*3, (mWidth* 1 / 12)*3, p);
@@ -151,7 +148,7 @@ public class SudokuCellView extends View {
         p.setAntiAlias(true);
         p.setTextSize(Math.min(mHeight * 3 / 4, mHeight * 3 / 4));
         p.setTextAlign(Paint.Align.CENTER);
-        canvas.drawText(String.valueOf(mGameCell.getValue()), mHeight/2, mHeight/2 + mHeight/4, p);
+        canvas.drawText(String.valueOf(mGameCell.getValue()), mHeight / 2, mHeight / 2 + mHeight / 4, p);
     }
 
     public int getRow() {
@@ -160,4 +157,11 @@ public class SudokuCellView extends View {
     public int getCol() {
         return mCol;
     }
+
+    /*@Override
+    public Parcelable onSaveInstanceState() {
+        Parcelable state = super.onSaveInstanceState();
+
+        return state;
+    }*/
 }

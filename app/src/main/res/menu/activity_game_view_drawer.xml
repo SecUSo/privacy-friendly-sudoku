@@ -2,23 +2,22 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <group android:checkableBehavior="single">
-        <item android:id="@+id/nav_newgame" android:icon="@android:drawable/ic_menu_camera"
+        <item android:id="@+id/nav_newgame" android:icon="@android:drawable/ic_menu_today"
             android:title="@string/new_game" />
         <item android:id="@+id/nav_mainmenu" android:icon="@android:drawable/ic_menu_gallery"
             android:title="@string/mainmenu" />
-        <item android:id="@+id/nav_settings" android:icon="@android:drawable/ic_menu_slideshow"
-            android:title="@string/settings" />
-        <item android:id="@+id/nav_highscore" android:icon="@android:drawable/ic_menu_manage"
+        <item android:id="@+id/nav_highscore" android:icon="@android:drawable/ic_menu_myplaces"
             android:title="@string/highscore" />
     </group>
-
-    <item android:title="@string/group">
+    <group android:menuCategory="container" android:title="">
         <menu>
-            <item android:id="@+id/nav_share" android:icon="@android:drawable/ic_menu_share"
+            <item android:id="@+id/nav_settings" android:icon="@android:drawable/ic_menu_manage"
+                android:title="@string/settings" />
+            <item android:id="@+id/nav_help" android:icon="@android:drawable/ic_menu_help"
                 android:title="@string/help" />
-            <item android:id="@+id/nav_send" android:icon="@android:drawable/ic_menu_send"
+            <item android:id="@+id/nav_about" android:icon="@android:drawable/ic_menu_info_details"
                 android:title="@string/about" />
         </menu>
-    </item>
+    </group>
 
 </menu>

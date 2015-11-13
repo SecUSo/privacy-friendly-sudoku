@@ -23,7 +23,7 @@ public class GameField implements Cloneable {
         this.size = size;
 
         field = new GameCell[size][size];
-        initCells(null);
+        initCells(new int[][]{{1}});
     }
 
     public void reset() {
@@ -55,6 +55,18 @@ public class GameField implements Cloneable {
             for(int j = 0; j < size; j++) {
                 field[i][j] = new GameCell(i,j,size,placeholder[i][j]);
             }
+        }
+    }
+
+    public void initCells(int[] level) {
+        if(level.length != size*size) {
+            throw new IllegalArgumentException("Levelarray must have length of "+size*size+".");
+        }
+        // Initit the game field with a 1 dimension array
+        for(int i = 0; i < size*size; i++) {
+            int row = (int)Math.floor(i/size);
+            int col = i%size;
+            field[row][col] = new GameCell(row,col,size,level[i]);
         }
     }
 

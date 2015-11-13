@@ -1,6 +1,7 @@
-package tu_darmstadt.sudoku.view;
+package tu_darmstadt.sudoku.ui.view;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -9,12 +10,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.RelativeLayout;
 
-import java.util.List;
-
 import tu_darmstadt.sudoku.controller.GameController;
 import tu_darmstadt.sudoku.game.GameCell;
-import tu_darmstadt.sudoku.game.GameSettings;
-import tu_darmstadt.sudoku.view.highlighting.CellHighlightTypes;
 
 /**
  * Created by Timm Lippert on 11.11.2015.
@@ -26,6 +23,7 @@ public class SudokuFieldLayout extends RelativeLayout {
     private int sectionWidth;
     private int gameCellWidth;
     private int gameCellHeight;
+    private SharedPreferences settings;
 
     public SudokuCellView [][] gamecells;
     AttributeSet attrs;
@@ -34,6 +32,10 @@ public class SudokuFieldLayout extends RelativeLayout {
         super(context, attrs);
         this.attrs=attrs;
         setBackgroundColor(Color.argb(255, 200, 200, 200));
+    }
+
+    public void setSettings(SharedPreferences sharedPref) {
+        settings = sharedPref;
     }
 
     public void setGame(GameController gc) {
@@ -58,7 +60,13 @@ public class SudokuFieldLayout extends RelativeLayout {
                         }
                     }
                     // Set connected Fields
-                    for(GameCell c : gameController.getConnectedCells(row,col, GameSettings.getHighlightConnectedRow(), GameSettings.getHighlightConnectedColumn(), GameSettings.getHighlightConnectedSection())) {
+
+                    //String syncConnPref = sharedPref.getString(SettingsActivity., "");
+                    boolean highlightConnectedRow = settings.getBoolean("pref_highlight_rows", true);
+                    boolean highlightConnectedColumn = settings.getBoolean("pref_highlight_cols", true);
+                    boolean highlightConnectedSection = settings.getBoolean("pref_highlight_secs", true);
+
+                    for(GameCell c : gameController.getConnectedCells(row,col, highlightConnectedRow, highlightConnectedColumn, highlightConnectedSection)) {
                         gamecells[c.getRow()][c.getCol()].setHighlightType(CellHighlightTypes.Connected);
                     }
                     // Select touched Cell

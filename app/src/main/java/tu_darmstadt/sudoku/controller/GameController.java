@@ -1,5 +1,7 @@
 package tu_darmstadt.sudoku.controller;
 
+import android.content.SharedPreferences;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -7,10 +9,8 @@ import tu_darmstadt.sudoku.game.CellConflict;
 import tu_darmstadt.sudoku.game.CellConflictList;
 import tu_darmstadt.sudoku.game.GameCell;
 import tu_darmstadt.sudoku.game.GameField;
-import tu_darmstadt.sudoku.game.GameSettings;
 import tu_darmstadt.sudoku.game.GameType;
-import tu_darmstadt.sudoku.game.ICellAction;
-import tu_darmstadt.sudoku.game.solver.Default9x9Solver;
+import tu_darmstadt.sudoku.game.solver.Solver;
 import tu_darmstadt.sudoku.game.solver.ISolver;
 
 /**
@@ -26,21 +26,26 @@ public class GameController {
     private GameType gameType;
     private int selectedRow;
     private int selectedCol;
+    private SharedPreferences settings;
     private CellConflictList errorList = new CellConflictList();
-    private GameSettings settings = new GameSettings();
     //private LinkedList<IModelChangeListener> listeners = new LinkedList<>();
 
-//    private Default9x9Solver solver;
+//    private Solver solver;
 //    private SudokuGenerator generator;
 
-    public GameController() {
-        this(GameType.Default_9x9);
+    public GameController(SharedPreferences pref) {
+        this(GameType.Default_9x9, pref);
     }
 
-    public GameController(GameType type) {
+    public GameController() {
+        this(null);
+    }
+
+    public GameController(GameType type, SharedPreferences pref) {
         this.gameType = type;
         setGameType(type);
         gameField = new GameField(size, sectionHeight, sectionWidth);
+        setSettings(pref);
         setValue(0, 1, 8);        setValue(0, 4, 2);
         setValue(0, 5, 6);        setValue(0, 6, 7);
         setValue(0, 7, 3);        setValue(0, 8, 4);
@@ -53,10 +58,31 @@ public class GameController {
         setNote(7, 3, 9);
     }
 
+    public void loadLevel(int size, int sectionHeight, int sectionWidth, int[] fixedValues, int[] setValues, int[][] setNotes) {
+        this.size = size;
+        this.sectionHeight = sectionHeight;
+        this.sectionWidth = sectionWidth;
+        this.gameField = new GameField(size, sectionHeight, sectionWidth);
+        gameField.initCells(fixedValues);
+
+        // now set the values that are not fixed
+        for(int i = 0; i < size*size; i++) {
+            int row = (int)Math.floor(i/size);
+            int col = i%size;
+            setValue(row, col, setValues[i]);
+        }
+    }
+
+    public void setSettings(SharedPreferences pref) {
+        settings = pref;
+    }
+
     private GameField solve(GameField gameField) {
         switch(gameType) {
             case Default_9x9:
-                solver = new Default9x9Solver(gameField);
+            case Default_6x6:
+            case Default_12x12:
+                solver = new Solver(gameField);
                 break;
             default:
                 throw new UnsupportedOperationException("No Solver for this GameType defined.");
@@ -116,7 +142,7 @@ public class GameController {
             cell.deleteNotes();
             cell.setValue(value);
 
-            if(settings.getEnableAutomaticNoteDeletion()) {
+            if(settings != null && settings.getBoolean("pref_automatic_note_deletion",true)) {
                 LinkedList<GameCell> updateList = new LinkedList<GameCell>();
                 updateList.addAll(gameField.getRow(cell.getRow()));
                 updateList.addAll(gameField.getColumn(cell.getCol()));
@@ -126,7 +152,7 @@ public class GameController {
         }
     }
 
-    public LinkedList<GameCell> getConnectedCells(int row, int col, boolean connectedSec, boolean connectedRow, boolean connectedCol) {
+    public LinkedList<GameCell> getConnectedCells(int row, int col, boolean connectedRow, boolean connectedCol, boolean connectedSec) {
         LinkedList<GameCell> list = new LinkedList<>();
 
         if(connectedRow) list.addAll(gameField.getRow(row));

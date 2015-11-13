@@ -1,4 +1,4 @@
-package tu_darmstadt.sudoku.view;
+package tu_darmstadt.sudoku.ui.view;
 
 import org.junit.Test;
 

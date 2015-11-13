@@ -2,7 +2,7 @@
     <string name="app_name">Sudoku</string>
     <string name="title_activity_game_view">Sudoku</string>
 
-    <!-- Strings related to Menu -->
+    <!-- ###MAIN MENU### -->
     <string name="new_game">New Game</string>
     <string name="settings">Settings</string>
     <string name="highscore">Highscore</string>
@@ -11,31 +11,49 @@
     <string name="help">Help</string>
     <string name="about">About</string>
 
+    <string name="description">a privacy friendly logic puzzle</string>
+
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
 
-    <!-- Strings related to Settings -->
+    <!-- ###SETTINGS### -->
     <string name="title_activity_settings">Settings</string>
     <string name="action_settings">Settings</string>
+    <!-- #Highlight -->
+    <string name="pref_header_highlight">Highlighting</string>
 
-    <!-- Strings related to Highlight -->
-    <string name="pref_highlighting_selection">Selection</string>
-    <string name="pref_highlighting_selection_values">Values</string>
+    <string name="pref_group_highlight_selection">Selection highlight</string>
+    <string name="pref_highlight_rows">Connected rows</string>
+    <string name="pref_highlight_cols">Connected columns</string>
+    <string name="pref_highlight_secs">Connected sections</string>
+
+    <string name="pref_group_highlight_value">Value highlight</string>
+    <string name="pref_highlight_vals">Same values</string>
+    <string name="pref_highlight_notes">Notes</string>
+
+    <!-- #Game -->
+    <string name="pref_header_game">Game</string>
+
+    <string name="pref_group_game">Game settings</string>
+    <string name="pref_automatic_note_deletion">Note deletion</string>
+    <string name="pref_automatic_note_deletion_summary">Automatically remove notes when setting values on connected cells</string>
 
 
-    <!-- Example General settings -->
-    <string name="pref_header_general">General</string>
+    <!-- ###ABOUT### -->
+    <string name="app_name_long">Privacy friendly Sudoku</string>
+    <string name="version_number">v0.1</string>
+    <string name="about_author">Author: Christopher Beckmann, Timm Lippert</string>
+    <string name="about_affiliation">In affiliation with:</string>
+    <string name="privacy_friendly">This application belongs to the Privacy Friendly Apps.</string>
+    <string name="more_info">More information can be found on:</string>
+    <string name="url"><a href="https://www.secuso.informatik.tu-darmstadt.de/en/research/results/">https://www.secuso.org</a></string>
 
-    <string name="pref_title_social_recommendations">Enable social recommendations</string>
-    <string name="pref_description_social_recommendations">Recommendations for people to contact
-        based on your message history
-    </string>
 
-    <string name="pref_title_display_name">Display DeineMudda</string>
-    <string name="pref_default_display_name">Anonymous</string>
+    <!-- end of valid settings -->
 
-    <string name="pref_title_add_friends_to_messages">Add friends to messages</string>
+
+    <!-- <string name="pref_title_add_friends_to_messages">Add friends to messages</string>
     <string-array name="pref_example_list_titles">
         <item>Always</item>
         <item>When possible</item>
@@ -46,9 +64,6 @@
         <item>0</item>
         <item>-1</item>
     </string-array>
-
-    <!-- Example settings for Data & Sync -->
-    <string name="pref_header_data_sync">Data &amp; sync</string>
 
     <string name="pref_title_sync_frequency">Sync frequency</string>
     <string-array name="pref_sync_frequency_titles">
@@ -66,17 +81,5 @@
         <item>180</item>
         <item>360</item>
         <item>-1</item>
-    </string-array>
-
-    <string name="pref_title_system_sync_settings">System sync settings</string>
-
-    <!-- Example settings for Notifications -->
-    <string name="pref_header_notifications">Notifications</string>
-
-    <string name="pref_title_new_message_notifications">New message notifications</string>
-
-    <string name="pref_title_ringtone">Ringtone</string>
-    <string name="pref_ringtone_silent">Silent</string>
-
-    <string name="pref_title_vibrate">Vibrate</string>
+    </string-array> -->
 </resources>

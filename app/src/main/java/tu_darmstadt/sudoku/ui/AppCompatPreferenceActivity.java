@@ -1,4 +1,4 @@
-package tu_darmstadt.sudoku.view;
+package tu_darmstadt.sudoku.ui;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
