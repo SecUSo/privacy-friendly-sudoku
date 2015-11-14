@@ -2,6 +2,7 @@ package tu_darmstadt.sudoku.ui;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
@@ -12,17 +13,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.GridLayout;
 
 import tu_darmstadt.sudoku.controller.GameController;
-import tu_darmstadt.sudoku.game.*;
 import tu_darmstadt.sudoku.ui.view.R;
 import tu_darmstadt.sudoku.ui.view.SudokuFieldLayout;
-import tu_darmstadt.sudoku.view.SudokuButton;
+import tu_darmstadt.sudoku.ui.view.SudokuButton;
+import tu_darmstadt.sudoku.ui.view.SudokuKeyboardLayout;
 
 public class GameActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     GameController gameController;
     SudokuFieldLayout layout;
+    SudokuKeyboardLayout keyboard;
     SudokuButton [] buttons;
 
     @Override
@@ -34,12 +37,23 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_game_view);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        layout = (SudokuFieldLayout)findViewById(R.id.sudokuLayout);
 
+        //Create new GameField
+        layout = (SudokuFieldLayout)findViewById(R.id.sudokuLayout);
         gameController = new GameController(sharedPref);
         layout.setGame(gameController);
-        buttons = new SudokuButton[12];
         layout.setSettings(sharedPref);
+
+        //set KeyBoard
+        keyboard = (SudokuKeyboardLayout) findViewById(R.id.sudokuKeyboardLayout);
+        keyboard.removeAllViews();
+        keyboard.setGameController(gameController);
+        keyboard.setColumnCount((gameController.getSize() / 2) + 1);
+        keyboard.setRowCount(2);
+        Point p = new Point();
+        getWindowManager().getDefaultDisplay().getSize(p);
+        int width = p.x;
+        keyboard.setKeyBoard(gameController.getSize(),p.x);
         /*
         // DEBUG
         String debug = gameController.getFieldAsString();
