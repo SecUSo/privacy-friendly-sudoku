@@ -49,6 +49,9 @@
     <string name="more_info">More information can be found on:</string>
     <string name="url"><a href="https://www.secuso.informatik.tu-darmstadt.de/en/research/results/">https://www.secuso.org</a></string>
 
+    <!-- ###New Game### -->
+    <string name="start_game">start game</string>
+
 
     <!-- end of valid settings -->
 
