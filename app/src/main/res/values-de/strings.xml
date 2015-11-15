@@ -26,4 +26,7 @@
     <string name="about_affiliation">In Zusammenarbeit mit:</string>
     <string name="about_author">Autor: \nChristopher Beckmann, Timm Lippert</string>
 
+    <!-- New Game -->
+    <string name="start_game">Spiel starten</string>
+
 </resources>
