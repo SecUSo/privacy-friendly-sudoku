@@ -65,7 +65,7 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
         keyboard = (SudokuKeyboardLayout) findViewById(R.id.sudokuKeyboardLayout);
         keyboard.removeAllViews();
         keyboard.setGameController(gameController);
-        keyboard.setColumnCount((gameController.getSize() / 2) + 1);
+        keyboard.setColumnCount(Math.max(((gameController.getSize() / 2) + 1),keyboard.fixedButtonsCount));
         keyboard.setRowCount(3);
         Point p = new Point();
         getWindowManager().getDefaultDisplay().getSize(p);

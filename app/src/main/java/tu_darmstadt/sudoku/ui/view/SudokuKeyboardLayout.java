@@ -20,6 +20,7 @@ public class SudokuKeyboardLayout extends GridLayout {
     AttributeSet attrs;
     SudokuButton [] buttons;
     SudokuButton [] fixedButtons;
+    public int fixedButtonsCount = 6;
     GameController gameController;
     boolean notesEnabled=false;
     SudokuButtonType [] fixedTypes = {SudokuButtonType.Do,SudokuButtonType.Undo,SudokuButtonType.NoteToggle,SudokuButtonType.Delete,SudokuButtonType.NumberOrCellFirst,SudokuButtonType.Hint};
@@ -78,7 +79,6 @@ public class SudokuKeyboardLayout extends GridLayout {
 
     public void setKeyBoard(int size,int width) {
         LayoutParams p ;
-        int fixedButtonsCount = 6;
         buttons = new SudokuButton[size];
         fixedButtons = new SudokuButton[fixedButtonsCount];
         int row = 0;
