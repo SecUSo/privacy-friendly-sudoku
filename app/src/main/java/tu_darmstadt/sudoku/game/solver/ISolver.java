@@ -1,6 +1,6 @@
 package tu_darmstadt.sudoku.game.solver;
 
-import tu_darmstadt.sudoku.game.GameField;
+import tu_darmstadt.sudoku.game.GameBoard;
 
 /**
  * Created by Chris on 11.11.2015.
@@ -11,6 +11,6 @@ public interface ISolver {
 
     public boolean calculateNextPossibleStep();
 
-    public GameField getGameField();
+    public GameBoard getGameBoard();
 
 }

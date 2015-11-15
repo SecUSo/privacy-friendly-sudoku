@@ -1,13 +1,10 @@
 package tu_darmstadt.sudoku.game.solver;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.List;
 
 import tu_darmstadt.sudoku.game.CellConflict;
+import tu_darmstadt.sudoku.game.GameBoard;
 import tu_darmstadt.sudoku.game.GameCell;
-import tu_darmstadt.sudoku.game.GameField;
 import tu_darmstadt.sudoku.game.ICellAction;
 
 /**
@@ -15,42 +12,42 @@ import tu_darmstadt.sudoku.game.ICellAction;
  */
 public class Solver implements ISolver {
 
-    private GameField gameField = null;
+    private GameBoard gameBoard = null;
 
-    public Solver(GameField gf) {
+    public Solver(GameBoard gf) {
         try {
             if(gf == null) {
-                throw new IllegalArgumentException("GameField may not be null.");
+                throw new IllegalArgumentException("GameBoard may not be null.");
             }
 
-            gameField = gf.clone();
+            gameBoard = gf.clone();
         } catch(CloneNotSupportedException e) {
-            throw new IllegalArgumentException("This GameField is not cloneable.", e);
+            throw new IllegalArgumentException("This GameBoard is not cloneable.", e);
         }
 
-        gameField.reset();
-        if(!isSolvable(gameField)) {
-            throw new IllegalArgumentException("This GameField is not solveable.");
+        gameBoard.reset();
+        if(!isSolvable(gameBoard)) {
+            throw new IllegalArgumentException("This GameBoard is not solveable.");
         }
 
-        setNotes(gameField);
+        setNotes(gameBoard);
     }
 
-    public void setNotes(GameField gameField) {
-        for(int i = 0; i < gameField.getSize(); i++) {
-            for(int j = 0; j < gameField.getSize(); j++) {
-                for(int k = 0; k < gameField.getSize(); k++) {
-                    gameField.getCell(i,j).setNote(k);
+    public void setNotes(GameBoard gameBoard) {
+        for(int i = 0; i < gameBoard.getSize(); i++) {
+            for(int j = 0; j < gameBoard.getSize(); j++) {
+                for(int k = 0; k < gameBoard.getSize(); k++) {
+                    gameBoard.getCell(i,j).setNote(k);
                 }
             }
         }
     }
 
-    public boolean isSolvable(GameField gameField) {
-        for(int i = 0; i < gameField.getSize(); i++) {
-            if(hasErrors(gameField.getRow(i))) return false;
-            if(hasErrors(gameField.getColumn(i))) return false;
-            if(hasErrors(gameField.getSection(i))) return false;
+    public boolean isSolvable(GameBoard gameBoard) {
+        for(int i = 0; i < gameBoard.getSize(); i++) {
+            if(hasErrors(gameBoard.getRow(i))) return false;
+            if(hasErrors(gameBoard.getColumn(i))) return false;
+            if(hasErrors(gameBoard.getSection(i))) return false;
         }
         return true;
     }
@@ -68,7 +65,7 @@ public class Solver implements ISolver {
 
     public boolean solve() {
 
-        if(gameField.isSolved(new LinkedList<CellConflict>())) {
+        if(gameBoard.isSolved(new LinkedList<CellConflict>())) {
             return true;
         }
 
@@ -97,21 +94,21 @@ public class Solver implements ISolver {
         return false;
     }
 
-    public GameField getGameField() {
-        return gameField;
+    public GameBoard getGameBoard() {
+        return gameBoard;
     }
 
     public boolean showPossibles() {
         LinkedList<GameCell> list = new LinkedList<GameCell>();
-        for(int i = 0; i < gameField.getSize(); i++) {
-            for(int j = 0; j < gameField.getSize(); j++) {
-                GameCell gc = gameField.getCell(i,j);
+        for(int i = 0; i < gameBoard.getSize(); i++) {
+            for(int j = 0; j < gameBoard.getSize(); j++) {
+                GameCell gc = gameBoard.getCell(i,j);
                 if(!gc.hasValue()) {
                     list.clear();
-                    list.addAll(gameField.getRow(i));
-                    list.addAll(gameField.getColumn(j));
-                    list.addAll(gameField.getSection(i,j));
-                    for(int k = 0; k < gameField.getSize(); k++) {
+                    list.addAll(gameBoard.getRow(i));
+                    list.addAll(gameBoard.getColumn(j));
+                    list.addAll(gameBoard.getSection(i,j));
+                    for(int k = 0; k < gameBoard.getSize(); k++) {
                         for(GameCell c : list) {
                             gc.deleteNote(c.getValue());
                         }
@@ -128,14 +125,14 @@ public class Solver implements ISolver {
 
         LinkedList<GameCell> list = new LinkedList<>();
 
-        for(int i = 0; i < gameField.getSize()*3; i++) {
+        for(int i = 0; i < gameBoard.getSize()*3; i++) {
 
-            int index = i % gameField.getSize();
-            int listSelector = (int)Math.floor(i / gameField.getSize());
+            int index = i % gameBoard.getSize();
+            int listSelector = (int)Math.floor(i / gameBoard.getSize());
 
-            if(listSelector == 0) list = gameField.getRow(index);
-            if(listSelector == 1) list = gameField.getColumn(index);
-            if(listSelector == 2) list = gameField.getSection(index);
+            if(listSelector == 0) list = gameBoard.getRow(index);
+            if(listSelector == 1) list = gameBoard.getColumn(index);
+            if(listSelector == 2) list = gameBoard.getSection(index);
 
             LinkedList<Integer[]> possibles = new LinkedList<>();
             LinkedList<Integer> notPossibles = new LinkedList<Integer>();
@@ -147,7 +144,7 @@ public class Solver implements ISolver {
                     continue;
                 }
 
-                for(int k = 0; k < gameField.getSize(); k++) {  // check all nodes
+                for(int k = 0; k < gameBoard.getSize(); k++) {  // check all nodes
                     if(c.getNotes()[k]) {   // if k note active
                         for(int p = 0; p < possibles.size(); p++) { // check possible list
                             if(possibles.get(p)[2] == k+1) {    // is value in possible list?
@@ -177,7 +174,7 @@ public class Solver implements ISolver {
                 }
                 // if this is still possible then SET IT :D YAY
                 if(possible) {
-                    gameField.getCell(possibles.get(p)[0],possibles.get(p)[1]).setValue(possibles.get(p)[2]);
+                    gameBoard.getCell(possibles.get(p)[0],possibles.get(p)[1]).setValue(possibles.get(p)[2]);
                     foundHiddenSingles = true;
                 }
             }
@@ -203,12 +200,12 @@ public class Solver implements ISolver {
     }
 
     private boolean checkSolvedCells() {
-        return gameField.actionOnCells(new ICellAction<Boolean>() {
+        return gameBoard.actionOnCells(new ICellAction<Boolean>() {
             @Override
             public Boolean action(GameCell gc, Boolean existing) {
                 int value = -1;
                 if(!gc.hasValue() && gc.getNoteCount() == 1) {
-                    for(int i = 0; i < gameField.getSize(); i++) {
+                    for(int i = 0; i < gameBoard.getSize(); i++) {
                         if(gc.getNotes()[i]) {
                             value = i;
                             break;

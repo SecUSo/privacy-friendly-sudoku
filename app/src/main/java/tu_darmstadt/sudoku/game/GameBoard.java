@@ -1,29 +1,26 @@
 package tu_darmstadt.sudoku.game;
 
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
 /**
  * Created by Christopher Beckmann on 06.11.2015.
  */
-public class GameField implements Cloneable {
+public class GameBoard implements Cloneable {
 
     //private int id;
     private int sectionHeight;
     private int sectionWidth;
     //private List additionalSections
-    private CellConflictList errorList = new CellConflictList();
     private int size;
     private GameCell[][] field;
 
-    public GameField(int size, int sectionHeight, int sectionWidth) {
+    public GameBoard(int size, int sectionHeight, int sectionWidth) {
         this.sectionHeight = sectionHeight;
         this.sectionWidth = sectionWidth;
         this.size = size;
 
         field = new GameCell[size][size];
-        initCells(new int[][]{{1}});
     }
 
     public void reset() {
@@ -36,29 +33,16 @@ public class GameField implements Cloneable {
         }, true);
     }
 
-    public void initCells(int[][] level) {
-        // TODO: this is a placeholder, because we don't have real levels yet.
-        int[][] placeholder = {{ 5, 0, 1,  9, 0, 0,  0, 0, 0 },
-                { 2, 0, 0,  0, 0, 4,  9, 5, 0 },
-                { 3, 9, 0,  7, 0, 0,  0, 2, 6 },
-
-                { 0, 3, 0,  0, 0, 1,  0, 7, 2 },
-                { 0, 0, 6,  0, 5, 7,  0, 0, 0 },
-                { 0, 7, 2,  0, 0, 9,  0, 4, 1 },
-
-                { 0, 0, 0,  0, 7, 0,  4, 0, 9 },
-                { 6, 4, 0,  0, 0, 0,  0, 0, 0 },
-                { 7, 0, 0,  0, 1, 0,  3, 0, 5 }};
-
+    /*public void initCells(int[][] level) {
         // Initit the game field
         int[] oneDimension = new int[size*size];
         for(int i = 0; i < size; i++) {
             for(int j = 0; j < size; j++) {
-                oneDimension[i*size+j] = placeholder[i][j];
+                oneDimension[i*size+j] = level[i][j];
             }
         }
         initCells(oneDimension);
-    }
+    }*/
 
     public void initCells(int[] level) {
         int count = 0;
@@ -163,7 +147,6 @@ public class GameField implements Cloneable {
      */
     private boolean checkList(final List<GameCell> list, final List<CellConflict> errorList) {
         boolean isNothingEmpty = true;
-        CellConflict lastFound = null;
 
         for(int i = 0; i < list.size(); i++) {
             for(int j = i + 1; j < list.size(); j++) {
@@ -187,8 +170,8 @@ public class GameField implements Cloneable {
     }
 
     @Override
-    public GameField clone() throws CloneNotSupportedException {
-        GameField clone = (GameField) super.clone();
+    public GameBoard clone() throws CloneNotSupportedException {
+        GameBoard clone = (GameBoard) super.clone();
 
         GameCell[][] cloneField = new GameCell[size][size];
         for(int i = 0; i < size; i++) {
@@ -205,7 +188,7 @@ public class GameField implements Cloneable {
     public String toString() {
         StringBuilder sb = new StringBuilder();
 
-        sb.append("[GameField: \n");
+        sb.append("[GameBoard: \n");
 
         for (int i = 0; i < size; i++) {
 

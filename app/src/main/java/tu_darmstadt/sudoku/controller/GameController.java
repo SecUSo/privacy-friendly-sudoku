@@ -7,8 +7,8 @@ import java.util.List;
 
 import tu_darmstadt.sudoku.game.CellConflict;
 import tu_darmstadt.sudoku.game.CellConflictList;
+import tu_darmstadt.sudoku.game.GameBoard;
 import tu_darmstadt.sudoku.game.GameCell;
-import tu_darmstadt.sudoku.game.GameField;
 import tu_darmstadt.sudoku.game.GameType;
 import tu_darmstadt.sudoku.game.solver.Solver;
 import tu_darmstadt.sudoku.game.solver.ISolver;
@@ -21,7 +21,7 @@ public class GameController {
     private int size;
     private int sectionHeight;
     private int sectionWidth;
-    private GameField gameField;
+    private GameBoard gameBoard;
     private ISolver solver;
     private GameType gameType;
     private int selectedRow;
@@ -42,31 +42,18 @@ public class GameController {
     }
 
     public GameController(GameType type, SharedPreferences pref) {
-        this.gameType = type;
         setGameType(type);
-        gameField = new GameField(size, sectionHeight, sectionWidth);
+        gameBoard = new GameBoard(size, sectionHeight, sectionWidth);
         setSettings(pref);
-        setValue(0, 1, 8);        setValue(0, 4, 2);
-        setValue(0, 5, 6);        setValue(0, 6, 7);
-        setValue(0, 7, 3);        setValue(0, 8, 4);
-        setNote(6, 3, 1); setNote(6, 3, 2); setNote(6, 3, 3); setNote(6, 3, 4);
-        setNote(6, 3, 5); setNote(6, 3, 6); setNote(6, 3, 7); setNote(6, 3, 8);
-        setNote(6, 3, 9);
-
-        setNote(7, 3, 2); setNote(7, 3, 3); setNote(7, 3, 4);
-        setNote(7, 3, 5);  setNote(7, 3, 7); setNote(7, 3, 8);
-        setNote(7, 3, 9);
     }
 
-    public void loadLevel(int size, int sectionHeight, int sectionWidth, int[] fixedValues, int[] setValues, int[][] setNotes) {
-        this.size = size;
-        this.sectionHeight = sectionHeight;
-        this.sectionWidth = sectionWidth;
-        this.gameField = new GameField(size, sectionHeight, sectionWidth);
+    public void loadLevel(GameType type, int[] fixedValues, int[] setValues, int[][] setNotes) {
+        setGameType(type);
+        this.gameBoard = new GameBoard(size, sectionHeight, sectionWidth);
 
         if(fixedValues == null) throw new IllegalArgumentException("fixedValues may not be null.");
 
-        gameField.initCells(fixedValues);
+        gameBoard.initCells(fixedValues);
 
         // now set the values that are not fixed
         if (setValues != null) {
@@ -87,30 +74,31 @@ public class GameController {
         settings = pref;
     }
 
-    private GameField solve(GameField gameField) {
+    public GameBoard solve(GameBoard gameBoard) {
         switch(gameType) {
             case Default_9x9:
             case Default_6x6:
             case Default_12x12:
-                solver = new Solver(gameField);
+                solver = new Solver(gameBoard);
                 break;
             default:
                 throw new UnsupportedOperationException("No Solver for this GameType defined.");
         }
 
         if(solver.solve()) {
-            return solver.getGameField();
+            return solver.getGameBoard();
         }
         return null;
     }
 
-    /*public boolean loadLevel(GameField level) {
-        if(GameField.isValid(level)) {
-            gameField = level;
+    /*public boolean loadLevel(GameBoard level) {
+        if(GameBoard.isValid(level)) {
+            gameBoard = level;
         }
     }*/
 
     private void setGameType(GameType type) {
+        this.gameType = type;
         switch(type) {
             case Default_9x9:
                 this.size = 9;
@@ -139,24 +127,25 @@ public class GameController {
     /** Use with care.
      */
     public GameCell getGameCell(int row, int col) {
-        return gameField.getCell(row, col);
+        return gameBoard.getCell(row, col);
     }
 
     public boolean isSolved() {
-        return gameField.isSolved(new LinkedList<CellConflict>());
+        errorList = new CellConflictList();
+        return gameBoard.isSolved(errorList);
     }
 
     public void setValue(int row, int col, int value) {
-        GameCell cell = gameField.getCell(row, col);
+        GameCell cell = gameBoard.getCell(row, col);
         if (!cell.isFixed() && isValidNumber(value)) {
             cell.deleteNotes();
             cell.setValue(value);
 
             if(settings != null && settings.getBoolean("pref_automatic_note_deletion",true)) {
                 LinkedList<GameCell> updateList = new LinkedList<GameCell>();
-                updateList.addAll(gameField.getRow(cell.getRow()));
-                updateList.addAll(gameField.getColumn(cell.getCol()));
-                updateList.addAll(gameField.getSection(cell.getRow(), cell.getCol()));
+                updateList.addAll(gameBoard.getRow(cell.getRow()));
+                updateList.addAll(gameBoard.getColumn(cell.getCol()));
+                updateList.addAll(gameBoard.getSection(cell.getRow(), cell.getCol()));
                 deleteNotes(updateList, value);
             }
         }
@@ -165,12 +154,12 @@ public class GameController {
     public LinkedList<GameCell> getConnectedCells(int row, int col, boolean connectedRow, boolean connectedCol, boolean connectedSec) {
         LinkedList<GameCell> list = new LinkedList<>();
 
-        if(connectedRow) list.addAll(gameField.getRow(row));
-        list.remove(gameField.getCell(row, col));
-        if(connectedCol) list.addAll(gameField.getColumn(col));
-        list.remove(gameField.getCell(row, col));
-        if(connectedSec) list.addAll(gameField.getSection(row, col));
-        list.remove(gameField.getCell(row, col));
+        if(connectedRow) list.addAll(gameBoard.getRow(row));
+        list.remove(gameBoard.getCell(row, col));
+        if(connectedCol) list.addAll(gameBoard.getColumn(col));
+        list.remove(gameBoard.getCell(row, col));
+        if(connectedSec) list.addAll(gameBoard.getSection(row, col));
+        list.remove(gameBoard.getCell(row, col));
 
         return list;
     }
@@ -182,7 +171,7 @@ public class GameController {
     }
 
     public int getValue(int row, int col) {
-        GameCell cell = gameField.getCell(row, col);
+        GameCell cell = gameBoard.getCell(row, col);
         return cell.getValue();
     }
 
@@ -205,12 +194,12 @@ public class GameController {
     }
 
     public void resetLevel() {
-        gameField.reset();
+        gameBoard.reset();
         //notifyListeners();
     }
 
     public boolean deleteValue(int row, int col) {
-        GameCell c = gameField.getCell(row,col);
+        GameCell c = gameBoard.getCell(row,col);
         if(!c.isFixed()) {
             c.setValue(0);
             //notifyListeners();
@@ -220,24 +209,24 @@ public class GameController {
     }
 
     public void setNote(int row, int col, int value) {
-        GameCell c = gameField.getCell(row,col);
+        GameCell c = gameBoard.getCell(row,col);
         c.setNote(value);
         //notifyListeners();
     }
 
     public boolean[] getNotes(int row, int col) {
-        GameCell c = gameField.getCell(row,col);
+        GameCell c = gameBoard.getCell(row,col);
         return c.getNotes().clone();
     }
 
     public void deleteNote(int row, int col, int value) {
-        GameCell c = gameField.getCell(row,col);
+        GameCell c = gameBoard.getCell(row,col);
         c.deleteNote(value);
         //notifyListeners();
     }
 
     public void toggleNote(int row, int col, int value) {
-        GameCell c = gameField.getCell(row,col);
+        GameCell c = gameBoard.getCell(row,col);
         c.toggleNote(value);
         //notifyListeners();
     }
@@ -247,7 +236,7 @@ public class GameController {
      * @return the Field represented as a String
      */
     public String getFieldAsString() {
-        return gameField.toString();
+        return gameBoard.toString();
     }
 
     public int getSelectedRow() {

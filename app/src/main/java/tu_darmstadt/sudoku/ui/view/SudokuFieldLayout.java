@@ -110,15 +110,16 @@ public class SudokuFieldLayout extends RelativeLayout {
         p.setColor(Color.BLACK);
         p.setStrokeWidth(2);
 
-        // TODO: Draw Borders
-        for(int i = 0; i <= (gameController.getSize()/sectionWidth); i++) {
+        int horizontalSections = gameController.getSize() / sectionWidth;
+        for(int i = 0; i <= horizontalSections; i++) {
             for(int j = -2; j < 2; j++) {
-                canvas.drawLine((i * getWidth() / sectionWidth) + j, 0, (i * getWidth() / sectionWidth) + j, getHeight(), p);
+                canvas.drawLine((i * getWidth() / horizontalSections) + j, 0, (i * getWidth() / horizontalSections) + j, getHeight(), p);
             }
         }
-        for(int i = 0; i <= (gameController.getSize()/sectionHeight); i++) {
+        int verticalSections = (gameController.getSize()/sectionHeight);
+        for(int i = 0; i <= verticalSections; i++) {
             for(int j = -2; j < 2; j++) {
-                canvas.drawLine(0, (i * getHeight() / sectionHeight) + j, getHeight(), (i * getHeight() / sectionHeight) + j, p);
+                canvas.drawLine(0, (i * getHeight() / verticalSections) + j, getHeight(), (i * getHeight() / verticalSections) + j, p);
             }
         }
     }

@@ -12,18 +12,17 @@ import android.widget.Button;
 
 public class SudokuButton extends Button {
 
-    private int i = 100;
+    private int value = -1;
+    private SudokuButtonType type = SudokuButtonType.Unspecified;
 
     public SudokuButton(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public void setVal(int i){
-        this.i = i;
-    }
-    public int getValue () {
-        return i;
-    }
+    public void setValue(int value)             { this.value = value; }
+    public void setType(SudokuButtonType type)  { this.type = type; }
+    public int getValue ()                      { return value; }
+    public SudokuButtonType getType()           { return type; }
 }
 
 
