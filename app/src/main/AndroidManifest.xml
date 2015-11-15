@@ -18,15 +18,17 @@
         <activity
             android:name="tu_darmstadt.sudoku.ui.SettingsActivity"
             android:label="@string/title_activity_settings"
-            android:parentActivityName="tu_darmstadt.sudoku.ui.MainActivity">
+            android:parentActivityName="tu_darmstadt.sudoku.ui.MainActivity" >
         </activity>
         <activity
-            android:screenOrientation="portrait"
             android:name="tu_darmstadt.sudoku.ui.GameActivity"
             android:label="@string/title_activity_game_view"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
         <activity android:name="tu_darmstadt.sudoku.ui.AboutActivity" >
+        </activity>
+        <activity android:name="tu_darmstadt.sudoku.ui.NewGameActivity" >
         </activity>
     </application>
 

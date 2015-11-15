@@ -47,6 +47,53 @@ public class GameController {
         setSettings(pref);
     }
 
+    public void loadNewLevel(GameType type, int difficulty) {
+        switch(type) {
+            case Default_9x9:
+                loadLevel(GameType.Default_9x9,
+                        new int[]{5, 0, 1, 9, 0, 0, 0, 0, 0,
+                                2, 0, 0, 0, 0, 4, 9, 5, 0,
+                                3, 9, 0, 7, 0, 0, 0, 2, 6,
+                                0, 3, 0, 0, 0, 1, 0, 7, 2,
+                                0, 0, 6, 0, 5, 7, 0, 0, 0,
+                                0, 7, 2, 0, 0, 9, 0, 4, 1,
+                                0, 0, 0, 0, 7, 0, 4, 0, 9,
+                                6, 4, 0, 0, 0, 0, 0, 0, 0,
+                                7, 0, 0, 0, 1, 0, 3, 0, 5}
+                        , null, null);
+                break;
+            case Default_12x12:
+                loadLevel(GameType.Default_12x12,
+                        new int[] {0, 2, 1, 0, 0, 6, 0, 0, 0, 8, 9, 0,
+                                10, 0,12, 0, 0, 2, 1,11, 0, 0, 0, 6,
+                                6, 0, 0, 4, 0,12, 0, 0, 0, 0, 2, 1,
+                                0, 0, 0, 5, 0, 0, 0, 4,11,10, 0, 0,
+                                0,10, 0, 1, 0, 0, 6, 0, 0, 0, 0, 0,
+                                0, 7, 0, 0,11, 0, 0, 0, 0,12, 8, 9,
+                                2, 1,11, 0, 0, 0, 0, 7, 0, 0, 6, 0,
+                                0, 0, 0, 0, 0, 5, 0, 0, 4, 0,10, 0,
+                                0, 0, 7, 3, 9, 0, 0, 0, 1, 0, 0, 0,
+                                1, 5, 0, 0, 0, 0, 4, 0,10, 0, 0,11,
+                                9, 0, 0, 0, 1,10, 2, 0, 0, 6, 0, 7,
+                                0, 6,10, 0, 0, 0, 8, 0, 0, 1,12, 0}
+                        ,null, null);
+                break;
+            case Unspecified:
+            default:
+                loadLevel(GameType.Default_9x9,
+                        new int[]{5, 0, 1, 9, 0, 0, 0, 0, 0,
+                                2, 0, 0, 0, 0, 4, 9, 5, 0,
+                                3, 9, 0, 7, 0, 0, 0, 2, 6,
+                                0, 3, 0, 0, 0, 1, 0, 7, 2,
+                                0, 0, 6, 0, 5, 7, 0, 0, 0,
+                                0, 7, 2, 0, 0, 9, 0, 4, 1,
+                                0, 0, 0, 0, 7, 0, 4, 0, 9,
+                                6, 4, 0, 0, 0, 0, 0, 0, 0,
+                                7, 0, 0, 0, 1, 0, 3, 0, 5}
+                        , null, null);
+        }
+    }
+
     public void loadLevel(GameType type, int[] fixedValues, int[] setValues, int[][] setNotes) {
         setGameType(type);
         this.gameBoard = new GameBoard(size, sectionHeight, sectionWidth);
@@ -67,7 +114,6 @@ public class GameController {
         if(setNotes != null) {
             // set notes.
         }
-
     }
 
     public void setSettings(SharedPreferences pref) {
@@ -260,15 +306,19 @@ public class GameController {
     }
 
     public void setSelectedValue(int value) {
-        if(selectedRow != -1 && selectedCol != -1) setValue(selectedRow, selectedCol, value);
+        if(isCellSelected()) setValue(selectedRow, selectedCol, value);
     }
 
     public void deleteSelectedValue() {
-        if(selectedRow != -1 && selectedCol != -1) setValue(selectedRow, selectedCol, 0);
+        if(isCellSelected()) setValue(selectedRow, selectedCol, 0);
     }
 
     public void toggleSelectedNote(int value) {
-        if(selectedRow != -1 && selectedCol != -1) toggleNote(selectedRow, selectedCol, value);
+        if(isCellSelected()) toggleNote(selectedRow, selectedCol, value);
+    }
+
+    public boolean isCellSelected() {
+        return selectedRow != -1 && selectedCol != -1;
     }
 
 //    public void registerListener(IModelChangeListener l) {

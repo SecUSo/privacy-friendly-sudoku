@@ -11,5 +11,6 @@ public enum SudokuButtonType {
     Hint,
     NoteToggle,
     NumberOrCellFirst,
-    Delete
+    Delete,
+    Reset
 }
