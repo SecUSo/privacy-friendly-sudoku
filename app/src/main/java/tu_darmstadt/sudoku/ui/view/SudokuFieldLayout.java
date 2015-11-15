@@ -20,7 +20,7 @@ public class SudokuFieldLayout extends RelativeLayout {
 
     private GameController gameController;
     private int sectionHeight;
-    public int sectionWidth;
+    private int sectionWidth;
     private int gameCellWidth;
     private int gameCellHeight;
     private SharedPreferences settings;
