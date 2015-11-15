@@ -69,7 +69,6 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
         keyboard.setRowCount(3);
         Point p = new Point();
         getWindowManager().getDefaultDisplay().getSize(p);
-        keyboard.getLayoutParams().height = (int)(p.y*0.3);
         //int width = p.x;
         keyboard.setKeyBoard(gameController.getSize(), p.x);
         /*
@@ -116,7 +115,7 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
 
         if (id == R.id.nav_newgame) {
             //create new game
-            intent = new Intent(this, GameActivity.class);
+            intent = new Intent(this, NewGameActivity.class);
             startActivity(intent);
 
         } else if (id == R.id.nav_mainmenu) {

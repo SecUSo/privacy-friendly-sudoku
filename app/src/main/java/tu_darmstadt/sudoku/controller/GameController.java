@@ -310,7 +310,7 @@ public class GameController {
     }
 
     public void deleteSelectedValue() {
-        if(isCellSelected()) setValue(selectedRow, selectedCol, 0);
+        if(isCellSelected()) deleteValue(selectedRow, selectedCol);
     }
 
     public void toggleSelectedNote(int value) {

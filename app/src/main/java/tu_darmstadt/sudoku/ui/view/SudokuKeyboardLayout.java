@@ -73,7 +73,6 @@ public class SudokuKeyboardLayout extends GridLayout {
     public SudokuKeyboardLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.attrs = attrs;
-
     }
 
 
