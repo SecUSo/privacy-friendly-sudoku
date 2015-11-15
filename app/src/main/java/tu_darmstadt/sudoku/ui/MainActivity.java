@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
     public void onClicktext(View view) {
-        Intent i = new Intent(this, GameActivity.class);
+        Intent i = new Intent(this, NewGameActivity.class);
         startActivity(i);
     }
 

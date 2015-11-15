@@ -33,6 +33,19 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        GameType gameType = GameType.Unspecified;
+        int gameDifficulty = 0;
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            Object o = extras.get("gameType");
+            if(o instanceof GameType) {
+                gameType = (GameType)extras.get("gameType");
+            }
+            gameDifficulty = extras.getInt("gameDifficulty");
+
+        }
+
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
 
         setContentView(R.layout.activity_game_view);
@@ -42,31 +55,8 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
         //Create new GameField
         layout = (SudokuFieldLayout)findViewById(R.id.sudokuLayout);
         gameController = new GameController(sharedPref);
-        /*gameController.loadLevel(GameType.Default_9x9,
-                new int[]{5, 0, 1, 9, 0, 0, 0, 0, 0,
-                        2, 0, 0, 0, 0, 4, 9, 5, 0,
-                        3, 9, 0, 7, 0, 0, 0, 2, 6,
-                        0, 3, 0, 0, 0, 1, 0, 7, 2,
-                        0, 0, 6, 0, 5, 7, 0, 0, 0,
-                        0, 7, 2, 0, 0, 9, 0, 4, 1,
-                        0, 0, 0, 0, 7, 0, 4, 0, 9,
-                        6, 4, 0, 0, 0, 0, 0, 0, 0,
-                        7, 0, 0, 0, 1, 0, 3, 0, 5}
-                , null, null);*/
-        gameController.loadLevel(GameType.Default_12x12,
-                new int[]{0, 2, 1, 0, 0, 6, 0, 0, 0, 8, 9, 0,
-                        10, 0, 12, 0, 0, 2, 1, 11, 0, 0, 0, 6,
-                        6, 0, 0, 4, 0, 12, 0, 0, 0, 0, 2, 1,
-                        0, 0, 0, 5, 0, 0, 0, 4, 11, 10, 0, 0,
-                        0, 10, 0, 1, 0, 0, 6, 0, 0, 0, 0, 0,
-                        0, 7, 0, 0, 11, 0, 0, 0, 0, 12, 8, 9,
-                        2, 1, 11, 0, 0, 0, 0, 7, 0, 0, 6, 0,
-                        0, 0, 0, 0, 0, 5, 0, 0, 4, 0, 10, 0,
-                        0, 0, 7, 3, 9, 0, 0, 0, 1, 0, 0, 0,
-                        1, 5, 0, 0, 0, 0, 4, 0, 10, 0, 0, 11,
-                        9, 0, 0, 0, 1, 10, 2, 0, 0, 6, 0, 7,
-                        0, 6, 10, 0, 0, 0, 8, 0, 0, 1, 12, 0}
-                , null, null);
+
+        gameController.loadNewLevel(gameType, gameDifficulty);
 
         layout.setGame(gameController);
         layout.setSettings(sharedPref);
