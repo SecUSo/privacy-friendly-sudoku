@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.GridLayout;
 
 import tu_darmstadt.sudoku.controller.GameController;
+import tu_darmstadt.sudoku.game.GameType;
 
 /**
  * Created by TMZ_LToP on 12.11.2015.
@@ -18,8 +19,11 @@ public class SudokuKeyboardLayout extends GridLayout {
 
     AttributeSet attrs;
     SudokuButton [] buttons;
+    SudokuButton [] fixedButtons;
     GameController gameController;
     boolean notesEnabled=false;
+    SudokuButtonType [] fixedTypes = {SudokuButtonType.Do,SudokuButtonType.Undo,SudokuButtonType.NoteToggle,SudokuButtonType.Delete,SudokuButtonType.NumberOrCellFirst,SudokuButtonType.Hint};
+    String [] s = {"Do","Un","fal","Del","Sh**","Hi"};
 
     OnClickListener listener = new OnClickListener() {
         @Override
@@ -40,6 +44,7 @@ public class SudokuKeyboardLayout extends GridLayout {
                         break;
                     case NoteToggle:
                         notesEnabled = !notesEnabled;
+                        btn.setText(String.valueOf(notesEnabled));
                         break;
                     case Do:
                         // TODO: not implemented
@@ -73,11 +78,12 @@ public class SudokuKeyboardLayout extends GridLayout {
 
     public void setKeyBoard(int size,int width) {
         LayoutParams p ;
-        int fixedButtons = 0;
-        buttons = new SudokuButton[size+1];
+        int fixedButtonsCount = 6;
+        buttons = new SudokuButton[size];
+        fixedButtons = new SudokuButton[fixedButtonsCount];
         int row = 0;
         int number = 0;
-        int torun = ((size+fixedButtons)%2==0) ? (size+fixedButtons)/2 :(size+fixedButtons+1)/2 ;
+        int torun = ((size)%2==0) ? (size)/2 :(size+1)/2 ;
 
         for (int k = 0; k<2;k++){
             for (int i = 0; i< torun; i++){
@@ -88,17 +94,29 @@ public class SudokuKeyboardLayout extends GridLayout {
                 p.width= width2-15;
                 buttons[i].setLayoutParams(p);
                 buttons[i].setGravity(Gravity.CENTER);
-                if (number<size) {
-                    buttons[i].setType(SudokuButtonType.Value);
-                    buttons[i].setText(String.valueOf(number + 1));
-                    buttons[i].setValue(number + 1);
-                    buttons[i].setOnClickListener(listener);
-                } else {
-                    //TODO: Set Enum for fixed Buttons maybe also pictures
-                }
+                buttons[i].setType(SudokuButtonType.Value);
+                buttons[i].setText(String.valueOf(number + 1));
+                buttons[i].setValue(number + 1);
+                buttons[i].setOnClickListener(listener);
+
                 number++;
                 addView(buttons[i]);
             }
+        }
+        for (int i = 0; i < fixedButtonsCount; i++){
+            fixedButtons[i] = new SudokuButton(getContext(),null);
+            p = new LayoutParams(GridLayout.spec(2,1),GridLayout.spec(i, 1));
+            p.setMargins(0,0,0,0);
+            int width2 =width/(fixedButtonsCount);
+            p.width= width2-15;
+            fixedButtons[i].setLayoutParams(p);
+            fixedButtons[i].setGravity(Gravity.CENTER);
+            fixedButtons[i].setType(fixedTypes[i]);
+            fixedButtons[i].setText(s[i]);
+            fixedButtons[i].setOnClickListener(listener);
+            addView(fixedButtons[i]);
+
+
         }
 
 

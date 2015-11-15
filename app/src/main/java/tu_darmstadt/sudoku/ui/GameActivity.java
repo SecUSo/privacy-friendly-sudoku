@@ -54,19 +54,19 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
                         7, 0, 0, 0, 1, 0, 3, 0, 5}
                 , null, null);*/
         gameController.loadLevel(GameType.Default_12x12,
-                new int[] {0, 2, 1, 0, 0, 6, 0, 0, 0, 8, 9, 0,
-                          10, 0,12, 0, 0, 2, 1,11, 0, 0, 0, 6,
-                           6, 0, 0, 4, 0,12, 0, 0, 0, 0, 2, 1,
-                           0, 0, 0, 5, 0, 0, 0, 4,11,10, 0, 0,
-                           0,10, 0, 1, 0, 0, 6, 0, 0, 0, 0, 0,
-                           0, 7, 0, 0,11, 0, 0, 0, 0,12, 8, 9,
-                           2, 1,11, 0, 0, 0, 0, 7, 0, 0, 6, 0,
-                           0, 0, 0, 0, 0, 5, 0, 0, 4, 0,10, 0,
-                           0, 0, 7, 3, 9, 0, 0, 0, 1, 0, 0, 0,
-                           1, 5, 0, 0, 0, 0, 4, 0,10, 0, 0,11,
-                           9, 0, 0, 0, 1,10, 2, 0, 0, 6, 0, 7,
-                           0, 6,10, 0, 0, 0, 8, 0, 0, 1,12, 0}
-                ,null, null);
+                new int[]{0, 2, 1, 0, 0, 6, 0, 0, 0, 8, 9, 0,
+                        10, 0, 12, 0, 0, 2, 1, 11, 0, 0, 0, 6,
+                        6, 0, 0, 4, 0, 12, 0, 0, 0, 0, 2, 1,
+                        0, 0, 0, 5, 0, 0, 0, 4, 11, 10, 0, 0,
+                        0, 10, 0, 1, 0, 0, 6, 0, 0, 0, 0, 0,
+                        0, 7, 0, 0, 11, 0, 0, 0, 0, 12, 8, 9,
+                        2, 1, 11, 0, 0, 0, 0, 7, 0, 0, 6, 0,
+                        0, 0, 0, 0, 0, 5, 0, 0, 4, 0, 10, 0,
+                        0, 0, 7, 3, 9, 0, 0, 0, 1, 0, 0, 0,
+                        1, 5, 0, 0, 0, 0, 4, 0, 10, 0, 0, 11,
+                        9, 0, 0, 0, 1, 10, 2, 0, 0, 6, 0, 7,
+                        0, 6, 10, 0, 0, 0, 8, 0, 0, 1, 12, 0}
+                , null, null);
 
         layout.setGame(gameController);
         layout.setSettings(sharedPref);
@@ -76,9 +76,10 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
         keyboard.removeAllViews();
         keyboard.setGameController(gameController);
         keyboard.setColumnCount((gameController.getSize() / 2) + 1);
-        keyboard.setRowCount(2);
+        keyboard.setRowCount(3);
         Point p = new Point();
         getWindowManager().getDefaultDisplay().getSize(p);
+        keyboard.getLayoutParams().height = (int)(p.y*0.3);
         //int width = p.x;
         keyboard.setKeyBoard(gameController.getSize(), p.x);
         /*
