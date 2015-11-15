@@ -21,11 +21,11 @@
 
     <tu_darmstadt.sudoku.ui.view.SudokuKeyboardLayout
         android:layout_width="fill_parent"
-        android:layout_height="200dp"
         android:layout_alignParentBottom="true"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/sudokuLayout"
         android:id="@+id/sudokuKeyboardLayout"
-        android:layout_centerVertical="true"
-        >
+        android:layout_centerVertical="true">
         <!-- <tu_darmstadt.sudoku.ui.view.SudokuButton
             android:id="@+id/button2"
             android:layout_width="50dp"
