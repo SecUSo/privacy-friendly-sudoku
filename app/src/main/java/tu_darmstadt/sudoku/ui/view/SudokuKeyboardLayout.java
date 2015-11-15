@@ -84,13 +84,14 @@ public class SudokuKeyboardLayout extends GridLayout {
         int row = 0;
         int number = 0;
         int torun = ((size)%2==0) ? (size)/2 :(size+1)/2 ;
+        int realSize = Math.max(torun,fixedButtonsCount);
 
         for (int k = 0; k<2;k++){
             for (int i = 0; i< torun; i++){
                 buttons[i] = new SudokuButton(getContext(),null);
                 p = new LayoutParams(GridLayout.spec(k,1),GridLayout.spec(i, 1));
                 p.setMargins(0,0,0,0);
-                int width2 =width/(torun);
+                int width2 =width/(realSize);
                 p.width= width2-15;
                 buttons[i].setLayoutParams(p);
                 buttons[i].setGravity(Gravity.CENTER);
@@ -100,6 +101,9 @@ public class SudokuKeyboardLayout extends GridLayout {
                 buttons[i].setOnClickListener(listener);
 
                 number++;
+                if (number > size) {
+                    break;
+                }
                 addView(buttons[i]);
             }
         }

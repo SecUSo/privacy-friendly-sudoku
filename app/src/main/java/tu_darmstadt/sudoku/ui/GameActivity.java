@@ -68,8 +68,6 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
         keyboard.setColumnCount(Math.max(((gameController.getSize() / 2) + 1),keyboard.fixedButtonsCount));
         keyboard.setRowCount(3);
         Point p = new Point();
-        getWindowManager().getDefaultDisplay().getSize(p);
-        keyboard.getLayoutParams().height = (int)(p.y*0.3);
         //int width = p.x;
         keyboard.setKeyBoard(gameController.getSize(), p.x);
         /*
