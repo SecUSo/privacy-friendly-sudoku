@@ -11,9 +11,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.GridLayout;
 
 import tu_darmstadt.sudoku.controller.GameController;
 import tu_darmstadt.sudoku.game.GameType;
@@ -46,11 +44,22 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
 
         }
 
+        // TODO: DEBUG START
+        /*if(gameDifficulty == 0) {
+            gameType = GameType.Default_6x6;
+        } else if(gameDifficulty == 5) {
+            gameType = GameType.Default_12x12;
+        } else {
+            gameType = GameType.Default_9x9;
+        }*/
+        // TODO: DEBUG END
+
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
 
         setContentView(R.layout.activity_game_view);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        //toolbar.addView();
 
         //Create new GameField
         layout = (SudokuFieldLayout)findViewById(R.id.sudokuLayout);
@@ -65,7 +74,7 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
         keyboard = (SudokuKeyboardLayout) findViewById(R.id.sudokuKeyboardLayout);
         keyboard.removeAllViews();
         keyboard.setGameController(gameController);
-        keyboard.setColumnCount(Math.max(((gameController.getSize() / 2) + 1),keyboard.fixedButtonsCount));
+        keyboard.setColumnCount(Math.max(((gameController.getSize() / 2) + 1), keyboard.fixedButtonsCount));
         keyboard.setRowCount(3);
         Point p = new Point();
         getWindowManager().getDefaultDisplay().getSize(p);
@@ -98,12 +107,12 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    @Override
+    /*@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.game_view, menu);
         return true;
-    }
+    }*/
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -115,13 +124,13 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
 
         if (id == R.id.nav_newgame) {
             //create new game
-            intent = new Intent(this, NewGameActivity.class);
-            startActivity(intent);
-
-        } else if (id == R.id.nav_mainmenu) {
-            //go to main menu
             intent = new Intent(this, MainActivity.class);
             startActivity(intent);
+
+        /*} else if (id == R.id.nav_mainmenu) {
+            //go to main menu
+            intent = new Intent(this, MainActivity.class);
+            startActivity(intent);*/
 
         } else if (id == R.id.nav_settings) {
             //open settings

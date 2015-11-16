@@ -45,7 +45,7 @@ public class SudokuKeyboardLayout extends GridLayout {
                         break;
                     case NoteToggle:
                         notesEnabled = !notesEnabled;
-                        btn.setText(String.valueOf(notesEnabled));
+                        btn.setText(notesEnabled ? "ON" : "OFF");
                         break;
                     case Do:
                         // TODO: not implemented

@@ -56,7 +56,7 @@ public class GameBoard implements Cloneable {
             if(level[i] != 0) count++;
             field[row][col] = new GameCell(row,col,size,level[i]);
         }
-        if(count < 17) throw new IllegalArgumentException("There must be at least 17 fixed values.");
+        //if(count < 17) throw new IllegalArgumentException("There must be at least 17 fixed values.");
     }
 
     public GameCell getCell(int row, int col) {

@@ -12,19 +12,12 @@
     tools:context=".AboutActivity"
     android:weightSum="1">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="85dp"
-        android:layout_weight="0.36">
-
-        <ImageView
-            android:id="@+id/barcodeLogo"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:src="@drawable/privacyfriendlyappslogo" />
-
-    </LinearLayout>
+    <ImageView
+        android:id="@+id/barcodeLogo"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:src="@drawable/privacyfriendlyappslogo" />
 
     <TextView
         android:id="@+id/appName"
@@ -49,6 +42,14 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"
         android:text="@string/about_author" />
+
+    <TextView
+        android:id="@+id/textFieldAuthorNames"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="0dp"
+        android:text="@string/about_author_names" />
 
     <TextView
         android:id="@+id/textFieldAffiliation"

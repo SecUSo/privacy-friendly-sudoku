@@ -5,12 +5,12 @@
 
     <!-- Strings related to Menu -->
     <string name="new_game">Neues Spiel</string>
-    <string name="settings">Einstellungen</string>
-    <string name="highscore">Bestenliste</string>
-    <string name="mainmenu">Hauptmenü</string>
-    <string name="group">Gruppe</string>
-    <string name="help">Hilfe</string>
-    <string name="about">Über</string>
+    <string name="menu_settings">Einstellungen</string>
+    <string name="menu_highscore">Bestenliste</string>
+    <string name="menu_main">Hauptmenü</string>
+    <string name="menu_group">Gruppe</string>
+    <string name="menu_help">Hilfe</string>
+    <string name="menu_about">Über</string>
 
     <!-- Strings related to Settings -->
     <string name="title_activity_settings">Einstellungen</string>
@@ -24,7 +24,7 @@
     <string name="privacy_friendly">Diese App gehört zur Gruppe der Privacy Friendly Apps.</string>
     <string name="more_info">Mehr Informationen unter:</string>
     <string name="about_affiliation">In Zusammenarbeit mit:</string>
-    <string name="about_author">Autor: \nChristopher Beckmann, Timm Lippert</string>
+    <string name="about_author">Autor:</string>
 
     <!-- New Game -->
     <string name="start_game">Spiel starten</string>

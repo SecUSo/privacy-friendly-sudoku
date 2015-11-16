@@ -49,18 +49,14 @@ public class GameController {
 
     public void loadNewLevel(GameType type, int difficulty) {
         switch(type) {
-            case Default_9x9:
-                loadLevel(GameType.Default_9x9,
-                        new int[]{5, 0, 1, 9, 0, 0, 0, 0, 0,
-                                2, 0, 0, 0, 0, 4, 9, 5, 0,
-                                3, 9, 0, 7, 0, 0, 0, 2, 6,
-                                0, 3, 0, 0, 0, 1, 0, 7, 2,
-                                0, 0, 6, 0, 5, 7, 0, 0, 0,
-                                0, 7, 2, 0, 0, 9, 0, 4, 1,
-                                0, 0, 0, 0, 7, 0, 4, 0, 9,
-                                6, 4, 0, 0, 0, 0, 0, 0, 0,
-                                7, 0, 0, 0, 1, 0, 3, 0, 5}
-                        , null, null);
+            case Default_6x6:
+                loadLevel(GameType.Default_6x6,
+                        new int[]{1,0,0,0,0,6,
+                                  4,0,6,1,0,0,
+                                  0,0,2,3,0,5,
+                                  0,4,0,0,1,0,
+                                  0,6,0,2,0,0,
+                                  0,3,0,5,0,1}, null,null);
                 break;
             case Default_12x12:
                 loadLevel(GameType.Default_12x12,
@@ -78,6 +74,7 @@ public class GameController {
                                 0, 6,10, 0, 0, 0, 8, 0, 0, 1,12, 0}
                         ,null, null);
                 break;
+            case Default_9x9:
             case Unspecified:
             default:
                 loadLevel(GameType.Default_9x9,
@@ -94,7 +91,7 @@ public class GameController {
         }
     }
 
-    public void loadLevel(GameType type, int[] fixedValues, int[] setValues, int[][] setNotes) {
+    public void loadLevel(GameType type, int[] fixedValues, int[] setValues, boolean[][] setNotes) {
         setGameType(type);
         this.gameBoard = new GameBoard(size, sectionHeight, sectionWidth);
 
@@ -111,8 +108,17 @@ public class GameController {
             }
         }
 
+        // set notes.
         if(setNotes != null) {
-            // set notes.
+            for(int i = 0; i < size * size; i++) {
+                int row = (int) Math.floor(i / size);
+                int col = i % size;
+                for(int k = 0 ; k < size; k++) {
+                    if(setNotes[i][k]) {
+                        setNote(row, col, k);
+                    }
+                }
+            }
         }
     }
 
