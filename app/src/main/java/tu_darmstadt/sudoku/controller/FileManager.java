@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.StringBufferInputStream;
 
 import tu_darmstadt.sudoku.game.GameBoard;
+import tu_darmstadt.sudoku.game.GameType;
 
 /**
  * Created by Chris on 16.11.2015.
@@ -47,7 +48,7 @@ public class FileManager {
         String[] levels = saves.split("###");
         for(String level : levels) {
             String[] values = level.split("|");
-            int size = Integer.valueOf(values[0]);
+            GameType type = Enum.valueOf(GameType.class, values[0]);
 
         }
 

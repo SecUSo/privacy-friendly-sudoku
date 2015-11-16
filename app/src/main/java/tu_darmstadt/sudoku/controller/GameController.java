@@ -351,7 +351,7 @@ public String getStringRepresentation() {
     StringBuilder sb = new StringBuilder();
     sb.append("###"); // TODO add some game information
 
-    sb.append(gameType);
+    sb.append(gameType.name());
     sb.append("|");
 
     // add every fixed cell

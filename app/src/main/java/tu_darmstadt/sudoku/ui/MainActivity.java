@@ -100,13 +100,11 @@ public class MainActivity extends AppCompatActivity {
                     i.putExtra("gameDifficulty", gameDifficulty);
                     break;
                 default:
-                    i = getIntent();
             }
         }
-        if(i == null) {
-            i = getIntent();
+        if(i != null) {
+            startActivity(i);
         }
-        startActivity(i);
     }
 
     @Override
