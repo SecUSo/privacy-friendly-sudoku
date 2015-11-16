@@ -10,6 +10,7 @@ import tu_darmstadt.sudoku.game.CellConflictList;
 import tu_darmstadt.sudoku.game.GameBoard;
 import tu_darmstadt.sudoku.game.GameCell;
 import tu_darmstadt.sudoku.game.GameType;
+import tu_darmstadt.sudoku.game.ICellAction;
 import tu_darmstadt.sudoku.game.solver.Solver;
 import tu_darmstadt.sudoku.game.solver.ISolver;
 
@@ -346,5 +347,57 @@ public class GameController {
 //            l.onModelChanged();
 //        }
 //    }
+public String getStringRepresentation() {
+    StringBuilder sb = new StringBuilder();
+    sb.append("###"); // TODO add some game information
+
+    sb.append(gameType);
+    sb.append("|");
+
+    // add every fixed cell
+    gameBoard.actionOnCells(new ICellAction<StringBuilder>() {
+        @Override
+        public StringBuilder action(GameCell gc, StringBuilder existing) {
+            if (gc.isFixed()) {
+                existing.append(gc.getValue());
+            } else {
+                existing.append(0);
+            }
+            return existing;
+        }
+    }, sb);
+
+    // add a seperator
+    sb.append("|");
+
+    // Add every set cell
+    gameBoard.actionOnCells(new ICellAction<StringBuilder>() {
+        @Override
+        public StringBuilder action(GameCell gc, StringBuilder existing) {
+            if (gc.isFixed()) {
+                existing.append(0);
+            } else {
+                existing.append(gc.getValue());
+            }
+            return existing;
+        }
+    }, sb);
+
+    // add a seperator
+    sb.append("|");
+
+    // now add notes
+    gameBoard.actionOnCells(new ICellAction<StringBuilder>() {
+        @Override
+        public StringBuilder action(GameCell gc, StringBuilder existing) {
+            for (Boolean b : gc.getNotes()) {
+                existing.append(b);
+            }
+            return existing;
+        }
+    }, sb);
+    sb.append("\n\n");
+    return sb.toString();
+}
 
 }
