@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -217,8 +218,24 @@ public class MainActivity extends AppCompatActivity {
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_main_menu, container, false);
 
+            GameType gameType = GameType.getValidGameTypes().get(getArguments().getInt(ARG_SECTION_NUMBER));
+
+            ImageView imageView = (ImageView) rootView.findViewById(R.id.gameTypeImage);
+
+            switch(gameType) {
+                case Default_6x6:
+                    imageView.setImageResource(R.drawable.icon_default_6x6);
+                    break;
+                case Default_12x12:
+                    imageView.setImageResource(R.drawable.icon_default_12x12);
+                    break;
+                case Default_9x9:
+                default:
+                    imageView.setImageResource(R.drawable.icon_default_9x9);
+            }
+
             TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(GameType.getValidGameTypes().get(getArguments().getInt(ARG_SECTION_NUMBER)).name());
+            textView.setText(gameType.name());
             return rootView;
         }
     }

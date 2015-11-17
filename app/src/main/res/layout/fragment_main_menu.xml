@@ -18,10 +18,11 @@
         android:layout_height="wrap_content" />
 
     <ImageView
+        android:id="@+id/gameTypeImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
         android:layout_centerInParent="true"
-        android:src="@drawable/sudoku9x9"/>
+        android:src="@drawable/icon_default_9x9"/>
 
 </LinearLayout>
