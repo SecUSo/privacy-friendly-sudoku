@@ -22,7 +22,6 @@ public class SudokuSpecialButtonLayout extends LinearLayout {
 
     SudokuButton [] fixedButtons;
     public int fixedButtonsCount = SudokuButtonType.getSpecialButtons().size();
-    String [] s = {"Do","Un","off","Del","Sh**","Hi"};
     GameController gameController;
     boolean notesEnabled=false;
     SudokuKeyboardLayout keyboard;
@@ -42,7 +41,6 @@ public class SudokuSpecialButtonLayout extends LinearLayout {
                         notesEnabled = !notesEnabled;
                         btn.setText(notesEnabled ? "ON" : "OFF");
                         keyboard.setNotesEnabled(notesEnabled);
-                        keyboard.setValueSize(notesEnabled ?btn.getTextSize()/4: btn.getTextSize()/2 );
                         break;
                     case Do:
                         // TODO: not implemented

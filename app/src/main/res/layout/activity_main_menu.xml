@@ -13,7 +13,6 @@
         android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/appbar_padding_top"
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.v7.widget.Toolbar
@@ -32,7 +31,8 @@
         android:layout_width="match_parent"
         android:orientation="vertical"
         android:weightSum="10"
-        android:layout_marginTop="?attr/actionBarSize">
+        android:layout_marginTop="?attr/actionBarSize"
+        style="?android:buttonBarStyle">
 
         <android.support.v4.view.ViewPager
             android:id="@+id/scroller"
@@ -58,7 +58,8 @@
             android:weightSum="8"
             android:divider="#000"
             android:baselineAligned="false"
-            android:gravity="center_horizontal">
+            android:gravity="center_horizontal"
+            style="?android:buttonBarStyle">
 
 
             <RatingBar
@@ -84,7 +85,8 @@
                 android:onClick="onClick"
                 android:capitalize="none"
                 android:clickable="false"
-                android:elevation="10dp"/>
+                android:elevation="10dp"
+                style="?android:attr/borderlessButtonStyle"/>
 
             <Button
                 android:layout_width="match_parent"
@@ -98,13 +100,15 @@
                 android:layout_weight="2"
                 android:onClick="onClick"
                 android:capitalize="none"
-                android:clickable="false" />
+                android:clickable="false"
+                style="?android:attr/borderlessButtonStyle"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="2"
-                android:weightSum="2">
+                android:weightSum="2"
+                style="?android:buttonBarStyle">
                 <Button
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -117,7 +121,8 @@
                     android:layout_weight="1"
                     android:onClick="onClick"
                     android:capitalize="none"
-                    android:clickable="false" />
+                    android:clickable="false"
+                    style="?android:attr/borderlessButtonStyle"/>
                 <Button
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -130,13 +135,15 @@
                     android:layout_weight="1"
                     android:onClick="onClick"
                     android:capitalize="none"
-                    android:clickable="false" />
+                    android:clickable="false"
+                    style="?android:attr/borderlessButtonStyle"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="2"
-                android:weightSum="2">
+                android:weightSum="2"
+                style="?android:buttonBarStyle">
                 <Button
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -149,7 +156,8 @@
                     android:layout_weight="1"
                     android:onClick="onClick"
                     android:capitalize="none"
-                    android:clickable="false" />
+                    android:clickable="false"
+                    style="?android:attr/borderlessButtonStyle"/>
                 <Button
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -162,7 +170,8 @@
                     android:layout_weight="1"
                     android:onClick="onClick"
                     android:capitalize="none"
-                    android:clickable="false" />
+                    android:clickable="false"
+                    style="?android:attr/borderlessButtonStyle"/>
             </LinearLayout>
         </LinearLayout>
 

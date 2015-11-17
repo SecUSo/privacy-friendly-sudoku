@@ -2,6 +2,7 @@ package tu_darmstadt.sudoku.ui.view;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
@@ -85,13 +86,20 @@ public class SudokuKeyboardLayout extends GridLayout {
 
     public void setNotesEnabled(boolean b) {
         notesEnabled = b;
-    }
-
-    public void setValueSize (float size){
-        for (int i = 0; i< buttons.length;i++){
-            buttons[i].setTextSize(size);
+        if(notesEnabled) {
+            setTextSize(buttons[0].getPaint().getTextSize()/2);
+        }else {
+            setTextSize(buttons[0].getPaint().getTextSize()*2);
         }
     }
+
+    private void setTextSize(float size){
+        for (SudokuButton b : buttons){
+            //b.setTextSize(size);
+            b.getPaint().setTextSize(size);
+        }
+    }
+
 
 
     @Override
