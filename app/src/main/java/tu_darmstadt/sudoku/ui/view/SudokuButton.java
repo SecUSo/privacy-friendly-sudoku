@@ -17,7 +17,7 @@ public class SudokuButton extends Button {
     private SudokuButtonType type = SudokuButtonType.Unspecified;
 
     public SudokuButton(Context context, AttributeSet attrs) {
-        super(context, attrs,R.attr.borderlessButtonStyle);
+        super(context, attrs);
     }
 
     public void setValue(int value)             { this.value = value; }
