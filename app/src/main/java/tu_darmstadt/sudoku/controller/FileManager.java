@@ -1,18 +1,17 @@
 package tu_darmstadt.sudoku.controller;
 
 import android.content.Context;
-import android.provider.MediaStore;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.StringBufferInputStream;
+import java.util.LinkedList;
+import java.util.List;
 
-import tu_darmstadt.sudoku.game.GameBoard;
-import tu_darmstadt.sudoku.game.GameType;
+import tu_darmstadt.sudoku.game.GameInfoContainer;
 
 /**
  * Created by Chris on 16.11.2015.
@@ -20,15 +19,91 @@ import tu_darmstadt.sudoku.game.GameType;
 public class FileManager {
 
     Context context;
-    private static String savesFile = "saves.txt";
-    private static String highscoresFile = "highscores.txt";
+    private SharedPreferences settings;
 
-    FileManager(Context context) {
+    private static String FILE_EXTENSION = ".txt";
+    private static String SAVE_PREFIX = "save_";
+    private static String SAVES_DIR = "saves";
+    private static String highscoresDir = "highscores";
+
+    private static List<GameInfoContainer> list = new LinkedList<>();
+
+    public FileManager(Context context, SharedPreferences settings) {
         this.context = context;
+        this.settings = settings;
     }
 
-    public String loadGameState() {
-        File dir = context.getFilesDir();
+    public static List<GameInfoContainer> getLoadableGameList() {
+        return list;
+    }
+
+    public List<GameInfoContainer> loadGameStateInfo() {
+        if(!settings.getBoolean("savesChanged", false)) {
+            return list;
+        }
+        File dir = context.getDir(SAVES_DIR, 0);
+
+        List<GameInfoContainer> result = new LinkedList<>();
+
+        // go through every file
+        for(File file : dir.listFiles()) {
+
+            // filter so we only work with actual files
+            if(file.isFile()) {
+
+                // create a new GameInfoContainer
+                GameInfoContainer gic = new GameInfoContainer();
+
+                // load file
+                byte[] bytes = new byte[(int)file.length()];
+                try {
+                    FileInputStream stream = new FileInputStream(file);
+                    try {
+                        stream.read(bytes);
+                    } finally {
+                        stream.close();
+                    }
+                } catch(IOException e) {
+                    Log.e("File Manager", "Could not load game. IOException occured.");
+                }
+                // start parsing
+                String gameString = new String(bytes);
+                String[] values = gameString.split("/");
+
+                //String[] levels = saves.split("###");
+                try {
+                    if(values.length < 4) {
+                        throw new IllegalArgumentException("Can not load game info. File seems to be damaged or incomplete.");
+                    }
+
+                    // fill the container
+                    String id = file.getName().substring(5, file.getName().lastIndexOf("."));
+                    gic.setID(Integer.valueOf(id));    // save_x.txt
+                    gic.parseGameType(values[0]);
+                    gic.parseFixedValues(values[1]);
+                    gic.parseSetValues(values[2]);
+                    gic.parseNotes(values[3]);
+                } catch(IllegalArgumentException e) {
+                    file.delete();
+                    continue;
+                }
+
+                // then add it to the list
+                result.add(gic);
+            }
+        }
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putBoolean("savesChanged", false);
+        editor.commit();
+
+        list = result;
+        return result;
+    }
+
+    /*public String loadGameState(int index) {
+        File dir = context.getDir(SAVES_DIR, 0);
+
+        dir.listFiles();
 
         File file = new File(dir, savesFile);
 
@@ -49,19 +124,18 @@ public class FileManager {
         for(String level : levels) {
             String[] values = level.split("|");
             GameType type = Enum.valueOf(GameType.class, values[0]);
-
         }
-
-
         return saves;
-    }
+    }*/
 
     public void saveGameState(GameController controller) {
-        String level = controller.getStringRepresentation();
+        String level = GameInfoContainer.getGameInfo(controller);
 
-        File dir = context.getFilesDir();
+        File dir = context.getDir(SAVES_DIR, 0);
 
-        File file = new File(dir, savesFile);
+        //controller.getGameID()
+
+        File file = new File(dir, SAVE_PREFIX+String.valueOf(controller.getGameID())+FILE_EXTENSION);
 
         try {
             FileOutputStream stream = new FileOutputStream(file);
@@ -73,5 +147,10 @@ public class FileManager {
         } catch(IOException e) {
             Log.e("File Manager", "Could not save game. IOException occured.");
         }
+
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putBoolean("savesChanged", true);
+        editor.commit();
+
     }
 }

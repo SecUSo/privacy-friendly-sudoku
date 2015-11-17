@@ -15,7 +15,7 @@ public class SolverTest {
 
     @Before
     public void init() {
-        controller = new GameController();
+        /*controller = new GameController();
         int[][] level = {{ 5, 0, 1,  9, 0, 0,  0, 0, 0 },
                 { 2, 0, 0,  0, 0, 4,  9, 5, 0 },
                 { 3, 9, 0,  7, 0, 0,  0, 2, 6 },
@@ -31,7 +31,7 @@ public class SolverTest {
         controller.loadLevel(GameType.Default_9x9,
                 new int[]{0,0,0,0,4,1,0,0,0,0,6,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,3,2,0,6,0,0,0,0,0,0,0,0,0,5,0,0,4,1,7,0,0,0,0,0,0,0,0,0,0,0,2,0,0,3,0,0,0,4,8,0,0,0,0,0,0,5,0,1,0,0,0,0,0,0},
                 null,
-                null);
+                null);*/
     }
 
     //000041000060000200000000000320600000000050041700000000000200300048000000501000000

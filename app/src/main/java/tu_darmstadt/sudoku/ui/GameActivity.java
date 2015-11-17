@@ -13,7 +13,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import java.util.List;
+
+import tu_darmstadt.sudoku.controller.FileManager;
 import tu_darmstadt.sudoku.controller.GameController;
+import tu_darmstadt.sudoku.game.GameInfoContainer;
 import tu_darmstadt.sudoku.game.GameType;
 import tu_darmstadt.sudoku.ui.view.R;
 import tu_darmstadt.sudoku.ui.view.SudokuFieldLayout;
@@ -25,7 +29,6 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
     GameController gameController;
     SudokuFieldLayout layout;
     SudokuKeyboardLayout keyboard;
-    SudokuButton [] buttons;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +36,7 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
 
         GameType gameType = GameType.Unspecified;
         int gameDifficulty = 0;
+        int loadLevel = 0;
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -41,18 +45,8 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
                 gameType = (GameType)extras.get("gameType");
             }
             gameDifficulty = extras.getInt("gameDifficulty");
-
+            loadLevel = extras.getInt("loadLevel");
         }
-
-        // TODO: DEBUG START
-        /*if(gameDifficulty == 0) {
-            gameType = GameType.Default_6x6;
-        } else if(gameDifficulty == 5) {
-            gameType = GameType.Default_12x12;
-        } else {
-            gameType = GameType.Default_9x9;
-        }*/
-        // TODO: DEBUG END
 
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -65,7 +59,15 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
         layout = (SudokuFieldLayout)findViewById(R.id.sudokuLayout);
         gameController = new GameController(sharedPref);
 
-        gameController.loadNewLevel(gameType, gameDifficulty);
+        List<GameInfoContainer> loadableGames = FileManager.getLoadableGameList();
+
+        if(loadLevel != 0 && loadableGames.size() >= loadLevel) {
+            // load level from FileManager
+            gameController.loadLevel(loadableGames.get(loadLevel-1));
+        } else {
+            // load a new level
+            gameController.loadNewLevel(gameType, gameDifficulty);
+        }
 
         layout.setGame(gameController);
         layout.setSettings(sharedPref);
@@ -103,6 +105,8 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
+            gameController.saveGame(getBaseContext());
+            finish();
             super.onBackPressed();
         }
     }

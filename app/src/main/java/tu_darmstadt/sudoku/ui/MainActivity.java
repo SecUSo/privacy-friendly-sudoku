@@ -1,6 +1,8 @@
 package tu_darmstadt.sudoku.ui;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -18,13 +20,17 @@ import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import java.util.List;
+
+import tu_darmstadt.sudoku.controller.FileManager;
+import tu_darmstadt.sudoku.game.GameInfoContainer;
 import tu_darmstadt.sudoku.game.GameType;
 import tu_darmstadt.sudoku.ui.view.R;
 
 public class MainActivity extends AppCompatActivity {
 
-    GameType gameType = GameType.Default_9x9;
-    int gameDifficulty = 1;
+    RatingBar difficultyBar;
+    SharedPreferences settings;
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -44,6 +50,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        settings = PreferenceManager.getDefaultSharedPreferences(this);
+
         setContentView(R.layout.activity_main_menu);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -53,15 +62,27 @@ public class MainActivity extends AppCompatActivity {
 
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
+
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.scroller);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
-        mViewPager.setCurrentItem(1);
+        // set default gametype choice to whatever was chosen the last time.
+        List<GameType> validGameTypes = GameType.getValidGameTypes();
+        String lastChosenGameType = settings.getString("lastChosenGameType", GameType.Default_9x9.name());
+        int index = validGameTypes.indexOf(Enum.valueOf(GameType.class, lastChosenGameType));
+        mViewPager.setCurrentItem(index);
 
-        Button continueButton = (Button)findViewById(R.id.continueButton);
-        continueButton.setEnabled(false);
+        // Set the difficulty Slider to whatever was chosen the last time
+        difficultyBar = (RatingBar)findViewById(R.id.difficultyBar);
+        int lastChosenDifficulty = settings.getInt("lastChosenDifficulty", 1);
+        difficultyBar.setProgress(lastChosenDifficulty);
 
+        // on first create always check for loadable levels!
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putBoolean("savesChanged", true);
+        editor.commit();
+        refreshContinueButton();
     }
 
     public void onClick(View view) {
@@ -77,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.continueButton:
                     // TODO continue from file.
                     i = new Intent(this, GameActivity.class);
-                    int levelNr = 0;
+                    int levelNr = 1;
                     i.putExtra("loadLevel", levelNr);
                     break;
                 case R.id.highscoreButton:
@@ -90,9 +111,14 @@ public class MainActivity extends AppCompatActivity {
                     // TODO: create help page.. what is supposed to be in there?!
                     break;
                 case R.id.playButton:
-                    gameType = GameType.getValidGameTypes().get(mViewPager.getCurrentItem());
-                    RatingBar difficultyBar = (RatingBar)findViewById(R.id.difficultyBar);
-                    gameDifficulty = difficultyBar.getProgress();
+                    GameType gameType = GameType.getValidGameTypes().get(mViewPager.getCurrentItem());
+                    int gameDifficulty = difficultyBar.getProgress();
+
+                    // save current setting for later
+                    SharedPreferences.Editor editor = settings.edit();
+                    editor.putString("lastChosenGameType", gameType.name());
+                    editor.putInt("lastChosenDifficulty", gameDifficulty);
+                    editor.commit();
 
                     // send everything to game activity
                     i = new Intent(this, GameActivity.class);
@@ -104,6 +130,25 @@ public class MainActivity extends AppCompatActivity {
         }
         if(i != null) {
             startActivity(i);
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        refreshContinueButton();
+    }
+
+    private void refreshContinueButton() {
+        // enable continue button if we have saved games.
+        Button continueButton = (Button)findViewById(R.id.continueButton);
+        FileManager fm = new FileManager(getBaseContext(), settings);
+        List<GameInfoContainer> gic = fm.loadGameStateInfo();
+        if(gic.size() > 0) {
+            continueButton.setEnabled(true);
+        } else {
+            continueButton.setEnabled(false);
         }
     }
 

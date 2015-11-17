@@ -3,6 +3,7 @@ package tu_darmstadt.sudoku.controller;
 import org.junit.Before;
 import org.junit.Test;
 
+import tu_darmstadt.sudoku.game.GameInfoContainer;
 import tu_darmstadt.sudoku.game.GameType;
 
 import static org.junit.Assert.*;
@@ -18,31 +19,33 @@ public class GameControllerTest {
     @Before
     public void init() {
         controller = new GameController();
-        controller. loadLevel(GameType.Default_9x9,
-                 new int[]{ 5, 0, 1, 9, 0, 0, 0, 0, 0,
-                            2, 0, 0, 0, 0, 4, 9, 5, 0,
-                            3, 9, 0, 7, 0, 0, 0, 2, 6,
-                            0, 3, 0, 0, 0, 1, 0, 7, 2,
-                            0, 0, 6, 0, 5, 7, 0, 0, 0,
-                            0, 7, 2, 0, 0, 9, 0, 4, 1,
-                            0, 0, 0, 0, 7, 0, 4, 0, 9,
-                            6, 4, 0, 0, 0, 0, 0, 0, 0,
-                            7, 0, 0, 0, 1, 0, 3, 0, 5}, null, null);
+        controller.loadLevel(new GameInfoContainer(3, GameType.Default_9x9,
+                new int[]{5, 0, 1, 9, 0, 0, 0, 0, 0,
+                        2, 0, 0, 0, 0, 4, 9, 5, 0,
+                        3, 9, 0, 7, 0, 0, 0, 2, 6,
+                        0, 3, 0, 0, 0, 1, 0, 7, 2,
+                        0, 0, 6, 0, 5, 7, 0, 0, 0,
+                        0, 7, 2, 0, 0, 9, 0, 4, 1,
+                        0, 0, 0, 0, 7, 0, 4, 0, 9,
+                        6, 4, 0, 0, 0, 0, 0, 0, 0,
+                        7, 0, 0, 0, 1, 0, 3, 0, 5}
+                , null, null));
         controller2 = new GameController();
-        controller2.loadLevel(GameType.Default_12x12,
-                new int[] {0, 2, 1, 0, 0, 6, 0, 0, 0, 8, 9, 0,
-                        10, 0,12, 0, 0, 2, 1,11, 0, 0, 0, 6,
-                        6, 0, 0, 4, 0,12, 0, 0, 0, 0, 2, 1,
-                        0, 0, 0, 5, 0, 0, 0, 4,11,10, 0, 0,
-                        0,10, 0, 1, 0, 0, 6, 0, 0, 0, 0, 0,
-                        0, 7, 0, 0,11, 0, 0, 0, 0,12, 8, 9,
-                        2, 1,11, 0, 0, 0, 0, 7, 0, 0, 6, 0,
-                        0, 0, 0, 0, 0, 5, 0, 0, 4, 0,10, 0,
+        controller2.loadLevel(new GameInfoContainer(2, GameType.Default_12x12,
+                new int[]{0, 2, 1, 0, 0, 6, 0, 0, 0, 8, 9, 0,
+                        10, 0, 12, 0, 0, 2, 1, 11, 0, 0, 0, 6,
+                        6, 0, 0, 4, 0, 12, 0, 0, 0, 0, 2, 1,
+                        0, 0, 0, 5, 0, 0, 0, 4, 11, 10, 0, 0,
+                        0, 10, 0, 1, 0, 0, 6, 0, 0, 0, 0, 0,
+                        0, 7, 0, 0, 11, 0, 0, 0, 0, 12, 8, 9,
+                        2, 1, 11, 0, 0, 0, 0, 7, 0, 0, 6, 0,
+                        0, 0, 0, 0, 0, 5, 0, 0, 4, 0, 10, 0,
                         0, 0, 7, 3, 9, 0, 0, 0, 1, 0, 0, 0,
-                        1, 5, 0, 0, 0, 0, 4, 0,10, 0, 0,11,
-                        9, 0, 0, 0, 1,10, 2, 0, 0, 6, 0, 7,
-                        0, 6,10, 0, 0, 0, 8, 0, 0, 1,12, 0}
-                ,null, null);
+                        1, 5, 0, 0, 0, 0, 4, 0, 10, 0, 0, 11,
+                        9, 0, 0, 0, 1, 10, 2, 0, 0, 6, 0, 7,
+                        0, 6, 10, 0, 0, 0, 8, 0, 0, 1, 12, 0}
+                , null, null));
+
     }
 
 

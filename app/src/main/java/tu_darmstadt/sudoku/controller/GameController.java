@@ -1,5 +1,6 @@
 package tu_darmstadt.sudoku.controller;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 
 import java.util.LinkedList;
@@ -9,6 +10,7 @@ import tu_darmstadt.sudoku.game.CellConflict;
 import tu_darmstadt.sudoku.game.CellConflictList;
 import tu_darmstadt.sudoku.game.GameBoard;
 import tu_darmstadt.sudoku.game.GameCell;
+import tu_darmstadt.sudoku.game.GameInfoContainer;
 import tu_darmstadt.sudoku.game.GameType;
 import tu_darmstadt.sudoku.game.ICellAction;
 import tu_darmstadt.sudoku.game.solver.Solver;
@@ -28,6 +30,7 @@ public class GameController {
     private int selectedRow;
     private int selectedCol;
     private SharedPreferences settings;
+    private int gameID = 0;
     private CellConflictList errorList = new CellConflictList();
     //private LinkedList<IModelChangeListener> listeners = new LinkedList<>();
 
@@ -48,19 +51,23 @@ public class GameController {
         setSettings(pref);
     }
 
+    public int getGameID() {
+        return gameID;
+    }
+
     public void loadNewLevel(GameType type, int difficulty) {
         switch(type) {
             case Default_6x6:
-                loadLevel(GameType.Default_6x6,
+                loadLevel(new GameInfoContainer(1, GameType.Default_6x6,
                         new int[]{1,0,0,0,0,6,
                                   4,0,6,1,0,0,
                                   0,0,2,3,0,5,
                                   0,4,0,0,1,0,
                                   0,6,0,2,0,0,
-                                  0,3,0,5,0,1}, null,null);
+                                  0,3,0,5,0,1}, null,null));
                 break;
             case Default_12x12:
-                loadLevel(GameType.Default_12x12,
+                loadLevel(new GameInfoContainer(2, GameType.Default_12x12,
                         new int[] {0, 2, 1, 0, 0, 6, 0, 0, 0, 8, 9, 0,
                                 10, 0,12, 0, 0, 2, 1,11, 0, 0, 0, 6,
                                 6, 0, 0, 4, 0,12, 0, 0, 0, 0, 2, 1,
@@ -73,12 +80,12 @@ public class GameController {
                                 1, 5, 0, 0, 0, 0, 4, 0,10, 0, 0,11,
                                 9, 0, 0, 0, 1,10, 2, 0, 0, 6, 0, 7,
                                 0, 6,10, 0, 0, 0, 8, 0, 0, 1,12, 0}
-                        ,null, null);
+                        ,null, null));
                 break;
             case Default_9x9:
             case Unspecified:
             default:
-                loadLevel(GameType.Default_9x9,
+                loadLevel(new GameInfoContainer(3, GameType.Default_9x9,
                         new int[]{5, 0, 1, 9, 0, 0, 0, 0, 0,
                                 2, 0, 0, 0, 0, 4, 9, 5, 0,
                                 3, 9, 0, 7, 0, 0, 0, 2, 6,
@@ -88,12 +95,17 @@ public class GameController {
                                 0, 0, 0, 0, 7, 0, 4, 0, 9,
                                 6, 4, 0, 0, 0, 0, 0, 0, 0,
                                 7, 0, 0, 0, 1, 0, 3, 0, 5}
-                        , null, null);
+                        , null, null));
         }
     }
 
-    public void loadLevel(GameType type, int[] fixedValues, int[] setValues, boolean[][] setNotes) {
-        setGameType(type);
+    public void loadLevel(GameInfoContainer gic) {
+        int[] fixedValues = gic.getFixedValues();
+        int[] setValues = gic.getSetValues();
+        boolean[][] setNotes = gic.getSetNotes();
+        this.gameID = gic.getID();
+
+        setGameType(gic.getGameType());
         this.gameBoard = new GameBoard(size, sectionHeight, sectionWidth);
 
         if(fixedValues == null) throw new IllegalArgumentException("fixedValues may not be null.");
@@ -116,7 +128,7 @@ public class GameController {
                 int col = i % size;
                 for(int k = 0 ; k < size; k++) {
                     if(setNotes[i][k]) {
-                        setNote(row, col, k);
+                        setNote(row, col, k+1);
                     }
                 }
             }
@@ -152,29 +164,9 @@ public class GameController {
 
     private void setGameType(GameType type) {
         this.gameType = type;
-        switch(type) {
-            case Default_9x9:
-                this.size = 9;
-                this.sectionHeight = 3;
-                this.sectionWidth = 3;
-                break;
-            case Default_12x12:
-                this.size = 12;
-                this.sectionHeight = 3;
-                this.sectionWidth = 4;
-                break;
-            case Default_6x6:
-                this.size = 6;
-                this.sectionHeight = 2;
-                this.sectionWidth = 3;
-                break;
-            case Unspecified:
-            default:
-                this.size = 1;
-                this.sectionHeight = 1;
-                this.sectionWidth = 1;
-                throw new IllegalArgumentException("GameType can not be unspecified.");
-        }
+        this.size = GameType.getSize(type);
+        this.sectionHeight = GameType.getSectionHeight(type);
+        this.sectionWidth = GameType.getSectionWidth(type);
     }
 
     /** Use with care.
@@ -228,6 +220,32 @@ public class GameController {
         return cell.getValue();
     }
 
+    public GameType getGameType() {
+        return gameType;
+    }
+
+    public <T> T actionOnCells(ICellAction<T> ca, T existing) {
+        return gameBoard.actionOnCells(ca,existing);
+    }
+
+    public void saveGame(Context context) {
+        if(settings == null) {
+            return;
+        }
+
+        if(gameID == 0) {
+            gameID = settings.getInt("lastGameID", 0)+1;
+
+            SharedPreferences.Editor editor = settings.edit();
+            editor.putInt("lastGameID", gameID);
+            editor.commit();
+        }
+
+        //gameID now has a value other than 0 and hopefully unique
+        FileManager fm = new FileManager(context, settings);
+        fm.saveGameState(this);
+    }
+
     public int getSize() {
         return size;
     }
@@ -262,8 +280,10 @@ public class GameController {
     }
 
     public void setNote(int row, int col, int value) {
-        GameCell c = gameBoard.getCell(row,col);
-        c.setNote(value);
+        if(isValidNumber(value)) {
+            GameCell c = gameBoard.getCell(row, col);
+            c.setNote(value);
+        }
         //notifyListeners();
     }
 
@@ -347,57 +367,4 @@ public class GameController {
 //            l.onModelChanged();
 //        }
 //    }
-public String getStringRepresentation() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("###"); // TODO add some game information
-
-    sb.append(gameType.name());
-    sb.append("|");
-
-    // add every fixed cell
-    gameBoard.actionOnCells(new ICellAction<StringBuilder>() {
-        @Override
-        public StringBuilder action(GameCell gc, StringBuilder existing) {
-            if (gc.isFixed()) {
-                existing.append(gc.getValue());
-            } else {
-                existing.append(0);
-            }
-            return existing;
-        }
-    }, sb);
-
-    // add a seperator
-    sb.append("|");
-
-    // Add every set cell
-    gameBoard.actionOnCells(new ICellAction<StringBuilder>() {
-        @Override
-        public StringBuilder action(GameCell gc, StringBuilder existing) {
-            if (gc.isFixed()) {
-                existing.append(0);
-            } else {
-                existing.append(gc.getValue());
-            }
-            return existing;
-        }
-    }, sb);
-
-    // add a seperator
-    sb.append("|");
-
-    // now add notes
-    gameBoard.actionOnCells(new ICellAction<StringBuilder>() {
-        @Override
-        public StringBuilder action(GameCell gc, StringBuilder existing) {
-            for (Boolean b : gc.getNotes()) {
-                existing.append(b);
-            }
-            return existing;
-        }
-    }, sb);
-    sb.append("\n\n");
-    return sb.toString();
-}
-
 }

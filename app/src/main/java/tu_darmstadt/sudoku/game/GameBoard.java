@@ -9,6 +9,7 @@ import java.util.List;
 public class GameBoard implements Cloneable {
 
     //private int id;
+    private GameType gameType;
     private int sectionHeight;
     private int sectionWidth;
     //private List additionalSections
