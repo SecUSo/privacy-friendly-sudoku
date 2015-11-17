@@ -23,12 +23,14 @@ import tu_darmstadt.sudoku.ui.view.R;
 import tu_darmstadt.sudoku.ui.view.SudokuFieldLayout;
 import tu_darmstadt.sudoku.ui.view.SudokuButton;
 import tu_darmstadt.sudoku.ui.view.SudokuKeyboardLayout;
+import tu_darmstadt.sudoku.ui.view.SudokuSpecialButtonLayout;
 
 public class GameActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     GameController gameController;
     SudokuFieldLayout layout;
     SudokuKeyboardLayout keyboard;
+    SudokuSpecialButtonLayout specialButtonLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,12 +78,17 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
         keyboard = (SudokuKeyboardLayout) findViewById(R.id.sudokuKeyboardLayout);
         keyboard.removeAllViews();
         keyboard.setGameController(gameController);
-        keyboard.setColumnCount(Math.max(((gameController.getSize() / 2) + 1), keyboard.fixedButtonsCount));
-        keyboard.setRowCount(3);
+        keyboard.setColumnCount((gameController.getSize() / 2) + 1);
+        keyboard.setRowCount(2);
         Point p = new Point();
         getWindowManager().getDefaultDisplay().getSize(p);
         //int width = p.x;
         keyboard.setKeyBoard(gameController.getSize(), p.x);
+
+
+        //set Special keys
+        specialButtonLayout = (SudokuSpecialButtonLayout) findViewById(R.id.sudokuSpecialLayout);
+        specialButtonLayout.setButtons(p.x,gameController,keyboard);
         /*
         // DEBUG
         String debug = gameController.getFieldAsString();
