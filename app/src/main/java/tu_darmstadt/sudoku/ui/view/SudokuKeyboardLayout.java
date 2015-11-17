@@ -34,6 +34,7 @@ public class SudokuKeyboardLayout extends GridLayout {
                 } else {
                     gameController.setSelectedValue(btn.getValue());
                 }
+                gameController.saveGame(getContext());
             }
         }
     };
