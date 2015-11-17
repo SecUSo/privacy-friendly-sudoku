@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.GridLayout;
 
 import tu_darmstadt.sudoku.controller.GameController;
-import tu_darmstadt.sudoku.game.GameType;
+import tu_darmstadt.sudoku.controller.Symbol;
 
 /**
  * Created by TMZ_LToP on 12.11.2015.
@@ -22,20 +22,19 @@ public class SudokuKeyboardLayout extends GridLayout {
     SudokuButton [] buttons;
     GameController gameController;
     boolean notesEnabled=false;
-
+    Symbol symbolsToUse = Symbol.Default;
 
     OnClickListener listener = new OnClickListener() {
         @Override
         public void onClick(View v) {
             if(v instanceof SudokuButton) {
                 SudokuButton btn = (SudokuButton)v;
-                    if(notesEnabled) {
-                        gameController.toggleSelectedNote(btn.getValue());
-                    } else {
-                        gameController.setSelectedValue(btn.getValue());
-                    }
+                if(notesEnabled) {
+                    gameController.toggleSelectedNote(btn.getValue());
+                } else {
+                    gameController.setSelectedValue(btn.getValue());
+                }
             }
-
         }
     };
 
@@ -68,14 +67,12 @@ public class SudokuKeyboardLayout extends GridLayout {
                 buttons[number].setLayoutParams(p);
                 buttons[number].setGravity(Gravity.CENTER);
                 buttons[number].setType(SudokuButtonType.Value);
-                buttons[number].setText(String.valueOf(number + 1));
+                // TODO settings: get SymbolEnum from settings
+                buttons[number].setText(Symbol.getSymbol(symbolsToUse, number));
                 buttons[number].setValue(number + 1);
                 buttons[number].setOnClickListener(listener);
                 addView(buttons[number]);
                 number++;
-
-
-
             }
         }
     }
@@ -84,8 +81,8 @@ public class SudokuKeyboardLayout extends GridLayout {
         gameController=gc;
     }
 
-    public void setNotesEnabled(boolean b) {
-        notesEnabled = b;
+    public void toggleNotesEnabled() {
+        notesEnabled = !notesEnabled;
         if(notesEnabled) {
             setTextSize(buttons[0].getPaint().getTextSize()/2);
         }else {

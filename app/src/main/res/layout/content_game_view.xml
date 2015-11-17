@@ -32,8 +32,7 @@
         android:id="@+id/sudokuSpecialLayout"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/sudokuKeyboardLayout"
-        >
+        android:layout_below="@+id/sudokuKeyboardLayout">
 
     </tu_darmstadt.sudoku.ui.view.SudokuSpecialButtonLayout>
 

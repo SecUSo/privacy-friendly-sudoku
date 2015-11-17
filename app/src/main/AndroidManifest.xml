@@ -31,6 +31,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="tu_darmstadt.sudoku.ui.LoadGameActivity" >
+        </activity>
     </application>
 
 </manifest>

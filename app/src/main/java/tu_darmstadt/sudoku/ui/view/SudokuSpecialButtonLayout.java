@@ -1,16 +1,12 @@
 package tu_darmstadt.sudoku.ui.view;
 
 import android.content.Context;
-import android.text.style.TextAppearanceSpan;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.GridLayout;
 import android.widget.LinearLayout;
 
-import java.awt.font.TextAttribute;
 import java.util.ArrayList;
 
 import tu_darmstadt.sudoku.controller.GameController;
@@ -23,7 +19,6 @@ public class SudokuSpecialButtonLayout extends LinearLayout {
     SudokuButton [] fixedButtons;
     public int fixedButtonsCount = SudokuButtonType.getSpecialButtons().size();
     GameController gameController;
-    boolean notesEnabled=false;
     SudokuKeyboardLayout keyboard;
 
 
@@ -38,9 +33,8 @@ public class SudokuSpecialButtonLayout extends LinearLayout {
                         gameController.deleteSelectedValue();
                         break;
                     case NoteToggle:
-                        notesEnabled = !notesEnabled;
-                        btn.setText(notesEnabled ? "ON" : "OFF");
-                        keyboard.setNotesEnabled(notesEnabled);
+                        btn.setText(keyboard.notesEnabled ? "ON" : "OFF");
+                        keyboard.toggleNotesEnabled();
                         break;
                     case Do:
                         // TODO: not implemented

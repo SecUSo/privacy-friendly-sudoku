@@ -15,13 +15,12 @@ import android.view.MenuItem;
 
 import java.util.List;
 
-import tu_darmstadt.sudoku.controller.FileManager;
+import tu_darmstadt.sudoku.controller.SaveLoadController;
 import tu_darmstadt.sudoku.controller.GameController;
 import tu_darmstadt.sudoku.game.GameInfoContainer;
 import tu_darmstadt.sudoku.game.GameType;
 import tu_darmstadt.sudoku.ui.view.R;
 import tu_darmstadt.sudoku.ui.view.SudokuFieldLayout;
-import tu_darmstadt.sudoku.ui.view.SudokuButton;
 import tu_darmstadt.sudoku.ui.view.SudokuKeyboardLayout;
 import tu_darmstadt.sudoku.ui.view.SudokuSpecialButtonLayout;
 
@@ -38,7 +37,8 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
 
         GameType gameType = GameType.Unspecified;
         int gameDifficulty = 0;
-        int loadLevel = 0;
+        int loadLevelID = 0;
+        boolean loadLevel = false;
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -47,7 +47,10 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
                 gameType = (GameType)extras.get("gameType");
             }
             gameDifficulty = extras.getInt("gameDifficulty");
-            loadLevel = extras.getInt("loadLevel");
+            loadLevel = extras.getBoolean("loadLevel");
+            if(loadLevel) {
+                loadLevelID = extras.getInt("loadLevelID");
+            }
         }
 
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
@@ -61,11 +64,11 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
         layout = (SudokuFieldLayout)findViewById(R.id.sudokuLayout);
         gameController = new GameController(sharedPref);
 
-        List<GameInfoContainer> loadableGames = FileManager.getLoadableGameList();
+        List<GameInfoContainer> loadableGames = SaveLoadController.getLoadableGameList();
 
-        if(loadLevel != 0 && loadableGames.size() >= loadLevel) {
-            // load level from FileManager
-            gameController.loadLevel(loadableGames.get(loadLevel-1));
+        if(loadLevel && loadableGames.size() > loadLevelID) {
+            // load level from SaveLoadController
+            gameController.loadLevel(loadableGames.get(loadLevelID));
         } else {
             // load a new level
             gameController.loadNewLevel(gameType, gameDifficulty);
@@ -133,35 +136,51 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
 
         Intent intent;
 
-        if (id == R.id.nav_newgame) {
-            //create new game
-            intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
+        switch(id) {
+            case R.id.nav_newgame:
+                //create new game
+                intent = new Intent(this, MainActivity.class);
+                gameController.saveGame(getBaseContext());
+                finish();
+                startActivity(intent);
+                break;
 
-        /*} else if (id == R.id.nav_mainmenu) {
-            //go to main menu
-            intent = new Intent(this, MainActivity.class);
-            startActivity(intent);*/
+            case R.id.nav_continue:
+                //create new game
+                intent = new Intent(this, LoadGameActivity.class);
+                gameController.saveGame(getBaseContext());
+                finish();
+                startActivity(intent);
+                break;
 
-        } else if (id == R.id.nav_settings) {
-            //open settings
-            intent = new Intent(this,SettingsActivity.class);
-            startActivity(intent);
+            case R.id.menu_settings:
+                //open settings
+                intent = new Intent(this,SettingsActivity.class);
+                gameController.saveGame(getBaseContext());
+                finish();
+                startActivity(intent);
+                break;
 
-        } else if (id == R.id.nav_highscore) {
-            // see highscore list
-            //intent = new Intent(this, HighscoreActivity.class);
-            //startActivity(intent);
+            case R.id.nav_highscore:
+                // see highscore list
+                //intent = new Intent(this, HighscoreActivity.class);
+                //startActivity(intent);
+                break;
 
-        } else if (id == R.id.nav_about) {
-            //open about page
-            intent = new Intent(this,AboutActivity.class);
-            startActivity(intent);
+            case R.id.menu_about:
+                //open about page
+                intent = new Intent(this,AboutActivity.class);
+                gameController.saveGame(getBaseContext());
+                finish();
+                startActivity(intent);
+                break;
 
-        } else if (id == R.id.nav_help) {
-            //open about page
-            //intent = new Intent(this,HelpActivity.class);
-            //startActivity(intent);
+            case R.id.menu_help:
+                //open about page
+                //intent = new Intent(this,HelpActivity.class);
+                //startActivity(intent);
+                break;
+            default:
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

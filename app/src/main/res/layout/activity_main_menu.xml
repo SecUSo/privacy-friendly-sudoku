@@ -85,8 +85,7 @@
                 android:onClick="onClick"
                 android:capitalize="none"
                 android:clickable="false"
-                android:elevation="10dp"
-                style="?android:attr/borderlessButtonStyle"/>
+                android:elevation="10dp"/>
 
             <Button
                 android:layout_width="match_parent"
@@ -100,15 +99,13 @@
                 android:layout_weight="2"
                 android:onClick="onClick"
                 android:capitalize="none"
-                android:clickable="false"
-                style="?android:attr/borderlessButtonStyle"/>
+                android:clickable="false"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="2"
-                android:weightSum="2"
-                style="?android:buttonBarStyle">
+                android:weightSum="2">
                 <Button
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -121,8 +118,7 @@
                     android:layout_weight="1"
                     android:onClick="onClick"
                     android:capitalize="none"
-                    android:clickable="false"
-                    style="?android:attr/borderlessButtonStyle"/>
+                    android:clickable="false"/>
                 <Button
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -135,15 +131,13 @@
                     android:layout_weight="1"
                     android:onClick="onClick"
                     android:capitalize="none"
-                    android:clickable="false"
-                    style="?android:attr/borderlessButtonStyle"/>
+                    android:clickable="false"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="2"
-                android:weightSum="2"
-                style="?android:buttonBarStyle">
+                android:weightSum="2">
                 <Button
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -156,8 +150,7 @@
                     android:layout_weight="1"
                     android:onClick="onClick"
                     android:capitalize="none"
-                    android:clickable="false"
-                    style="?android:attr/borderlessButtonStyle"/>
+                    android:clickable="false"/>
                 <Button
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -170,8 +163,7 @@
                     android:layout_weight="1"
                     android:onClick="onClick"
                     android:capitalize="none"
-                    android:clickable="false"
-                    style="?android:attr/borderlessButtonStyle"/>
+                    android:clickable="false"/>
             </LinearLayout>
         </LinearLayout>
 

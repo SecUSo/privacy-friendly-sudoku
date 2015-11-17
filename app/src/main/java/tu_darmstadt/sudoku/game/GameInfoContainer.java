@@ -3,6 +3,7 @@ package tu_darmstadt.sudoku.game;
 import android.util.Log;
 
 import tu_darmstadt.sudoku.controller.GameController;
+import tu_darmstadt.sudoku.controller.Symbol;
 
 /**
  * Created by Chris on 17.11.2015.
@@ -35,23 +36,52 @@ public class GameInfoContainer {
     }
 
     public void parseFixedValues(String s){
+        if(gameType != GameType.Unspecified && gameType != null) {
+            int size = GameType.getSize(gameType);
+            int sq = size*size;
+
+            if(s.length() != sq) {
+                throw new IllegalArgumentException("The string must be "+sq+" characters long.");
+            }
+        }
         fixedValues = new int[s.length()];
         for(int i = 0; i < s.length(); i++) {
-               fixedValues[i] = Integer.parseInt(s.charAt(i)+"");
+               fixedValues[i] = Symbol.getValue(Symbol.Default, s.charAt(i))+1;
         }
     }
 
     public void parseSetValues(String s) {
+        if(gameType != GameType.Unspecified && gameType != null) {
+            int size = GameType.getSize(gameType);
+            int sq = size*size;
+
+            if(s.length() != sq) {
+                throw new IllegalArgumentException("The string must be "+sq+" characters long.");
+            }
+        }
         setValues = new int[s.length()];
         for(int i = 0; i < s.length(); i++) {
-            setValues[i] = Integer.parseInt(s.charAt(i)+"");
+            setValues[i] = Symbol.getValue(Symbol.Default, s.charAt(i))+1;
         }
     }
 
     public void parseNotes(String s) {
         String[] strings = s.split("-");
+
+        int size = GameType.getSize(gameType);
+        int sq = size*size;
+
+        if(gameType != GameType.Unspecified && gameType != null) {
+            if(strings.length != sq) {
+                throw new IllegalArgumentException("The string array must have "+sq+" entries.");
+            }
+        }
+
         setNotes = new boolean[strings.length][strings[0].length()];
         for(int i = 0; i < strings.length; i++) {
+            if(strings[i].length() != size) {
+                throw new IllegalArgumentException("The string must be "+size+" characters long.");
+            }
             for(int k = 0; k < strings[i].length(); k++) {
                 setNotes[i][k] = (strings[i].charAt(k)) == '1' ? true : false;
             }
@@ -103,7 +133,7 @@ public class GameInfoContainer {
             @Override
             public StringBuilder action(GameCell gc, StringBuilder existing) {
                 if (gc.isFixed()) {
-                    existing.append(gc.getValue());
+                    existing.append(Symbol.getSymbol(Symbol.Default, gc.getValue() - 1));
                 } else {
                     existing.append(0);
                 }
@@ -118,10 +148,10 @@ public class GameInfoContainer {
         controller.actionOnCells(new ICellAction<StringBuilder>() {
             @Override
             public StringBuilder action(GameCell gc, StringBuilder existing) {
-                if (gc.isFixed()) {
+                if (gc.isFixed() || gc.getValue() == 0) {
                     existing.append(0);
                 } else {
-                    existing.append(gc.getValue());
+                    existing.append(Symbol.getSymbol(Symbol.Default, gc.getValue() - 1));
                 }
                 return existing;
             }

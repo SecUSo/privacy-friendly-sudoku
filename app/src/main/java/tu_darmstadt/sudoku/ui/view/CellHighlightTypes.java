@@ -8,5 +8,8 @@ public enum CellHighlightTypes {
     Selected,
     Error,
     Connected,
-    Highlighted // Same Numbers are not connected but might be highlighted.
+    Value_Highlighted,
+    Value_Highlighted_Selected,
+
+    // Same Numbers are not connected but might be highlighted.
 }

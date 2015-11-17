@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 
 import tu_darmstadt.sudoku.game.GameCell;
+import tu_darmstadt.sudoku.controller.Symbol;
 
 /**
  * Created by TMZ_LToP on 10.11.2015.
@@ -26,6 +27,7 @@ public class SudokuCellView extends View {
     int mCol;
     boolean selected;
     CellHighlightTypes highlightType = CellHighlightTypes.Default;
+    Symbol symbolsToUse = Symbol.Default;
 
 
     public SudokuCellView(Context context) {
@@ -97,7 +99,7 @@ public class SudokuCellView extends View {
                 p.setColor(Color.YELLOW);
                 p.setAlpha(100);
                 break;
-            case Highlighted:
+            case Value_Highlighted:
                 p.setColor(Color.YELLOW);
                 break;
             default:
@@ -125,9 +127,10 @@ public class SudokuCellView extends View {
             for (int i = 0; i < mGameCell.getNotes().length; i++) {
                 if (mGameCell.getNotes()[i]) {
                     p.setTypeface(Typeface.SANS_SERIF);
-                    p.setTextSize(mWidth/4);
+                    p.setTextSize(mWidth / 4);
                     p.setTextAlign(Paint.Align.RIGHT);
-                    canvas.drawText(String.valueOf(i+1),(mWidth*1/12)*k,(mWidth*1/12)*j,p);
+                    // TODO settings: get SymbolEnum from settings
+                    canvas.drawText(String.valueOf(Symbol.getSymbol(symbolsToUse, i)),(mWidth*1/12)*k,(mWidth*1/12)*j,p);
                     /*canvas.drawText(String.valueOf(1), (mWidth * 1 / 12)*3, (mWidth* 1 / 12)*3, p);
                     canvas.drawText(String.valueOf(2),(mWidth*1/12)*7, (mWidth* 1 / 12)*7,p );
                     canvas.drawText(String.valueOf(3),(mWidth*1/12)*11, (mWidth* 1 / 12)*11,p );*/
@@ -148,7 +151,8 @@ public class SudokuCellView extends View {
         p.setAntiAlias(true);
         p.setTextSize(Math.min(mHeight * 3 / 4, mHeight * 3 / 4));
         p.setTextAlign(Paint.Align.CENTER);
-        canvas.drawText(String.valueOf(mGameCell.getValue()), mHeight / 2, mHeight / 2 + mHeight / 4, p);
+        // TODO settings: get SymbolEnum from settings
+        canvas.drawText(String.valueOf(Symbol.getSymbol(symbolsToUse, mGameCell.getValue()-1)), mHeight / 2, mHeight / 2 + mHeight / 4, p);
     }
 
     public int getRow() {

@@ -242,7 +242,7 @@ public class GameController {
         }
 
         //gameID now has a value other than 0 and hopefully unique
-        FileManager fm = new FileManager(context, settings);
+        SaveLoadController fm = new SaveLoadController(context, settings);
         fm.saveGameState(this);
     }
 

@@ -23,7 +23,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import tu_darmstadt.sudoku.controller.FileManager;
+import tu_darmstadt.sudoku.controller.SaveLoadController;
 import tu_darmstadt.sudoku.game.GameInfoContainer;
 import tu_darmstadt.sudoku.game.GameType;
 import tu_darmstadt.sudoku.ui.view.R;
@@ -97,10 +97,7 @@ public class MainActivity extends AppCompatActivity {
                     i = new Intent(this, AboutActivity.class);
                     break;
                 case R.id.continueButton:
-                    // TODO continue from file.
-                    i = new Intent(this, GameActivity.class);
-                    int levelNr = 1;
-                    i.putExtra("loadLevel", levelNr);
+                    i = new Intent(this, LoadGameActivity.class);
                     break;
                 case R.id.highscoreButton:
                     // TODO: create highscore screen
@@ -144,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
     private void refreshContinueButton() {
         // enable continue button if we have saved games.
         Button continueButton = (Button)findViewById(R.id.continueButton);
-        FileManager fm = new FileManager(getBaseContext(), settings);
+        SaveLoadController fm = new SaveLoadController(getBaseContext(), settings);
         List<GameInfoContainer> gic = fm.loadGameStateInfo();
         if(gic.size() > 0) {
             continueButton.setEnabled(true);

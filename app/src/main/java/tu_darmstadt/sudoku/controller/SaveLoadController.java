@@ -16,7 +16,7 @@ import tu_darmstadt.sudoku.game.GameInfoContainer;
 /**
  * Created by Chris on 16.11.2015.
  */
-public class FileManager {
+public class SaveLoadController {
 
     Context context;
     private SharedPreferences settings;
@@ -24,11 +24,10 @@ public class FileManager {
     private static String FILE_EXTENSION = ".txt";
     private static String SAVE_PREFIX = "save_";
     private static String SAVES_DIR = "saves";
-    private static String highscoresDir = "highscores";
 
     private static List<GameInfoContainer> list = new LinkedList<>();
 
-    public FileManager(Context context, SharedPreferences settings) {
+    public SaveLoadController(Context context, SharedPreferences settings) {
         this.context = context;
         this.settings = settings;
     }
@@ -70,7 +69,6 @@ public class FileManager {
                 String gameString = new String(bytes);
                 String[] values = gameString.split("/");
 
-                //String[] levels = saves.split("###");
                 try {
                     if(values.length < 4) {
                         throw new IllegalArgumentException("Can not load game info. File seems to be damaged or incomplete.");
@@ -99,34 +97,6 @@ public class FileManager {
         list = result;
         return result;
     }
-
-    /*public String loadGameState(int index) {
-        File dir = context.getDir(SAVES_DIR, 0);
-
-        dir.listFiles();
-
-        File file = new File(dir, savesFile);
-
-        byte[] bytes = new byte[(int)file.length()];
-
-        try {
-            FileInputStream stream = new FileInputStream(file);
-            try {
-                stream.read(bytes);
-            } finally {
-                stream.close();
-            }
-        } catch(IOException e) {
-            Log.e("File Manager", "Could not load game. IOException occured.");
-        }
-        String saves = new String(bytes);
-        String[] levels = saves.split("###");
-        for(String level : levels) {
-            String[] values = level.split("|");
-            GameType type = Enum.valueOf(GameType.class, values[0]);
-        }
-        return saves;
-    }*/
 
     public void saveGameState(GameController controller) {
         String level = GameInfoContainer.getGameInfo(controller);
