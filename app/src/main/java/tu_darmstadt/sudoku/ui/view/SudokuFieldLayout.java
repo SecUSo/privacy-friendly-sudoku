@@ -70,19 +70,20 @@ public class SudokuFieldLayout extends RelativeLayout {
                         return false;
                     }
                     // Set connected Fields
+                    if(gameController.isValidCellSelected()) {
+                        //String syncConnPref = sharedPref.getString(SettingsActivity., "");
+                        boolean highlightConnectedRow = settings.getBoolean("pref_highlight_rows", true);
+                        boolean highlightConnectedColumn = settings.getBoolean("pref_highlight_cols", true);
+                        boolean highlightConnectedSection = settings.getBoolean("pref_highlight_secs", true);
 
-                    //String syncConnPref = sharedPref.getString(SettingsActivity., "");
-                    boolean highlightConnectedRow = settings.getBoolean("pref_highlight_rows", true);
-                    boolean highlightConnectedColumn = settings.getBoolean("pref_highlight_cols", true);
-                    boolean highlightConnectedSection = settings.getBoolean("pref_highlight_secs", true);
-
-                    for(GameCell c : gameController.getConnectedCells(row,col, highlightConnectedRow, highlightConnectedColumn, highlightConnectedSection)) {
-                        gamecells[c.getRow()][c.getCol()].setHighlightType(CellHighlightTypes.Connected);
+                        for (GameCell c : gameController.getConnectedCells(row, col, highlightConnectedRow, highlightConnectedColumn, highlightConnectedSection)) {
+                            gamecells[c.getRow()][c.getCol()].setHighlightType(CellHighlightTypes.Connected);
+                        }
+                        // Select touched Cell
+                        scv.setHighlightType(CellHighlightTypes.Selected);
+                    } else {
+                        scv.setHighlightType(CellHighlightTypes.Value_Highlighted_Selected);
                     }
-                    // Select touched Cell
-                    scv.setHighlightType(CellHighlightTypes.Selected);
-
-
                 }
                 return false;
             }

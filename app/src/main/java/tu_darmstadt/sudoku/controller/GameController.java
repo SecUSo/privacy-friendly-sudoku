@@ -14,7 +14,6 @@ import tu_darmstadt.sudoku.controller.helper.GameInfoContainer;
 import tu_darmstadt.sudoku.game.GameType;
 import tu_darmstadt.sudoku.game.ICellAction;
 import tu_darmstadt.sudoku.game.solver.Solver;
-import tu_darmstadt.sudoku.game.solver.ISolver;
 
 /**
  * Created by Chris on 06.11.2015.
@@ -26,6 +25,7 @@ public class GameController {
     private int sectionWidth;
     private GameBoard gameBoard;
     private Solver solver;
+    private LinkedList<GameBoard> solvedBoards = new LinkedList<>();
     private GameType gameType;
     private int selectedRow;
     private int selectedCol;
@@ -141,20 +141,23 @@ public class GameController {
     }
 
     public LinkedList<GameBoard> solve() {
-        switch(gameType) {
-            case Default_9x9:
-            case Default_6x6:
-            case Default_12x12:
-                solver = new Solver(gameBoard);
-                break;
-            default:
-                throw new UnsupportedOperationException("No Solver for this GameType defined.");
-        }
+        if(solvedBoards.size() == 0) {
+            switch (gameType) {
+                case Default_9x9:
+                case Default_6x6:
+                case Default_12x12:
+                    solver = new Solver(gameBoard);
+                    break;
+                default:
+                    throw new UnsupportedOperationException("No Solver for this GameType defined.");
+            }
 
-        if(solver.solve(solver.getGameBoard())) {
-            return solver.getSolutions();
+            if (solver.solve(solver.getGameBoard())) {
+                solvedBoards.addAll(solver.getSolutions());
+                return solvedBoards;
+            }
         }
-        return null;
+        return solvedBoards;
     }
 
     /*public boolean loadLevel(GameBoard level) {
@@ -362,19 +365,19 @@ public class GameController {
     }
 
     public void selectValue(int value) {
-        if(isCellSelected()) setValue(selectedRow, selectedCol, value);
+        if(isValidCellSelected()) setValue(selectedRow, selectedCol, value);
     }
 
     public void deleteSelectedValue() {
-        if(isCellSelected()) deleteValue(selectedRow, selectedCol);
+        if(isValidCellSelected()) deleteValue(selectedRow, selectedCol);
     }
 
     public void toggleSelectedNote(int value) {
-        if(isCellSelected()) toggleNote(selectedRow, selectedCol, value);
+        if(isValidCellSelected()) toggleNote(selectedRow, selectedCol, value);
     }
 
-    public boolean isCellSelected() {
-        return selectedRow != -1 && selectedCol != -1;
+    public boolean isValidCellSelected() {
+        return selectedRow != -1 && selectedCol != -1 && !getGameCell(selectedRow, selectedCol).isFixed();
     }
 
 //    public void registerListener(IModelChangeListener l) {

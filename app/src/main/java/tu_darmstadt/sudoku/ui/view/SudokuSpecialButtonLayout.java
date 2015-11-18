@@ -8,8 +8,10 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 import tu_darmstadt.sudoku.controller.GameController;
+import tu_darmstadt.sudoku.game.GameBoard;
 
 /**
  * Created by TMZ_LToP on 17.11.2015.
@@ -28,6 +30,9 @@ public class SudokuSpecialButtonLayout extends LinearLayout {
             if(v instanceof SudokuButton) {
                 SudokuButton btn = (SudokuButton)v;
 
+                int row = gameController.getSelectedRow();
+                int col = gameController.getSelectedCol();
+
                 switch(btn.getType()) {
                     case Delete:
                         gameController.deleteSelectedValue();
@@ -43,7 +48,16 @@ public class SudokuSpecialButtonLayout extends LinearLayout {
                         // TODO: not implemented
                         break;
                     case Hint:
-                        // TODO: not implemented
+                        if(gameController.isValidCellSelected()) {
+                            LinkedList<GameBoard> solved = gameController.solve();
+                            if(solved.size() >= 1) {
+                                GameBoard solvedBoard = solved.get(0);
+                                // test every placed value so far
+
+                                // and reveal the selected value.
+                                gameController.selectValue(solvedBoard.getCell(row, col).getValue());
+                            }
+                        }
                         break;
                     case NumberOrCellFirst:
                         // TODO: not implemented

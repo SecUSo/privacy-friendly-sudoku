@@ -102,6 +102,8 @@ public class SudokuCellView extends View {
             case Value_Highlighted:
                 p.setColor(Color.YELLOW);
                 break;
+            case Value_Highlighted_Selected:
+                p.setColor(Color.CYAN);
             default:
                 p.setColor(Color.WHITE);
         }
