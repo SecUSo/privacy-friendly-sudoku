@@ -52,7 +52,7 @@ public class SudokuSpecialButtonLayout extends LinearLayout {
                             LinkedList<GameBoard> solved = gameController.solve();
                             if(solved.size() >= 1) {
                                 GameBoard solvedBoard = solved.get(0);
-                                // test every placed value so far
+                                // TODO test every placed value so far
 
                                 // and reveal the selected value.
                                 gameController.selectValue(solvedBoard.getCell(row, col).getValue());
