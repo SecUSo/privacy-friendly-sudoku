@@ -71,29 +71,17 @@ public class GameBoard implements Cloneable {
     public LinkedList<GameCell> getRow(final int row) {
         LinkedList<GameCell> result = new LinkedList<GameCell>();
         for(int i = 0; i < size; i++) {
-
+            result.add(field[row][i]);
         }
-        return actionOnCells(new ICellAction<LinkedList<GameCell>>() {
-            @Override
-            public LinkedList<GameCell> action(GameCell gc, LinkedList<GameCell> existing) {
-                if(gc.getRow() == row) {
-                    existing.add(gc);
-                }
-                return existing;
-            }
-        }, new LinkedList<GameCell>());
+        return result;
     }
 
     public LinkedList<GameCell> getColumn(final int col) {
-        return actionOnCells(new ICellAction<LinkedList<GameCell>>() {
-            @Override
-            public LinkedList<GameCell> action(GameCell gc, LinkedList<GameCell> existing) {
-                if(gc.getCol() == col) {
-                    existing.add(gc);
-                }
-                return existing;
-            }
-        }, new LinkedList<GameCell>());
+        LinkedList<GameCell> result = new LinkedList<GameCell>();
+        for(int i = 0; i < size; i++) {
+            result.add(field[i][col]);
+        }
+        return result;
     }
 
     public LinkedList<GameCell> getSection(final int sec) {

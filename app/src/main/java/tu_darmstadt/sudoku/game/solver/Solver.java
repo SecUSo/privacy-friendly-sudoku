@@ -131,7 +131,7 @@ public class Solver implements ISolver {
 
                     GameCell copyGC = gameBoardCopy.getCell(p.x, p.y);
 
-                    copyGC.setValue(i);
+                    copyGC.setValue(i+1);
 
                     result = solve(gameBoardCopy);
 
@@ -295,19 +295,19 @@ public class Solver implements ISolver {
         for(int i = 0; i < gameBoard.getSize(); i++) {
 
             count = countUnsolved(gameBoard.getRow(i),candidate);
-            if(count < minimumCount) {
+            if(count != 0 && count < minimumCount) {
                 minimumCount = count;
                 bestCandidate.set(candidate.x, candidate.y);
             }
 
             count = countUnsolved(gameBoard.getColumn(i),candidate);
-            if(count < minimumCount) {
+            if(count != 0 && count < minimumCount) {
                 minimumCount = count;
                 bestCandidate.set(candidate.x, candidate.y);
             }
 
             count = countUnsolved(gameBoard.getSection(i),candidate);
-            if(count < minimumCount) {
+            if(count != 0 && count < minimumCount) {
                 minimumCount = count;
                 bestCandidate.set(candidate.x, candidate.y);
             }

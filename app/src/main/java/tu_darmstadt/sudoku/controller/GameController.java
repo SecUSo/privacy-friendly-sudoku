@@ -141,6 +141,7 @@ public class GameController {
     }
 
     public LinkedList<GameBoard> solve() {
+        // TODO call solve at the beginning.. when loading a level.
         if(solvedBoards.size() == 0) {
             switch (gameType) {
                 case Default_9x9:
