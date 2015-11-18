@@ -1,7 +1,12 @@
 package tu_darmstadt.sudoku.game.solver;
 
-import java.util.LinkedList;
+import android.graphics.Point;
+import android.util.Log;
 
+import java.util.LinkedList;
+import java.util.List;
+
+import tu_darmstadt.sudoku.controller.helper.GameInfoContainer;
 import tu_darmstadt.sudoku.game.CellConflict;
 import tu_darmstadt.sudoku.game.GameBoard;
 import tu_darmstadt.sudoku.game.GameCell;
@@ -13,6 +18,7 @@ import tu_darmstadt.sudoku.game.ICellAction;
 public class Solver implements ISolver {
 
     private GameBoard gameBoard = null;
+    private LinkedList<GameBoard> solutions = new LinkedList<>();
 
     public Solver(GameBoard gf) {
         try {
@@ -36,7 +42,7 @@ public class Solver implements ISolver {
     public void setNotes(GameBoard gameBoard) {
         for(int i = 0; i < gameBoard.getSize(); i++) {
             for(int j = 0; j < gameBoard.getSize(); j++) {
-                for(int k = 0; k < gameBoard.getSize(); k++) {
+                for(int k = 1; k <= gameBoard.getSize(); k++) {
                     gameBoard.getCell(i,j).setNote(k);
                 }
             }
@@ -58,34 +64,92 @@ public class Solver implements ISolver {
             if(checked.contains(c.getValue())) {
                 return true;
             }
-            checked.add(c.getValue());
+            if(c.hasValue()) {
+                checked.add(c.getValue());
+            }
         }
         return false;
     }
 
-    public boolean solve() {
+    public LinkedList<GameBoard> getSolutions() {
+        return solutions;
+    }
 
-        if(gameBoard.isSolved(new LinkedList<CellConflict>())) {
+    public boolean isDone(GameBoard gameBoard) {
+        for(int i = 0; i < gameBoard.getSize(); i++) {
+            for(int j = 0; j < gameBoard.getSize(); j++) {
+                if(!gameBoard.getCell(i,j).hasValue()) return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean solve(final GameBoard gameBoard) {
+
+        checkSolvedCells(gameBoard);
+
+        String string = gameBoard.toString();
+
+        if(isDone(gameBoard)) {
+            solutions.add(gameBoard);
             return true;
         }
 
-        checkSolvedCells();
+        if(showPossibles(gameBoard))
+            return solve(gameBoard);
 
-        if(showPossibles()) return solve();
+        if(searchHiddenSingles(gameBoard))
+            return solve(gameBoard);
 
-        if(searchHiddenSingles()) return solve();
+        if(searchNakedPairsTriples(gameBoard))
+            return solve(gameBoard);
 
-        if(searchNakedPairsTriples()) return solve();
+        if(searchHiddenPairsTriples(gameBoard))
+            return solve(gameBoard);
 
-        if(searchHiddenPairsTriples()) return solve();
+        if(searchNakedQuads(gameBoard))
+            return solve(gameBoard);
 
-        if(searchNakedQuads()) return solve();
+        if(searchPointingPairs(gameBoard))
+            return solve(gameBoard);
 
-        if(searchPointingPairs()) return solve();
+        if(searchBoxLineReduction(gameBoard))
+            return solve(gameBoard);
 
-        if(searchBoxLineReduction()) return solve();
 
-        return false;
+        // if every defined strategy fails.. we have to guess
+        // get the best candidate
+        Point p = getBestCandidate(gameBoard);
+
+        // then we test every possible value for that candidate, but we do it on a cloned gameBoard
+        boolean result = false;
+        for(int i = 0; i < gameBoard.getSize(); i++) {
+            GameCell gc = gameBoard.getCell(p.x,p.y);
+            try {
+                if(gc.getNotes()[i]) {
+                    GameBoard gameBoardCopy = gameBoard.clone();
+
+                    GameCell copyGC = gameBoardCopy.getCell(p.x, p.y);
+
+                    copyGC.setValue(i);
+
+                    result = solve(gameBoardCopy);
+
+                    //if (result) {
+                        // stop after we found 1 solution
+                        //return true;
+
+                        // or keep going to find multiple solutions
+                    //}
+
+                } else {
+                    continue;
+                }
+            } catch(CloneNotSupportedException e) {
+                return false;
+            }
+        }
+        return result;
     }
 
     @Override
@@ -98,7 +162,28 @@ public class Solver implements ISolver {
         return gameBoard;
     }
 
-    public boolean showPossibles() {
+    private boolean checkSolvedCells(final GameBoard gameBoard) {
+        return gameBoard.actionOnCells(new ICellAction<Boolean>() {
+            @Override
+            public Boolean action(GameCell gc, Boolean existing) {
+                int value = -1;
+                if(!gc.hasValue() && gc.getNoteCount() == 1) {
+                    for(int i = 0; i < gameBoard.getSize(); i++) {
+                        if(gc.getNotes()[i]) {
+                            value = i+1;
+                            break;
+                        }
+                    }
+                    gc.setValue(value);
+                    existing = true;
+                }
+                return existing;
+            }}, false);
+    }
+
+
+    public boolean showPossibles(final GameBoard gameBoard) {
+        boolean deletedSomething = false;
         LinkedList<GameCell> list = new LinkedList<GameCell>();
         for(int i = 0; i < gameBoard.getSize(); i++) {
             for(int j = 0; j < gameBoard.getSize(); j++) {
@@ -108,19 +193,21 @@ public class Solver implements ISolver {
                     list.addAll(gameBoard.getRow(i));
                     list.addAll(gameBoard.getColumn(j));
                     list.addAll(gameBoard.getSection(i,j));
-                    for(int k = 0; k < gameBoard.getSize(); k++) {
-                        for(GameCell c : list) {
-                            gc.deleteNote(c.getValue());
+                    for(GameCell c : list) {
+                        for(int k = 0; k < gameBoard.getSize(); k++) {
+                            if(gc.getNotes()[k] && c.hasValue() && !c.equals(gc) && k+1 == c.getValue()) {
+                                gc.deleteNote(c.getValue());
+                                deletedSomething = true;
+                            }
                         }
                     }
                 }
-
             }
         }
-        return false;
+        return deletedSomething;
     }
 
-    private boolean searchHiddenSingles() {
+    private boolean searchHiddenSingles(final GameBoard gameBoard) {
         boolean foundHiddenSingles = false;
 
         LinkedList<GameCell> list = new LinkedList<>();
@@ -183,40 +270,68 @@ public class Solver implements ISolver {
         return foundHiddenSingles;
     }
 
-    public boolean searchNakedPairsTriples() {
+
+    public boolean searchNakedPairsTriples(final GameBoard gameBoard) {
         return false;
     }
-    public boolean searchHiddenPairsTriples() {
+    public boolean searchHiddenPairsTriples(final GameBoard gameBoard) {
         return false;
     }
-    public boolean searchNakedQuads() {
+    public boolean searchNakedQuads(final GameBoard gameBoard) {
         return false;
     }
-    public boolean searchPointingPairs() {
+    public boolean searchPointingPairs(final GameBoard gameBoard) {
         return false;
     }
-    public boolean searchBoxLineReduction() {
+    public boolean searchBoxLineReduction(final GameBoard gameBoard) {
         return false;
     }
 
-    private boolean checkSolvedCells() {
-        return gameBoard.actionOnCells(new ICellAction<Boolean>() {
-            @Override
-            public Boolean action(GameCell gc, Boolean existing) {
-                int value = -1;
-                if(!gc.hasValue() && gc.getNoteCount() == 1) {
-                    for(int i = 0; i < gameBoard.getSize(); i++) {
-                        if(gc.getNotes()[i]) {
-                            value = i;
-                            break;
-                        }
-                    }
-                    gc.setValue(value);
-                    existing = true;
-                }
-                return existing;
-            }}, false);
+    public Point getBestCandidate(GameBoard gameBoard) {
+        Point bestCandidate = new Point();
+        int minimumCount = gameBoard.getSize();
+        int count = 0;
+        Point candidate = new Point();
+        for(int i = 0; i < gameBoard.getSize(); i++) {
+
+            count = countUnsolved(gameBoard.getRow(i),candidate);
+            if(count < minimumCount) {
+                minimumCount = count;
+                bestCandidate.set(candidate.x, candidate.y);
+            }
+
+            count = countUnsolved(gameBoard.getColumn(i),candidate);
+            if(count < minimumCount) {
+                minimumCount = count;
+                bestCandidate.set(candidate.x, candidate.y);
+            }
+
+            count = countUnsolved(gameBoard.getSection(i),candidate);
+            if(count < minimumCount) {
+                minimumCount = count;
+                bestCandidate.set(candidate.x, candidate.y);
+            }
+
+            if(minimumCount == 2) {
+                return bestCandidate;
+            }
+        }
+        return bestCandidate;
     }
+
+    public int countUnsolved(final List<GameCell> list, Point p) {
+        int count = 0;
+        for(GameCell gc : list) {
+            if(!gc.hasValue()) {
+                count++;
+                p.set(gc.getRow(), gc.getCol());
+            }
+        }
+        return count;
+    }
+
+
+
 
 
 }

@@ -3,7 +3,7 @@ package tu_darmstadt.sudoku.controller;
 import org.junit.Before;
 import org.junit.Test;
 
-import tu_darmstadt.sudoku.game.GameInfoContainer;
+import tu_darmstadt.sudoku.controller.helper.GameInfoContainer;
 import tu_darmstadt.sudoku.game.GameType;
 
 import static org.junit.Assert.*;

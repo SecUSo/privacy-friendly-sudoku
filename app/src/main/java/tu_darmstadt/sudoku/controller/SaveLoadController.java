@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
-import tu_darmstadt.sudoku.game.GameInfoContainer;
+import tu_darmstadt.sudoku.controller.helper.GameInfoContainer;
 
 /**
  * Created by Chris on 16.11.2015.

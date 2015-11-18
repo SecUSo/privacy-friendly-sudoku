@@ -2,7 +2,6 @@ package tu_darmstadt.sudoku.ui.view;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
@@ -32,7 +31,7 @@ public class SudokuKeyboardLayout extends GridLayout {
                 if(notesEnabled) {
                     gameController.toggleSelectedNote(btn.getValue());
                 } else {
-                    gameController.setSelectedValue(btn.getValue());
+                    gameController.selectValue(btn.getValue());
                 }
                 gameController.saveGame(getContext());
             }

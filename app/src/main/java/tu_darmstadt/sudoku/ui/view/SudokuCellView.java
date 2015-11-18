@@ -130,7 +130,7 @@ public class SudokuCellView extends View {
                     p.setTextSize(mWidth / 4);
                     p.setTextAlign(Paint.Align.RIGHT);
                     // TODO settings: get SymbolEnum from settings
-                    canvas.drawText(String.valueOf(Symbol.getSymbol(symbolsToUse, i)),(mWidth*1/12)*k,(mWidth*1/12)*j,p);
+                    canvas.drawText(Symbol.getSymbol(symbolsToUse, i),(mWidth*1/12)*k,(mWidth*1/12)*j,p);
                     /*canvas.drawText(String.valueOf(1), (mWidth * 1 / 12)*3, (mWidth* 1 / 12)*3, p);
                     canvas.drawText(String.valueOf(2),(mWidth*1/12)*7, (mWidth* 1 / 12)*7,p );
                     canvas.drawText(String.valueOf(3),(mWidth*1/12)*11, (mWidth* 1 / 12)*11,p );*/
@@ -152,7 +152,7 @@ public class SudokuCellView extends View {
         p.setTextSize(Math.min(mHeight * 3 / 4, mHeight * 3 / 4));
         p.setTextAlign(Paint.Align.CENTER);
         // TODO settings: get SymbolEnum from settings
-        canvas.drawText(String.valueOf(Symbol.getSymbol(symbolsToUse, mGameCell.getValue()-1)), mHeight / 2, mHeight / 2 + mHeight / 4, p);
+        canvas.drawText(Symbol.getSymbol(symbolsToUse, mGameCell.getValue()-1), mHeight / 2, mHeight / 2 + mHeight / 4, p);
     }
 
     public int getRow() {

@@ -17,7 +17,7 @@ import java.util.List;
 
 import tu_darmstadt.sudoku.controller.SaveLoadController;
 import tu_darmstadt.sudoku.controller.GameController;
-import tu_darmstadt.sudoku.game.GameInfoContainer;
+import tu_darmstadt.sudoku.controller.helper.GameInfoContainer;
 import tu_darmstadt.sudoku.game.GameType;
 import tu_darmstadt.sudoku.ui.view.R;
 import tu_darmstadt.sudoku.ui.view.SudokuFieldLayout;
@@ -91,7 +91,7 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
 
         //set Special keys
         specialButtonLayout = (SudokuSpecialButtonLayout) findViewById(R.id.sudokuSpecialLayout);
-        specialButtonLayout.setButtons(p.x,gameController,keyboard);
+        specialButtonLayout.setButtons(p.x, gameController, keyboard);
         /*
         // DEBUG
         String debug = gameController.getFieldAsString();

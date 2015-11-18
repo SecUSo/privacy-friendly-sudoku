@@ -10,7 +10,7 @@ import tu_darmstadt.sudoku.game.CellConflict;
 import tu_darmstadt.sudoku.game.CellConflictList;
 import tu_darmstadt.sudoku.game.GameBoard;
 import tu_darmstadt.sudoku.game.GameCell;
-import tu_darmstadt.sudoku.game.GameInfoContainer;
+import tu_darmstadt.sudoku.controller.helper.GameInfoContainer;
 import tu_darmstadt.sudoku.game.GameType;
 import tu_darmstadt.sudoku.game.ICellAction;
 import tu_darmstadt.sudoku.game.solver.Solver;
@@ -25,13 +25,14 @@ public class GameController {
     private int sectionHeight;
     private int sectionWidth;
     private GameBoard gameBoard;
-    private ISolver solver;
+    private Solver solver;
     private GameType gameType;
     private int selectedRow;
     private int selectedCol;
     private SharedPreferences settings;
     private int gameID = 0;
     private CellConflictList errorList = new CellConflictList();
+    private int selectedValue;
     //private LinkedList<IModelChangeListener> listeners = new LinkedList<>();
 
 //    private Solver solver;
@@ -139,7 +140,7 @@ public class GameController {
         settings = pref;
     }
 
-    public GameBoard solve(GameBoard gameBoard) {
+    public LinkedList<GameBoard> solve() {
         switch(gameType) {
             case Default_9x9:
             case Default_6x6:
@@ -150,8 +151,8 @@ public class GameController {
                 throw new UnsupportedOperationException("No Solver for this GameType defined.");
         }
 
-        if(solver.solve()) {
-            return solver.getGameBoard();
+        if(solver.solve(solver.getGameBoard())) {
+            return solver.getSolutions();
         }
         return null;
     }
@@ -226,6 +227,15 @@ public class GameController {
 
     public <T> T actionOnCells(ICellAction<T> ca, T existing) {
         return gameBoard.actionOnCells(ca,existing);
+    }
+
+    public boolean checkIfBoardIsFilled() {
+        //if(gameBoard.getEmptyCellCount() == 0) {
+            // TODO: board is filled. check it for errors.
+
+            //return true;
+        //}
+        return false;
     }
 
     public void saveGame(Context context) {
@@ -312,15 +322,34 @@ public class GameController {
         return gameBoard.toString();
     }
 
+
+
+
+    /*
+     * Controls for the View.
+     * Select methods for Cells and Values.
+     * If a value is selected while a cell is selected the value is put into the cell.
+     * If no cell is selected while a value is being selected, the value gets selected,
+     * and every cell selection after that will automaticly put that value into the cell.
+     *
+     */
     public int getSelectedRow() {
         return selectedRow;
     }
-
     public int getSelectedCol() {
         return selectedCol;
     }
+    public int getSelectedValue() {
+        return selectedValue;
+    }
 
     public void selectCell(int row, int col) {
+        // TODO if there is a value selected
+        // TODO should we do this in here or rather in the view?
+        // we set the value directly
+        //if(selectedValue != 0) {
+        //}
+
         if(selectedRow == row && selectedCol == col) {
             // if we select the same field 2ce -> deselect it
             selectedRow = -1;
@@ -332,7 +361,7 @@ public class GameController {
         }
     }
 
-    public void setSelectedValue(int value) {
+    public void selectValue(int value) {
         if(isCellSelected()) setValue(selectedRow, selectedCol, value);
     }
 

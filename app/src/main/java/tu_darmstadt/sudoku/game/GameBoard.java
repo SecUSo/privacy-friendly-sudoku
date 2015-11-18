@@ -69,6 +69,10 @@ public class GameBoard implements Cloneable {
     }
 
     public LinkedList<GameCell> getRow(final int row) {
+        LinkedList<GameCell> result = new LinkedList<GameCell>();
+        for(int i = 0; i < size; i++) {
+
+        }
         return actionOnCells(new ICellAction<LinkedList<GameCell>>() {
             @Override
             public LinkedList<GameCell> action(GameCell gc, LinkedList<GameCell> existing) {

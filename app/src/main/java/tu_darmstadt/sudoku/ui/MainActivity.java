@@ -24,7 +24,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import tu_darmstadt.sudoku.controller.SaveLoadController;
-import tu_darmstadt.sudoku.game.GameInfoContainer;
+import tu_darmstadt.sudoku.controller.helper.GameInfoContainer;
 import tu_darmstadt.sudoku.game.GameType;
 import tu_darmstadt.sudoku.ui.view.R;
 

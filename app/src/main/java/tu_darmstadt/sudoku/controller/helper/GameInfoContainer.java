@@ -1,9 +1,12 @@
-package tu_darmstadt.sudoku.game;
+package tu_darmstadt.sudoku.controller.helper;
 
 import android.util.Log;
 
 import tu_darmstadt.sudoku.controller.GameController;
 import tu_darmstadt.sudoku.controller.Symbol;
+import tu_darmstadt.sudoku.game.GameCell;
+import tu_darmstadt.sudoku.game.GameType;
+import tu_darmstadt.sudoku.game.ICellAction;
 
 /**
  * Created by Chris on 17.11.2015.
@@ -46,7 +49,7 @@ public class GameInfoContainer {
         }
         fixedValues = new int[s.length()];
         for(int i = 0; i < s.length(); i++) {
-               fixedValues[i] = Symbol.getValue(Symbol.Default, s.charAt(i))+1;
+               fixedValues[i] = Symbol.getValue(Symbol.SaveFormat, String.valueOf(s.charAt(i)))+1;
         }
     }
 
@@ -61,7 +64,7 @@ public class GameInfoContainer {
         }
         setValues = new int[s.length()];
         for(int i = 0; i < s.length(); i++) {
-            setValues[i] = Symbol.getValue(Symbol.Default, s.charAt(i))+1;
+            setValues[i] = Symbol.getValue(Symbol.SaveFormat, String.valueOf(s.charAt(i)))+1;
         }
     }
 
@@ -133,7 +136,7 @@ public class GameInfoContainer {
             @Override
             public StringBuilder action(GameCell gc, StringBuilder existing) {
                 if (gc.isFixed()) {
-                    existing.append(Symbol.getSymbol(Symbol.Default, gc.getValue() - 1));
+                    existing.append(Symbol.getSymbol(Symbol.SaveFormat, gc.getValue() - 1));
                 } else {
                     existing.append(0);
                 }
@@ -151,7 +154,7 @@ public class GameInfoContainer {
                 if (gc.isFixed() || gc.getValue() == 0) {
                     existing.append(0);
                 } else {
-                    existing.append(Symbol.getSymbol(Symbol.Default, gc.getValue() - 1));
+                    existing.append(Symbol.getSymbol(Symbol.SaveFormat, gc.getValue() - 1));
                 }
                 return existing;
             }

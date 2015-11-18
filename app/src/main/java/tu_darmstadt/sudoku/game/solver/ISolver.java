@@ -7,7 +7,7 @@ import tu_darmstadt.sudoku.game.GameBoard;
  */
 public interface ISolver {
 
-    public boolean solve();
+    public boolean solve(GameBoard gameBoard);
 
     public boolean calculateNextPossibleStep();
 
