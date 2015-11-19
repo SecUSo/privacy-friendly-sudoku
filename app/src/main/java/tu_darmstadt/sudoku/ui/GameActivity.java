@@ -12,6 +12,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import java.util.List;
@@ -21,6 +22,7 @@ import java.util.TimerTask;
 import tu_darmstadt.sudoku.controller.SaveLoadController;
 import tu_darmstadt.sudoku.controller.GameController;
 import tu_darmstadt.sudoku.controller.helper.GameInfoContainer;
+import tu_darmstadt.sudoku.game.GameDifficulty;
 import tu_darmstadt.sudoku.game.GameType;
 import tu_darmstadt.sudoku.game.listeners.IGameSolvedListener;
 import tu_darmstadt.sudoku.ui.view.R;
@@ -39,6 +41,7 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
     SudokuTimer timerView;
     boolean isActive = true;
     TextView viewName ;
+    RatingBar ratingBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,6 +126,15 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
         viewName = (TextView) findViewById(R.id.gameModeText);
         viewName.setText(getString(gameController.getGameType().getStringResID()));
 
+
+        //set Rating bar
+        List<GameDifficulty> difficutyList = GameDifficulty.getValidDifficultyList();
+        int numberOfStarts = difficutyList.size();
+        ratingBar = (RatingBar) findViewById(R.id.gameModeStar);
+        ratingBar.setMax(numberOfStarts);
+        ratingBar.setNumStars(numberOfStarts);
+        ratingBar.setRating(difficutyList.indexOf(gameController.getDifficulty())+1);
+        ((TextView)findViewById(R.id.difficultyText)).setText(getString(gameController.getDifficulty().getStringResID()));
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
