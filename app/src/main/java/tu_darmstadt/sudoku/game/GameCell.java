@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
+import tu_darmstadt.sudoku.game.listeners.IModelChangedListener;
+
 /**
  * Created by Chris on 06.11.2015.
  */

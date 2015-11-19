@@ -3,6 +3,8 @@ package tu_darmstadt.sudoku.game;
 import java.util.LinkedList;
 import java.util.List;
 
+import tu_darmstadt.sudoku.game.listeners.IModelChangedListener;
+
 /**
  * Created by Christopher Beckmann on 06.11.2015.
  */

@@ -15,7 +15,8 @@ import tu_darmstadt.sudoku.controller.helper.GameInfoContainer;
 import tu_darmstadt.sudoku.game.GameDifficulty;
 import tu_darmstadt.sudoku.game.GameType;
 import tu_darmstadt.sudoku.game.ICellAction;
-import tu_darmstadt.sudoku.game.IModelChangedListener;
+import tu_darmstadt.sudoku.game.listeners.IGameSolvedListener;
+import tu_darmstadt.sudoku.game.listeners.IModelChangedListener;
 
 /**
  * Created by Chris on 06.11.2015.
@@ -35,7 +36,7 @@ public class GameController implements IModelChangedListener {
     private int gameID = 0;
     private CellConflictList errorList = new CellConflictList();
     private int selectedValue;
-    //private LinkedList<IModelChangeListener> listeners = new LinkedList<>();
+    private LinkedList<IGameSolvedListener> solvedListeners = new LinkedList<>();
 
 //    private Solver solver;
 //    private SudokuGenerator generator;
@@ -396,7 +397,7 @@ public class GameController implements IModelChangedListener {
         if(gameBoard.isFilled()) {
             List<CellConflict> errorList = new LinkedList<>();
             if(gameBoard.isSolved(errorList)) {
-                // TODO: WE WON! :D
+                notifySolvedListeners();
             } else {
                 // TODO: errorList now holds all the errors
                 // TODO: display errors .. notify some view?
@@ -404,9 +405,21 @@ public class GameController implements IModelChangedListener {
         }
     }
 
-//    public void notifyListeners() {
-//        for(IModelChangeListener l : listeners) {
-//            l.onModelChanged();
-//        }
-//    }
+    public void registerGameSolvedListener(IGameSolvedListener l) {
+        if(!solvedListeners.contains(l)) {
+            solvedListeners.add(l);
+        }
+    }
+
+    public void removeGameSolvedListener(IGameSolvedListener l) {
+        if(solvedListeners.contains(l)) {
+            solvedListeners.remove(l);
+        }
+    }
+
+    public void notifySolvedListeners() {
+        for(IGameSolvedListener l : solvedListeners) {
+            l.onSolved();
+        }
+    }
 }

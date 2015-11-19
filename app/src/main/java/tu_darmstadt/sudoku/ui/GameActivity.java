@@ -22,13 +22,14 @@ import tu_darmstadt.sudoku.controller.SaveLoadController;
 import tu_darmstadt.sudoku.controller.GameController;
 import tu_darmstadt.sudoku.controller.helper.GameInfoContainer;
 import tu_darmstadt.sudoku.game.GameType;
+import tu_darmstadt.sudoku.game.listeners.IGameSolvedListener;
 import tu_darmstadt.sudoku.ui.view.R;
 import tu_darmstadt.sudoku.ui.view.SudokuFieldLayout;
 import tu_darmstadt.sudoku.ui.view.SudokuKeyboardLayout;
 import tu_darmstadt.sudoku.ui.view.SudokuSpecialButtonLayout;
 import tu_darmstadt.sudoku.ui.view.SudokuTimer;
 
-public class GameActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class GameActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, IGameSolvedListener {
 
     GameController gameController;
     SudokuFieldLayout layout;
@@ -71,6 +72,7 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
         //Create new GameField
         layout = (SudokuFieldLayout)findViewById(R.id.sudokuLayout);
         gameController = new GameController(sharedPref);
+        gameController.registerGameSolvedListener(this);
 
         List<GameInfoContainer> loadableGames = SaveLoadController.getLoadableGameList();
 
@@ -222,5 +224,10 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onSolved() {
+        // TODO: WE WON.. do something awesome :)
     }
 }
