@@ -117,6 +117,10 @@ public class GameInfoContainer {
         return setNotes;
     }
 
+    public GameDifficulty getDifficulty() {
+        return difficulty;
+    }
+
     public int getID() {
         return ID;
     }

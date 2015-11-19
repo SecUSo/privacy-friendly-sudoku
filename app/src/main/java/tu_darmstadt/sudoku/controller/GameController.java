@@ -34,6 +34,7 @@ public class GameController implements IModelChangedListener {
     private int selectedCol;
     private SharedPreferences settings;
     private int gameID = 0;
+    private GameDifficulty difficulty;
     private CellConflictList errorList = new CellConflictList();
     private int selectedValue;
     private LinkedList<IGameSolvedListener> solvedListeners = new LinkedList<>();
@@ -51,9 +52,8 @@ public class GameController implements IModelChangedListener {
 
     public GameController(GameType type, SharedPreferences pref) {
         setGameType(type);
-        gameBoard = new GameBoard(type);
-        gameBoard.registerOnModelChangeListener(this);
         setSettings(pref);
+        gameBoard = new GameBoard(type);
     }
 
     public int getGameID() {
@@ -112,6 +112,7 @@ public class GameController implements IModelChangedListener {
         int[] setValues = gic.getSetValues();
         boolean[][] setNotes = gic.getSetNotes();
         this.gameID = gic.getID();
+        this.difficulty = gic.getDifficulty();
 
         setGameType(gic.getGameType());
         this.gameBoard = new GameBoard(gic.getGameType());
@@ -141,6 +142,8 @@ public class GameController implements IModelChangedListener {
                 }
             }
         }
+
+        gameBoard.registerOnModelChangeListener(this);
 
         // call the solve function to get the solution of this board
         solve();
@@ -301,6 +304,10 @@ public class GameController implements IModelChangedListener {
     public boolean[] getNotes(int row, int col) {
         GameCell c = gameBoard.getCell(row,col);
         return c.getNotes().clone();
+    }
+
+    public GameDifficulty getDifficulty() {
+        return difficulty;
     }
 
     public void deleteNote(int row, int col, int value) {

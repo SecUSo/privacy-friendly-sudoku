@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         int lastChosenDifficulty = settings.getInt("lastChosenDifficulty", 1);
-        difficultyBar.setProgress(lastChosenDifficulty);
+        difficultyBar.setRating(lastChosenDifficulty);
 
         // on first create always check for loadable levels!
         SharedPreferences.Editor editor = settings.edit();

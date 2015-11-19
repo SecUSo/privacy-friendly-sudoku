@@ -27,7 +27,7 @@ public enum GameType {
         this.size = size;
         this.sectionHeight = sectionHeight;
         this.sectionWidth = sectionWidth;
-        this.resIDString = this.resIDString;
+        this.resIDString = resIDString;
     }
 
     public static List<GameType> getValidGameTypes() {

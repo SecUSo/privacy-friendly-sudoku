@@ -215,7 +215,6 @@ public class GameBoard implements Cloneable {
     public void registerOnModelChangeListener(final IModelChangedListener listener) {
         if(!modelChangedListeners.contains(listener)) {
             actionOnCells(new ICellAction<Boolean>() {
-
                 @Override
                 public Boolean action(GameCell gc, Boolean existing) {
                     gc.registerOnModelChangeListener(listener);
