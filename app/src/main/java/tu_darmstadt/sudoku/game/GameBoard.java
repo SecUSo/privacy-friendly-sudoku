@@ -17,10 +17,11 @@ public class GameBoard implements Cloneable {
     private GameCell[][] field;
     private List<IModelChangedListener> modelChangedListeners = new LinkedList<>();
 
-    public GameBoard(int size, int sectionHeight, int sectionWidth) {
-        this.sectionHeight = sectionHeight;
-        this.sectionWidth = sectionWidth;
-        this.size = size;
+    public GameBoard(GameType gameType) {
+        this.gameType = gameType;
+        this.sectionHeight = gameType.getSectionHeight();
+        this.sectionWidth = gameType.getSectionWidth();
+        this.size = gameType.getSize();
 
         field = new GameCell[size][size];
     }

@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import java.util.LinkedList;
 import java.util.List;
 
+import tu_darmstadt.sudoku.controller.generator.Generator;
 import tu_darmstadt.sudoku.game.CellConflict;
 import tu_darmstadt.sudoku.game.CellConflictList;
 import tu_darmstadt.sudoku.game.GameBoard;
@@ -15,7 +16,6 @@ import tu_darmstadt.sudoku.game.GameDifficulty;
 import tu_darmstadt.sudoku.game.GameType;
 import tu_darmstadt.sudoku.game.ICellAction;
 import tu_darmstadt.sudoku.game.IModelChangedListener;
-import tu_darmstadt.sudoku.game.solver.Solver;
 
 /**
  * Created by Chris on 06.11.2015.
@@ -50,7 +50,8 @@ public class GameController implements IModelChangedListener {
 
     public GameController(GameType type, SharedPreferences pref) {
         setGameType(type);
-        gameBoard = new GameBoard(size, sectionHeight, sectionWidth);
+        gameBoard = new GameBoard(type);
+        gameBoard.registerOnModelChangeListener(this);
         setSettings(pref);
     }
 
@@ -59,6 +60,9 @@ public class GameController implements IModelChangedListener {
     }
 
     public void loadNewLevel(GameType type, int difficulty) {
+        Generator generator = new Generator();
+        // TODO call methods to generate level.
+
         switch(type) {
             case Default_6x6:
                 loadLevel(new GameInfoContainer(1, GameDifficulty.Easy, GameType.Default_6x6,
@@ -109,7 +113,7 @@ public class GameController implements IModelChangedListener {
         this.gameID = gic.getID();
 
         setGameType(gic.getGameType());
-        this.gameBoard = new GameBoard(size, sectionHeight, sectionWidth);
+        this.gameBoard = new GameBoard(gic.getGameType());
 
         if(fixedValues == null) throw new IllegalArgumentException("fixedValues may not be null.");
 
@@ -136,6 +140,9 @@ public class GameController implements IModelChangedListener {
                 }
             }
         }
+
+        // call the solve function to get the solution of this board
+        solve();
     }
 
     public void setSettings(SharedPreferences pref) {
@@ -143,17 +150,9 @@ public class GameController implements IModelChangedListener {
     }
 
     public LinkedList<GameBoard> solve() {
-        // TODO call solve at the beginning.. when loading a level.
         if(solvedBoards.size() == 0) {
-            switch (gameType) {
-                case Default_9x9:
-                case Default_6x6:
-                case Default_12x12:
-                    solver = new Solver(gameBoard);
-                    break;
-                default:
-                    throw new UnsupportedOperationException("No Solver for this GameType defined.");
-            }
+
+            solver = new Solver(gameBoard);
 
             if (solver.solve(solver.getGameBoard())) {
                 solvedBoards.addAll(solver.getSolutions());

@@ -1,4 +1,4 @@
-package tu_darmstadt.sudoku.game.solver;
+package tu_darmstadt.sudoku.controller;
 
 import android.graphics.Point;
 import android.util.Log;
@@ -15,7 +15,7 @@ import tu_darmstadt.sudoku.game.ICellAction;
 /**
  * Created by Chris on 10.11.2015.
  */
-public class Solver implements ISolver {
+public class Solver {
 
     private GameBoard gameBoard = null;
     private LinkedList<GameBoard> solutions = new LinkedList<>();
@@ -152,7 +152,6 @@ public class Solver implements ISolver {
         return result;
     }
 
-    @Override
     public boolean calculateNextPossibleStep() {
 
         return false;

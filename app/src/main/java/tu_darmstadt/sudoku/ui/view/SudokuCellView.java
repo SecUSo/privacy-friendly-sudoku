@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 
 import tu_darmstadt.sudoku.game.GameCell;
 import tu_darmstadt.sudoku.controller.Symbol;
+import tu_darmstadt.sudoku.game.IModelChangedListener;
 
 /**
  * Created by TMZ_LToP on 10.11.2015.
