@@ -3,6 +3,7 @@ package tu_darmstadt.sudoku.ui.view;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.GridLayout;
@@ -22,6 +23,7 @@ public class SudokuKeyboardLayout extends GridLayout {
     GameController gameController;
     boolean notesEnabled=false;
     Symbol symbolsToUse = Symbol.Default;
+    float normalTextSize = 0;
 
     OnClickListener listener = new OnClickListener() {
         @Override
@@ -83,17 +85,18 @@ public class SudokuKeyboardLayout extends GridLayout {
 
     public void toggleNotesEnabled() {
         notesEnabled = !notesEnabled;
+        if (normalTextSize == 0) {normalTextSize = buttons[0].getTextSize();}
         if(notesEnabled) {
-            setTextSize(buttons[0].getPaint().getTextSize()/2);
+            setTextSize(normalTextSize*0.6f);
         }else {
-            setTextSize(buttons[0].getPaint().getTextSize()*2);
+            setTextSize(normalTextSize);
         }
     }
 
     private void setTextSize(float size){
         for (SudokuButton b : buttons){
             //b.setTextSize(size);
-            b.getPaint().setTextSize(size);
+            b.setTextSize(TypedValue.COMPLEX_UNIT_PX,size);
         }
     }
 
