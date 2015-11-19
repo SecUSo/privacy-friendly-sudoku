@@ -23,6 +23,8 @@ import android.widget.TextView;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import tu_darmstadt.sudoku.controller.SaveLoadController;
 import tu_darmstadt.sudoku.controller.helper.GameInfoContainer;
@@ -35,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     RatingBar difficultyBar;
     TextView difficultyText;
     SharedPreferences settings;
+    Timer t = new Timer();
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -235,20 +238,11 @@ public class MainActivity extends AppCompatActivity {
 
             ImageView imageView = (ImageView) rootView.findViewById(R.id.gameTypeImage);
 
-            switch(gameType) {
-                case Default_6x6:
-                    imageView.setImageResource(R.drawable.icon_default_6x6);
-                    break;
-                case Default_12x12:
-                    imageView.setImageResource(R.drawable.icon_default_12x12);
-                    break;
-                case Default_9x9:
-                default:
-                    imageView.setImageResource(R.drawable.icon_default_9x9);
-            }
+            imageView.setImageResource(gameType.getResIDImage());
+
 
             TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(gameType.name());
+            textView.setText(getString(gameType.getStringResID()));
             return rootView;
         }
     }

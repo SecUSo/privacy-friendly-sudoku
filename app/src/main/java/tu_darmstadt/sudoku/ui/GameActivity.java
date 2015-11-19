@@ -12,8 +12,11 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import tu_darmstadt.sudoku.controller.SaveLoadController;
 import tu_darmstadt.sudoku.controller.GameController;
@@ -23,6 +26,7 @@ import tu_darmstadt.sudoku.ui.view.R;
 import tu_darmstadt.sudoku.ui.view.SudokuFieldLayout;
 import tu_darmstadt.sudoku.ui.view.SudokuKeyboardLayout;
 import tu_darmstadt.sudoku.ui.view.SudokuSpecialButtonLayout;
+import tu_darmstadt.sudoku.ui.view.SudokuTimer;
 
 public class GameActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -30,6 +34,10 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
     SudokuFieldLayout layout;
     SudokuKeyboardLayout keyboard;
     SudokuSpecialButtonLayout specialButtonLayout;
+    Timer t = new Timer();
+    SudokuTimer timerView;
+    boolean isActive = true;
+    TextView viewName ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,11 +100,28 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
         //set Special keys
         specialButtonLayout = (SudokuSpecialButtonLayout) findViewById(R.id.sudokuSpecialLayout);
         specialButtonLayout.setButtons(p.x, gameController, keyboard);
-        /*
-        // DEBUG
-        String debug = gameController.getFieldAsString();
-        Log.d("Sudoku", debug);
-         */
+
+        //set TimerView
+        timerView = (SudokuTimer)findViewById(R.id.timerView);
+
+        t.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                // run every second / ever 1000 milsecs
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (isActive) timerView.increase();
+                    }
+                });
+            }
+        }, 0, 1000);
+
+        //set GameName
+        viewName = (TextView) findViewById(R.id.gameModeText);
+        viewName.setText(getString(gameController.getGameType().getStringResID()));
+
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -106,6 +131,17 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        isActive = false;
+    }
+    @Override
+    public void onResume(){
+        super.onResume();
+        isActive = true;
     }
 
 

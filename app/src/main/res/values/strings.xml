@@ -51,4 +51,13 @@
     <string name="difficulty_moderate">Moderate</string>
     <string name="difficulty_hard">Hard</string>
 
+    <!--###GameActivity -->
+    <string name="Sudoku"></string>
+    <string name="gametype_default_9x9">Standart Sudoku 9x9</string>
+    <string name="gametype_default_6x6">Standart Sudoku 6x6</string>
+    <string name="gametype_unspecified">Unspec</string>
+    <string name="gametype_default_12x12">Standart Sudoku 12x12</string>
+    <string name="gametype_x_9x9">X Sudoku 9x9</string>
+    <string name="gametype_hyper_9x9">Hyper Sudoku 9x9</string>
+
 </resources>

@@ -3,16 +3,32 @@ package tu_darmstadt.sudoku.game;
 import java.util.LinkedList;
 import java.util.List;
 
+import tu_darmstadt.sudoku.ui.view.R;
+
 /**
  * Created by Chris on 09.11.2015.
  */
 public enum GameType {
-    Unspecified,
-    Default_9x9,
-    Default_12x12,
-    Default_6x6,
-    X_9x9,
-    Hyper_9x9;
+    Unspecified(1,1,1,R.string.gametype_unspecified,R.drawable.icon_default_6x6),
+    Default_9x9(9,3,3,R.string.gametype_default_9x9,R.drawable.icon_default_9x9),
+    Default_12x12(12,3,4,R.string.gametype_default_12x12,R.drawable.icon_default_12x12),
+    Default_6x6(6,2,3,R.string.gametype_default_6x6,R.drawable.icon_default_6x6),
+    X_9x9(9,3,3,R.string.gametype_x_9x9,R.drawable.icon_default_9x9),
+    Hyper_9x9(9,3,3,R.string.gametype_hyper_9x9,R.drawable.icon_default_9x9);
+    //TODO: change pictures for unsepc x9x9 and hyper 9x9 as soon as available
+    int resIDString;
+    int sectionWidth;
+    int sectionHeight;
+    int size;
+    int resIDImage;
+
+    GameType(int size, int sectionHeight, int sectionWidth, int resIDString, int resIDImage) {
+        this.resIDImage = resIDImage;
+        this.size = size;
+        this.sectionHeight = sectionHeight;
+        this.sectionWidth = sectionWidth;
+        this.resIDString = this.resIDString;
+    }
 
     public static List<GameType> getValidGameTypes() {
         LinkedList<GameType> result = new LinkedList<>();
@@ -22,51 +38,20 @@ public enum GameType {
         return result;
     }
 
-    public static int getSize(GameType type) {
-        switch(type) {
-            case X_9x9:
-            case Hyper_9x9:
-            case Default_9x9:
-                return 9;
-            case Default_12x12:
-                return 12;
-            case Default_6x6:
-                return 6;
-            case Unspecified:
-            default:
-                return 1;
-        }
+    public int getResIDImage(){return resIDImage;   }
+    public int getSectionHeight() {
+        return sectionHeight;
+    }
+    public int getSize() {
+        return size;
     }
 
-    public static int getSectionHeight(GameType type) {
-        switch(type) {
-            case X_9x9:
-            case Hyper_9x9:
-            case Default_9x9:
-                return 3;
-            case Default_12x12:
-                return 3;
-            case Default_6x6:
-                return 2;
-            case Unspecified:
-            default:
-                return 1;
-        }
+    public int getSectionWidth() {
+        return sectionWidth;
     }
 
-    public static int getSectionWidth(GameType type) {
-        switch(type) {
-            case X_9x9:
-            case Hyper_9x9:
-            case Default_9x9:
-                return 3;
-            case Default_12x12:
-                return 4;
-            case Default_6x6:
-                return 3;
-            case Unspecified:
-            default:
-                return 1;
-        }
+    public int getStringResID() {
+        return resIDString;
     }
+
 }

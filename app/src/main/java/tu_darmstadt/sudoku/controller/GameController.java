@@ -171,9 +171,9 @@ public class GameController implements IModelChangedListener {
 
     private void setGameType(GameType type) {
         this.gameType = type;
-        this.size = GameType.getSize(type);
-        this.sectionHeight = GameType.getSectionHeight(type);
-        this.sectionWidth = GameType.getSectionWidth(type);
+        this.size = type.getSize();
+        this.sectionHeight = type.getSectionHeight();
+        this.sectionWidth = type.getSectionWidth();
     }
 
     /** Use with care.
@@ -224,7 +224,7 @@ public class GameController implements IModelChangedListener {
 
     public int getValue(int row, int col) {
         GameCell cell = gameBoard.getCell(row, col);
-        return cell.getValue();
+            return cell.getValue();
     }
 
     public GameType getGameType() {

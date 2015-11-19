@@ -50,7 +50,7 @@ public class GameInfoContainer {
 
     public void parseFixedValues(String s){
         if(gameType != GameType.Unspecified && gameType != null) {
-            int size = GameType.getSize(gameType);
+            int size = gameType.getSize();
             int sq = size*size;
 
             if(s.length() != sq) {
@@ -65,7 +65,7 @@ public class GameInfoContainer {
 
     public void parseSetValues(String s) {
         if(gameType != GameType.Unspecified && gameType != null) {
-            int size = GameType.getSize(gameType);
+            int size = gameType.getSize();
             int sq = size*size;
 
             if(s.length() != sq) {
@@ -81,7 +81,7 @@ public class GameInfoContainer {
     public void parseNotes(String s) {
         String[] strings = s.split("-");
 
-        int size = GameType.getSize(gameType);
+        int size = gameType.getSize();
         int sq = size*size;
 
         if(gameType != GameType.Unspecified && gameType != null) {
