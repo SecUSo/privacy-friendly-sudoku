@@ -1,6 +1,8 @@
 package tu_darmstadt.sudoku.game;
 
 import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by Chris on 06.11.2015.
@@ -14,6 +16,7 @@ public class GameCell implements Cloneable {
     private int noteCount = 0;
     private boolean notes[];
     private int size = 0;
+    private List<IModelChangedListener> modelChangedListeners = new LinkedList<IModelChangedListener>();
 
     public GameCell(int row, int col, int size) {
         this(row,col,size,0);
@@ -43,6 +46,7 @@ public class GameCell implements Cloneable {
     public void setValue(int val) {
         deleteNotes();
         value = val;
+        notifyListeners();
     }
 
     public int getValue() {
@@ -66,6 +70,7 @@ public class GameCell implements Cloneable {
             noteCount = notes[val - 1] ? noteCount - 1 : noteCount + 1;
             notes[val - 1] = !notes[val - 1];
         }
+        notifyListeners();
     }
 
     public void setNote(int val) {
@@ -73,6 +78,7 @@ public class GameCell implements Cloneable {
             noteCount = notes[val - 1] ? noteCount : noteCount + 1;
             notes[val - 1] = true;
         }
+        notifyListeners();
     }
 
     public void deleteNote(int val) {
@@ -80,6 +86,7 @@ public class GameCell implements Cloneable {
             noteCount = notes[val - 1] ? noteCount - 1 : noteCount;
             notes[val - 1] = false;
         }
+        notifyListeners();
     }
 
     public int getNoteCount() {
@@ -96,6 +103,7 @@ public class GameCell implements Cloneable {
     public void deleteNotes() {
         noteCount = 0;
         notes = new boolean[size];
+        notifyListeners();
     }
 
     public boolean isFixed() {
@@ -164,7 +172,26 @@ public class GameCell implements Cloneable {
     @Override
     public GameCell clone() throws CloneNotSupportedException {
         GameCell clone = (GameCell) super.clone();
+        clone.modelChangedListeners = new LinkedList<IModelChangedListener>();
         clone.notes = (notes == null) ? null : Arrays.copyOf(notes, notes.length);
         return clone;
+    }
+
+    public void registerOnModelChangeListener(IModelChangedListener listener) {
+        if(!modelChangedListeners.contains(listener)) {
+            modelChangedListeners.add(listener);
+        }
+    }
+
+    public void removeOnModelChangeListener(IModelChangedListener listener) {
+        if(modelChangedListeners.contains(listener)) {
+            modelChangedListeners.remove(listener);
+        }
+    }
+
+    public void notifyListeners() {
+        for(IModelChangedListener m : modelChangedListeners) {
+            m.onModelChange(this);
+        }
     }
 }

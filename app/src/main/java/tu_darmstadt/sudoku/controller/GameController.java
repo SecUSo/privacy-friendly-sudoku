@@ -11,14 +11,16 @@ import tu_darmstadt.sudoku.game.CellConflictList;
 import tu_darmstadt.sudoku.game.GameBoard;
 import tu_darmstadt.sudoku.game.GameCell;
 import tu_darmstadt.sudoku.controller.helper.GameInfoContainer;
+import tu_darmstadt.sudoku.game.GameDifficulty;
 import tu_darmstadt.sudoku.game.GameType;
 import tu_darmstadt.sudoku.game.ICellAction;
+import tu_darmstadt.sudoku.game.IModelChangedListener;
 import tu_darmstadt.sudoku.game.solver.Solver;
 
 /**
  * Created by Chris on 06.11.2015.
  */
-public class GameController {
+public class GameController implements IModelChangedListener {
 
     private int size;
     private int sectionHeight;
@@ -59,7 +61,7 @@ public class GameController {
     public void loadNewLevel(GameType type, int difficulty) {
         switch(type) {
             case Default_6x6:
-                loadLevel(new GameInfoContainer(1, GameType.Default_6x6,
+                loadLevel(new GameInfoContainer(1, GameDifficulty.Easy, GameType.Default_6x6,
                         new int[]{1,0,0,0,0,6,
                                   4,0,6,1,0,0,
                                   0,0,2,3,0,5,
@@ -68,7 +70,7 @@ public class GameController {
                                   0,3,0,5,0,1}, null,null));
                 break;
             case Default_12x12:
-                loadLevel(new GameInfoContainer(2, GameType.Default_12x12,
+                loadLevel(new GameInfoContainer(2, GameDifficulty.Easy, GameType.Default_12x12,
                         new int[] {0, 2, 1, 0, 0, 6, 0, 0, 0, 8, 9, 0,
                                 10, 0,12, 0, 0, 2, 1,11, 0, 0, 0, 6,
                                 6, 0, 0, 4, 0,12, 0, 0, 0, 0, 2, 1,
@@ -86,7 +88,7 @@ public class GameController {
             case Default_9x9:
             case Unspecified:
             default:
-                loadLevel(new GameInfoContainer(3, GameType.Default_9x9,
+                loadLevel(new GameInfoContainer(3, GameDifficulty.Easy, GameType.Default_9x9,
                         new int[]{5, 0, 1, 9, 0, 0, 0, 0, 0,
                                 2, 0, 0, 0, 0, 4, 9, 5, 0,
                                 3, 9, 0, 7, 0, 0, 0, 2, 6,
@@ -234,12 +236,7 @@ public class GameController {
     }
 
     public boolean checkIfBoardIsFilled() {
-        //if(gameBoard.getEmptyCellCount() == 0) {
-            // TODO: board is filled. check it for errors.
-
-            //return true;
-        //}
-        return false;
+        return gameBoard.isFilled();
     }
 
     public void saveGame(Context context) {
@@ -393,6 +390,19 @@ public class GameController {
 
     public int getSectionWidth() {
         return sectionWidth;
+    }
+
+    @Override
+    public void onModelChange(GameCell c) {
+        if(gameBoard.isFilled()) {
+            List<CellConflict> errorList = new LinkedList<>();
+            if(gameBoard.isSolved(errorList)) {
+                // TODO: WE WON! :D
+            } else {
+                // TODO: errorList now holds all the errors
+                // TODO: display errors .. notify some view?
+            }
+        }
     }
 
 //    public void notifyListeners() {

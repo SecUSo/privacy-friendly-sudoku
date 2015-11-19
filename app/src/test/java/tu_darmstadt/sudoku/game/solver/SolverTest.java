@@ -10,6 +10,7 @@ import java.util.LinkedList;
 import tu_darmstadt.sudoku.controller.GameController;
 import tu_darmstadt.sudoku.controller.helper.GameInfoContainer;
 import tu_darmstadt.sudoku.game.GameBoard;
+import tu_darmstadt.sudoku.game.GameDifficulty;
 import tu_darmstadt.sudoku.game.GameType;
 
 import static junit.framework.Assert.assertEquals;
@@ -24,7 +25,7 @@ public class SolverTest {
     @Before
     public void init() {
         controller = new GameController();
-        controller.loadLevel(new GameInfoContainer(0, GameType.Default_9x9,
+        controller.loadLevel(new GameInfoContainer(0, GameDifficulty.Easy  ,GameType.Default_9x9,
                 new int[]{5, 0, 1, 9, 0, 0, 0, 0, 0,
                         2, 0, 0, 0, 0, 4, 9, 5, 0,
                         3, 9, 0, 7, 0, 0, 0, 2, 6,
@@ -62,7 +63,7 @@ public class SolverTest {
 
     @Test
     public void solveSingleSolution2() {
-        controller.loadLevel(new GameInfoContainer(0, GameType.Default_9x9,
+        controller.loadLevel(new GameInfoContainer(0, GameDifficulty.Easy, GameType.Default_9x9,
                 new int[]{0,0,0,0,4,1,0,0,0,0,6,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,3,2,0,6,0,0,0,0,0,0,0,0,0,5,0,0,4,1,7,0,0,0,0,0,0,0,0,0,0,0,2,0,0,3,0,0,0,4,8,0,0,0,0,0,0,5,0,1,0,0,0,0,0,0}
                 , null, null));
 
@@ -85,7 +86,7 @@ public class SolverTest {
 
     @Test
     public void solveMultipleSolutions1() {
-        controller.loadLevel(new GameInfoContainer(0, GameType.Default_6x6,
+        controller.loadLevel(new GameInfoContainer(0, GameDifficulty.Easy, GameType.Default_6x6,
                 new int[]{1,0,0,0,0,6,
                         4,0,6,1,0,0,
                         0,0,2,3,0,5,

@@ -21,16 +21,19 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import tu_darmstadt.sudoku.controller.SaveLoadController;
 import tu_darmstadt.sudoku.controller.helper.GameInfoContainer;
+import tu_darmstadt.sudoku.game.GameDifficulty;
 import tu_darmstadt.sudoku.game.GameType;
 import tu_darmstadt.sudoku.ui.view.R;
 
 public class MainActivity extends AppCompatActivity {
 
     RatingBar difficultyBar;
+    TextView difficultyText;
     SharedPreferences settings;
 
     /**
@@ -76,6 +79,19 @@ public class MainActivity extends AppCompatActivity {
 
         // Set the difficulty Slider to whatever was chosen the last time
         difficultyBar = (RatingBar)findViewById(R.id.difficultyBar);
+        difficultyText = (TextView) findViewById(R.id.difficultyText);
+        final LinkedList<GameDifficulty> difficultyList = GameDifficulty.getValidDifficultyList();
+        difficultyBar.setNumStars(difficultyList.size());
+        difficultyBar.setMax(difficultyList.size());
+        difficultyBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                if (rating < 1) {
+                    ratingBar.setRating(1);
+                }
+                difficultyText.setText(getString(difficultyList.get((int)ratingBar.getRating()-1).getStringResID()));
+            }
+        });
         int lastChosenDifficulty = settings.getInt("lastChosenDifficulty", 1);
         difficultyBar.setProgress(lastChosenDifficulty);
 

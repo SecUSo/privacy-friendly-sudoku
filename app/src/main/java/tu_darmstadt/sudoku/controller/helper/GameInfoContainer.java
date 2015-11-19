@@ -2,9 +2,12 @@ package tu_darmstadt.sudoku.controller.helper;
 
 import android.util.Log;
 
+import java.util.Date;
+
 import tu_darmstadt.sudoku.controller.GameController;
 import tu_darmstadt.sudoku.controller.Symbol;
 import tu_darmstadt.sudoku.game.GameCell;
+import tu_darmstadt.sudoku.game.GameDifficulty;
 import tu_darmstadt.sudoku.game.GameType;
 import tu_darmstadt.sudoku.game.ICellAction;
 
@@ -15,16 +18,23 @@ public class GameInfoContainer {
 
     GameType gameType;
     int ID;
-    int time;
-    int difficulty;
+    int timePlayed;
+    Date lastTimePlayed;
+    GameDifficulty difficulty;
     int[] fixedValues;
     int[] setValues;
     boolean[][] setNotes;
 
     public GameInfoContainer() {}
-    public GameInfoContainer(int ID, GameType gameType, int[] fixedValues, int[] setValues, boolean[][] setNotes) {
+    public GameInfoContainer(int ID, GameDifficulty difficulty, GameType gameType, int[] fixedValues, int[] setValues, boolean[][] setNotes) {
+        this(ID, difficulty, new Date(), 0, gameType, fixedValues, setValues, setNotes);
+    }
+    public GameInfoContainer(int ID, GameDifficulty difficulty, Date lastTimePlayed, int timePlayed, GameType gameType, int[] fixedValues, int[] setValues, boolean[][] setNotes) {
         this.ID = ID;
+        this.difficulty = difficulty;
         this.gameType = gameType;
+        this.timePlayed = timePlayed;
+        this.lastTimePlayed = lastTimePlayed;
         this.fixedValues = fixedValues;
         this.setValues = setValues;
         this.setNotes = setNotes;

@@ -29,4 +29,9 @@
     <!-- New Game -->
     <string name="start_game">Spiel starten</string>
 
+    <!-- ###Difficulty### -->
+    <string name="difficulty_easy">Leicht</string>
+    <string name="difficulty_moderate">Normal</string>
+    <string name="difficulty_hard">Schwer</string>
+
 </resources>

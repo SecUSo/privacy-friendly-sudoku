@@ -15,6 +15,7 @@ public class GameBoard implements Cloneable {
     //private List additionalSections
     private int size;
     private GameCell[][] field;
+    private List<IModelChangedListener> modelChangedListeners = new LinkedList<>();
 
     public GameBoard(int size, int sectionHeight, int sectionWidth) {
         this.sectionHeight = sectionHeight;
@@ -199,4 +200,40 @@ public class GameBoard implements Cloneable {
         return sb.toString();
     }
 
+    public boolean isFilled() {
+        return actionOnCells(new ICellAction<Boolean>() {
+            @Override
+            public Boolean action(GameCell gc, Boolean existing) {
+                return gc.hasValue() ? existing : false;
+            }
+        }, true);
+    }
+
+    public void registerOnModelChangeListener(final IModelChangedListener listener) {
+        if(!modelChangedListeners.contains(listener)) {
+            actionOnCells(new ICellAction<Boolean>() {
+
+                @Override
+                public Boolean action(GameCell gc, Boolean existing) {
+                    gc.registerOnModelChangeListener(listener);
+                    return existing;
+                }
+            }, false);
+            modelChangedListeners.add(listener);
+        }
+    }
+
+    public void deleteOnModelChangeListener(final IModelChangedListener listener) {
+        if(modelChangedListeners.contains(listener)) {
+            actionOnCells(new ICellAction<Boolean>() {
+
+                @Override
+                public Boolean action(GameCell gc, Boolean existing) {
+                    gc.removeOnModelChangeListener(listener);
+                    return existing;
+                }
+            }, false);
+            modelChangedListeners.remove(listener);
+        }
+    }
 }

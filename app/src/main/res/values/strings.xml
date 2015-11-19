@@ -36,7 +36,6 @@
     <string name="pref_automatic_note_deletion">Note deletion</string>
     <string name="pref_automatic_note_deletion_summary">Automatically remove notes when setting values on connected cells</string>
 
-
     <!-- ###ABOUT### -->
     <string name="app_name_long">Privacy friendly Sudoku</string>
     <string name="version_number">v0.9</string>
@@ -46,5 +45,10 @@
     <string name="privacy_friendly">This application belongs to the Privacy Friendly Apps.</string>
     <string name="more_info">More information can be found on:</string>
     <string name="url"><a href="https://www.secuso.informatik.tu-darmstadt.de/en/research/results/">https://www.secuso.org</a></string>
+
+    <!-- ###Difficulty### -->
+    <string name="difficulty_easy">Easy</string>
+    <string name="difficulty_moderate">Moderate</string>
+    <string name="difficulty_hard">Hard</string>
 
 </resources>
