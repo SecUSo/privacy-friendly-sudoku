@@ -113,4 +113,19 @@ public class SolverTest {
         }
     }
 
+    @Test
+    public void solveNotSolvableTest() {
+        controller.loadLevel(new GameInfoContainer(0, GameDifficulty.Easy, GameType.Default_6x6,
+                new int[]{1,2,0,0,0,6,
+                          4,0,6,1,3,0,
+                          0,0,2,3,0,5,
+                          0,4,0,0,1,0,
+                          0,5,0,2,0,0,
+                          0,3,0,5,0,1}, null,null));
+
+        LinkedList<GameBoard> result = controller.solve();
+
+        assertEquals(0, result.size());
+    }
+
 }

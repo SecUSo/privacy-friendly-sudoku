@@ -14,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 import java.util.Timer;
@@ -36,9 +37,7 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
     SudokuFieldLayout layout;
     SudokuKeyboardLayout keyboard;
     SudokuSpecialButtonLayout specialButtonLayout;
-    Timer t = new Timer();
     TextView timerView;
-    boolean isActive = true;
     TextView viewName ;
     RatingBar ratingBar;
 
@@ -84,7 +83,7 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
             gameController.loadLevel(loadableGames.get(loadLevelID));
         } else {
             // load a new level
-            gameController.loadNewLevel(gameType, gameDifficulty);
+            gameController.loadNewLevel(gameType, GameDifficulty.getValidDifficultyList().get(gameDifficulty));
         }
 
         layout.setGame(gameController);
@@ -141,12 +140,13 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onPause(){
         super.onPause();
-        isActive = false;
+        gameController.saveGame(this);
+        gameController.pauseTimer();
     }
     @Override
     public void onResume(){
         super.onResume();
-        isActive = true;
+        gameController.startTimer();
     }
 
 
@@ -156,7 +156,6 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            gameController.saveGame(getBaseContext());
             finish();
             super.onBackPressed();
         }
@@ -181,7 +180,6 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_newgame:
                 //create new game
                 intent = new Intent(this, MainActivity.class);
-                gameController.saveGame(getBaseContext());
                 finish();
                 startActivity(intent);
                 break;
@@ -189,7 +187,6 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_continue:
                 //create new game
                 intent = new Intent(this, LoadGameActivity.class);
-                gameController.saveGame(getBaseContext());
                 finish();
                 startActivity(intent);
                 break;
@@ -197,8 +194,6 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
             case R.id.menu_settings:
                 //open settings
                 intent = new Intent(this,SettingsActivity.class);
-                gameController.saveGame(getBaseContext());
-                finish();
                 startActivity(intent);
                 break;
 
@@ -211,8 +206,6 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
             case R.id.menu_about:
                 //open about page
                 intent = new Intent(this,AboutActivity.class);
-                gameController.saveGame(getBaseContext());
-                finish();
                 startActivity(intent);
                 break;
 
@@ -231,6 +224,8 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onSolved() {
+        Toast t = Toast.makeText(this,"Congratulations you have solved the puzzle!", Toast.LENGTH_SHORT);
+        t.show();
         // TODO: WE WON.. do something awesome :)
     }
 
@@ -244,6 +239,6 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
         s = (seconds< 10)? "0"+String.valueOf(seconds):String.valueOf(seconds);
         m = (minutes< 10)? "0"+String.valueOf(minutes):String.valueOf(minutes);
         h = (hours< 10)? "0"+String.valueOf(hours):String.valueOf(hours);
-        timerView.setText(h+":"+m+":"+s);
+        timerView.setText(h + ":" + m + ":" + s);
     }
 }

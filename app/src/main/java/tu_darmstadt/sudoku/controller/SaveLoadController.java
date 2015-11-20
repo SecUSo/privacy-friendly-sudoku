@@ -76,11 +76,15 @@ public class SaveLoadController {
 
                     // fill the container
                     String id = file.getName().substring(5, file.getName().lastIndexOf("."));
+                    int i = 0;
                     gic.setID(Integer.valueOf(id));    // save_x.txt
-                    gic.parseGameType(values[0]);
-                    gic.parseFixedValues(values[1]);
-                    gic.parseSetValues(values[2]);
-                    gic.parseNotes(values[3]);
+                    gic.parseGameType(values[i++]);
+                    gic.parseTime(values[i++]);
+                    gic.parseDate(values[i++]);
+                    gic.parseDifficulty(values[i++]);
+                    gic.parseFixedValues(values[i++]);
+                    gic.parseSetValues(values[i++]);
+                    gic.parseNotes(values[i++]);
                 } catch(IllegalArgumentException e) {
                     file.delete();
                     continue;

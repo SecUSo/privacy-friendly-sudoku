@@ -9,7 +9,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.logging.Handler;
 
-import tu_darmstadt.sudoku.controller.generator.Generator;
+import tu_darmstadt.sudoku.controller.solver.Solver;
 import tu_darmstadt.sudoku.game.CellConflict;
 import tu_darmstadt.sudoku.game.CellConflictList;
 import tu_darmstadt.sudoku.game.GameBoard;
@@ -42,11 +42,13 @@ public class GameController implements IModelChangedListener {
     private CellConflictList errorList = new CellConflictList();
     private int selectedValue;
     private LinkedList<IGameSolvedListener> solvedListeners = new LinkedList<>();
+    private boolean notifiedOnSolvedListeners = false;
     private Timer timer;
     private android.os.Handler handler = new android.os.Handler();
     private TimerTask timerTask;
     private int time = 0;
     private LinkedList<ITimerListener> timerListeners = new LinkedList<>();
+    private boolean timerRunning = false;
 
 //    private Solver solver;
 //    private SudokuGenerator generator;
@@ -70,8 +72,11 @@ public class GameController implements IModelChangedListener {
         return gameID;
     }
 
-    public void loadNewLevel(GameType type, int difficulty) {
-        Generator generator = new Generator();
+    public void loadNewLevel(GameType type, GameDifficulty difficulty) {
+        //Generator generator = new Generator(type, difficulty);
+        //GameBoard randomBoard = generator.getGameBoard();
+
+
         // TODO call methods to generate level.
 
         switch(type) {
@@ -85,7 +90,7 @@ public class GameController implements IModelChangedListener {
                                   0,3,0,5,0,1}, null,null));
                 break;
             case Default_12x12:
-                loadLevel(new GameInfoContainer(2, GameDifficulty.Easy, GameType.Default_12x12,
+                loadLevel(new GameInfoContainer(2, GameDifficulty.Hard, GameType.Default_12x12,
                         new int[] {0, 2, 1, 0, 0, 6, 0, 0, 0, 8, 9, 0,
                                 10, 0,12, 0, 0, 2, 1,11, 0, 0, 0, 6,
                                 6, 0, 0, 4, 0,12, 0, 0, 0, 0, 2, 1,
@@ -103,7 +108,7 @@ public class GameController implements IModelChangedListener {
             case Default_9x9:
             case Unspecified:
             default:
-                loadLevel(new GameInfoContainer(3, GameDifficulty.Easy, GameType.Default_9x9,
+                loadLevel(new GameInfoContainer(3, GameDifficulty.Moderate, GameType.Default_9x9,
                         new int[]{5, 0, 1, 9, 0, 0, 0, 0, 0,
                                 2, 0, 0, 0, 0, 4, 9, 5, 0,
                                 3, 9, 0, 7, 0, 0, 0, 2, 6,
@@ -117,12 +122,17 @@ public class GameController implements IModelChangedListener {
         }
     }
 
+    public int getTime() {
+        return time;
+    }
+
     public void loadLevel(GameInfoContainer gic) {
         int[] fixedValues = gic.getFixedValues();
         int[] setValues = gic.getSetValues();
         boolean[][] setNotes = gic.getSetNotes();
         this.gameID = gic.getID();
         this.difficulty = gic.getDifficulty();
+        this.time = gic.getTime();
 
         setGameType(gic.getGameType());
         this.gameBoard = new GameBoard(gic.getGameType());
@@ -245,7 +255,7 @@ public class GameController implements IModelChangedListener {
     }
 
     public <T> T actionOnCells(ICellAction<T> ca, T existing) {
-        return gameBoard.actionOnCells(ca,existing);
+        return gameBoard.actionOnCells(ca, existing);
     }
 
     public boolean checkIfBoardIsFilled() {
@@ -261,7 +271,12 @@ public class GameController implements IModelChangedListener {
             gameID = settings.getInt("lastGameID", 0)+1;
 
             SharedPreferences.Editor editor = settings.edit();
-            editor.putInt("lastGameID", gameID);
+            // is anyone ever gonna play so many levels? :)
+            if(gameID == Integer.MAX_VALUE-1) {
+                editor.putInt("lastGameID", 1);
+            } else {
+                editor.putInt("lastGameID", gameID);
+            }
             editor.commit();
         }
 
@@ -414,11 +429,19 @@ public class GameController implements IModelChangedListener {
         if(gameBoard.isFilled()) {
             List<CellConflict> errorList = new LinkedList<>();
             if(gameBoard.isSolved(errorList)) {
-                notifySolvedListeners();
+                if(!notifiedOnSolvedListeners) {
+                    notifiedOnSolvedListeners = true;
+                    notifySolvedListeners();
+                    //TODO disable controls and play animation in view. onSolved method is called.
+                }
             } else {
+                //notifiedOnSolvedListeners = false;
+
                 // TODO: errorList now holds all the errors
                 // TODO: display errors .. notify some view?
             }
+        } else {
+            notifiedOnSolvedListeners = false;
         }
     }
 
@@ -451,30 +474,35 @@ public class GameController implements IModelChangedListener {
         }
     }
 
-    public void initTimer() {
-
+    private void initTimer() {
         timerTask = new TimerTask() {
             @Override
             public void run() {
             handler.post(new Runnable() {
                 @Override
                 public void run() {
-                    notifyTimerListener(time++);
+                    if(timerRunning) {
+                        notifyTimerListener(time++);
+                    }
                 }
             });
 
             }
         };
         timer = new Timer();
-    }
-
-    public void startTimer() {
-
         timer.scheduleAtFixedRate(timerTask,0,1000);
     }
 
+    public void startTimer() {
+        if(!timerRunning) {
+            timerRunning = true;
+        }
+    }
+
     public void pauseTimer(){
-        timer.cancel();
+        if(timerRunning) {
+            timerRunning = false;
+        }
     }
 
 }

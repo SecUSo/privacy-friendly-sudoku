@@ -71,24 +71,24 @@ public class GameCell implements Cloneable {
         if(!isFixed()) {
             noteCount = notes[val - 1] ? noteCount - 1 : noteCount + 1;
             notes[val - 1] = !notes[val - 1];
+            notifyListeners();
         }
-        notifyListeners();
     }
 
     public void setNote(int val) {
         if(!isFixed()) {
             noteCount = notes[val - 1] ? noteCount : noteCount + 1;
             notes[val - 1] = true;
+            notifyListeners();
         }
-        notifyListeners();
     }
 
     public void deleteNote(int val) {
         if(!isFixed()) {
             noteCount = notes[val - 1] ? noteCount - 1 : noteCount;
             notes[val - 1] = false;
+            notifyListeners();
         }
-        notifyListeners();
     }
 
     public int getNoteCount() {

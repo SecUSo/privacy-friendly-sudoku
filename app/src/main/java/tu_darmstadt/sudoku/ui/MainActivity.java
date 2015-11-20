@@ -129,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case R.id.playButton:
                     GameType gameType = GameType.getValidGameTypes().get(mViewPager.getCurrentItem());
-                    int gameDifficulty = difficultyBar.getProgress();
+                    int gameDifficulty = difficultyBar.getProgress()-1;
 
                     // save current setting for later
                     SharedPreferences.Editor editor = settings.edit();

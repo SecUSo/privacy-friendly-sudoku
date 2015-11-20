@@ -1,4 +1,4 @@
-package tu_darmstadt.sudoku.controller;
+package tu_darmstadt.sudoku.controller.solver;
 
 import android.graphics.Point;
 import android.util.Log;
@@ -88,8 +88,7 @@ public class Solver {
 
         checkSolvedCells(gameBoard);
 
-        String string = gameBoard.toString();
-
+        //String string = gameBoard.toString();
         if(isDone(gameBoard)) {
             solutions.add(gameBoard);
             return true;
@@ -97,6 +96,9 @@ public class Solver {
 
         if(showPossibles(gameBoard))
             return solve(gameBoard);
+
+        if(isImpossible(gameBoard))
+            return false;
 
         if(searchHiddenSingles(gameBoard))
             return solve(gameBoard);
@@ -135,6 +137,11 @@ public class Solver {
 
                     result = solve(gameBoardCopy);
 
+                    if(solutions.size() > 1) {
+                        // don't search for more than 1 solution
+                        return result;
+                    }
+
                     //if (result) {
                         // stop after we found 1 solution
                         //return true;
@@ -150,6 +157,15 @@ public class Solver {
             }
         }
         return result;
+    }
+
+    public boolean isImpossible(GameBoard gameBoard) {
+        return gameBoard.actionOnCells(new ICellAction<Boolean>() {
+            @Override
+            public Boolean action(GameCell gc, Boolean existing) {
+                return (gc.getNoteCount() == 0 && !gc.hasValue()) ? true : existing;
+            }
+        }, false);
     }
 
     public boolean calculateNextPossibleStep() {

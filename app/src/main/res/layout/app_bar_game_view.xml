@@ -29,7 +29,7 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="testMode"
+                    android:text="@string/gametype_unspecified"
                     android:id="@+id/gameModeText"
                     android:layout_weight="8"/>
                 <RelativeLayout
@@ -39,13 +39,14 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="lable"
+                        android:text="@string/difficulty_easy"
                         android:layout_centerHorizontal="true"
                         android:id="@+id/difficultyText"
                         />
                     <RatingBar
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:numStars="3"
                         android:clickable="false"
                         android:id="@+id/gameModeStar"
                         android:layout_centerHorizontal="true"
@@ -56,7 +57,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="test"
+                    android:text="00:00:00"
                     android:layout_weight="2"
                     android:id="@+id/timerView"
                     android:gravity="right"

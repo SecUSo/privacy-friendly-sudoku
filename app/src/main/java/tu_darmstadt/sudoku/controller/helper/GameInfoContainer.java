@@ -31,9 +31,9 @@ public class GameInfoContainer {
     }
     public GameInfoContainer(int ID, GameDifficulty difficulty, Date lastTimePlayed, int timePlayed, GameType gameType, int[] fixedValues, int[] setValues, boolean[][] setNotes) {
         this.ID = ID;
+        this.timePlayed = timePlayed;
         this.difficulty = difficulty;
         this.gameType = gameType;
-        this.timePlayed = timePlayed;
         this.lastTimePlayed = lastTimePlayed;
         this.fixedValues = fixedValues;
         this.setValues = setValues;
@@ -46,6 +46,36 @@ public class GameInfoContainer {
 
     public void parseGameType(String s) {
         gameType = Enum.valueOf(GameType.class, s);
+        if(gameType == null) {
+            throw new IllegalArgumentException("GameInfoContainer: gameType could not be set.");
+        }
+    }
+
+    public int getTime() {
+        return timePlayed;
+    }
+
+    public void parseTime(String s) {
+        try {
+            this.timePlayed = Integer.valueOf(s);
+        } catch(NumberFormatException e) {
+            throw new IllegalArgumentException("GameInfoContainer: Can not parse time.", e);
+        }
+    }
+
+    public void parseDate(String s) {
+        try {
+            this.lastTimePlayed = new Date(Long.valueOf(s));
+        } catch(NumberFormatException e) {
+            throw new IllegalArgumentException("GameInfoContainer: LastTimePlayed Date can not be extracted.", e);
+        }
+    }
+
+    public void parseDifficulty(String s) {
+        difficulty = Enum.valueOf(GameDifficulty.class, s);
+        if(difficulty == null) {
+            throw new IllegalArgumentException("GameInfoContainer: difficulty could not be set.");
+        }
     }
 
     public void parseFixedValues(String s){
@@ -127,9 +157,15 @@ public class GameInfoContainer {
 
     public static String getGameInfo(GameController controller) {
         StringBuilder sb = new StringBuilder();
-
+        Date today = new Date();
         // TODO add some game information
         sb.append(controller.getGameType().name());
+        sb.append("/");
+        sb.append(controller.getTime());
+        sb.append("/");
+        sb.append(today.getTime());
+        sb.append("/");
+        sb.append(controller.getDifficulty().name());
         sb.append("/");
         sb.append(getFixedCells(controller));
         sb.append("/");
