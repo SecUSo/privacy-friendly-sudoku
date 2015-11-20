@@ -5,6 +5,9 @@ import android.content.SharedPreferences;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.logging.Handler;
 
 import tu_darmstadt.sudoku.controller.generator.Generator;
 import tu_darmstadt.sudoku.game.CellConflict;
@@ -17,6 +20,7 @@ import tu_darmstadt.sudoku.game.GameType;
 import tu_darmstadt.sudoku.game.ICellAction;
 import tu_darmstadt.sudoku.game.listeners.IGameSolvedListener;
 import tu_darmstadt.sudoku.game.listeners.IModelChangedListener;
+import tu_darmstadt.sudoku.game.listeners.ITimerListener;
 
 /**
  * Created by Chris on 06.11.2015.
@@ -38,6 +42,11 @@ public class GameController implements IModelChangedListener {
     private CellConflictList errorList = new CellConflictList();
     private int selectedValue;
     private LinkedList<IGameSolvedListener> solvedListeners = new LinkedList<>();
+    private Timer timer;
+    private android.os.Handler handler = new android.os.Handler();
+    private TimerTask timerTask;
+    private int time = 0;
+    private LinkedList<ITimerListener> timerListeners = new LinkedList<>();
 
 //    private Solver solver;
 //    private SudokuGenerator generator;
@@ -54,6 +63,7 @@ public class GameController implements IModelChangedListener {
         setGameType(type);
         setSettings(pref);
         gameBoard = new GameBoard(type);
+        initTimer();
     }
 
     public int getGameID() {
@@ -429,4 +439,42 @@ public class GameController implements IModelChangedListener {
             l.onSolved();
         }
     }
+    public void notifyTimerListener(int time) {
+        for (ITimerListener listener : timerListeners){
+            listener.onTick(time);
+        }
+    }
+
+    public void registerTimerListener(ITimerListener listener){
+        if (!timerListeners.contains(listener)){
+            timerListeners.add(listener);
+        }
+    }
+
+    public void initTimer() {
+
+        timerTask = new TimerTask() {
+            @Override
+            public void run() {
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    notifyTimerListener(time++);
+                }
+            });
+
+            }
+        };
+        timer = new Timer();
+    }
+
+    public void startTimer() {
+
+        timer.scheduleAtFixedRate(timerTask,0,1000);
+    }
+
+    public void pauseTimer(){
+        timer.cancel();
+    }
+
 }

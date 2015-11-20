@@ -17,7 +17,6 @@ import android.widget.TextView;
 
 import java.util.List;
 import java.util.Timer;
-import java.util.TimerTask;
 
 import tu_darmstadt.sudoku.controller.SaveLoadController;
 import tu_darmstadt.sudoku.controller.GameController;
@@ -25,20 +24,20 @@ import tu_darmstadt.sudoku.controller.helper.GameInfoContainer;
 import tu_darmstadt.sudoku.game.GameDifficulty;
 import tu_darmstadt.sudoku.game.GameType;
 import tu_darmstadt.sudoku.game.listeners.IGameSolvedListener;
+import tu_darmstadt.sudoku.game.listeners.ITimerListener;
 import tu_darmstadt.sudoku.ui.view.R;
 import tu_darmstadt.sudoku.ui.view.SudokuFieldLayout;
 import tu_darmstadt.sudoku.ui.view.SudokuKeyboardLayout;
 import tu_darmstadt.sudoku.ui.view.SudokuSpecialButtonLayout;
-import tu_darmstadt.sudoku.ui.view.SudokuTimer;
 
-public class GameActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, IGameSolvedListener {
+public class GameActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, IGameSolvedListener ,ITimerListener {
 
     GameController gameController;
     SudokuFieldLayout layout;
     SudokuKeyboardLayout keyboard;
     SudokuSpecialButtonLayout specialButtonLayout;
     Timer t = new Timer();
-    SudokuTimer timerView;
+    TextView timerView;
     boolean isActive = true;
     TextView viewName ;
     RatingBar ratingBar;
@@ -76,6 +75,7 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
         layout = (SudokuFieldLayout)findViewById(R.id.sudokuLayout);
         gameController = new GameController(sharedPref);
         gameController.registerGameSolvedListener(this);
+        gameController.registerTimerListener(this);
 
         List<GameInfoContainer> loadableGames = SaveLoadController.getLoadableGameList();
 
@@ -107,20 +107,8 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
         specialButtonLayout.setButtons(p.x, gameController, keyboard);
 
         //set TimerView
-        timerView = (SudokuTimer)findViewById(R.id.timerView);
+        timerView = (TextView)findViewById(R.id.timerView);
 
-        t.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                // run every second / ever 1000 milsecs
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (isActive) timerView.increase();
-                    }
-                });
-            }
-        }, 0, 1000);
 
         //set GameName
         viewName = (TextView) findViewById(R.id.gameModeText);
@@ -145,6 +133,9 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        // start the game
+        gameController.startTimer();
     }
 
     @Override
@@ -241,5 +232,18 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onSolved() {
         // TODO: WE WON.. do something awesome :)
+    }
+
+    @Override
+    public void onTick(int time) {
+        //do something not so awesome
+        int seconds = time % 60;
+        int minutes = ((time -seconds)/60)%60 ;
+        int hours = (time - minutes - seconds)/(3600);
+        String h,m,s;
+        s = (seconds< 10)? "0"+String.valueOf(seconds):String.valueOf(seconds);
+        m = (minutes< 10)? "0"+String.valueOf(minutes):String.valueOf(minutes);
+        h = (hours< 10)? "0"+String.valueOf(hours):String.valueOf(hours);
+        timerView.setText(h+":"+m+":"+s);
     }
 }
