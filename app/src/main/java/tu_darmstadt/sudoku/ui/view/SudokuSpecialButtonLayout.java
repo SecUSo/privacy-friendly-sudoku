@@ -49,14 +49,11 @@ public class SudokuSpecialButtonLayout extends LinearLayout {
                         break;
                     case Hint:
                         if(gameController.isValidCellSelected()) {
-                            LinkedList<GameBoard> solved = gameController.solve();
-                            if(solved.size() >= 1) {
-                                GameBoard solvedBoard = solved.get(0);
-                                // TODO test every placed value so far
+                            int[] solved = gameController.solve();
+                            // TODO test every placed value so far
 
-                                // and reveal the selected value.
-                                gameController.selectValue(solvedBoard.getCell(row, col).getValue());
-                            }
+                            // and reveal the selected value.
+                            gameController.selectValue(solved[row * gameController.getSize() + col]);
                         }
                         break;
                     case NumberOrCellFirst:

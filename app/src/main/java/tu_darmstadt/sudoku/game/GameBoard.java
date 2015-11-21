@@ -28,6 +28,10 @@ public class GameBoard implements Cloneable {
         field = new GameCell[size][size];
     }
 
+    public GameType getGameType() {
+        return gameType;
+    }
+
     public void reset() {
         actionOnCells(new ICellAction<Boolean>() {
             @Override

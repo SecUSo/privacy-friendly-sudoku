@@ -9,6 +9,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.logging.Handler;
 
+import tu_darmstadt.sudoku.controller.qqwing.QQWing;
 import tu_darmstadt.sudoku.controller.solver.Solver;
 import tu_darmstadt.sudoku.game.CellConflict;
 import tu_darmstadt.sudoku.game.CellConflictList;
@@ -32,6 +33,7 @@ public class GameController implements IModelChangedListener {
     private int sectionWidth;
     private GameBoard gameBoard;
     private Solver solver;
+    private int[] solution;
     private LinkedList<GameBoard> solvedBoards = new LinkedList<>();
     private GameType gameType;
     private int selectedRow;
@@ -49,6 +51,7 @@ public class GameController implements IModelChangedListener {
     private int time = 0;
     private LinkedList<ITimerListener> timerListeners = new LinkedList<>();
     private boolean timerRunning = false;
+    private QQWingController qqWingController = new QQWingController();
 
 //    private Solver solver;
 //    private SudokuGenerator generator;
@@ -73,13 +76,15 @@ public class GameController implements IModelChangedListener {
     }
 
     public void loadNewLevel(GameType type, GameDifficulty difficulty) {
-        //Generator generator = new Generator(type, difficulty);
+        //Generator generator = new Generator(type, gameDifficulty);
         //GameBoard randomBoard = generator.getGameBoard();
 
 
         // TODO call methods to generate level.
+        int[] generated = qqWingController.generate(type, difficulty);
+        loadLevel(new GameInfoContainer(0, difficulty, type, generated, null, null));
 
-        switch(type) {
+        /* switch(type) {
             case Default_6x6:
                 loadLevel(new GameInfoContainer(1, GameDifficulty.Easy, GameType.Default_6x6,
                         new int[]{1,0,0,0,0,6,
@@ -119,7 +124,7 @@ public class GameController implements IModelChangedListener {
                                 6, 4, 0, 0, 0, 0, 0, 0, 0,
                                 7, 0, 0, 0, 1, 0, 3, 0, 5}
                         , null, null));
-        }
+        }*/
     }
 
     public int getTime() {
@@ -166,24 +171,30 @@ public class GameController implements IModelChangedListener {
         gameBoard.registerOnModelChangeListener(this);
 
         // call the solve function to get the solution of this board
-        solve();
+        //qqWingController.solve(gameBoard);
     }
 
     public void setSettings(SharedPreferences pref) {
         settings = pref;
     }
 
-    public LinkedList<GameBoard> solve() {
-        if(solvedBoards.size() == 0) {
+    public int[] solve() {
 
-            solver = new Solver(gameBoard);
-
-            if (solver.solve(solver.getGameBoard())) {
-                solvedBoards.addAll(solver.getSolutions());
-                return solvedBoards;
-            }
+        if(solution == null) {
+            solution = qqWingController.solve(gameBoard);
         }
-        return solvedBoards;
+        return solution;
+
+//        if(solvedBoards.size() == 0) {
+//
+//            solver = new Solver(gameBoard);
+//
+//            if (solver.solve(solver.getGameBoard())) {
+//                solvedBoards.addAll(solver.getSolutions());
+//                return solvedBoards;
+//            }
+//        }
+//        return solvedBoards;
     }
 
     /*public boolean loadLevel(GameBoard level) {

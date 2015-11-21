@@ -11,6 +11,7 @@ import tu_darmstadt.sudoku.ui.view.R;
  */
 public enum GameDifficulty {
 
+    Unspecified(R.string.gametype_unspecified),
     Easy(R.string.difficulty_easy),
     Moderate(R.string.difficulty_moderate),
     Hard(R.string.difficulty_hard);
