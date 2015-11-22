@@ -33,6 +33,7 @@ public class QQWingController {
         // TODO: GameType options.
         opts.gameDifficulty = difficulty;
         opts.action = Action.GENERATE;
+        opts.threads = Runtime.getRuntime().availableProcessors();
         doAction(type);
         return generated;
     }
@@ -52,7 +53,12 @@ public class QQWingController {
 
         opts.action = Action.SOLVE;
         opts.printSolution = true;
+        opts.threads = 1;
         doAction(gameBoard.getGameType());
+        if(solveImpossible) {
+            // TODO: do something else.
+
+        }
         return solution;
     }
 
@@ -206,7 +212,11 @@ public class QQWingController {
 
     private boolean getPuzzleToSolve(int[] puzzle) {
         if(level != null) {
-            puzzle = level;
+            if(puzzle.length == level.length) {
+                for(int i = 0; i < level.length; i++) {
+                    puzzle[i] = level[i];
+                }
+            }
             level = null;
             return true;
         }

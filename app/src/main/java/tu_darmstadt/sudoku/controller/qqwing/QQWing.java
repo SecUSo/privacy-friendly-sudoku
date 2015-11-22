@@ -147,6 +147,18 @@ public class QQWing {
 		BOARD_SIZE = (ROW_COL_SEC_SIZE * ROW_COL_SEC_SIZE);     // 9 * 9 = 81   // 36
 
 		POSSIBILITY_SIZE = (BOARD_SIZE * ROW_COL_SEC_SIZE);     // 81 * 9
+
+        puzzle = new int[BOARD_SIZE];
+
+        solution = new int[BOARD_SIZE];
+
+        solutionRound = new int[BOARD_SIZE];
+
+        possibilities = new int[POSSIBILITY_SIZE];
+
+        randomBoardArray = fillIncrementing(new int[BOARD_SIZE]);
+
+        randomPossibilityArray = fillIncrementing(new int[ROW_COL_SEC_SIZE]);
 	}
 
 	private static int[] fillIncrementing(int[] arr){
@@ -765,9 +777,9 @@ public class QQWing {
 				int rowStart = rowToFirstCell(row);
 				boolean inOneBox = true;
 				int rowBox = -1;
-				for (int i = 0; i < GRID_SIZE_COL; i++) {
-					for (int j = 0; j < GRID_SIZE_ROW; j++) {
-						int column = i * GRID_SIZE_COL + j;
+				for (int i = 0; i < GRID_SIZE_ROW; i++) {
+					for (int j = 0; j < GRID_SIZE_COL; j++) {
+						int column = i * GRID_SIZE_ROW + j;
 						int position = rowColumnToCell(row, column);
 						int valPos = getPossibilityIndex(valIndex, position);
 						if (possibilities[valPos] == 0) {
@@ -807,14 +819,15 @@ public class QQWing {
 		return false;
 	}
 
+    // CHECKED!
 	private boolean pointingRowReduction(int round) {
 		for (int valIndex = 0; valIndex < ROW_COL_SEC_SIZE; valIndex++) {
 			for (int section = 0; section < ROW_COL_SEC_SIZE; section++) {
 				int secStart = sectionToFirstCell(section);
 				boolean inOneRow = true;
 				int boxRow = -1;
-				for (int j = 0; j < GRID_SIZE_COL; j++) {
-					for (int i = 0; i < GRID_SIZE_ROW; i++) {
+				for (int j = 0; j < GRID_SIZE_ROW; j++) {
+					for (int i = 0; i < GRID_SIZE_COL; i++) {
 						int secVal = secStart + i + (ROW_COL_SEC_SIZE * j);
 						int valPos = getPossibilityIndex(valIndex, secVal);
 						if (possibilities[valPos] == 0) {
@@ -1509,7 +1522,7 @@ public class QQWing {
 	 */
 	static int cellToSectionStartCell(int cell) {
 		return ((cell / SEC_GROUP_SIZE * SEC_GROUP_SIZE)
-		+ (cellToColumn(cell) / GRID_SIZE_COL * GRID_SIZE_ROW));
+		+ (cellToColumn(cell) / GRID_SIZE_COL * GRID_SIZE_COL));
 	}
 
 	/**
