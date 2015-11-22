@@ -721,15 +721,16 @@ public class QQWing {
 		return false;
 	}
 
-    // TODO:  .... :(
+    // TODO:  checked
 	private boolean colBoxReduction(int round) {
 		for (int valIndex = 0; valIndex < ROW_COL_SEC_SIZE; valIndex++) {
 			for (int col = 0; col < ROW_COL_SEC_SIZE; col++) {
 				int colStart = columnToFirstCell(col);
 				boolean inOneBox = true;
 				int colBox = -1;
-				for (int i = 0; i < GRID_SIZE_ROW; i++) {
-					for (int j = 0; j < GRID_SIZE_COL; j++) {
+                // this part is checked!
+				for (int i = 0; i < GRID_SIZE_COL; i++) {
+					for (int j = 0; j < GRID_SIZE_ROW; j++) {
 						int row = i * GRID_SIZE_ROW + j;
 						int position = rowColumnToCell(row, col);
 						int valPos = getPossibilityIndex(valIndex, position);
@@ -744,14 +745,14 @@ public class QQWing {
 				}
 				if (inOneBox && colBox != -1) {
 					boolean doneSomething = false;
-					int row = GRID_SIZE_ROW * colBox;
+					int row = GRID_SIZE_ROW * colBox;   // TODO: ? .. check this later ..
 					int secStart = cellToSectionStartCell(rowColumnToCell(row, col));
 					int secStartRow = cellToRow(secStart);
 					int secStartCol = cellToColumn(secStart);
 					for (int i = 0; i < GRID_SIZE_COL; i++) {
 						for (int j = 0; j < GRID_SIZE_ROW; j++) {
-							int row2 = secStartRow + i;
-							int col2 = secStartCol + j;
+							int row2 = secStartRow + j;
+							int col2 = secStartCol + i;
 							int position = rowColumnToCell(row2, col2);
 							int valPos = getPossibilityIndex(valIndex, position);
 							if (col != col2 && possibilities[valPos] == 0) {
@@ -770,7 +771,7 @@ public class QQWing {
 		return false;
 	}
 
-    // TODO :: check.... GRID_SIZE_COL AND ROW probably wrong
+    // TODO :
 	private boolean rowBoxReduction(int round) {
 		for (int valIndex = 0; valIndex < ROW_COL_SEC_SIZE; valIndex++) {
 			for (int row = 0; row < ROW_COL_SEC_SIZE; row++) {
@@ -779,7 +780,7 @@ public class QQWing {
 				int rowBox = -1;
 				for (int i = 0; i < GRID_SIZE_ROW; i++) {
 					for (int j = 0; j < GRID_SIZE_COL; j++) {
-						int column = i * GRID_SIZE_ROW + j;
+						int column = i * GRID_SIZE_COL + j;
 						int position = rowColumnToCell(row, column);
 						int valPos = getPossibilityIndex(valIndex, position);
 						if (possibilities[valPos] == 0) {
@@ -797,8 +798,8 @@ public class QQWing {
 					int secStart = cellToSectionStartCell(rowColumnToCell(row, column));
 					int secStartRow = cellToRow(secStart);
 					int secStartCol = cellToColumn(secStart);
-					for (int i = 0; i < GRID_SIZE_COL; i++) {
-						for (int j = 0; j < GRID_SIZE_ROW; j++) {
+					for (int i = 0; i < GRID_SIZE_ROW; i++) {
+						for (int j = 0; j < GRID_SIZE_COL; j++) {
 							int row2 = secStartRow + i;
 							int col2 = secStartCol + j;
 							int position = rowColumnToCell(row2, col2);
@@ -863,6 +864,7 @@ public class QQWing {
 		return false;
 	}
 
+    // CHECKED! .. pretty sure this is correct now
 	private boolean pointingColumnReduction(int round) {
 		for (int valIndex = 0; valIndex < ROW_COL_SEC_SIZE; valIndex++) {
 			for (int section = 0; section < ROW_COL_SEC_SIZE; section++) {
@@ -906,6 +908,7 @@ public class QQWing {
 		return false;
 	}
 
+    // CHECKED!
 	private int countPossibilities(int position) {
 		int count = 0;
 		for (int valIndex = 0; valIndex < ROW_COL_SEC_SIZE; valIndex++) {
@@ -915,6 +918,7 @@ public class QQWing {
 		return count;
 	}
 
+    // CHECKED!
 	private boolean arePossibilitiesSame(int position1, int position2) {
 		for (int valIndex = 0; valIndex < ROW_COL_SEC_SIZE; valIndex++) {
 			int valPos1 = getPossibilityIndex(valIndex, position1);
@@ -926,6 +930,7 @@ public class QQWing {
 		return true;
 	}
 
+    // CHECKED!
 	private boolean removePossibilitiesInOneFromTwo(int position1, int position2, int round) {
 		boolean doneSomething = false;
 		for (int valIndex = 0; valIndex < ROW_COL_SEC_SIZE; valIndex++) {
@@ -939,6 +944,7 @@ public class QQWing {
 		return doneSomething;
 	}
 
+    // CHECKED!
 	private boolean hiddenPairInColumn(int round) {
 		for (int column = 0; column < ROW_COL_SEC_SIZE; column++) {
 			for (int valIndex = 0; valIndex < ROW_COL_SEC_SIZE; valIndex++) {
@@ -1004,6 +1010,7 @@ public class QQWing {
 		return false;
 	}
 
+    // CHECKED!
 	private boolean hiddenPairInSection(int round) {
 		for (int section = 0; section < ROW_COL_SEC_SIZE; section++) {
 			for (int valIndex = 0; valIndex < ROW_COL_SEC_SIZE; valIndex++) {
@@ -1069,6 +1076,7 @@ public class QQWing {
 		return false;
 	}
 
+    // CHECKED!
 	private boolean hiddenPairInRow(int round) {
 		for (int row = 0; row < ROW_COL_SEC_SIZE; row++) {
 			for (int valIndex = 0; valIndex < ROW_COL_SEC_SIZE; valIndex++) {
@@ -1134,6 +1142,7 @@ public class QQWing {
 		return false;
 	}
 
+    // CHECKED!
 	private boolean handleNakedPairs(int round) {
 		for (int position = 0; position < BOARD_SIZE; position++) {
 			int possibilities = countPossibilities(position);
@@ -1174,8 +1183,8 @@ public class QQWing {
 							if (section == cellToSectionStartCell(position2)) {
 								boolean doneSomething = false;
 								int secStart = cellToSectionStartCell(position);
-								for (int i = 0; i < 3; i++) {
-									for (int j = 0; j < 3; j++) {
+								for (int i = 0; i < GRID_SIZE_COL; i++) {
+									for (int j = 0; j < GRID_SIZE_ROW; j++) {
 										int position3 = secStart + i + (ROW_COL_SEC_SIZE * j);
 										if (position3 != position && position3 != position2 && removePossibilitiesInOneFromTwo(position, position3, round)) {
 											doneSomething = true;
@@ -1200,6 +1209,7 @@ public class QQWing {
 	 * such a cell exists. This method will look in a row for a possibility that
 	 * is only listed for one cell. This type of cell is often called a
 	 * "hidden single"
+     * CHECKED!
 	 */
 	private boolean onlyValueInRow(int round) {
 		for (int row = 0; row < ROW_COL_SEC_SIZE; row++) {
@@ -1230,6 +1240,7 @@ public class QQWing {
 	 * if such a cell exists. This method will look in a column for a
 	 * possibility that is only listed for one cell. This type of cell is often
 	 * called a "hidden single"
+     * CHECKED!
 	 */
 	private boolean onlyValueInColumn(int round) {
 		for (int col = 0; col < ROW_COL_SEC_SIZE; col++) {
@@ -1530,7 +1541,7 @@ public class QQWing {
      * Checked!
 	 */
 	static int rowToFirstCell(int row) {
-		return 9 * row;
+		return ROW_COL_SEC_SIZE * row;
 	}
 
 	/**
