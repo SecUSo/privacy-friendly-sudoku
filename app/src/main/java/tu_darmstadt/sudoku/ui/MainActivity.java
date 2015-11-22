@@ -12,7 +12,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -23,8 +22,6 @@ import android.widget.TextView;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import tu_darmstadt.sudoku.controller.SaveLoadController;
 import tu_darmstadt.sudoku.controller.helper.GameInfoContainer;
@@ -37,17 +34,6 @@ public class MainActivity extends AppCompatActivity {
     RatingBar difficultyBar;
     TextView difficultyText;
     SharedPreferences settings;
-    Timer t = new Timer();
-
-    /**
-     * The {@link android.support.v4.view.PagerAdapter} that will provide
-     * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
-     * {@link android.support.v4.app.FragmentStatePagerAdapter}.
-     */
-    private SectionsPagerAdapter mSectionsPagerAdapter;
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -67,7 +53,15 @@ public class MainActivity extends AppCompatActivity {
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
 
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+            /*
+          The {@link android.support.v4.view.PagerAdapter} that will provide
+          fragments for each of the sections. We use a
+          {@link FragmentPagerAdapter} derivative, which will keep every
+          loaded fragment in memory. If this becomes too memory intensive, it
+          may be best to switch to a
+          {@link android.support.v4.app.FragmentStatePagerAdapter}.
+         */
+        SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
 
         // Set up the ViewPager with the sections adapter.
@@ -92,16 +86,16 @@ public class MainActivity extends AppCompatActivity {
                 if (rating < 1) {
                     ratingBar.setRating(1);
                 }
-                difficultyText.setText(getString(difficultyList.get((int)ratingBar.getRating()-1).getStringResID()));
+                difficultyText.setText(getString(difficultyList.get((int) ratingBar.getRating() - 1).getStringResID()));
             }
         });
-        int lastChosenDifficulty = settings.getInt("lastChosenDifficulty", 1);
-        difficultyBar.setRating(lastChosenDifficulty);
+        GameDifficulty lastChosenDifficulty = GameDifficulty.valueOf(settings.getString("lastChosenDifficulty", "Easy"));
+        difficultyBar.setRating(GameDifficulty.getValidDifficultyList().indexOf(lastChosenDifficulty)+1);
 
         // on first create always check for loadable levels!
         SharedPreferences.Editor editor = settings.edit();
         editor.putBoolean("savesChanged", true);
-        editor.commit();
+        editor.apply();
         refreshContinueButton();
     }
 
@@ -129,13 +123,14 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case R.id.playButton:
                     GameType gameType = GameType.getValidGameTypes().get(mViewPager.getCurrentItem());
-                    int gameDifficulty = difficultyBar.getProgress()-1;
+                    int index = difficultyBar.getProgress()-1;
+                    GameDifficulty gameDifficulty = GameDifficulty.getValidDifficultyList().get(index < 0 ? 0 : index);
 
                     // save current setting for later
                     SharedPreferences.Editor editor = settings.edit();
                     editor.putString("lastChosenGameType", gameType.name());
-                    editor.putInt("lastChosenDifficulty", gameDifficulty);
-                    editor.commit();
+                    editor.putString("lastChosenDifficulty", gameDifficulty.name());
+                    editor.apply();
 
                     // send everything to game activity
                     i = new Intent(this, GameActivity.class);
@@ -169,7 +164,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @Override
+    /*@Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
@@ -177,7 +172,7 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         return super.onOptionsItemSelected(item);
-    }
+    }*/
 
 
     /**

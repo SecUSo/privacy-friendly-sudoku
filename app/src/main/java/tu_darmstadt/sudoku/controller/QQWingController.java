@@ -20,8 +20,6 @@ import tu_darmstadt.sudoku.game.GameType;
  */
 public class QQWingController {
 
-    private static final String NL = System.getProperties().getProperty("line.separator");
-
     final QQWingOptions opts = new QQWingOptions();
 
     private int[] level;
@@ -30,11 +28,12 @@ public class QQWingController {
     private boolean solveImpossible = false;
 
     public int[] generate(GameType type, GameDifficulty difficulty) {
-        // TODO: GameType options.
         opts.gameDifficulty = difficulty;
         opts.action = Action.GENERATE;
+        opts.printSolution = false;
         opts.threads = Runtime.getRuntime().availableProcessors();
-        doAction(type);
+        opts.gameType = type;
+        doAction();
         return generated;
     }
 
@@ -54,7 +53,8 @@ public class QQWingController {
         opts.action = Action.SOLVE;
         opts.printSolution = true;
         opts.threads = 1;
-        doAction(gameBoard.getGameType());
+        opts.gameType = gameBoard.getGameType();
+        doAction();
         if(solveImpossible) {
             // TODO: do something else.
 
@@ -62,11 +62,10 @@ public class QQWingController {
         return solution;
     }
 
-    private void doAction(final GameType gameType) {
+    private void doAction() {
         // The number of puzzles solved or generated.
         final AtomicInteger puzzleCount = new AtomicInteger(0);
         final AtomicBoolean done = new AtomicBoolean(false);
-        final AtomicIntegerArray result = new AtomicIntegerArray(new int[gameType.getSize()*gameType.getSize()]);
 
         Thread[] threads = new Thread[opts.threads];
         for (int threadCount = 0; threadCount < threads.length; threadCount++) {
@@ -78,7 +77,7 @@ public class QQWingController {
                         private QQWing ss = createQQWing();
 
                         private QQWing createQQWing() {
-                            QQWing ss = new QQWing(gameType);
+                            QQWing ss = new QQWing(opts.gameType, opts.gameDifficulty);
                             ss.setRecordHistory(opts.printHistory || opts.printInstructions || opts.printStats || opts.gameDifficulty != GameDifficulty.Unspecified);
                             ss.setLogHistory(opts.logHistory);
                             ss.setPrintStyle(opts.printStyle);
@@ -94,15 +93,11 @@ public class QQWingController {
                                 // until we have generated the specified number.
                                 while (!done.get()) {
 
-                                    // iff something has been printed for this
-                                    // particular puzzle
-                                    StringBuilder output = new StringBuilder();
-
                                     // Record whether the puzzle was possible or
                                     // not,
                                     // so that we don't try to solve impossible
                                     // givens.
-                                    boolean havePuzzle = false;
+                                    boolean havePuzzle;
 
                                     if (opts.action == Action.GENERATE) {
                                         // Generate a puzzle
@@ -135,9 +130,9 @@ public class QQWingController {
                                         // Count the solutions if requested.
                                         // (Must be done before solving, as it would
                                         // mess up the stats.)
-                                        if (opts.countSolutions) {
-                                            solutions = ss.countSolutions();
-                                        }
+                                        //if (opts.countSolutions) {
+                                        //    solutions = ss.countSolutions();
+                                        //}
 
                                         // Solve the puzzle
                                         if (opts.printSolution || opts.printHistory || opts.printStats || opts.printInstructions || opts.gameDifficulty != GameDifficulty.Unspecified) {
@@ -148,22 +143,9 @@ public class QQWingController {
                                         // Bail out if it didn't meet the gameDifficulty
                                         // standards for generation
                                         if (opts.action == Action.GENERATE) {
-                                            if (opts.gameDifficulty != GameDifficulty.Unspecified && opts.gameDifficulty != ss.getDifficulty()) {
-                                                havePuzzle = false;
-                                                // check if other threads have
-                                                // finished the job
-                                                if (puzzleCount.get() >= opts.numberToGenerate) {
-                                                    done.set(true);
-                                                    generated = ss.getPuzzle();
-                                                }
-                                            } else {
-                                                int numDone = puzzleCount.incrementAndGet();
-                                                if (numDone >= opts.numberToGenerate) {
-                                                    done.set(true);
-                                                    generated = ss.getPuzzle();
-                                                }
-                                                if (numDone > opts.numberToGenerate)
-                                                    havePuzzle = false;
+                                            if (opts.gameDifficulty != GameDifficulty.Unspecified && opts.gameDifficulty == ss.getDifficulty()) {
+                                                done.set(true);
+                                                generated = ss.getPuzzle();
                                             }
                                         }
                                     }
@@ -202,6 +184,7 @@ public class QQWingController {
         int numberToGenerate = 1;
         boolean printStats = false;
         GameDifficulty gameDifficulty = GameDifficulty.Unspecified;
+        GameType gameType = GameType.Unspecified;
         Symmetry symmetry = Symmetry.NONE;
         int threads = Runtime.getRuntime().availableProcessors();
     }

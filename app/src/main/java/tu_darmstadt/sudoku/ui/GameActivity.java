@@ -46,7 +46,7 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
 
         GameType gameType = GameType.Unspecified;
-        int gameDifficulty = 0;
+        GameDifficulty gameDifficulty = GameDifficulty.Unspecified;
         int loadLevelID = 0;
         boolean loadLevel = false;
 
@@ -56,7 +56,7 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
             if(o instanceof GameType) {
                 gameType = (GameType)extras.get("gameType");
             }
-            gameDifficulty = extras.getInt("gameDifficulty");
+            gameDifficulty = (GameDifficulty)(extras.get("gameDifficulty"));
             loadLevel = extras.getBoolean("loadLevel");
             if(loadLevel) {
                 loadLevelID = extras.getInt("loadLevelID");
@@ -83,7 +83,7 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
             gameController.loadLevel(loadableGames.get(loadLevelID));
         } else {
             // load a new level
-            gameController.loadNewLevel(gameType, GameDifficulty.getValidDifficultyList().get(gameDifficulty));
+            gameController.loadNewLevel(gameType, gameDifficulty);
         }
 
         layout.setGame(gameController);

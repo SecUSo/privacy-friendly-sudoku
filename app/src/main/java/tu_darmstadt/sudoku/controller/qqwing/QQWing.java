@@ -132,10 +132,16 @@ public class QQWing {
 	 */
 	private PrintStyle printStyle = PrintStyle.READABLE;
 
+    private GameType gameType = GameType.Unspecified;
+    private GameDifficulty difficulty = GameDifficulty.Unspecified;
+
 	/**
 	 * Create a new Sudoku board
 	 */
-	public QQWing(GameType type) {
+	public QQWing(GameType type, GameDifficulty difficulty) {
+        gameType = type;
+        this.difficulty = difficulty;
+
 		GRID_SIZE_ROW = type.getSectionHeight();    // 3    // 2
 
 		GRID_SIZE_COL = type.getSectionWidth();     // 3    // 3
@@ -221,13 +227,21 @@ public class QQWing {
 	 * Get the gameDifficulty rating.
 	 */
 	public GameDifficulty getDifficulty() {
-		if (getGuessCount() > 0) return GameDifficulty.Hard;
-		if (getBoxLineReductionCount() > 0) return GameDifficulty.Moderate;
-		if (getPointingPairTripleCount() > 0) return GameDifficulty.Moderate;
-		if (getHiddenPairCount() > 0) return GameDifficulty.Moderate;
-		if (getNakedPairCount() > 0) return GameDifficulty.Moderate;
-		if (getHiddenSingleCount() > 0) return GameDifficulty.Easy;
-		if (getSingleCount() > 0) return GameDifficulty.Easy;
+		if (getGuessCount() > 0)
+            return GameDifficulty.Hard;
+		if (getBoxLineReductionCount() > 0)
+            return GameDifficulty.Moderate;
+		if (getPointingPairTripleCount() > 0)
+            return GameDifficulty.Moderate;
+		if (getHiddenPairCount() > 0)
+            return GameDifficulty.Moderate;
+		if (getNakedPairCount() > 0)
+            return GameDifficulty.Moderate;
+		if (getHiddenSingleCount() > 0)
+            return GameDifficulty.Easy;
+		if (getSingleCount() > 0)
+            return GameDifficulty.Easy;
+
 		return GameDifficulty.Unspecified;
 	}
 
@@ -434,7 +448,12 @@ public class QQWing {
 		// Non-guesses are even rounds
 		for (int i = 2; i <= lastSolveRound; i += 2) {
 			rollbackRound(i);
-		}
+
+            // Some hack to make easy levels on 12x12 .. because the generator wasn't able to create some
+            if(gameType == GameType.Default_12x12 &&  difficulty == GameDifficulty.Easy ) {
+                i += 4; // skip every 2nd round
+            }
+        }
 	}
 
 	public void setPrintStyle(PrintStyle ps) {
@@ -667,7 +686,7 @@ public class QQWing {
 	}
 
 	private int findPositionWithFewestPossibilities() {
-		int minPossibilities = 10;
+		int minPossibilities = ROW_COL_SEC_SIZE+1;
 		int bestPosition = 0;
 		for (int i = 0; i < BOARD_SIZE; i++) {
 			int position = randomBoardArray[i];
