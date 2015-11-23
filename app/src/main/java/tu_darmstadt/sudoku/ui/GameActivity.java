@@ -17,9 +17,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
-import java.util.Timer;
 
-import tu_darmstadt.sudoku.controller.SaveLoadController;
+import tu_darmstadt.sudoku.controller.SaveLoadGameStateController;
 import tu_darmstadt.sudoku.controller.GameController;
 import tu_darmstadt.sudoku.controller.helper.GameInfoContainer;
 import tu_darmstadt.sudoku.game.GameDifficulty;
@@ -72,14 +71,14 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
 
         //Create new GameField
         layout = (SudokuFieldLayout)findViewById(R.id.sudokuLayout);
-        gameController = new GameController(sharedPref);
+        gameController = new GameController(sharedPref, getApplicationContext());
         gameController.registerGameSolvedListener(this);
         gameController.registerTimerListener(this);
 
-        List<GameInfoContainer> loadableGames = SaveLoadController.getLoadableGameList();
+        List<GameInfoContainer> loadableGames = SaveLoadGameStateController.getLoadableGameList();
 
         if(loadLevel && loadableGames.size() > loadLevelID) {
-            // load level from SaveLoadController
+            // load level from SaveLoadGameStateController
             gameController.loadLevel(loadableGames.get(loadLevelID));
         } else {
             // load a new level

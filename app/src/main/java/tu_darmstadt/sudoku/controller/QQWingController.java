@@ -2,6 +2,7 @@ package tu_darmstadt.sudoku.controller;
 
 import android.util.Log;
 
+import java.util.LinkedList;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.Date;
@@ -24,11 +25,26 @@ public class QQWingController {
 
     private int[] level;
     private int[] solution;
-    private int[] generated;
+    private LinkedList<int[]> generated = new LinkedList<>();
     private boolean solveImpossible = false;
 
     public int[] generate(GameType type, GameDifficulty difficulty) {
+        generated.clear();
         opts.gameDifficulty = difficulty;
+        opts.action = Action.GENERATE;
+        opts.needNow = true;
+        opts.printSolution = false;
+        opts.threads = Runtime.getRuntime().availableProcessors();
+        opts.gameType = type;
+        doAction();
+        return generated.poll();
+    }
+
+    public LinkedList<int[]> generateMultiple(GameType type, GameDifficulty difficulty, int amount) {
+        generated.clear();
+        opts.numberToGenerate = amount;
+        opts.gameDifficulty = difficulty;
+        opts.needNow = true;
         opts.action = Action.GENERATE;
         opts.printSolution = false;
         opts.threads = Runtime.getRuntime().availableProcessors();
@@ -50,6 +66,7 @@ public class QQWingController {
             }
         }
 
+        opts.needNow = true;
         opts.action = Action.SOLVE;
         opts.printSolution = true;
         opts.threads = 1;
@@ -57,7 +74,6 @@ public class QQWingController {
         doAction();
         if(solveImpossible) {
             // TODO: do something else.
-
         }
         return solution;
     }
@@ -86,6 +102,9 @@ public class QQWingController {
 
                         @Override
                         public void run() {
+
+                            android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_BACKGROUND);
+
                             try {
 
                                 // Solve puzzle or generate puzzles
@@ -140,13 +159,22 @@ public class QQWingController {
                                             solution = ss.getSolution();
                                         }
 
-                                        // Bail out if it didn't meet the gameDifficulty
+                                        // Bail out if it didn't meet the difficulty
                                         // standards for generation
                                         if (opts.action == Action.GENERATE) {
-                                            if (opts.gameDifficulty != GameDifficulty.Unspecified && opts.gameDifficulty == ss.getDifficulty()) {
-                                                done.set(true);
-                                                generated = ss.getPuzzle();
+                                            if (opts.gameDifficulty != GameDifficulty.Unspecified && opts.gameDifficulty != ss.getDifficulty()) {
+                                                havePuzzle = false;
+                                                // check if other threads have
+                                                // finished the job
+                                                if (puzzleCount.get() >= opts.numberToGenerate) done.set(true);
+                                            } else {
+                                                int numDone = puzzleCount.incrementAndGet();
+                                                if (numDone >= opts.numberToGenerate) done.set(true);
+                                                if (numDone > opts.numberToGenerate) havePuzzle = false;
                                             }
+                                        }
+                                        if(havePuzzle) {
+                                            generated.add(ss.getPuzzle());
                                         }
                                     }
                                 }
@@ -161,17 +189,20 @@ public class QQWingController {
             threads[threadCount].start();
         }
 
-        for(int i = 0; i < threads.length; i++) {
-            try {
-                threads[i].join();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+        if(opts.needNow) {
+            for (int i = 0; i < threads.length; i++) {
+                try {
+                    threads[i].join();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
 
     private static class QQWingOptions {
         // defaults for options
+        boolean needNow = false;
         boolean printPuzzle = false;
         boolean printSolution = false;
         boolean printHistory = false;

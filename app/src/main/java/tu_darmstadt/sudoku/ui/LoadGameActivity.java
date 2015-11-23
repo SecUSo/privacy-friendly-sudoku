@@ -17,7 +17,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import tu_darmstadt.sudoku.controller.SaveLoadController;
+import tu_darmstadt.sudoku.controller.SaveLoadGameStateController;
 import tu_darmstadt.sudoku.controller.helper.GameInfoContainer;
 import tu_darmstadt.sudoku.ui.view.R;
 
@@ -34,8 +34,8 @@ public class LoadGameActivity extends AppCompatActivity {
 
         settings = PreferenceManager.getDefaultSharedPreferences(this);
 
-        SaveLoadController saveLoadController = new SaveLoadController(this, settings);
-        loadableGameList = saveLoadController.loadGameStateInfo();
+        SaveLoadGameStateController saveLoadGameStateController = new SaveLoadGameStateController(this, settings);
+        loadableGameList = saveLoadGameStateController.loadGameStateInfo();
 
         AdapterView.OnItemClickListener clickListener = new AdapterView.OnItemClickListener() {
             @Override

@@ -7,9 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.logging.Handler;
 
-import tu_darmstadt.sudoku.controller.qqwing.QQWing;
 import tu_darmstadt.sudoku.controller.solver.Solver;
 import tu_darmstadt.sudoku.game.CellConflict;
 import tu_darmstadt.sudoku.game.CellConflictList;
@@ -52,20 +50,22 @@ public class GameController implements IModelChangedListener {
     private LinkedList<ITimerListener> timerListeners = new LinkedList<>();
     private boolean timerRunning = false;
     private QQWingController qqWingController = new QQWingController();
+    private Context context;
 
 //    private Solver solver;
 //    private SudokuGenerator generator;
 
-    public GameController(SharedPreferences pref) {
-        this(GameType.Default_9x9, pref);
+    public GameController(SharedPreferences pref, Context context) {
+        this(GameType.Default_9x9, pref, context);
     }
 
     public GameController() {
-        this(null);
+        this(null, null);
     }
 
-    public GameController(GameType type, SharedPreferences pref) {
+    public GameController(GameType type, SharedPreferences pref, Context context) {
         setGameType(type);
+        this.context = context;
         setSettings(pref);
         gameBoard = new GameBoard(type);
         initTimer();
@@ -79,10 +79,14 @@ public class GameController implements IModelChangedListener {
         //Generator generator = new Generator(type, gameDifficulty);
         //GameBoard randomBoard = generator.getGameBoard();
 
+        SaveLoadLevelManager saveLoadLevelManager = SaveLoadLevelManager.getInstance();
+        int[] level = saveLoadLevelManager.loadLevel(type, difficulty);
+        loadLevel(new GameInfoContainer(0, difficulty, type, level, null, null));
+        saveLoadLevelManager.checkAndRestock();
 
         // TODO call methods to generate level.
-        int[] generated = qqWingController.generate(type, difficulty);
-        loadLevel(new GameInfoContainer(0, difficulty, type, generated, null, null));
+        //int[] generated = qqWingController.generate(type, difficulty);
+        //loadLevel(new GameInfoContainer(0, difficulty, type, generated, null, null));
 
         /* switch(type) {
             case Default_6x6:
@@ -292,7 +296,7 @@ public class GameController implements IModelChangedListener {
         }
 
         //gameID now has a value other than 0 and hopefully unique
-        SaveLoadController fm = new SaveLoadController(context, settings);
+        SaveLoadGameStateController fm = new SaveLoadGameStateController(context, settings);
         fm.saveGameState(this);
     }
 

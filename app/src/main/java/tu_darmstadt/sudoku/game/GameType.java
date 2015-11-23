@@ -30,7 +30,7 @@ public enum GameType {
         this.resIDString = resIDString;
     }
 
-    public static List<GameType> getValidGameTypes() {
+    public static LinkedList<GameType> getValidGameTypes() {
         LinkedList<GameType> result = new LinkedList<>();
         result.add(Default_6x6);
         result.add(Default_9x9);

@@ -451,7 +451,8 @@ public class QQWing {
 
             // Some hack to make easy levels on 12x12 .. because the generator wasn't able to create some
             if(gameType == GameType.Default_12x12 &&  difficulty == GameDifficulty.Easy ) {
-                i += 4; // skip every 2nd round
+                i += 4; // skip every 2nd round to find "easy" levels more frequent. Still takes about 20 Seconds.
+				// TODO . save games be4 hand to load them when needed
             }
         }
 	}
@@ -764,7 +765,7 @@ public class QQWing {
 				}
 				if (inOneBox && colBox != -1) {
 					boolean doneSomething = false;
-					int row = GRID_SIZE_ROW * colBox;   // TODO: ? .. check this later ..
+					int row = GRID_SIZE_ROW * colBox;
 					int secStart = cellToSectionStartCell(rowColumnToCell(row, col));
 					int secStartRow = cellToRow(secStart);
 					int secStartCol = cellToColumn(secStart);
@@ -790,7 +791,7 @@ public class QQWing {
 		return false;
 	}
 
-    // TODO :
+
 	private boolean rowBoxReduction(int round) {
 		for (int valIndex = 0; valIndex < ROW_COL_SEC_SIZE; valIndex++) {
 			for (int row = 0; row < ROW_COL_SEC_SIZE; row++) {
@@ -813,7 +814,7 @@ public class QQWing {
 				}
 				if (inOneBox && rowBox != -1) {
 					boolean doneSomething = false;
-					int column = GRID_SIZE_COL * rowBox;	// TODO : ?
+					int column = GRID_SIZE_COL * rowBox;
 					int secStart = cellToSectionStartCell(rowColumnToCell(row, column));
 					int secStartRow = cellToRow(secStart);
 					int secStartCol = cellToColumn(secStart);
