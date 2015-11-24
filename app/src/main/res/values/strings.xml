@@ -62,4 +62,9 @@
     <string name="gametype_x_9x9">X Sudoku 9x9</string>
     <string name="gametype_hyper_9x9">Hyper Sudoku 9x9</string>
 
+    <!-- ### Continue Game ### -->
+    <string name="loadgame_delete_confirmation">Are you sure you want to delete this save?</string>
+    <string name="loadgame_delete_confirm">Delete</string>
+    <string name="loadgame_delete_cancel">Cancel</string>
+
 </resources>

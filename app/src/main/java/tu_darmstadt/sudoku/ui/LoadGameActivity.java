@@ -1,6 +1,12 @@
 package tu_darmstadt.sudoku.ui;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -10,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -17,9 +24,8 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import java.text.DateFormat;
-import java.text.FieldPosition;
-import java.text.ParsePosition;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.TimeZone;
 
@@ -28,10 +34,11 @@ import tu_darmstadt.sudoku.controller.helper.GameInfoContainer;
 import tu_darmstadt.sudoku.game.GameDifficulty;
 import tu_darmstadt.sudoku.ui.view.R;
 
-public class LoadGameActivity extends AppCompatActivity {
+public class LoadGameActivity extends AppCompatActivity implements IDeleteDialogFragmentListener {
 
     List<GameInfoContainer> loadableGameList;
     SharedPreferences settings;
+    LoadGameAdapter loadGameAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +47,11 @@ public class LoadGameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_load_game);
 
         settings = PreferenceManager.getDefaultSharedPreferences(this);
+
+        init();
+    }
+
+    public void init() {
 
         SaveLoadGameStateController saveLoadGameStateController = new SaveLoadGameStateController(this, settings);
         loadableGameList = saveLoadGameStateController.loadGameStateInfo();
@@ -58,17 +70,77 @@ public class LoadGameActivity extends AppCompatActivity {
         AdapterView.OnItemLongClickListener longClickListener = new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                return false;
+                DeleteDialogFragment deleteDialog = new DeleteDialogFragment();
+                deleteDialog.setPosition(position);
+                deleteDialog.show(getFragmentManager(), "DeleteDialogFragment");
+
+                return true;
             }
         };
 
         ListView listView = (ListView)findViewById(R.id.load_game_list);
-        listView.setAdapter(new LoadGameAdapter(this, loadableGameList));
+        loadGameAdapter = new LoadGameAdapter(this, loadableGameList);
+        listView.setAdapter(loadGameAdapter);
         listView.setOnItemClickListener(clickListener);
         listView.setOnItemLongClickListener(longClickListener);
 
     }
 
+    @Override
+    public void onDialogPositiveClick(int position) {
+        SaveLoadGameStateController saveLoadGameStateController = new SaveLoadGameStateController(getApplicationContext(), settings);
+        saveLoadGameStateController.deleteGameStateFile(loadableGameList.get(position));
+        loadGameAdapter.delete(position);
+    }
+
+    @Override
+    public void onDialogNegativeClick(int position) {
+        // do nothing
+    }
+
+    @SuppressLint("ValidFragment")
+    public class DeleteDialogFragment extends DialogFragment {
+
+        private int position = 0;
+
+        public void setPosition(int position) {
+            this.position = position;
+        }
+        public int getPosition() {
+            return position;
+        }
+
+        LinkedList<IDeleteDialogFragmentListener> listeners = new LinkedList<>();
+
+        @Override
+        public void onAttach(Activity activity) {
+            super.onAttach(activity);
+            // Verify that the host activity implements the callback interface
+            if(activity instanceof IDeleteDialogFragmentListener) {
+                listeners.add((IDeleteDialogFragmentListener) activity);
+            }
+        }
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            // Use the Builder class for convenient dialog construction
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setMessage(R.string.loadgame_delete_confirmation)
+                    .setPositiveButton(R.string.loadgame_delete_confirm, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            for(IDeleteDialogFragmentListener l : listeners) {
+                                l.onDialogPositiveClick(getPosition());
+                            }
+                        }
+                    })
+                    .setNegativeButton(R.string.loadgame_delete_cancel, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            // User cancelled the dialog
+                        }
+                    });
+            return builder.create();
+        }
+    }
 
 
     private class LoadGameAdapter extends BaseAdapter {
@@ -79,6 +151,11 @@ public class LoadGameActivity extends AppCompatActivity {
         public LoadGameAdapter(Context context, List<GameInfoContainer> loadableGameList) {
             this.context = context;
             this.loadableGameList = loadableGameList;
+        }
+
+        public void delete(int position) {
+            loadableGameList.remove(position);
+            notifyDataSetChanged();
         }
 
         @Override

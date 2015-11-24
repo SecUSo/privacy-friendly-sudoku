@@ -117,7 +117,7 @@ public class SaveLoadGameStateController {
         return list;
     }
 
-    private void deleteGameStateFile(GameInfoContainer gic) {
+    public void deleteGameStateFile(GameInfoContainer gic) {
         File dir = context.getDir(SAVES_DIR, 0);
 
         File file = new File(dir, SAVE_PREFIX+gic.getID()+FILE_EXTENSION);
