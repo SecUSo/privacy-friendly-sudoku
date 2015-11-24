@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-import tu_darmstadt.sudoku.game.listeners.IModelChangedListener;
+import tu_darmstadt.sudoku.game.listener.IModelChangedListener;
 
 /**
  * Created by Chris on 06.11.2015.
@@ -174,8 +174,9 @@ public class GameCell implements Cloneable {
     @Override
     public GameCell clone() throws CloneNotSupportedException {
         GameCell clone = (GameCell) super.clone();
-        clone.modelChangedListeners = new LinkedList<IModelChangedListener>();
+        // keep listeners .. so we can just replace the board and still have the listeners
         clone.notes = (notes == null) ? null : Arrays.copyOf(notes, notes.length);
+
         return clone;
     }
 

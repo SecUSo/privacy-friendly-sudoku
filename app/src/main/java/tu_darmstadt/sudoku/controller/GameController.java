@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import tu_darmstadt.sudoku.controller.solver.Solver;
 import tu_darmstadt.sudoku.game.CellConflict;
 import tu_darmstadt.sudoku.game.CellConflictList;
 import tu_darmstadt.sudoku.game.GameBoard;
@@ -17,9 +16,9 @@ import tu_darmstadt.sudoku.controller.helper.GameInfoContainer;
 import tu_darmstadt.sudoku.game.GameDifficulty;
 import tu_darmstadt.sudoku.game.GameType;
 import tu_darmstadt.sudoku.game.ICellAction;
-import tu_darmstadt.sudoku.game.listeners.IGameSolvedListener;
-import tu_darmstadt.sudoku.game.listeners.IModelChangedListener;
-import tu_darmstadt.sudoku.game.listeners.ITimerListener;
+import tu_darmstadt.sudoku.game.listener.IGameSolvedListener;
+import tu_darmstadt.sudoku.game.listener.IModelChangedListener;
+import tu_darmstadt.sudoku.game.listener.ITimerListener;
 
 /**
  * Created by Chris on 06.11.2015.
@@ -30,9 +29,7 @@ public class GameController implements IModelChangedListener {
     private int sectionHeight;
     private int sectionWidth;
     private GameBoard gameBoard;
-    private Solver solver;
     private int[] solution;
-    private LinkedList<GameBoard> solvedBoards = new LinkedList<>();
     private GameType gameType;
     private int selectedRow;
     private int selectedCol;
@@ -40,6 +37,7 @@ public class GameController implements IModelChangedListener {
     private int gameID = 0;
     private GameDifficulty difficulty;
     private CellConflictList errorList = new CellConflictList();
+    private DoUndo doUndo;
     private int selectedValue;
     private LinkedList<IGameSolvedListener> solvedListeners = new LinkedList<>();
     private boolean notifiedOnSolvedListeners = false;
@@ -76,59 +74,13 @@ public class GameController implements IModelChangedListener {
     }
 
     public void loadNewLevel(GameType type, GameDifficulty difficulty) {
-        //Generator generator = new Generator(type, gameDifficulty);
-        //GameBoard randomBoard = generator.getGameBoard();
-
         SaveLoadLevelManager saveLoadLevelManager = SaveLoadLevelManager.getInstance();
+
         int[] level = saveLoadLevelManager.loadLevel(type, difficulty);
+
         loadLevel(new GameInfoContainer(0, difficulty, type, level, null, null));
+
         saveLoadLevelManager.checkAndRestock();
-
-        // TODO call methods to generate level.
-        //int[] generated = qqWingController.generate(type, difficulty);
-        //loadLevel(new GameInfoContainer(0, difficulty, type, generated, null, null));
-
-        /* switch(type) {
-            case Default_6x6:
-                loadLevel(new GameInfoContainer(1, GameDifficulty.Easy, GameType.Default_6x6,
-                        new int[]{1,0,0,0,0,6,
-                                  4,0,6,1,0,0,
-                                  0,0,2,3,0,5,
-                                  0,4,0,0,1,0,
-                                  0,6,0,2,0,0,
-                                  0,3,0,5,0,1}, null,null));
-                break;
-            case Default_12x12:
-                loadLevel(new GameInfoContainer(2, GameDifficulty.Hard, GameType.Default_12x12,
-                        new int[] {0, 2, 1, 0, 0, 6, 0, 0, 0, 8, 9, 0,
-                                10, 0,12, 0, 0, 2, 1,11, 0, 0, 0, 6,
-                                6, 0, 0, 4, 0,12, 0, 0, 0, 0, 2, 1,
-                                0, 0, 0, 5, 0, 0, 0, 4,11,10, 0, 0,
-                                0,10, 0, 1, 0, 0, 6, 0, 0, 0, 0, 0,
-                                0, 7, 0, 0,11, 0, 0, 0, 0,12, 8, 9,
-                                2, 1,11, 0, 0, 0, 0, 7, 0, 0, 6, 0,
-                                0, 0, 0, 0, 0, 5, 0, 0, 4, 0,10, 0,
-                                0, 0, 7, 3, 9, 0, 0, 0, 1, 0, 0, 0,
-                                1, 5, 0, 0, 0, 0, 4, 0,10, 0, 0,11,
-                                9, 0, 0, 0, 1,10, 2, 0, 0, 6, 0, 7,
-                                0, 6,10, 0, 0, 0, 8, 0, 0, 1,12, 0}
-                        ,null, null));
-                break;
-            case Default_9x9:
-            case Unspecified:
-            default:
-                loadLevel(new GameInfoContainer(3, GameDifficulty.Moderate, GameType.Default_9x9,
-                        new int[]{5, 0, 1, 9, 0, 0, 0, 0, 0,
-                                2, 0, 0, 0, 0, 4, 9, 5, 0,
-                                3, 9, 0, 7, 0, 0, 0, 2, 6,
-                                0, 3, 0, 0, 0, 1, 0, 7, 2,
-                                0, 0, 6, 0, 5, 7, 0, 0, 0,
-                                0, 7, 2, 0, 0, 9, 0, 4, 1,
-                                0, 0, 0, 0, 7, 0, 4, 0, 9,
-                                6, 4, 0, 0, 0, 0, 0, 0, 0,
-                                7, 0, 0, 0, 1, 0, 3, 0, 5}
-                        , null, null));
-        }*/
     }
 
     public int getTime() {
@@ -174,6 +126,7 @@ public class GameController implements IModelChangedListener {
 
         gameBoard.registerOnModelChangeListener(this);
 
+        doUndo = new DoUndo(gameBoard);
         // call the solve function to get the solution of this board
         //qqWingController.solve(gameBoard);
     }
@@ -188,24 +141,7 @@ public class GameController implements IModelChangedListener {
             solution = qqWingController.solve(gameBoard);
         }
         return solution;
-
-//        if(solvedBoards.size() == 0) {
-//
-//            solver = new Solver(gameBoard);
-//
-//            if (solver.solve(solver.getGameBoard())) {
-//                solvedBoards.addAll(solver.getSolutions());
-//                return solvedBoards;
-//            }
-//        }
-//        return solvedBoards;
     }
-
-    /*public boolean loadLevel(GameBoard level) {
-        if(GameBoard.isValid(level)) {
-            gameBoard = level;
-        }
-    }*/
 
     private void setGameType(GameType type) {
         this.gameType = type;
@@ -328,6 +264,7 @@ public class GameController implements IModelChangedListener {
         if(!c.isFixed()) {
             c.setValue(0);
             //notifyListeners();
+
             return true;
         }
         return false;
@@ -358,6 +295,9 @@ public class GameController implements IModelChangedListener {
 
     public void toggleNote(int row, int col, int value) {
         GameCell c = gameBoard.getCell(row,col);
+        if(c.hasValue()) {
+            c.setValue(0);
+        }
         c.toggleNote(value);
         //notifyListeners();
     }
@@ -410,15 +350,29 @@ public class GameController implements IModelChangedListener {
     }
 
     public void selectValue(int value) {
-        if(isValidCellSelected()) setValue(selectedRow, selectedCol, value);
+        if(isValidCellSelected() && getSelectedValue() != value) {
+            setValue(selectedRow, selectedCol, value);
+            // add state to undo
+            doUndo.addState(gameBoard);
+        }
+
     }
 
     public void deleteSelectedValue() {
-        if(isValidCellSelected()) deleteValue(selectedRow, selectedCol);
+        if(isValidCellSelected() && getSelectedValue() != 0) {
+            deleteValue(selectedRow, selectedCol);
+            // add state to undo
+            doUndo.addState(gameBoard);
+        }
+
     }
 
     public void toggleSelectedNote(int value) {
-        if(isValidCellSelected()) toggleNote(selectedRow, selectedCol, value);
+        if(isValidCellSelected()) {
+            toggleNote(selectedRow, selectedCol, value);
+            // add state to undo
+            doUndo.addState(gameBoard);
+        }
     }
 
     public boolean isValidCellSelected() {
@@ -450,7 +404,6 @@ public class GameController implements IModelChangedListener {
                     //TODO disable controls and play animation in view. onSolved method is called.
                 }
             } else {
-                //notifiedOnSolvedListeners = false;
 
                 // TODO: errorList now holds all the errors
                 // TODO: display errors .. notify some view?
@@ -518,6 +471,50 @@ public class GameController implements IModelChangedListener {
         if(timerRunning) {
             timerRunning = false;
         }
+    }
+
+    public void ReDo() {
+        updateGameBoard(doUndo.ReDo());
+    }
+
+    public void UnDo() {
+        updateGameBoard(doUndo.UnDo());
+    }
+
+    public boolean isRedoAvailable() {
+        return doUndo.isRedoAvailable();
+    }
+    public boolean isUndoAvailable() {
+        return doUndo.isUnDoAvailable();
+    }
+
+    public void updateGameBoard(final GameBoard gameBoard) {
+        if(gameBoard == null) {
+            return;
+        }
+        for(int i = 0; i < gameBoard.getSize(); i++) {
+            for(int j = 0; j < gameBoard.getSize(); j++) {
+                GameCell other_c = gameBoard.getCell(i,j);
+                GameCell this_c = this.gameBoard.getCell(i,j);
+                if(other_c.isFixed()) {
+                    continue;
+                }
+                if(other_c.hasValue()) {
+                    this_c.setValue(other_c.getValue());
+                } else {
+                    this_c.setValue(0);
+                    for(int k = 0; k < gameBoard.getSize(); k++) {
+                        if(other_c.getNotes()[k]) {
+                            this_c.setNote(k+1);
+                        } else {
+                            this_c.deleteNote(k+1);
+                        }
+                    }
+                }
+            }
+        }
+
+        return;
     }
 
 }

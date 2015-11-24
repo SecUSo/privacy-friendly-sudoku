@@ -42,15 +42,17 @@ public class SudokuSpecialButtonLayout extends LinearLayout {
                         keyboard.toggleNotesEnabled();
                         break;
                     case Do:
-                        // TODO: not implemented
+                        gameController.ReDo();
+                        gameController.saveGame(getContext());
                         break;
                     case Undo:
-                        // TODO: not implemented
+                        gameController.UnDo();
+                        gameController.saveGame(getContext());
                         break;
                     case Hint:
                         if(gameController.isValidCellSelected()) {
                             int[] solved = gameController.solve();
-                            // TODO test every placed value so far
+                            // TODO test every placed value so far? Or just reveal current selected?
 
                             // and reveal the selected value.
                             gameController.selectValue(solved[row * gameController.getSize() + col]);
@@ -79,7 +81,7 @@ public class SudokuSpecialButtonLayout extends LinearLayout {
         fixedButtons = new SudokuButton[fixedButtonsCount];
         LayoutParams p;
         int i = 0;
-        ArrayList<SudokuButtonType> type = (ArrayList<SudokuButtonType>) SudokuButtonType.getSpecialButtons();
+        //ArrayList<SudokuButtonType> type = (ArrayList<SudokuButtonType>) SudokuButtonType.getSpecialButtons();
         for (SudokuButtonType t : SudokuButtonType.getSpecialButtons()){
             fixedButtons[i] = new SudokuButton(getContext(),null);
             p = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT,1);

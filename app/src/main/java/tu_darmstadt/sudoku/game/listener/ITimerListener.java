@@ -1,4 +1,4 @@
-package tu_darmstadt.sudoku.game.listeners;
+package tu_darmstadt.sudoku.game.listener;
 
 /**
  * Created by TMZ_LToP on 20.11.2015.

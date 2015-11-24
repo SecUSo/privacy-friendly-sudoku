@@ -1,4 +1,4 @@
-package tu_darmstadt.sudoku.game.listeners;
+package tu_darmstadt.sudoku.game.listener;
 
 import tu_darmstadt.sudoku.game.GameCell;
 

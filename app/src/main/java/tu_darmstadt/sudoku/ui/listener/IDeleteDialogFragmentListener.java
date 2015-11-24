@@ -1,4 +1,4 @@
-package tu_darmstadt.sudoku.ui;
+package tu_darmstadt.sudoku.ui.listener;
 
 import android.app.DialogFragment;
 

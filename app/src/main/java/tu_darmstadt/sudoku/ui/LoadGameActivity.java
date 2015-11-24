@@ -13,10 +13,10 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -32,6 +32,7 @@ import java.util.TimeZone;
 import tu_darmstadt.sudoku.controller.SaveLoadGameStateController;
 import tu_darmstadt.sudoku.controller.helper.GameInfoContainer;
 import tu_darmstadt.sudoku.game.GameDifficulty;
+import tu_darmstadt.sudoku.ui.listener.IDeleteDialogFragmentListener;
 import tu_darmstadt.sudoku.ui.view.R;
 
 public class LoadGameActivity extends AppCompatActivity implements IDeleteDialogFragmentListener {
@@ -46,9 +47,24 @@ public class LoadGameActivity extends AppCompatActivity implements IDeleteDialog
 
         setContentView(R.layout.activity_load_game);
 
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle(R.string.menu_continue_game);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
         settings = PreferenceManager.getDefaultSharedPreferences(this);
 
         init();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public void init() {
