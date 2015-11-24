@@ -51,8 +51,12 @@ public class GameInfoContainer {
         }
     }
 
-    public int getTime() {
+    public int getTimePlayed() {
         return timePlayed;
+    }
+
+    public Date getLastTimePlayed() {
+        return lastTimePlayed;
     }
 
     public void parseTime(String s) {

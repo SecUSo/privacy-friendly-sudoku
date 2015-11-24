@@ -141,7 +141,7 @@ public class GameController implements IModelChangedListener {
         boolean[][] setNotes = gic.getSetNotes();
         this.gameID = gic.getID();
         this.difficulty = gic.getDifficulty();
-        this.time = gic.getTime();
+        this.time = gic.getTimePlayed();
 
         setGameType(gic.getGameType());
         this.gameBoard = new GameBoard(gic.getGameType());

@@ -24,6 +24,7 @@ public class SaveLoadGameStateController {
     private static String FILE_EXTENSION = ".txt";
     private static String SAVE_PREFIX = "save_";
     private static String SAVES_DIR = "saves";
+    private static final int MAX_NUM_OF_SAVED_GAMES = 10;
 
     private static List<GameInfoContainer> list = new LinkedList<>();
 
@@ -42,7 +43,7 @@ public class SaveLoadGameStateController {
         }
         File dir = context.getDir(SAVES_DIR, 0);
 
-        List<GameInfoContainer> result = new LinkedList<>();
+        LinkedList<GameInfoContainer> result = new LinkedList<>();
 
         // go through every file
         for(File file : dir.listFiles()) {
@@ -98,7 +99,75 @@ public class SaveLoadGameStateController {
         editor.putBoolean("savesChanged", false);
         editor.commit();
 
-        list = result;
+        list = sortListByLastPlayedDate(result);
+
+        LinkedList<GameInfoContainer> removeList = new LinkedList<>();
+
+        for(int i = 0; i < list.size(); i++) {
+            if(i >= MAX_NUM_OF_SAVED_GAMES) {
+                deleteGameStateFile(list.get(i));
+                removeList.add(list.get(i));
+            }
+        }
+
+        for(GameInfoContainer gic : removeList) {
+            list.remove(gic);
+        }
+
+        return list;
+    }
+
+    private void deleteGameStateFile(GameInfoContainer gic) {
+        File dir = context.getDir(SAVES_DIR, 0);
+
+        File file = new File(dir, SAVE_PREFIX+gic.getID()+FILE_EXTENSION);
+
+        file.delete();
+    }
+
+    public LinkedList<GameInfoContainer> sortListByLastPlayedDate(LinkedList<GameInfoContainer> list) {
+
+        if(list.size() < 2) {
+            return list;
+        }
+
+        LinkedList<GameInfoContainer> listL = new LinkedList<>();
+        LinkedList<GameInfoContainer> listR = new LinkedList<>();
+
+        int middle = list.size()/2;
+
+        for(int i = 0; i < list.size(); i++) {
+            if(i < middle) {
+                listL.add(list.get(i));
+            } else {
+                listR.add(list.get(i));
+            }
+        }
+
+        listL = sortListByLastPlayedDate(listL);
+        listR = sortListByLastPlayedDate(listR);
+
+        return sortListByLastPlayedDateMerge(listL, listR);
+    }
+
+    public LinkedList<GameInfoContainer> sortListByLastPlayedDateMerge(LinkedList<GameInfoContainer> list1, LinkedList<GameInfoContainer> list2) {
+
+        LinkedList<GameInfoContainer> result = new LinkedList<>();
+
+        while(!(list1.isEmpty() && list2.isEmpty())) {
+            GameInfoContainer gic1 = list1.peek();
+            GameInfoContainer gic2 = list2.peek();
+            if(gic1 == null) {
+                result.add(list2.pop());
+            } else if(gic2 == null) {
+                result.add(list1.pop());
+            } else if(gic1.getLastTimePlayed().after(gic2.getLastTimePlayed())) {
+                result.add(list1.pop());
+            } else {
+                result.add(list2.pop());
+            }
+        }
+
         return result;
     }
 

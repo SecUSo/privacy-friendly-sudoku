@@ -15,23 +15,61 @@
         android:src="@drawable/icon_default_9x9"/>
 
     <RelativeLayout
-        android:layout_width="0dp"
-        android:layout_weight="4"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent">
 
-    <TextView
-        android:text="ID"
-        android:id="@+id/loadgame_listentry_id"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        <TextView
+            android:text="GameType"
+            android:id="@+id/loadgame_listentry_gametype"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
-    <TextView
-        android:text="gametype"
-        android:layout_below="@+id/loadgame_listentry_id"
-        android:id="@+id/loadgame_listentry_gametype"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@+id/loadgame_listentry_gametype">
+
+            <RatingBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/loadgame_listentry_difficultybar"
+                android:numStars="3"
+                android:rating="3"
+                android:clickable="false"
+                style="?android:attr/ratingBarStyleSmall"/>
+
+            <TextView
+                android:text="Difficulty"
+                android:id="@+id/loadgame_listentry_difficultytext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
     </RelativeLayout>
 
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="right"
+        android:gravity="right">
+
+        <TextView
+            android:text="00:00"
+            android:textStyle="bold"
+            android:id="@+id/loadgame_listentry_timeplayed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="end"/>
+
+        <TextView
+            android:text="1 second ago"
+            android:gravity="end"
+            android:layout_below="@+id/loadgame_listentry_timeplayed"
+            android:id="@+id/loadgame_listentry_lasttimeplayed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
 
 </LinearLayout>

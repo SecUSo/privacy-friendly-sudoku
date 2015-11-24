@@ -13,12 +13,19 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
+import java.text.DateFormat;
+import java.text.FieldPosition;
+import java.text.ParsePosition;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import tu_darmstadt.sudoku.controller.SaveLoadGameStateController;
 import tu_darmstadt.sudoku.controller.helper.GameInfoContainer;
+import tu_darmstadt.sudoku.game.GameDifficulty;
 import tu_darmstadt.sudoku.ui.view.R;
 
 public class LoadGameActivity extends AppCompatActivity {
@@ -98,8 +105,11 @@ public class LoadGameActivity extends AppCompatActivity {
 
             GameInfoContainer gic = loadableGameList.get(position);
 
-            TextView name = (TextView)convertView.findViewById(R.id.loadgame_listentry_gametype);
-            TextView summary=(TextView)convertView.findViewById(R.id.loadgame_listentry_id);
+            TextView gameType = (TextView)convertView.findViewById(R.id.loadgame_listentry_gametype);
+            TextView difficulty =(TextView)convertView.findViewById(R.id.loadgame_listentry_difficultytext);
+            RatingBar difficultyBar =(RatingBar)convertView.findViewById(R.id.loadgame_listentry_difficultybar);
+            TextView playedTime = (TextView)convertView.findViewById(R.id.loadgame_listentry_timeplayed);
+            TextView lastTimePlayed = (TextView)convertView.findViewById(R.id.loadgame_listentry_lasttimeplayed);
             ImageView image = (ImageView)convertView.findViewById(R.id.loadgame_listentry_gametypeimage);
 
             switch(gic.getGameType()) {
@@ -115,8 +125,26 @@ public class LoadGameActivity extends AppCompatActivity {
                 default:
                     image.setImageResource(R.drawable.icon_default_9x9);
             }
-            name.setText(gic.getGameType().name());
-            summary.setText(String.valueOf(gic.getID()));
+            gameType.setText(gic.getGameType().getStringResID());
+            difficulty.setText(gic.getDifficulty().getStringResID());
+            difficultyBar.setRating(GameDifficulty.getValidDifficultyList().indexOf(gic.getDifficulty())+1);
+
+            int time = gic.getTimePlayed();
+            int seconds = time % 60;
+            int minutes = ((time -seconds)/60)%60 ;
+            int hours = (time - minutes - seconds)/(3600);
+            String h,m,s;
+            s = (seconds< 10)? "0"+String.valueOf(seconds):String.valueOf(seconds);
+            m = (minutes< 10)? "0"+String.valueOf(minutes):String.valueOf(minutes);
+            h = (hours< 10)? "0"+String.valueOf(hours):String.valueOf(hours);
+            playedTime.setText(h + ":" + m + ":" + s);
+
+            Date lastTimePlayedDate = gic.getLastTimePlayed();
+
+            DateFormat format = DateFormat.getDateTimeInstance();
+            format.setTimeZone(TimeZone.getDefault());
+
+            lastTimePlayed.setText(format.format(lastTimePlayedDate));
 
             return convertView;
         }
