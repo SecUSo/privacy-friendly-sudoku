@@ -37,7 +37,7 @@ public class GameController implements IModelChangedListener {
     private int gameID = 0;
     private GameDifficulty difficulty;
     private CellConflictList errorList = new CellConflictList();
-    private DoUndo doUndo;
+    private UndoRedoManager undoRedoManager;
     private int selectedValue;
     private LinkedList<IGameSolvedListener> solvedListeners = new LinkedList<>();
     private boolean notifiedOnSolvedListeners = false;
@@ -74,13 +74,13 @@ public class GameController implements IModelChangedListener {
     }
 
     public void loadNewLevel(GameType type, GameDifficulty difficulty) {
-        SaveLoadLevelManager saveLoadLevelManager = SaveLoadLevelManager.getInstance();
+        NewLevelManager newLevelManager = NewLevelManager.getInstance();
 
-        int[] level = saveLoadLevelManager.loadLevel(type, difficulty);
+        int[] level = newLevelManager.loadLevel(type, difficulty);
 
         loadLevel(new GameInfoContainer(0, difficulty, type, level, null, null));
 
-        saveLoadLevelManager.checkAndRestock();
+        newLevelManager.checkAndRestock();
     }
 
     public int getTime() {
@@ -126,7 +126,7 @@ public class GameController implements IModelChangedListener {
 
         gameBoard.registerOnModelChangeListener(this);
 
-        doUndo = new DoUndo(gameBoard);
+        undoRedoManager = new UndoRedoManager(gameBoard);
         // call the solve function to get the solution of this board
         //qqWingController.solve(gameBoard);
     }
@@ -232,7 +232,7 @@ public class GameController implements IModelChangedListener {
         }
 
         //gameID now has a value other than 0 and hopefully unique
-        SaveLoadGameStateController fm = new SaveLoadGameStateController(context, settings);
+        GameStateManager fm = new GameStateManager(context, settings);
         fm.saveGameState(this);
     }
 
@@ -353,7 +353,7 @@ public class GameController implements IModelChangedListener {
         if(isValidCellSelected() && getSelectedValue() != value) {
             setValue(selectedRow, selectedCol, value);
             // add state to undo
-            doUndo.addState(gameBoard);
+            undoRedoManager.addState(gameBoard);
         }
 
     }
@@ -362,7 +362,7 @@ public class GameController implements IModelChangedListener {
         if(isValidCellSelected() && getSelectedValue() != 0) {
             deleteValue(selectedRow, selectedCol);
             // add state to undo
-            doUndo.addState(gameBoard);
+            undoRedoManager.addState(gameBoard);
         }
 
     }
@@ -371,7 +371,7 @@ public class GameController implements IModelChangedListener {
         if(isValidCellSelected()) {
             toggleNote(selectedRow, selectedCol, value);
             // add state to undo
-            doUndo.addState(gameBoard);
+            undoRedoManager.addState(gameBoard);
         }
     }
 
@@ -474,18 +474,18 @@ public class GameController implements IModelChangedListener {
     }
 
     public void ReDo() {
-        updateGameBoard(doUndo.ReDo());
+        updateGameBoard(undoRedoManager.ReDo());
     }
 
     public void UnDo() {
-        updateGameBoard(doUndo.UnDo());
+        updateGameBoard(undoRedoManager.UnDo());
     }
 
     public boolean isRedoAvailable() {
-        return doUndo.isRedoAvailable();
+        return undoRedoManager.isRedoAvailable();
     }
     public boolean isUndoAvailable() {
-        return doUndo.isUnDoAvailable();
+        return undoRedoManager.isUnDoAvailable();
     }
 
     public void updateGameBoard(final GameBoard gameBoard) {

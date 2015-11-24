@@ -16,7 +16,7 @@ import tu_darmstadt.sudoku.controller.helper.GameInfoContainer;
 /**
  * Created by Chris on 16.11.2015.
  */
-public class SaveLoadGameStateController {
+public class GameStateManager {
 
     Context context;
     private SharedPreferences settings;
@@ -28,7 +28,7 @@ public class SaveLoadGameStateController {
 
     private static List<GameInfoContainer> list = new LinkedList<>();
 
-    public SaveLoadGameStateController(Context context, SharedPreferences settings) {
+    public GameStateManager(Context context, SharedPreferences settings) {
         this.context = context;
         this.settings = settings;
     }

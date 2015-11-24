@@ -8,12 +8,12 @@ import tu_darmstadt.sudoku.game.GameBoard;
 /**
  * Created by Chris on 24.11.2015.
  */
-public class DoUndo {
+public class UndoRedoManager {
 
     private int activeState;
     private LinkedList<GameBoard> states = new LinkedList<>();
 
-    public DoUndo(GameBoard initState) {
+    public UndoRedoManager(GameBoard initState) {
         // we get the base state and set it as active state.
         try {
 

@@ -24,8 +24,8 @@ import android.widget.Toast;
 import java.util.LinkedList;
 import java.util.List;
 
-import tu_darmstadt.sudoku.controller.SaveLoadGameStateController;
-import tu_darmstadt.sudoku.controller.SaveLoadLevelManager;
+import tu_darmstadt.sudoku.controller.GameStateManager;
+import tu_darmstadt.sudoku.controller.NewLevelManager;
 import tu_darmstadt.sudoku.controller.helper.GameInfoContainer;
 import tu_darmstadt.sudoku.game.GameDifficulty;
 import tu_darmstadt.sudoku.game.GameType;
@@ -49,9 +49,9 @@ public class MainActivity extends AppCompatActivity {
         settings = PreferenceManager.getDefaultSharedPreferences(this);
 
         // check if we need to pre generate levels.
-        SaveLoadLevelManager.init(getApplicationContext(), settings);
-        SaveLoadLevelManager saveLoadLevelManager = SaveLoadLevelManager.getInstance();
-        saveLoadLevelManager.checkAndRestock();
+        NewLevelManager.init(getApplicationContext(), settings);
+        NewLevelManager newLevelManager = NewLevelManager.getInstance();
+        newLevelManager.checkAndRestock();
 
         setContentView(R.layout.activity_main_menu);
 
@@ -133,8 +133,8 @@ public class MainActivity extends AppCompatActivity {
                     int index = difficultyBar.getProgress()-1;
                     GameDifficulty gameDifficulty = GameDifficulty.getValidDifficultyList().get(index < 0 ? 0 : index);
 
-                    SaveLoadLevelManager saveLoadLevelManager = SaveLoadLevelManager.getInstance();
-                    if(saveLoadLevelManager.isLevelLoadable(gameType, gameDifficulty)) {
+                    NewLevelManager newLevelManager = NewLevelManager.getInstance();
+                    if(newLevelManager.isLevelLoadable(gameType, gameDifficulty)) {
                         // save current setting for later
                         SharedPreferences.Editor editor = settings.edit();
                         editor.putString("lastChosenGameType", gameType.name());
@@ -146,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
                         i.putExtra("gameType", gameType);
                         i.putExtra("gameDifficulty", gameDifficulty);
                     } else {
-                        saveLoadLevelManager.checkAndRestock();
+                        newLevelManager.checkAndRestock();
                         Toast t = Toast.makeText(getApplicationContext(), R.string.generating, Toast.LENGTH_SHORT);
                         t.show();
                         return;
@@ -170,7 +170,7 @@ public class MainActivity extends AppCompatActivity {
     private void refreshContinueButton() {
         // enable continue button if we have saved games.
         Button continueButton = (Button)findViewById(R.id.continueButton);
-        SaveLoadGameStateController fm = new SaveLoadGameStateController(getBaseContext(), settings);
+        GameStateManager fm = new GameStateManager(getBaseContext(), settings);
         List<GameInfoContainer> gic = fm.loadGameStateInfo();
         if(gic.size() > 0) {
             continueButton.setEnabled(true);

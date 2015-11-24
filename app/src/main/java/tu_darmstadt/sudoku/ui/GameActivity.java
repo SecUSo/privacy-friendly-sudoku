@@ -18,7 +18,7 @@ import android.widget.Toast;
 
 import java.util.List;
 
-import tu_darmstadt.sudoku.controller.SaveLoadGameStateController;
+import tu_darmstadt.sudoku.controller.GameStateManager;
 import tu_darmstadt.sudoku.controller.GameController;
 import tu_darmstadt.sudoku.controller.helper.GameInfoContainer;
 import tu_darmstadt.sudoku.game.GameDifficulty;
@@ -75,10 +75,10 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
         gameController.registerGameSolvedListener(this);
         gameController.registerTimerListener(this);
 
-        List<GameInfoContainer> loadableGames = SaveLoadGameStateController.getLoadableGameList();
+        List<GameInfoContainer> loadableGames = GameStateManager.getLoadableGameList();
 
         if(loadLevel && loadableGames.size() > loadLevelID) {
-            // load level from SaveLoadGameStateController
+            // load level from GameStateManager
             gameController.loadLevel(loadableGames.get(loadLevelID));
         } else {
             // load a new level

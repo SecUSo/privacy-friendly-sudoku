@@ -29,7 +29,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.TimeZone;
 
-import tu_darmstadt.sudoku.controller.SaveLoadGameStateController;
+import tu_darmstadt.sudoku.controller.GameStateManager;
 import tu_darmstadt.sudoku.controller.helper.GameInfoContainer;
 import tu_darmstadt.sudoku.game.GameDifficulty;
 import tu_darmstadt.sudoku.ui.listener.IDeleteDialogFragmentListener;
@@ -69,8 +69,8 @@ public class LoadGameActivity extends AppCompatActivity implements IDeleteDialog
 
     public void init() {
 
-        SaveLoadGameStateController saveLoadGameStateController = new SaveLoadGameStateController(this, settings);
-        loadableGameList = saveLoadGameStateController.loadGameStateInfo();
+        GameStateManager gameStateManager = new GameStateManager(this, settings);
+        loadableGameList = gameStateManager.loadGameStateInfo();
 
         AdapterView.OnItemClickListener clickListener = new AdapterView.OnItemClickListener() {
             @Override
@@ -104,8 +104,8 @@ public class LoadGameActivity extends AppCompatActivity implements IDeleteDialog
 
     @Override
     public void onDialogPositiveClick(int position) {
-        SaveLoadGameStateController saveLoadGameStateController = new SaveLoadGameStateController(getApplicationContext(), settings);
-        saveLoadGameStateController.deleteGameStateFile(loadableGameList.get(position));
+        GameStateManager gameStateManager = new GameStateManager(getApplicationContext(), settings);
+        gameStateManager.deleteGameStateFile(loadableGameList.get(position));
         loadGameAdapter.delete(position);
     }
 
