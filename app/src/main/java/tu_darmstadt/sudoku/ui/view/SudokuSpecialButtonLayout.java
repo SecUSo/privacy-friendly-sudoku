@@ -51,11 +51,7 @@ public class SudokuSpecialButtonLayout extends LinearLayout {
                         break;
                     case Hint:
                         if(gameController.isValidCellSelected()) {
-                            int[] solved = gameController.solve();
-                            // TODO test every placed value so far? Or just reveal current selected?
-
-                            // and reveal the selected value.
-                            gameController.selectValue(solved[row * gameController.getSize() + col]);
+                            gameController.hint();
                         }
                         break;
                     case NumberOrCellFirst:

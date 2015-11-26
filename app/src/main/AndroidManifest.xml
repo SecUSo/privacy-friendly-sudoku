@@ -14,6 +14,7 @@
             android:theme="@style/AppTheme.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -31,6 +32,11 @@
         <activity android:name="tu_darmstadt.sudoku.ui.AboutActivity" >
         </activity>
         <activity android:name="tu_darmstadt.sudoku.ui.LoadGameActivity" >
+        </activity>
+        <activity
+            android:name="tu_darmstadt.sudoku.ui.StatsActivity"
+            android:label="@string/title_activity_stats"
+            android:theme="@style/AppTheme.NoActionBar" >
         </activity>
     </application>
 

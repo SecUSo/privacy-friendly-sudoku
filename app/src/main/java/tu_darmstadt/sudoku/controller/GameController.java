@@ -28,6 +28,7 @@ public class GameController implements IModelChangedListener {
     private int size;
     private int sectionHeight;
     private int sectionWidth;
+    private int numbOfHints=0;
     private GameBoard gameBoard;
     private int[] solution;
     private GameType gameType;
@@ -141,6 +142,21 @@ public class GameController implements IModelChangedListener {
             solution = qqWingController.solve(gameBoard);
         }
         return solution;
+    }
+
+    /*public boolean loadLevel(GameBoard level) {
+        if(GameBoard.isValid(level)) {
+            gameBoard = level;
+        }
+    }*/
+
+    public void hint(){
+
+        int[] solved = solve();
+        // TODO test every placed value so far
+        // and reveal the selected value.
+        selectValue(solved[selectedRow * getSize() + selectedCol]);
+        numbOfHints++;
     }
 
     private void setGameType(GameType type) {
@@ -440,6 +456,9 @@ public class GameController implements IModelChangedListener {
         if (!timerListeners.contains(listener)){
             timerListeners.add(listener);
         }
+    }
+    public int getNumbOfHints(){
+        return numbOfHints;
     }
 
     private void initTimer() {

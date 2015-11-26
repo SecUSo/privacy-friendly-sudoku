@@ -20,8 +20,10 @@ import java.util.List;
 
 import tu_darmstadt.sudoku.controller.GameStateManager;
 import tu_darmstadt.sudoku.controller.GameController;
+import tu_darmstadt.sudoku.controller.SaveLoadStatistics;
 import tu_darmstadt.sudoku.controller.helper.GameInfoContainer;
 import tu_darmstadt.sudoku.game.GameDifficulty;
+import tu_darmstadt.sudoku.game.GameStatus;
 import tu_darmstadt.sudoku.game.GameType;
 import tu_darmstadt.sudoku.game.listener.IGameSolvedListener;
 import tu_darmstadt.sudoku.game.listener.ITimerListener;
@@ -198,8 +200,9 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
 
             case R.id.nav_highscore:
                 // see highscore list
-                //intent = new Intent(this, HighscoreActivity.class);
-                //startActivity(intent);
+
+                intent = new Intent(this, StatsActivity.class);
+                startActivity(intent);
                 break;
 
             case R.id.menu_about:
@@ -225,6 +228,8 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
     public void onSolved() {
         Toast t = Toast.makeText(this,"Congratulations you have solved the puzzle!", Toast.LENGTH_SHORT);
         t.show();
+        SaveLoadStatistics s = new SaveLoadStatistics(this);
+        s.saveGameStats(gameController);
         // TODO: WE WON.. do something awesome :)
     }
 

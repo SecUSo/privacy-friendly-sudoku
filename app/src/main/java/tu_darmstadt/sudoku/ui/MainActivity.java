@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
                     i = new Intent(this, LoadGameActivity.class);
                     break;
                 case R.id.highscoreButton:
-                    // TODO: create highscore screen
+                    i = new Intent(this,StatsActivity.class);
                     break;
                 case R.id.settingsButton:
                     i = new Intent(this, SettingsActivity.class);

@@ -61,11 +61,24 @@
     <string name="gametype_default_12x12">Standart Sudoku 12x12</string>
     <string name="gametype_x_9x9">X Sudoku 9x9</string>
     <string name="gametype_hyper_9x9">Hyper Sudoku 9x9</string>
+    <string name="title_activity_stats_game">StatsGameActivity</string>
+    <string name="section_format">Hello World from section: %1$d</string>
 
     <!-- ### Continue Game ### -->
     <string name="loadgame_delete_confirmation">Are you sure you want to delete this save?</string>
     <string name="loadgame_delete_confirm">Delete</string>
     <string name="loadgame_delete_cancel">Cancel</string>
+    <string name="title_activity_stats">StatsActivity</string>
+
+    <!-- ### Stats ###-->
+    <string name="stats_name">Statistics</string>
+    <string name="number_of_hints">Number of Hints Used:</string>
+    <string name="number_of_games">#Games:</string>
+    <string name="total_of_time">Total time Played:</string>
+    <string name="average_time">Av time:</string>
+    <string name="min_time">Min time:</string>
+    <string name="reset_stats">reset stats</string>
+
 
 
 
