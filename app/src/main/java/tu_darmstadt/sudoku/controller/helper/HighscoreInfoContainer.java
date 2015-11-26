@@ -16,8 +16,10 @@ public class HighscoreInfoContainer {
     private int time=0;
     private int numberOfHintsUsed =0;
     private int numberOfGames=0;
+    private int numberOfGamesNoHints =0;
+    private int timeNoHints = 0;
 
-    private int amountOfSavedArguments = 6;
+    private int amountOfSavedArguments = 8;
 
     public HighscoreInfoContainer(){
 
@@ -34,7 +36,11 @@ public class HighscoreInfoContainer {
         time += gc.getTime();
         numberOfHintsUsed += gc.getNumbOfHints();
         numberOfGames++;
-        minTime = (gc.getTime()< minTime) ? gc.getTime() : minTime;
+        // min time is only minTime of games without hints used
+        minTime = (gc.getNumbOfHints() == 0 && gc.getTime()< minTime) ? gc.getTime() : minTime;
+        numberOfGamesNoHints = (gc.getNumbOfHints()==0)?numberOfGamesNoHints+1:numberOfGamesNoHints;
+        timeNoHints = (gc.getNumbOfHints()==0)?timeNoHints+gc.getTime():timeNoHints;
+
     }
 
     public void setInfosFromFile(String s){
@@ -50,6 +56,9 @@ public class HighscoreInfoContainer {
             minTime = parseTime(strings[3]);
             type = parseGameType(strings[4]);
             difficulty = parsDifficulty(strings[5]);
+            numberOfGamesNoHints=parseNumberOfGames(strings[6]);
+            timeNoHints = parseTime(strings[7]);
+
         } catch (IllegalArgumentException e){
             throw  new IllegalArgumentException("Could not set Infoprmation illegal Arguments");
         }
@@ -58,21 +67,16 @@ public class HighscoreInfoContainer {
     public GameDifficulty getDifficulty(){
         return difficulty;
     }
-    public GameType getGameType(){
-        return type;
-    }
+    public GameType getGameType(){return type;}
     public int getTime(){
         return time;
     }
-    public int getMinTime(){
-        return minTime;
-    }
-    public int getNumberOfHintsUsed(){
-        return numberOfHintsUsed;
-    }
-    public int getNumberOfGames(){
-        return numberOfGames;
-    }
+    public int getMinTime(){return minTime; }
+    public int getNumberOfHintsUsed(){return numberOfHintsUsed; }
+    public int getNumberOfGames(){  return numberOfGames;   }
+    public int getNumberOfGamesNoHints(){   return numberOfGamesNoHints; }
+    public int getTimeNoHints(){    return timeNoHints; }
+
 
     private GameType parseGameType(String s){
         return GameType.valueOf(s);
@@ -117,20 +121,11 @@ public class HighscoreInfoContainer {
         sb.append(type.name());
         sb.append("/");
         sb.append(difficulty.name());
-
-
-        return sb.toString();
-    }
-
-    public static String getStats(int time,GameDifficulty gd, int numberOfHints, GameType gt){
-        StringBuilder sb = new StringBuilder();
-        sb.append(time);
         sb.append("/");
-        sb.append(gd.name());
+        sb.append(numberOfGamesNoHints);
         sb.append("/");
-        sb.append(numberOfHints);
-        sb.append("/");
-        sb.append(gt.name());
+        sb.append(timeNoHints);
+
 
         return sb.toString();
     }

@@ -237,7 +237,7 @@ public class StatsActivity extends AppCompatActivity {
             }
             difficultyBarView.setRating(pos+1);
             difficultyView.setText(rootView.getResources().getString(infos.getDifficulty().getStringResID()));
-            s= (infos.getTime() == 0)?"/":String.valueOf(infos.getTime() / infos.getNumberOfGames());
+            s= (infos.getTimeNoHints() == 0)?"/":String.valueOf(infos.getTimeNoHints() / infos.getNumberOfGamesNoHints());
             averageTimeView.setText(s);
             s = (infos.getMinTime()==Integer.MAX_VALUE)? "/":String.valueOf(infos.getMinTime());
             minTimeView.setText(s);
