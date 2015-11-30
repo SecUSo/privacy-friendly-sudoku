@@ -98,8 +98,9 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
         keyboard.setRowCount(2);
         Point p = new Point();
         getWindowManager().getDefaultDisplay().getSize(p);
+
         //int width = p.x;
-        keyboard.setKeyBoard(gameController.getSize(), p.x);
+        keyboard.setKeyBoard(gameController.getSize(), p.x,layout.getHeight()-p.y);
 
 
         //set Special keys

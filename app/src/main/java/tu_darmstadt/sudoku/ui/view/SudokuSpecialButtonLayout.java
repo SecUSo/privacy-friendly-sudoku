@@ -81,14 +81,16 @@ public class SudokuSpecialButtonLayout extends LinearLayout {
         for (SudokuButtonType t : SudokuButtonType.getSpecialButtons()){
             fixedButtons[i] = new SudokuButton(getContext(),null);
             p = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT,1);
-            p.setMargins(0,0,0,0);
-            int width2 =width/(fixedButtonsCount);
-            p.width= width2-15;
+            p.setMargins(5,5,5,5);
+
+            //int width2 =width/(fixedButtonsCount);
+            //p.width= width2-15;
             fixedButtons[i].setLayoutParams(p);
             fixedButtons[i].setGravity(Gravity.CENTER);
             fixedButtons[i].setType(t);
             fixedButtons[i].setText(SudokuButtonType.getName(t));
             fixedButtons[i].setOnClickListener(listener);
+            fixedButtons[i].setBackgroundResource(R.drawable.numpad_highlighted_four);
             addView(fixedButtons[i]);
             i++;
 
