@@ -3,6 +3,10 @@ package tu_darmstadt.sudoku.ui;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -12,6 +16,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -31,7 +36,7 @@ import tu_darmstadt.sudoku.game.GameDifficulty;
 import tu_darmstadt.sudoku.game.GameType;
 import tu_darmstadt.sudoku.ui.view.R;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     RatingBar difficultyBar;
     TextView difficultyText;
@@ -104,6 +109,18 @@ public class MainActivity extends AppCompatActivity {
         editor.putBoolean("savesChanged", true);
         editor.apply();
         refreshContinueButton();
+
+
+        // set Nav_Bar
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_main);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view_main);
+        navigationView.setNavigationItemSelectedListener(this);
+
     }
 
     public void onClick(View view) {
@@ -177,6 +194,46 @@ public class MainActivity extends AppCompatActivity {
         } else {
             continueButton.setEnabled(false);
         }
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        Intent intent;
+
+        switch(id) {
+            case R.id.menu_settings_main:
+                //open settings
+                intent = new Intent(this,SettingsActivity.class);
+                startActivity(intent);
+                break;
+
+            case R.id.nav_highscore_main:
+                // see highscore list
+
+                intent = new Intent(this, StatsActivity.class);
+                startActivity(intent);
+                break;
+
+            case R.id.menu_about_main:
+                //open about page
+                intent = new Intent(this,AboutActivity.class);
+                startActivity(intent);
+                break;
+
+            case R.id.menu_help_main:
+                //open about page
+                //intent = new Intent(this,HelpActivity.class);
+                //startActivity(intent);
+                break;
+            default:
+        }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_main);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 
     /*@Override

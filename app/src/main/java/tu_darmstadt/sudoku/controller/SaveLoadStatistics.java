@@ -57,8 +57,12 @@ public class SaveLoadStatistics {
                 Log.e("Failed to read file","File could not be read");
             }
             infos = new HighscoreInfoContainer(t,dif);
+            try {
             infos.setInfosFromFile(new String(bytes));
-            result.add(infos);
+            } catch (IllegalArgumentException e){
+                file.delete();
+            }
+                result.add(infos);
         }
 
 
