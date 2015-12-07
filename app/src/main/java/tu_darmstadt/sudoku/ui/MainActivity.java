@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if(view instanceof Button) {
             Button b = (Button)view;
             switch(b.getId()) {
-                case R.id.aboutButton:
+                /**case R.id.aboutButton:
                     i = new Intent(this, AboutActivity.class);
                     break;
                 case R.id.continueButton:
@@ -144,7 +144,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     break;
                 case R.id.helpButton:
                     // TODO: create help page.. what is supposed to be in there?!
-                    break;
+                    break;*/
                 case R.id.playButton:
                     GameType gameType = GameType.getValidGameTypes().get(mViewPager.getCurrentItem());
                     int index = difficultyBar.getProgress()-1;

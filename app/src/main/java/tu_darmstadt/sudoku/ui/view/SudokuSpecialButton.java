@@ -2,22 +2,16 @@ package tu_darmstadt.sudoku.ui.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ToggleButton;
 
 /**
- * Created by TMZ_LToP on 12.11.2015.
+ * Created by TMZ_LToP on 07.12.2015.
  */
-
-
-
-public class SudokuButton extends Button {
-
+public class SudokuSpecialButton extends ImageButton{
     private int value = -1;
     private SudokuButtonType type = SudokuButtonType.Unspecified;
 
-    public SudokuButton(Context context, AttributeSet attrs) {
+    public SudokuSpecialButton(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
@@ -26,5 +20,3 @@ public class SudokuButton extends Button {
     public int getValue ()                      { return value; }
     public SudokuButtonType getType()           { return type; }
 }
-
-
