@@ -344,7 +344,9 @@ public class GameController implements IModelChangedListener {
         return selectedCol;
     }
     public int getSelectedValue() {
-        return selectedValue;
+        if(isValidCellSelected()){
+        return getValue(getSelectedRow(),getSelectedCol()); //selectedValue;
+        } else return 0;
     }
 
     public void selectCell(int row, int col) {

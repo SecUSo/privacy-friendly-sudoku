@@ -135,7 +135,7 @@ public class SudokuFieldLayout extends RelativeLayout {
 
             for (int i = 0; i < gameController.getSize(); i++) {
                 for (int j = 0; j < gameController.getSize(); j++) {
-                    gamecells[i][j].setValues(gameCellWidth, gameCellHeight, sectionHeight, sectionWidth, gameController.getGameCell(i, j));
+                    gamecells[i][j].setValues(gameCellWidth, gameCellHeight, sectionHeight, sectionWidth, gameController.getGameCell(i, j),gameController.getSize());
                 }
             }
         }

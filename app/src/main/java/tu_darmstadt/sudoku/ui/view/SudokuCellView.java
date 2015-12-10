@@ -25,6 +25,7 @@ public class SudokuCellView extends View {
     int mSectionWidth;
     int mRow;
     int mCol;
+    int size;
     boolean selected;
     CellHighlightTypes highlightType = CellHighlightTypes.Default;
     Symbol symbolsToUse = Symbol.Default;
@@ -42,7 +43,7 @@ public class SudokuCellView extends View {
         this.selected = b;
     }
 
-    public void setValues (int width, int height, int sectionHeight, int sectionWidth, GameCell gameCell) {
+    public void setValues (int width, int height, int sectionHeight, int sectionWidth, GameCell gameCell,int size) {
         mSectionHeight = sectionHeight;
         mSectionWidth = sectionWidth;
         mGameCell = gameCell;
@@ -50,6 +51,7 @@ public class SudokuCellView extends View {
         mHeight = height;
         mRow = gameCell.getRow();
         mCol = gameCell.getCol();
+        this.size = size;
     }
 
     public void setHighlightType(CellHighlightTypes highlightType) {
@@ -123,24 +125,24 @@ public class SudokuCellView extends View {
 
     public void drawValue(Canvas canvas) {
         Paint p = new Paint();
-        int j= 3;
-        int k = 3;
+        int root = (int) Math.sqrt(size);
+        int j= root+1;
+        int k = root;
         if(mGameCell.getValue() == 0) {
             for (int i = 0; i < mGameCell.getNotes().length; i++) {
                 if (mGameCell.getNotes()[i]) {
                     p.setTypeface(Typeface.SANS_SERIF);
                     p.setTextSize(mWidth / 4);
                     p.setTextAlign(Paint.Align.RIGHT);
-                    // TODO settings: get SymbolEnum from settings
-                    canvas.drawText(Symbol.getSymbol(symbolsToUse, i),(mWidth*1/12)*k,(mWidth*1/12)*j,p);
+                    canvas.drawText(Symbol.getSymbol(symbolsToUse, i),(mWidth*1/(size+root))*k,(mWidth*1/(size+root+1))*j,p);
                     /*canvas.drawText(String.valueOf(1), (mWidth * 1 / 12)*3, (mWidth* 1 / 12)*3, p);
                     canvas.drawText(String.valueOf(2),(mWidth*1/12)*7, (mWidth* 1 / 12)*7,p );
                     canvas.drawText(String.valueOf(3),(mWidth*1/12)*11, (mWidth* 1 / 12)*11,p );*/
                 }
-                k+=4;
-                if (k > 11) {
-                    k = 3;
-                    j +=4;
+                k+=root+1;
+                if (k > (size+root)) {
+                    k = root;
+                    j +=root+1;
                 }
             }
             return;

@@ -1,29 +1,16 @@
 package tu_darmstadt.sudoku.ui.view;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.RotateDrawable;
 import android.util.AttributeSet;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
-import android.view.animation.DecelerateInterpolator;
-import android.view.animation.RotateAnimation;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-
 import tu_darmstadt.sudoku.controller.GameController;
-import tu_darmstadt.sudoku.game.GameBoard;
 
 /**
  * Created by TMZ_LToP on 17.11.2015.
@@ -34,6 +21,8 @@ public class SudokuSpecialButtonLayout extends LinearLayout {
     public int fixedButtonsCount = SudokuButtonType.getSpecialButtons().size();
     GameController gameController;
     SudokuKeyboardLayout keyboard;
+    Bitmap bitMap,bitResult;
+    Canvas canvas;
 
 
     OnClickListener listener = new OnClickListener() {
@@ -51,21 +40,29 @@ public class SudokuSpecialButtonLayout extends LinearLayout {
                         break;
                     case NoteToggle:
                         //btn.setText(keyboard.notesEnabled ? "ON" : "OFF");
-                        //TODO: add rotation
-
-                        AnimationSet aniset = new AnimationSet(true);
+                        //Animation rotates whole button
+                        /*AnimationSet aniset = new AnimationSet(true);
                         aniset.setInterpolator(new DecelerateInterpolator());
                         aniset.setFillAfter(true);
                         aniset.setFillEnabled(true);
 
-                        RotateAnimation rotate = new RotateAnimation(0.0f,(keyboard.notesEnabled ? 90.0f:-90.0f),
+                        RotateAnimation rotate = new RotateAnimation(0.0f,(keyboard.notesEnabled ? 90.0f:0.0f),
                                 RotateAnimation.RELATIVE_TO_SELF,0.5f,
                                 Animation.RELATIVE_TO_SELF,0.5f);
                         rotate.setDuration(1500);
                         rotate.setFillAfter(true);
                         aniset.addAnimation(rotate);
 
-                        btn.startAnimation(aniset);
+                        btn.startAnimation(aniset);*/
+
+                        // rotates now only the Drawable
+                        bitMap = BitmapFactory.decodeResource(getResources(), btn.getType().getResID());
+                        bitResult = Bitmap.createBitmap(bitMap.getWidth(), bitMap.getHeight(), Bitmap.Config.ARGB_8888);
+
+                        canvas = new Canvas(bitResult);
+                        canvas.rotate(keyboard.notesEnabled?0.0f:90.0f,bitMap.getWidth()/2,bitMap.getHeight()/2);
+                        canvas.drawBitmap(bitMap,0,0,null);
+                        btn.setImageBitmap(bitResult);
                         keyboard.toggleNotesEnabled();
                         break;
                     case Do:
