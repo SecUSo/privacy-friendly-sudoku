@@ -6,6 +6,7 @@ import android.graphics.Point;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -23,10 +24,10 @@ import tu_darmstadt.sudoku.controller.GameController;
 import tu_darmstadt.sudoku.controller.SaveLoadStatistics;
 import tu_darmstadt.sudoku.controller.helper.GameInfoContainer;
 import tu_darmstadt.sudoku.game.GameDifficulty;
-import tu_darmstadt.sudoku.game.GameStatus;
 import tu_darmstadt.sudoku.game.GameType;
 import tu_darmstadt.sudoku.game.listener.IGameSolvedListener;
 import tu_darmstadt.sudoku.game.listener.ITimerListener;
+import tu_darmstadt.sudoku.ui.view.DialogWinScreen;
 import tu_darmstadt.sudoku.ui.view.R;
 import tu_darmstadt.sudoku.ui.view.SudokuFieldLayout;
 import tu_darmstadt.sudoku.ui.view.SudokuKeyboardLayout;
@@ -122,7 +123,7 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
         ratingBar = (RatingBar) findViewById(R.id.gameModeStar);
         ratingBar.setMax(numberOfStarts);
         ratingBar.setNumStars(numberOfStarts);
-        ratingBar.setRating(difficutyList.indexOf(gameController.getDifficulty())+1);
+        ratingBar.setRating(difficutyList.indexOf(gameController.getDifficulty()) + 1);
         ((TextView)findViewById(R.id.difficultyText)).setText(getString(gameController.getDifficulty().getStringResID()));
 
 
@@ -231,7 +232,13 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
         t.show();
         SaveLoadStatistics s = new SaveLoadStatistics(this);
         s.saveGameStats(gameController);
+        DialogWinScreen win = new DialogWinScreen();
+        win.setProps(gameController);
+        FragmentManager fr = getSupportFragmentManager();
+        win.show(fr, "win_screen_layout");
+
         // TODO: WE WON.. do something awesome :)
+        gameController.pauseTimer();
     }
 
     @Override

@@ -80,6 +80,7 @@
     <string name="reset_stats">reset stats</string>
 
 
-
+    <!--### Win Strings -->
+    <string name="win_text">Congratz du depp du hast gewonnen oder so was</string>
 
 </resources>

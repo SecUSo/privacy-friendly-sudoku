@@ -34,6 +34,7 @@ import tu_darmstadt.sudoku.controller.NewLevelManager;
 import tu_darmstadt.sudoku.controller.helper.GameInfoContainer;
 import tu_darmstadt.sudoku.game.GameDifficulty;
 import tu_darmstadt.sudoku.game.GameType;
+import tu_darmstadt.sudoku.ui.view.DialogWinScreen;
 import tu_darmstadt.sudoku.ui.view.R;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
@@ -122,6 +123,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
     }
+    public void callFragment(View view){
+        FragmentManager fm = getSupportFragmentManager();
+        DialogWinScreen winScreen = new DialogWinScreen();
+        winScreen.show(fm,"win_screen_layout");
+    }
 
     public void onClick(View view) {
 
@@ -133,9 +139,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 /**case R.id.aboutButton:
                     i = new Intent(this, AboutActivity.class);
                     break;
-                case R.id.continueButton:
-                    i = new Intent(this, LoadGameActivity.class);
-                    break;
                 case R.id.highscoreButton:
                     i = new Intent(this,StatsActivity.class);
                     break;
@@ -145,6 +148,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 case R.id.helpButton:
                     // TODO: create help page.. what is supposed to be in there?!
                     break;*/
+                case R.id.continueButton:
+                    i = new Intent(this, LoadGameActivity.class);
+                    break;
                 case R.id.playButton:
                     GameType gameType = GameType.getValidGameTypes().get(mViewPager.getCurrentItem());
                     int index = difficultyBar.getProgress()-1;

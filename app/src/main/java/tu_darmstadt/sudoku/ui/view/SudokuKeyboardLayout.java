@@ -81,7 +81,6 @@ public class SudokuKeyboardLayout extends GridLayout {
                 buttons[number].setLayoutParams(p);
                 //buttons[number].setGravity(Gravity.CENTER);
                 buttons[number].setType(SudokuButtonType.Value);
-                // TODO settings: get SymbolEnum from settings
                 buttons[number].setBackgroundResource(R.drawable.mnenomic_numpad_button);
                 buttons[number].setText(Symbol.getSymbol(symbolsToUse, number));
                 buttons[number].setValue(number + 1);

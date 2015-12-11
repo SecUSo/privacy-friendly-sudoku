@@ -132,6 +132,11 @@
                 android:capitalize="none"
                 android:clickable="false"
                 android:background="@drawable/mnenomic_numpad_button"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="testforwinshitz"
+                android:onClick="callFragment"/>
 <!--
             <LinearLayout
                 android:layout_width="match_parent"

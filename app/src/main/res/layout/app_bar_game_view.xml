@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    android:id="@+id/game_coordinate_layout"
     tools:context="tu_darmstadt.sudoku.activity.GameActivity">
 
     <android.support.design.widget.AppBarLayout

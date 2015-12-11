@@ -155,7 +155,6 @@ public class SudokuCellView extends View {
         p.setAntiAlias(true);
         p.setTextSize(Math.min(mHeight * 3 / 4, mHeight * 3 / 4));
         p.setTextAlign(Paint.Align.CENTER);
-        // TODO settings: get SymbolEnum from settings
         canvas.drawText(Symbol.getSymbol(symbolsToUse, mGameCell.getValue()-1), mHeight / 2, mHeight / 2 + mHeight / 4, p);
     }
 
