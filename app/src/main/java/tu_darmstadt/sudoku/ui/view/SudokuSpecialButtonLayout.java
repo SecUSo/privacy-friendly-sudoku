@@ -31,39 +31,28 @@ public class SudokuSpecialButtonLayout extends LinearLayout {
             if(v instanceof SudokuSpecialButton) {
                 SudokuSpecialButton btn = (SudokuSpecialButton)v;
 
-                int row = gameController.getSelectedRow();
-                int col = gameController.getSelectedCol();
+                //int row = gameController.getSelectedRow();
+                //int col = gameController.getSelectedCol();
 
                 switch(btn.getType()) {
                     case Delete:
-                        gameController.deleteSelectedValue();
+                        gameController.deleteSelectedCellsValue();
                         break;
                     case NoteToggle:
-                        //btn.setText(keyboard.notesEnabled ? "ON" : "OFF");
-                        //Animation rotates whole button
-                        /*AnimationSet aniset = new AnimationSet(true);
-                        aniset.setInterpolator(new DecelerateInterpolator());
-                        aniset.setFillAfter(true);
-                        aniset.setFillEnabled(true);
+                        // rotates the Drawable
+                        gameController.setNoteStatus(!gameController.getNoteStatus());
+                        keyboard.updateNotesEnabled();
 
-                        RotateAnimation rotate = new RotateAnimation(0.0f,(keyboard.notesEnabled ? 90.0f:0.0f),
-                                RotateAnimation.RELATIVE_TO_SELF,0.5f,
-                                Animation.RELATIVE_TO_SELF,0.5f);
-                        rotate.setDuration(1500);
-                        rotate.setFillAfter(true);
-                        aniset.addAnimation(rotate);
-
-                        btn.startAnimation(aniset);*/
-
-                        // rotates now only the Drawable
                         bitMap = BitmapFactory.decodeResource(getResources(), btn.getType().getResID());
                         bitResult = Bitmap.createBitmap(bitMap.getWidth(), bitMap.getHeight(), Bitmap.Config.ARGB_8888);
 
                         canvas = new Canvas(bitResult);
-                        canvas.rotate(keyboard.notesEnabled?0.0f:90.0f,bitMap.getWidth()/2,bitMap.getHeight()/2);
-                        canvas.drawBitmap(bitMap,0,0,null);
+                        canvas.rotate(gameController.getNoteStatus() ? 45.0f : 0.0f, bitMap.getWidth()/2, bitMap.getHeight()/2);
+                        canvas.drawBitmap(bitMap, 0, 0, null);
+
                         btn.setImageBitmap(bitResult);
-                        keyboard.toggleNotesEnabled();
+                        btn.setBackgroundResource(gameController.getNoteStatus() ? R.drawable.numpad_highlighted_three : R.drawable.numpad_highlighted_four);
+
                         break;
                     case Do:
                         gameController.ReDo();
@@ -76,10 +65,9 @@ public class SudokuSpecialButtonLayout extends LinearLayout {
                     case Hint:
                         if(gameController.isValidCellSelected()) {
                             gameController.hint();
+                        } else {
+                            // TODO: Display a Toast that explains how to use the Hint function.
                         }
-                        break;
-                    case NumberOrCellFirst:
-                        // TODO: not implemented
                         break;
                     default:
                         break;
@@ -94,8 +82,13 @@ public class SudokuSpecialButtonLayout extends LinearLayout {
         setWeightSum(fixedButtonsCount);
     }
 
+    public void setButtonsEnabled(boolean enabled) {
+        for(SudokuSpecialButton b : fixedButtons) {
+            b.setEnabled(enabled);
+        }
+    }
 
-    public void setButtons(int width, GameController gc,SudokuKeyboardLayout key) {
+    public void setButtons(int width, GameController gc, SudokuKeyboardLayout key) {
         keyboard=key;
         gameController = gc;
         fixedButtons = new SudokuSpecialButton[fixedButtonsCount];
@@ -109,6 +102,15 @@ public class SudokuSpecialButtonLayout extends LinearLayout {
 
             //int width2 =width/(fixedButtonsCount);
             //p.width= width2-15;
+            if(t == SudokuButtonType.Spacer) {
+                fixedButtons[i].setVisibility(View.INVISIBLE);
+            }
+            /*if(t == SudokuButtonType.Do && !gameController.isRedoAvailable()) {
+                fixedButtons[i].setEnabled(false);
+            }
+            if(t == SudokuButtonType.Undo && !gameController.isUndoAvailable()) {
+                fixedButtons[i].setEnabled(false);
+            }*/
             fixedButtons[i].setLayoutParams(p);
             fixedButtons[i].setType(t);
             fixedButtons[i].setImageDrawable(getResources().getDrawable(t.getResID()));
@@ -119,8 +121,6 @@ public class SudokuSpecialButtonLayout extends LinearLayout {
             fixedButtons[i].setBackgroundResource(R.drawable.numpad_highlighted_four);
             addView(fixedButtons[i]);
             i++;
-
-
         }
 
     }

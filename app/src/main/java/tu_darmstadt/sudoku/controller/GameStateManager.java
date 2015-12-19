@@ -123,6 +123,11 @@ public class GameStateManager {
         File file = new File(dir, SAVE_PREFIX+gic.getID()+FILE_EXTENSION);
 
         file.delete();
+
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putBoolean("savesChanged", true);
+        editor.commit();
+
     }
 
     public LinkedList<GameInfoContainer> sortListByLastPlayedDate(LinkedList<GameInfoContainer> list) {

@@ -6,22 +6,21 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.GridLayout;
-import android.support.v7.widget.GridLayoutManager;
 
 import tu_darmstadt.sudoku.controller.GameController;
 import tu_darmstadt.sudoku.controller.Symbol;
+import tu_darmstadt.sudoku.game.listener.IHighlightChangedListener;
 
 /**
  * Created by TMZ_LToP on 12.11.2015.
  */
 
 
-public class SudokuKeyboardLayout extends GridLayout {
+public class SudokuKeyboardLayout extends GridLayout implements IHighlightChangedListener {
 
     AttributeSet attrs;
     SudokuButton [] buttons;
     GameController gameController;
-    boolean notesEnabled=false;
     Symbol symbolsToUse = Symbol.Default;
     float normalTextSize = 0;
 
@@ -30,17 +29,13 @@ public class SudokuKeyboardLayout extends GridLayout {
         public void onClick(View v) {
             if(v instanceof SudokuButton) {
                 SudokuButton btn = (SudokuButton)v;
-                if(notesEnabled) {
-                    gameController.toggleSelectedNote(btn.getValue());
-                } else {
-                    gameController.selectValue(btn.getValue());
-                }
+
+                gameController.selectValue(btn.getValue());
+
                 gameController.saveGame(getContext());
             }
         }
     };
-
-
 
 
     public SudokuKeyboardLayout(Context context, AttributeSet attrs) {
@@ -48,7 +43,6 @@ public class SudokuKeyboardLayout extends GridLayout {
         this.attrs = attrs;
 
     }
-
 
     public void setKeyBoard(int size,int width, int height) {
         LayoutParams p ;
@@ -69,10 +63,8 @@ public class SudokuKeyboardLayout extends GridLayout {
 
                 p = (new LayoutParams(rowSpec,colSpec));
 
-
-
                 //p = new LayoutParams(rowSpec,colSpec);
-                p.setMargins((i == 0)?0:5,5,5,5);
+                p.setMargins((i == 0) ? 0 : 5,5,5,5);
                 p.width= (width-(int)((getResources().getDimension(R.dimen.activity_horizontal_margin))*2))/realSize;
                 p.width= p.width-10;
                 p.setGravity(LayoutParams.WRAP_CONTENT);
@@ -91,15 +83,24 @@ public class SudokuKeyboardLayout extends GridLayout {
         }
     }
 
-    public void setGameController(GameController gc){
-        gameController=gc;
-
+    public void setButtonsEnabled(boolean enabled) {
+        for(SudokuButton b : buttons) {
+            b.setEnabled(enabled);
+        }
     }
 
-    public void toggleNotesEnabled() {
-        notesEnabled = !notesEnabled;
+    public void setGameController(GameController gc){
+        if(gc == null) {
+            throw new IllegalArgumentException("GameController may not be null.");
+        }
+
+        gameController = gc;
+        gameController.registerHighlightChangedListener(this);
+    }
+
+    public void updateNotesEnabled() {
         if (normalTextSize == 0) {normalTextSize = buttons[0].getTextSize();}
-        if(notesEnabled) {
+        if(gameController.getNoteStatus()) {
             setTextSize(normalTextSize*0.6f);
         }else {
             setTextSize(normalTextSize);
@@ -119,5 +120,22 @@ public class SudokuKeyboardLayout extends GridLayout {
     public void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
+    }
+
+    @Override
+    public void onHighlightChanged() {
+        for(SudokuButton i_btn : buttons) {
+            i_btn.setBackgroundResource(R.drawable.mnenomic_numpad_button);
+
+            // Highlight Yellow if we are done with that number
+            if(gameController.getValueCount(i_btn.getValue()) == gameController.getSize()) {
+                i_btn.setBackgroundResource(R.drawable.numpad_highlighted_three);
+            }
+
+            if(gameController.getSelectedValue() == i_btn.getValue()) {
+                // highlight button to indicate that the value is selected
+                i_btn.setBackgroundResource(R.drawable.numpad_highlighted);
+            }
+        }
     }
 }

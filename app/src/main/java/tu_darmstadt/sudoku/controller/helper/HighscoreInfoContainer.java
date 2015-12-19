@@ -26,20 +26,20 @@ public class HighscoreInfoContainer {
     }
     public HighscoreInfoContainer(GameType t, GameDifficulty diff){
         type =(type == null)?t:type;
-        difficulty = (difficulty == null)?diff: difficulty;
+        difficulty = (difficulty == null) ? diff : difficulty;
     }
 
     public void add(GameController gc){
         //add all wanted Game Stats
-        difficulty = (difficulty== null)?gc.getDifficulty():difficulty;
-        type = (type == null)?gc.getGameType():type;
+        difficulty = (difficulty== null) ? gc.getDifficulty() : difficulty;
+        type = (type == null) ? gc.getGameType() : type;
         time += gc.getTime();
-        numberOfHintsUsed += gc.getNumbOfHints();
+        numberOfHintsUsed += gc.getUsedHints();
         numberOfGames++;
         // min time is only minTime of games without hints used
-        minTime = (gc.getNumbOfHints() == 0 && gc.getTime()< minTime) ? gc.getTime() : minTime;
-        numberOfGamesNoHints = (gc.getNumbOfHints()==0)?numberOfGamesNoHints+1:numberOfGamesNoHints;
-        timeNoHints = (gc.getNumbOfHints()==0)?timeNoHints+gc.getTime():timeNoHints;
+        minTime = (gc.getUsedHints() == 0 && gc.getTime()< minTime) ? gc.getTime() : minTime;
+        numberOfGamesNoHints = (gc.getUsedHints() == 0) ? numberOfGamesNoHints + 1 : numberOfGamesNoHints;
+        timeNoHints = (gc.getUsedHints() == 0) ? timeNoHints + gc.getTime() : timeNoHints;
 
     }
 

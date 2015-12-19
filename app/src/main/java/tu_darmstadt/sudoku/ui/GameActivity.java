@@ -42,6 +42,7 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
     TextView timerView;
     TextView viewName ;
     RatingBar ratingBar;
+    private boolean gameSolved = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,8 +89,7 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
             gameController.loadNewLevel(gameType, gameDifficulty);
         }
 
-        layout.setGame(gameController);
-        layout.setSettings(sharedPref);
+        layout.setSettingsAndGame(sharedPref, gameController);
 
         //set KeyBoard
         keyboard = (SudokuKeyboardLayout) findViewById(R.id.sudokuKeyboardLayout);
@@ -143,13 +143,17 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onPause(){
         super.onPause();
-        gameController.saveGame(this);
-        gameController.pauseTimer();
+        if(!gameSolved) {
+            gameController.saveGame(this);
+            gameController.pauseTimer();
+        }
     }
     @Override
     public void onResume(){
         super.onResume();
-        gameController.startTimer();
+        if(!gameSolved) {
+            gameController.startTimer();
+        }
     }
 
 
@@ -228,21 +232,30 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onSolved() {
+        gameSolved = true;
+
+        gameController.pauseTimer();
+        gameController.deleteGame(this);
+
         Toast t = Toast.makeText(this,"Congratulations you have solved the puzzle!", Toast.LENGTH_SHORT);
         t.show();
+
         SaveLoadStatistics s = new SaveLoadStatistics(this);
         s.saveGameStats(gameController);
-        DialogWinScreen win = new DialogWinScreen();
-        win.setProps(gameController);
+
         FragmentManager fr = getSupportFragmentManager();
+        DialogWinScreen win = new DialogWinScreen();
+        win.setProps(gameController, this);
         win.show(fr, "win_screen_layout");
 
-        // TODO: WE WON.. do something awesome :)
-        gameController.pauseTimer();
+        keyboard.setButtonsEnabled(false);
+        specialButtonLayout.setButtonsEnabled(false);
     }
 
     @Override
     public void onTick(int time) {
+        if(gameSolved) return;
+
         //do something not so awesome
         int seconds = time % 60;
         int minutes = ((time -seconds)/60)%60 ;
@@ -252,5 +265,8 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
         m = (minutes< 10)? "0"+String.valueOf(minutes):String.valueOf(minutes);
         h = (hours< 10)? "0"+String.valueOf(hours):String.valueOf(hours);
         timerView.setText(h + ":" + m + ":" + s);
+
+        // save time
+        gameController.saveGame(this);
     }
 }

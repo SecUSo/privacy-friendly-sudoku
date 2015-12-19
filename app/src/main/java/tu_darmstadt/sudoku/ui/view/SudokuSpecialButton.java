@@ -1,13 +1,14 @@
 package tu_darmstadt.sudoku.ui.view;
 
 import android.content.Context;
+import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.widget.ImageButton;
 
 /**
  * Created by TMZ_LToP on 07.12.2015.
  */
-public class SudokuSpecialButton extends ImageButton{
+public class SudokuSpecialButton extends ImageButton {
     private int value = -1;
     private SudokuButtonType type = SudokuButtonType.Unspecified;
 
@@ -19,4 +20,5 @@ public class SudokuSpecialButton extends ImageButton{
     public void setType(SudokuButtonType type)  { this.type = type; }
     public int getValue ()                      { return value; }
     public SudokuButtonType getType()           { return type; }
+
 }

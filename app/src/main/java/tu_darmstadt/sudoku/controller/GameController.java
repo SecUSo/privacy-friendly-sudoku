@@ -2,21 +2,23 @@ package tu_darmstadt.sudoku.controller;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Handler;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import tu_darmstadt.sudoku.controller.helper.GameInfoContainer;
 import tu_darmstadt.sudoku.game.CellConflict;
 import tu_darmstadt.sudoku.game.CellConflictList;
 import tu_darmstadt.sudoku.game.GameBoard;
 import tu_darmstadt.sudoku.game.GameCell;
-import tu_darmstadt.sudoku.controller.helper.GameInfoContainer;
 import tu_darmstadt.sudoku.game.GameDifficulty;
 import tu_darmstadt.sudoku.game.GameType;
 import tu_darmstadt.sudoku.game.ICellAction;
 import tu_darmstadt.sudoku.game.listener.IGameSolvedListener;
+import tu_darmstadt.sudoku.game.listener.IHighlightChangedListener;
 import tu_darmstadt.sudoku.game.listener.IModelChangedListener;
 import tu_darmstadt.sudoku.game.listener.ITimerListener;
 
@@ -25,48 +27,61 @@ import tu_darmstadt.sudoku.game.listener.ITimerListener;
  */
 public class GameController implements IModelChangedListener {
 
+    // General
+    private SharedPreferences settings;
+
+    // View
+    private Context context;
+    private int selectedRow = -1;
+    private int selectedCol = -1;
+    private int selectedValue = 0;
+    private int highlightValue = 0;
+
+    private LinkedList<IHighlightChangedListener> highlightListeners = new LinkedList<>();
+    private LinkedList<IGameSolvedListener> solvedListeners = new LinkedList<>();
+    private boolean notifiedOnSolvedListeners = false;
+
+    // Game
+    private int gameID = 0;         // 0 = empty id => will be assigned a free ID when saving
     private int size;
     private int sectionHeight;
     private int sectionWidth;
-    private int numbOfHints=0;
+    private int usedHints = 0;
     private GameBoard gameBoard;
     private int[] solution;
     private GameType gameType;
-    private int selectedRow;
-    private int selectedCol;
-    private SharedPreferences settings;
-    private int gameID = 0;
     private GameDifficulty difficulty;
     private CellConflictList errorList = new CellConflictList();
+
+    // Undo Redo
     private UndoRedoManager undoRedoManager;
-    private int selectedValue;
-    private LinkedList<IGameSolvedListener> solvedListeners = new LinkedList<>();
-    private boolean notifiedOnSolvedListeners = false;
-    private Timer timer;
-    private android.os.Handler handler = new android.os.Handler();
-    private TimerTask timerTask;
-    private int time = 0;
-    private LinkedList<ITimerListener> timerListeners = new LinkedList<>();
-    private boolean timerRunning = false;
+
+    // Solver / Generator
     private QQWingController qqWingController = new QQWingController();
-    private Context context;
 
-//    private Solver solver;
-//    private SudokuGenerator generator;
+    // Timer
+    private int time = 0;
+    private boolean timerRunning = false;
+    private LinkedList<ITimerListener> timerListeners = new LinkedList<>();
+    private Handler timerHandler = new Handler();
+    private Timer timer = new Timer();
+    private TimerTask timerTask;
+    private boolean noteStatus = false;
 
-    public GameController(SharedPreferences pref, Context context) {
-        this(GameType.Default_9x9, pref, context);
-    }
-
+    // Constructors
     public GameController() {
         this(null, null);
     }
-
+    public GameController(SharedPreferences pref, Context context) {
+        this(GameType.Default_9x9, pref, context);
+    }
     public GameController(GameType type, SharedPreferences pref, Context context) {
-        setGameType(type);
         this.context = context;
+        this.gameBoard = new GameBoard(type);
+
+        setGameType(type);
         setSettings(pref);
-        gameBoard = new GameBoard(type);
+
         initTimer();
     }
 
@@ -156,7 +171,7 @@ public class GameController implements IModelChangedListener {
         // TODO test every placed value so far
         // and reveal the selected value.
         selectValue(solved[selectedRow * getSize() + selectedCol]);
-        numbOfHints++;
+        usedHints++;
     }
 
     private void setGameType(GameType type) {
@@ -252,6 +267,20 @@ public class GameController implements IModelChangedListener {
         fm.saveGameState(this);
     }
 
+    public void deleteGame(Context context) {
+        if(gameID == 0) {
+            throw new IllegalArgumentException("GameID may not be 0.");
+        }
+        GameStateManager fm = new GameStateManager(context, settings);
+        fm.deleteGameStateFile(getInfoContainer());
+    }
+
+    public GameInfoContainer getInfoContainer() {
+        // this functionality is not needed as of yet. this is not correctly implemented
+        // but its sufficient to our needs
+        return new GameInfoContainer(gameID, difficulty, gameType, null, null, null);
+    }
+
     public int getSize() {
         return size;
     }
@@ -343,49 +372,99 @@ public class GameController implements IModelChangedListener {
     public int getSelectedCol() {
         return selectedCol;
     }
+    public int getSelectedCellsValue() {
+        return isValidCellSelected() ? getGameCell(selectedRow, selectedCol).getValue() : 0;
+    }
+
     public int getSelectedValue() {
-        if(isValidCellSelected()){
-        return getValue(getSelectedRow(),getSelectedCol()); //selectedValue;
-        } else return 0;
+        return selectedValue;
     }
 
     public void selectCell(int row, int col) {
-        // TODO if there is a value selected
-        // TODO should we do this in here or rather in the view?
-        // we set the value directly
-        //if(selectedValue != 0) {
-        //}
+        if(selectedValue != 0) {
+            // we have a value selected.
+            // we need to set the value directly now / toggle notes.
+            if(noteStatus) {
+                toggleNote(row, col, selectedValue);
+            } else {
+                setValue(row, col, selectedValue);
+            }
+            undoRedoManager.addState(gameBoard);
 
-        if(selectedRow == row && selectedCol == col) {
+        } else if(selectedRow == row && selectedCol == col) {
             // if we select the same field 2ce -> deselect it
             selectedRow = -1;
             selectedCol = -1;
+            highlightValue = 0;
         } else {
             // else we set it to the new selected field
             selectedRow = row;
             selectedCol = col;
+            // highlight the selected value only if its not 0.
+            int v = getGameCell(row, col).getValue();
+            if(v != 0) {
+                highlightValue = v;
+            }
         }
+        notifyHighlightChangedListeners();
+    }
+
+    public int getHighlightedValue() {
+        return highlightValue;
+    }
+
+    public boolean isValueHighlighted() {
+        return highlightValue > 0 && highlightValue <= size;
     }
 
     public void selectValue(int value) {
-        if(isValidCellSelected() && getSelectedValue() != value) {
-            setValue(selectedRow, selectedCol, value);
-            // add state to undo
-            undoRedoManager.addState(gameBoard);
+        if(isValidCellSelected()) {
+            if(noteStatus) {
+                toggleNote(selectedRow, selectedCol, value);
+                undoRedoManager.addState(gameBoard);
+
+                highlightValue = value;
+            } else {
+                if(getSelectedCellsValue() != value) {
+                    setValue(selectedRow, selectedCol, value);
+                    // add state to undo
+                    undoRedoManager.addState(gameBoard);
+
+                    highlightValue = value;
+                }
+            }
+        } else {
+            if(value == selectedValue) {
+                // if the value we are selecting is the one we already have selected... deselect it
+                selectedValue = 0;
+            } else {
+                selectedValue = value;
+                highlightValue = value;
+            }
         }
 
+        notifyHighlightChangedListeners();
+    }
+    
+    public void setNoteStatus(boolean enabled) {
+        noteStatus = enabled;
     }
 
-    public void deleteSelectedValue() {
-        if(isValidCellSelected() && getSelectedValue() != 0) {
+    public boolean getNoteStatus() {
+        return noteStatus;
+    }
+
+    public void deleteSelectedCellsValue() {
+        if(isValidCellSelected() && getSelectedCellsValue() != 0) {
             deleteValue(selectedRow, selectedCol);
             // add state to undo
             undoRedoManager.addState(gameBoard);
+            notifyHighlightChangedListeners();
         }
 
     }
 
-    public void toggleSelectedNote(int value) {
+    public void toggleSelectedCellsNote(int value) {
         if(isValidCellSelected()) {
             toggleNote(selectedRow, selectedCol, value);
             // add state to undo
@@ -419,10 +498,9 @@ public class GameController implements IModelChangedListener {
                 if(!notifiedOnSolvedListeners) {
                     notifiedOnSolvedListeners = true;
                     notifySolvedListeners();
-                    //TODO disable controls and play animation in view. onSolved method is called.
                 }
             } else {
-
+                // notifyErrorListener();
                 // TODO: errorList now holds all the errors
                 // TODO: display errors .. notify some view?
             }
@@ -437,9 +515,21 @@ public class GameController implements IModelChangedListener {
         }
     }
 
+    public void registerHighlightChangedListener(IHighlightChangedListener l) {
+        if(!highlightListeners.contains(l)) {
+            highlightListeners.add(l);
+        }
+    }
+
     public void removeGameSolvedListener(IGameSolvedListener l) {
         if(solvedListeners.contains(l)) {
             solvedListeners.remove(l);
+        }
+    }
+
+    public void notifyHighlightChangedListeners() {
+        for(IHighlightChangedListener l : highlightListeners) {
+            l.onHighlightChanged();
         }
     }
 
@@ -459,23 +549,22 @@ public class GameController implements IModelChangedListener {
             timerListeners.add(listener);
         }
     }
-    public int getNumbOfHints(){
-        return numbOfHints;
+    public int getUsedHints(){
+        return usedHints;
     }
 
     private void initTimer() {
         timerTask = new TimerTask() {
             @Override
             public void run() {
-            handler.post(new Runnable() {
-                @Override
-                public void run() {
-                    if(timerRunning) {
-                        notifyTimerListener(time++);
+                timerHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(timerRunning) {
+                            notifyTimerListener(time++);
+                        }
                     }
-                }
-            });
-
+                });
             }
         };
         timer = new Timer();
@@ -483,15 +572,12 @@ public class GameController implements IModelChangedListener {
     }
 
     public void startTimer() {
-        if(!timerRunning) {
-            timerRunning = true;
-        }
+        timerRunning = true;
+        notifyHighlightChangedListeners();
     }
 
     public void pauseTimer(){
-        if(timerRunning) {
-            timerRunning = false;
-        }
+        timerRunning = false;
     }
 
     public void ReDo() {
@@ -534,8 +620,16 @@ public class GameController implements IModelChangedListener {
                 }
             }
         }
-
         return;
+    }
+
+    public int getValueCount(final int value) {
+        return actionOnCells(new ICellAction<Integer>() {
+            @Override
+            public Integer action(GameCell gc, Integer existing) {
+                return (gc.getValue() == value) ? existing + 1 : existing;
+            }
+        }, 0);
     }
 
 }

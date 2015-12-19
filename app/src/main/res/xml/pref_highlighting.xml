@@ -27,7 +27,7 @@
         <SwitchPreference android:id="@+id/pref_highlight_notes"
             android:key="pref_highlight_notes"
             android:title="@string/pref_highlight_notes"
-            android:summary="not implemented yet"
+            android:summary=""
             android:defaultValue="true"/>
     </PreferenceCategory>
 </PreferenceScreen>

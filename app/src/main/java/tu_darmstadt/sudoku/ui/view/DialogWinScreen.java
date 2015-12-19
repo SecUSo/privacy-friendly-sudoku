@@ -14,6 +14,9 @@ import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 
 import tu_darmstadt.sudoku.controller.GameController;
+import tu_darmstadt.sudoku.game.GameDifficulty;
+import tu_darmstadt.sudoku.game.GameType;
+import tu_darmstadt.sudoku.ui.GameActivity;
 
 /**
  * Created by TMZ_LToP on 11.12.2015.
@@ -21,17 +24,26 @@ import tu_darmstadt.sudoku.controller.GameController;
 public class DialogWinScreen extends android.support.v4.app.DialogFragment {
 
 
-    ImageView upperView, lowerView;
+    private ImageView upperView, lowerView;
+    private int time = 0;
+    private int hints = 0;
+    private GameDifficulty difficulty = GameDifficulty.Unspecified;
+    private GameType gameType = GameType.Unspecified;
+    private GameController gameController = null;
+    private GameActivity gameActivity = null;
 
     public DialogWinScreen(){
 
     }
-    public void setProps(GameController gc){
-
-        //no second Conjstrutor with argument allowed
-        //save everything that should be sown in winscreeen and set in the text etc
-
+    public void setProps(GameController gc, GameActivity a){
+        gameActivity = a;
+        gameController = gc;
+        gameType = gc.getGameType();
+        difficulty = gc.getDifficulty();
+        hints = gc.getUsedHints();
+        time = gc.getTime();
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {

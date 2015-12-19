@@ -46,9 +46,11 @@ public class GameCell implements Cloneable {
      * @param val the value to be assigned to the cell.
      */
     public void setValue(int val) {
-        deleteNotes();
-        value = val;
-        notifyListeners();
+        if(!isFixed()) {
+            deleteNotes();
+            value = val;
+            notifyListeners();
+        }
     }
 
     public int getValue() {
