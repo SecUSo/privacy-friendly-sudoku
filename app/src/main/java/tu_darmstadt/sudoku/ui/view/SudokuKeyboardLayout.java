@@ -44,14 +44,22 @@ public class SudokuKeyboardLayout extends GridLayout implements IHighlightChange
 
     }
 
+    public void setSymbols(Symbol s) {
+        symbolsToUse = s;
+        for(SudokuButton b : buttons) {
+            b.setText(Symbol.getSymbol(symbolsToUse, b.getValue()-1));
+        }
+    }
+
     public void setKeyBoard(int size,int width, int height) {
         LayoutParams p ;
         buttons = new SudokuButton[size];
         int number = 0;
-        int torun = ((size)%2==0) ? (size)/2 :(size+1)/2 ;
+        int torun = (size % 2 == 0) ? size/2 :(size+1)/2 ;
         int realSize = torun;
 
-        int width2 =(width-(realSize*30))/(realSize);
+        //int width2 =(width-(realSize*30))/(realSize);
+
         for (int k = 0; k<2;k++){
             for (int i = 0; i< torun; i++){
                 if (number == size) {
@@ -65,8 +73,8 @@ public class SudokuKeyboardLayout extends GridLayout implements IHighlightChange
 
                 //p = new LayoutParams(rowSpec,colSpec);
                 p.setMargins((i == 0) ? 0 : 5,5,5,5);
-                p.width= (width-(int)((getResources().getDimension(R.dimen.activity_horizontal_margin))*2))/realSize;
-                p.width= p.width-10;
+                p.width = (width - (int)((getResources().getDimension(R.dimen.activity_horizontal_margin))*2)) / realSize;
+                p.width = p.width - 10;
                 p.setGravity(LayoutParams.WRAP_CONTENT);
 
 
@@ -99,10 +107,13 @@ public class SudokuKeyboardLayout extends GridLayout implements IHighlightChange
     }
 
     public void updateNotesEnabled() {
-        if (normalTextSize == 0) {normalTextSize = buttons[0].getTextSize();}
+        if (normalTextSize == 0) {
+            normalTextSize = buttons[0].getTextSize();
+        }
+
         if(gameController.getNoteStatus()) {
             setTextSize(normalTextSize*0.6f);
-        }else {
+        } else {
             setTextSize(normalTextSize);
         }
     }
@@ -119,7 +130,6 @@ public class SudokuKeyboardLayout extends GridLayout implements IHighlightChange
     @Override
     public void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-
     }
 
     @Override

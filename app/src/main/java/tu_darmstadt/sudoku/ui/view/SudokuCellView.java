@@ -54,6 +54,10 @@ public class SudokuCellView extends View {
         this.size = size;
     }
 
+    public void setSymbols(Symbol s) {
+        symbolsToUse = s;
+    }
+
     public void setHighlightType(CellHighlightTypes highlightType) {
         this.highlightType = highlightType;
     }

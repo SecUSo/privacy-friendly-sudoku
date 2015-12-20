@@ -14,6 +14,7 @@ import android.widget.RelativeLayout;
 import java.util.LinkedList;
 
 import tu_darmstadt.sudoku.controller.GameController;
+import tu_darmstadt.sudoku.controller.Symbol;
 import tu_darmstadt.sudoku.game.GameCell;
 import tu_darmstadt.sudoku.game.ICellAction;
 import tu_darmstadt.sudoku.game.listener.IHighlightChangedListener;
@@ -99,6 +100,14 @@ public class SudokuFieldLayout extends RelativeLayout implements IHighlightChang
         for(int i = 0; i <= verticalSections; i++) {
             for(int j = -2; j < 2; j++) {
                 canvas.drawLine(0, (i * getHeight() / verticalSections) + j, getHeight(), (i * getHeight() / verticalSections) + j, p);
+            }
+        }
+    }
+
+    public void setSymbols(Symbol s) {
+        for(int i = 0; i < gamecells.length ; i++) {
+            for(int j = 0; j < gamecells[i].length; j++) {
+                gamecells[i][j].setSymbols(s);
             }
         }
     }

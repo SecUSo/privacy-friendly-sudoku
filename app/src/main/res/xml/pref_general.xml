@@ -1,12 +1,21 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory android:title="@string/pref_group_game">
-    <SwitchPreference android:id="@+id/pref_highlighting_selection_values"
+    <SwitchPreference android:id="@+id/pref_automatic_note_deletion"
         android:key="pref_automatic_note_deletion"
         android:title="@string/pref_automatic_note_deletion"
         android:summary="@string/pref_automatic_note_deletion_summary"
         android:defaultValue="true"/>
     </PreferenceCategory>
+
+    <ListPreference
+        android:key="pref_symbols"
+        android:title="@string/pref_symbols"
+        android:defaultValue="-1"
+        android:entries="@array/pref_symbols_list_titles"
+        android:entryValues="@array/pref_symbols_list_values"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null" />
 
     <!-- NOTE: EditTextPreference accepts EditText attributes. -->
     <!-- NOTE: EditTextPreference's summary should be set to its value by the activity code. -->

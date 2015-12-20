@@ -22,6 +22,7 @@ import java.util.List;
 import tu_darmstadt.sudoku.controller.GameStateManager;
 import tu_darmstadt.sudoku.controller.GameController;
 import tu_darmstadt.sudoku.controller.SaveLoadStatistics;
+import tu_darmstadt.sudoku.controller.Symbol;
 import tu_darmstadt.sudoku.controller.helper.GameInfoContainer;
 import tu_darmstadt.sudoku.game.GameDifficulty;
 import tu_darmstadt.sudoku.game.GameType;
@@ -154,6 +155,11 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
         if(!gameSolved) {
             gameController.startTimer();
         }
+
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        Symbol s = Symbol.valueOf(Symbol.class, sharedPref.getString("pref_symbols", "Default"));
+        layout.setSymbols(s);
+        keyboard.setSymbols(s);
     }
 
 

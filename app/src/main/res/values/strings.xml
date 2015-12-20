@@ -34,6 +34,23 @@
     <!-- #Game -->
     <string name="pref_header_game">Game</string>
     <string name="pref_group_game">Game settings</string>
+    <string name="pref_symbols">Symbols</string>
+    <array name="pref_symbols_list_titles">
+        <item>Default 1,2,3,..</item>
+        <item>Roman I,II,III,..</item>
+        <item>Fancy ♪,♫,☼,..</item>
+        <item>Chinese 一,二,三,..</item>
+        <item>Greek α,β,γ,..</item>
+        <item>Indian १,२,३,..</item>
+    </array>
+    <array name="pref_symbols_list_values">
+        <item>Default</item>
+        <item>Roman</item>
+        <item>Fancy</item>
+        <item>Chinese</item>
+        <item>Greek</item>
+        <item>Indian</item>
+    </array>
     <string name="pref_automatic_note_deletion">Note deletion</string>
     <string name="pref_automatic_note_deletion_summary">Automatically remove notes when setting values on connected cells</string>
 
@@ -81,6 +98,6 @@
 
 
     <!--### Win Strings -->
-    <string name="win_text">Congratz du depp du hast gewonnen oder so was</string>
+    <string name="win_text">Congratulations, you have solved the puzzle.</string>
 
 </resources>
