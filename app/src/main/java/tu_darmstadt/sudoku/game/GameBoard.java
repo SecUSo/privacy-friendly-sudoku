@@ -55,6 +55,9 @@ public class GameBoard implements Cloneable {
 
     public void initCells(int[] level) {
         int count = 0;
+        if(level == null) {
+            throw new IllegalArgumentException("Level array is null.");
+        }
         if(level.length != size*size) {
             throw new IllegalArgumentException("Levelarray must have length of "+size*size+".");
         }

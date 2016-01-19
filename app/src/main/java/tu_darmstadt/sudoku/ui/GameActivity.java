@@ -1,5 +1,11 @@
 package tu_darmstadt.sudoku.ui;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Point;
@@ -17,6 +23,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import tu_darmstadt.sudoku.controller.GameStateManager;
@@ -28,13 +35,15 @@ import tu_darmstadt.sudoku.game.GameDifficulty;
 import tu_darmstadt.sudoku.game.GameType;
 import tu_darmstadt.sudoku.game.listener.IGameSolvedListener;
 import tu_darmstadt.sudoku.game.listener.ITimerListener;
+import tu_darmstadt.sudoku.ui.listener.IHintDialogFragmentListener;
+import tu_darmstadt.sudoku.ui.listener.IResetDialogFragmentListener;
 import tu_darmstadt.sudoku.ui.view.DialogWinScreen;
 import tu_darmstadt.sudoku.ui.view.R;
 import tu_darmstadt.sudoku.ui.view.SudokuFieldLayout;
 import tu_darmstadt.sudoku.ui.view.SudokuKeyboardLayout;
 import tu_darmstadt.sudoku.ui.view.SudokuSpecialButtonLayout;
 
-public class GameActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, IGameSolvedListener ,ITimerListener {
+public class GameActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, IGameSolvedListener ,ITimerListener, IHintDialogFragmentListener, IResetDialogFragmentListener {
 
     GameController gameController;
     SudokuFieldLayout layout;
@@ -61,7 +70,7 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
                 gameType = (GameType)extras.get("gameType");
             }
             gameDifficulty = (GameDifficulty)(extras.get("gameDifficulty"));
-            loadLevel = extras.getBoolean("loadLevel");
+            loadLevel = extras.getBoolean("loadLevel", false);
             if(loadLevel) {
                 loadLevelID = extras.getInt("loadLevelID");
             }
@@ -107,7 +116,7 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
 
         //set Special keys
         specialButtonLayout = (SudokuSpecialButtonLayout) findViewById(R.id.sudokuSpecialLayout);
-        specialButtonLayout.setButtons(p.x, gameController, keyboard);
+        specialButtonLayout.setButtons(p.x, gameController, keyboard, getFragmentManager());
 
         //set TimerView
         timerView = (TextView)findViewById(R.id.timerView);
@@ -190,16 +199,14 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
         Intent intent;
 
         switch(id) {
+            case R.id.menu_reset:
+                ResetConfirmationDialog hintDialog = new ResetConfirmationDialog();
+                hintDialog.show(getFragmentManager(), "ResetDialogFragment");
+                break;
+
             case R.id.nav_newgame:
                 //create new game
                 intent = new Intent(this, MainActivity.class);
-                finish();
-                startActivity(intent);
-                break;
-
-            case R.id.nav_continue:
-                //create new game
-                intent = new Intent(this, LoadGameActivity.class);
                 finish();
                 startActivity(intent);
                 break;
@@ -274,5 +281,54 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
 
         // save time
         gameController.saveGame(this);
+    }
+
+    @Override
+    public void onHintDialogPositiveClick() {
+        gameController.hint();
+    }
+
+    @Override
+    public void onResetDialogPositiveClick() {
+        gameController.resetLevel();
+    }
+
+    @Override
+    public void onDialogNegativeClick() {
+        // do nothing
+    }
+    @SuppressLint("ValidFragment")
+    public class ResetConfirmationDialog extends DialogFragment {
+
+        LinkedList<IResetDialogFragmentListener> listeners = new LinkedList<>();
+
+        @Override
+        public void onAttach(Activity activity) {
+            super.onAttach(activity);
+            // Verify that the host activity implements the callback interface
+            if(activity instanceof IHintDialogFragmentListener) {
+                listeners.add((IResetDialogFragmentListener) activity);
+            }
+        }
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            // Use the Builder class for convenient dialog construction
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setMessage(R.string.reset_confirmation)
+                    .setPositiveButton(R.string.reset_confirmation_confirm, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            for(IResetDialogFragmentListener l : listeners) {
+                                l.onResetDialogPositiveClick();
+                            }
+                        }
+                    })
+                    .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            // User cancelled the dialog
+                        }
+                    });
+            return builder.create();
+        }
     }
 }

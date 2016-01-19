@@ -6,7 +6,7 @@
     <!-- Strings related to Menu -->
     <string name="new_game">Neues Spiel</string>
     <string name="menu_settings">Einstellungen</string>
-    <string name="menu_highscore">Bestenliste</string>
+    <string name="menu_highscore">Statistik</string>
     <string name="menu_main">Hauptmenü</string>
     <string name="menu_group">Gruppe</string>
     <string name="menu_help">Hilfe</string>

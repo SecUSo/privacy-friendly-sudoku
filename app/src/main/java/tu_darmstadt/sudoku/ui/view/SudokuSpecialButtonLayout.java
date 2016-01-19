@@ -1,21 +1,34 @@
 package tu_darmstadt.sudoku.ui.view;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
+import android.app.FragmentManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.os.Bundle;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
+
+import java.util.LinkedList;
 
 import tu_darmstadt.sudoku.controller.GameController;
+import tu_darmstadt.sudoku.ui.listener.IHintDialogFragmentListener;
 
 /**
  * Created by TMZ_LToP on 17.11.2015.
  */
 public class SudokuSpecialButtonLayout extends LinearLayout {
+
 
     SudokuSpecialButton[] fixedButtons;
     public int fixedButtonsCount = SudokuButtonType.getSpecialButtons().size();
@@ -23,7 +36,7 @@ public class SudokuSpecialButtonLayout extends LinearLayout {
     SudokuKeyboardLayout keyboard;
     Bitmap bitMap,bitResult;
     Canvas canvas;
-
+    FragmentManager fragmentManager;
 
     OnClickListener listener = new OnClickListener() {
         @Override
@@ -64,9 +77,18 @@ public class SudokuSpecialButtonLayout extends LinearLayout {
                         break;
                     case Hint:
                         if(gameController.isValidCellSelected()) {
-                            gameController.hint();
+                            if(gameController.getUsedHints() == 0) {
+                                // are you sure you want to use a hint?
+                                HintConfirmationDialog hintDialog = new HintConfirmationDialog();
+                                hintDialog.show(fragmentManager, "HintDialogFragment");
+
+                            } else {
+                                gameController.hint();
+                            }
                         } else {
-                            // TODO: Display a Toast that explains how to use the Hint function.
+                            // Display a Toast that explains how to use the Hint function.
+                            Toast t = Toast.makeText(getContext(), R.string.hint_usage, Toast.LENGTH_SHORT);
+                            t.show();
                         }
                         break;
                     default:
@@ -88,7 +110,8 @@ public class SudokuSpecialButtonLayout extends LinearLayout {
         }
     }
 
-    public void setButtons(int width, GameController gc, SudokuKeyboardLayout key) {
+    public void setButtons(int width, GameController gc, SudokuKeyboardLayout key, FragmentManager fm) {
+        fragmentManager = fm;
         keyboard=key;
         gameController = gc;
         fixedButtons = new SudokuSpecialButton[fixedButtonsCount];
@@ -123,5 +146,40 @@ public class SudokuSpecialButtonLayout extends LinearLayout {
             i++;
         }
 
+    }
+
+    @SuppressLint("ValidFragment")
+    public class HintConfirmationDialog extends DialogFragment {
+
+        LinkedList<IHintDialogFragmentListener> listeners = new LinkedList<>();
+
+        @Override
+        public void onAttach(Activity activity) {
+            super.onAttach(activity);
+            // Verify that the host activity implements the callback interface
+            if(activity instanceof IHintDialogFragmentListener) {
+                listeners.add((IHintDialogFragmentListener) activity);
+            }
+        }
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            // Use the Builder class for convenient dialog construction
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setMessage(R.string.hint_confirmation)
+                    .setPositiveButton(R.string.hint_confirmation_confirm, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            for(IHintDialogFragmentListener l : listeners) {
+                                l.onHintDialogPositiveClick();
+                            }
+                        }
+                    })
+                    .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            // User cancelled the dialog
+                        }
+                    });
+            return builder.create();
+        }
     }
 }

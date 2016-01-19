@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:checkableBehavior="single">
+    <group android:id="@+id/group1">
+        <item android:id="@+id/menu_reset" android:icon="@android:drawable/ic_menu_delete"
+            android:title="@string/menu_reset" />
+    </group>
+    <group android:id="@+id/group2">
         <item android:id="@+id/nav_newgame" android:icon="@android:drawable/ic_menu_today"
-            android:title="@string/menu_new_game" />
-        <item android:id="@+id/nav_continue" android:icon="@android:drawable/ic_menu_gallery"
-            android:title="@string/menu_continue_game" />
+            android:title="@string/menu_main" />
         <item android:id="@+id/nav_highscore" android:icon="@android:drawable/ic_menu_myplaces"
             android:title="@string/menu_highscore" />
+        <item android:id="@+id/menu_settings" android:icon="@android:drawable/ic_menu_manage"
+            android:title="@string/menu_settings" />
     </group>
-    <group android:menuCategory="container" android:title="">
-        <menu>
-            <item android:id="@+id/menu_settings" android:icon="@android:drawable/ic_menu_manage"
-                android:title="@string/menu_settings" />
+    <group android:id="@+id/group3">
             <item android:id="@+id/menu_help" android:icon="@android:drawable/ic_menu_help"
                 android:title="@string/menu_help" />
             <item android:id="@+id/menu_about" android:icon="@android:drawable/ic_menu_info_details"
                 android:title="@string/menu_about" />
-        </menu>
     </group>
 
 </menu>
