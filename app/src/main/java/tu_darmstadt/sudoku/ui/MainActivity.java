@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
+import android.support.v4.content.SharedPreferencesCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -57,9 +58,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         settings = PreferenceManager.getDefaultSharedPreferences(this);
 
-        // check if we need to pre generate levels.
         NewLevelManager.init(getApplicationContext(), settings);
         NewLevelManager newLevelManager = NewLevelManager.getInstance();
+
+        // Is this the very first time we start this app?
+        boolean firstStart = settings.getBoolean("firstStart", true);
+        if(firstStart) {
+            // preload some levels so we don't have to generate as many and we can start playing right away.
+            newLevelManager.loadFirstStartLevels();
+
+            SharedPreferences.Editor editor = settings.edit();
+            editor.putBoolean("firstStart", false);
+            editor.commit();
+        }
+
+        // check if we need to pre generate levels.
         newLevelManager.checkAndRestock();
 
         setContentView(R.layout.activity_main_menu);

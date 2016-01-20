@@ -1,6 +1,8 @@
 package tu_darmstadt.sudoku.ui;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -51,6 +53,12 @@ public class StatsActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle(R.string.menu_highscore);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#024265")));
+
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -79,17 +87,21 @@ public class StatsActivity extends AppCompatActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_reset) {
-            SaveLoadStatistics.resetStats(this);
-            mSectionsPagerAdapter.refresh(this);
-            return true;
+        switch(item.getItemId()) {
+            case R.id.action_reset:
+                SaveLoadStatistics.resetStats(this);
+                mSectionsPagerAdapter.refresh(this);
+                return true;
+            case R.id.home:
+                finish();
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
+
 
 
     /**

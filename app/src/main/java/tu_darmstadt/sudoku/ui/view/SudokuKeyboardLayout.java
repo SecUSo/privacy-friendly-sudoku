@@ -1,15 +1,25 @@
 package tu_darmstadt.sudoku.ui.view;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Canvas;
+import android.os.Bundle;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.GridLayout;
 
+import java.util.LinkedList;
+
 import tu_darmstadt.sudoku.controller.GameController;
 import tu_darmstadt.sudoku.controller.Symbol;
 import tu_darmstadt.sudoku.game.listener.IHighlightChangedListener;
+import tu_darmstadt.sudoku.ui.listener.IDeleteDialogFragmentListener;
 
 /**
  * Created by TMZ_LToP on 12.11.2015.

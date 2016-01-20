@@ -166,6 +166,9 @@ public class GameController implements IModelChangedListener {
     }*/
 
     public void hint(){
+        if(!isValidCellSelected()) {
+            return;
+        }
 
         int[] solved = solve();
         // TODO test every placed value so far
@@ -302,6 +305,7 @@ public class GameController implements IModelChangedListener {
     public void resetLevel() {
         gameBoard.reset();
         //notifyListeners();
+        notifyHighlightChangedListeners();
     }
 
     public boolean deleteValue(int row, int col) {
@@ -620,6 +624,8 @@ public class GameController implements IModelChangedListener {
                 }
             }
         }
+
+        notifyHighlightChangedListeners();
         return;
     }
 

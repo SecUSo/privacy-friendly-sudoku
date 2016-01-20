@@ -11,7 +11,7 @@
     <ListPreference
         android:key="pref_symbols"
         android:title="@string/pref_symbols"
-        android:defaultValue="-1"
+        android:defaultValue="Default"
         android:entries="@array/pref_symbols_list_titles"
         android:entryValues="@array/pref_symbols_list_values"
         android:negativeButtonText="@null"

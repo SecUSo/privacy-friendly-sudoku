@@ -139,12 +139,72 @@ public class NewLevelManager {
             return resultPuzzle;
         }
 
-        // TODO: make the UI wait. Or just generate a level now.
         return null;
     }
 
     public void checkAndRestock() {
         new AsyncGenerationTask().execute();
+    }
+
+    public void loadFirstStartLevels() {
+        // Default_9x9
+        // Default_12x12
+        // Default_6x6
+
+        // Easy
+        // Moderate
+        // Hard
+
+        // 0
+        // 1
+
+        saveToFile(GameType.Default_9x9, GameDifficulty.Easy, 0, "000208090027000000000400000090100706408090201000030080200001000100300469000000007");
+        saveToFile(GameType.Default_9x9, GameDifficulty.Easy, 1, "000000052000003007500206830002040700070000046640508003000400000000005000050301008");
+        saveToFile(GameType.Default_9x9, GameDifficulty.Moderate, 0, "000800400008004093009003060000700000000400000060002900091000670200000100403006802");
+        saveToFile(GameType.Default_9x9, GameDifficulty.Moderate, 1, "000006040000050000600040080043000200500810000100300605209080460004500000001030000");
+        saveToFile(GameType.Default_9x9, GameDifficulty.Hard, 0, "086000000000000070090000304968027030000100060200900000072006100000000296000000740");
+        saveToFile(GameType.Default_9x9, GameDifficulty.Hard, 1, "450900001001400000600010004006700000500000000100024060002000030000062400040005700");
+
+        saveToFile(GameType.Default_12x12, GameDifficulty.Easy, 0, "B30050A100701600070030800002894000007008000000B550100004020300B0000090000060000A010000000032050C0407008006A000000000400001000C290000000008005000");
+        saveToFile(GameType.Default_12x12, GameDifficulty.Easy, 1, "00B4008A09C002A030C00008007850003000030C000408AB000B00052000000000000070069500030C00B00010467000008000000A100000000800000C0020700001700000095400");
+        saveToFile(GameType.Default_12x12, GameDifficulty.Moderate, 0, "00600500000004000000002050004C00800A28049000050000A900C000000000B00000A00B0560000C900C708A00000B0002000000769000008000B002B0C6000017C00107400908");
+        saveToFile(GameType.Default_12x12, GameDifficulty.Moderate, 1, "020000B000A608070530000B9050200A03800030980010B001000B6C30900000032000CAB0000000000000067000B000000500000A000C09000081302B0100070950836000100000");
+        saveToFile(GameType.Default_12x12, GameDifficulty.Hard, 0, "2000000000000B070C00000000AC100000000020050CA00BB60002097800079001000C60400000B0070A0000A7000298005048000010004000070009A10600C00B000C00B0000020");
+        saveToFile(GameType.Default_12x12, GameDifficulty.Hard, 1, "01000002000C00640A800070000A0000082020000008100B0C081090000050A0060C079009BC000A04010500097000000000000000000000904000866070B100020000000C00B009");
+
+        saveToFile(GameType.Default_6x6, GameDifficulty.Easy, 0, "000000050004013000004003006050040010");
+        saveToFile(GameType.Default_6x6, GameDifficulty.Easy, 1, "000450000600104306630000060005010000");
+        saveToFile(GameType.Default_6x6, GameDifficulty.Moderate, 0, "630010002000001000040020400006003040");
+        saveToFile(GameType.Default_6x6, GameDifficulty.Moderate, 1, "000000060130006000050603030005000041");
+        saveToFile(GameType.Default_6x6, GameDifficulty.Hard, 0, "004200200000003002600050300400046000");
+        saveToFile(GameType.Default_6x6, GameDifficulty.Hard, 1, "003050200003502000000000640002000045");
+    }
+
+    /** Don't use this if you don't know what you are doing! **/
+    private void saveToFile(GameType gameType, GameDifficulty gameDifficulty, int saveNumber, String puzzle) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(LEVEL_PREFIX);
+        sb.append(gameType.name());
+        sb.append("_");
+        sb.append(gameDifficulty.name());
+        sb.append("_");
+        sb.append(saveNumber);
+        sb.append(FILE_EXTENSION);
+        // create the file
+        File file = new File(DIR, sb.toString());
+
+        // save the file
+        try {
+            FileOutputStream stream = new FileOutputStream(file);
+
+            try {
+                stream.write(puzzle.getBytes());
+            } finally {
+                stream.close();
+            }
+        } catch (IOException e) {
+            Log.e("File Manager", "Could not save game. IOException occured.");
+        }
     }
 
     private class AsyncGenerationTask extends AsyncTask<int[][], Integer, String> {
@@ -233,6 +293,7 @@ public class NewLevelManager {
                     sb.append(missingNumbers[p]);
                     sb.append(FILE_EXTENSION);
                     String filename = sb.toString();
+
 
 
                     // create the file

@@ -149,7 +149,7 @@ public class LoadGameActivity extends AppCompatActivity implements IDeleteDialog
                             }
                         }
                     })
-                    .setNegativeButton(R.string.loadgame_delete_cancel, new DialogInterface.OnClickListener() {
+                    .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             // User cancelled the dialog
                         }
