@@ -145,6 +145,7 @@ public class StatsActivity extends AppCompatActivity {
         private TextView difficultyView,averageTimeView,minTimeView;
         private RatingBar difficultyBarView;
         private String s;
+        private int t;
         private int totalTime =0;
         private int totalGames =0;
         private int totalHints =0;
@@ -185,6 +186,7 @@ public class StatsActivity extends AppCompatActivity {
 
 
         private String formatTime(int totalTime){
+            if (totalTime==0) return "/";
             int seconds = totalTime % 60;
             int minutes = ((totalTime -seconds)/60)%60 ;
             int hours = (totalTime - minutes - seconds)/(3600);
@@ -196,9 +198,9 @@ public class StatsActivity extends AppCompatActivity {
 
         }
         private void updateGeneralIfo(int time, int games, int hints){
-            totalHints +=hints;
-            totalGames +=games;
-            totalTime +=time;
+            totalHints =hints;
+            totalGames =games;
+            totalTime =time;
         }
         private void setGeneralInfo(){
             TextView generalInfoView;
@@ -237,10 +239,10 @@ public class StatsActivity extends AppCompatActivity {
             }
             difficultyBarView.setRating(pos+1);
             difficultyView.setText(rootView.getResources().getString(infos.getDifficulty().getStringResID()));
-            s= (infos.getTimeNoHints() == 0)?"/":String.valueOf(infos.getTimeNoHints() / infos.getNumberOfGamesNoHints());
-            averageTimeView.setText(s);
-            s = (infos.getMinTime()==Integer.MAX_VALUE)? "/":String.valueOf(infos.getMinTime());
-            minTimeView.setText(s);
+            t= (infos.getTimeNoHints() == 0)?0:(infos.getTimeNoHints() / infos.getNumberOfGamesNoHints());
+            averageTimeView.setText(formatTime(t));
+            t = (infos.getMinTime()==Integer.MAX_VALUE)? 0:(infos.getMinTime());
+            minTimeView.setText(formatTime(t));
         }
 
 

@@ -6,11 +6,13 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
+import android.widget.GridLayout;
 import android.widget.ImageView;
 
 import tu_darmstadt.sudoku.controller.GameController;
@@ -47,8 +49,12 @@ public class DialogWinScreen extends android.support.v4.app.DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.win_screen_layout,container);
-        getDialog().getWindow().setBackgroundDrawableResource(R.drawable.ic_trophy_black_48dp);
+        View view = inflater.inflate(R.layout.win_screen_layout,null);
+
+        // set background for the dialog window maybe just set the background to the drawable or to transparent
+
+        //getDialog().getWindow().setWindowAnimations();
+        //getDialog().getWindow().setAttributes(new WindowManager.LayoutParams(250,250,getDialog().getWindow().getAttributes().type,getDialog().getWindow().getAttributes().flags,getDialog().getWindow().getAttributes().format ));
         //getDialog().getWindow().setLayout(200,250);
         //Maybe creat real animation
         //Animation ani = AnimationUtils.loadAnimation(this,R.anim...);

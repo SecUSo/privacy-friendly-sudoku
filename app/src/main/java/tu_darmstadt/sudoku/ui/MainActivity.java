@@ -1,5 +1,6 @@
 package tu_darmstadt.sudoku.ui;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -15,11 +16,13 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -124,9 +127,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
     public void callFragment(View view){
-        FragmentManager fm = getSupportFragmentManager();
+        /*FragmentManager fm = getSupportFragmentManager();
         DialogWinScreen winScreen = new DialogWinScreen();
-        winScreen.show(fm,"win_screen_layout");
+
+        winScreen.show(fm,"win_screen_layout");*/
+        Dialog dialog = new Dialog(this);
+        //dialog.setContentView(getLayoutInflater().inflate(R.layout.win_screen_layout,null));
+        dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        //dialog.setContentView(R.layout.win_screen_layout);
+        dialog.getWindow().setGravity(Gravity.CENTER_HORIZONTAL);
+        dialog.getWindow().setContentView(R.layout.win_screen_layout);
+        dialog.getWindow().setBackgroundDrawableResource(R.color.transparent);
+        dialog.show();
     }
 
     public void onClick(View view) {

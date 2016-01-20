@@ -99,5 +99,6 @@
 
     <!--### Win Strings -->
     <string name="win_text">Congratulations, you have solved the puzzle.</string>
+    <string name="win_button_text">OK!</string>
 
 </resources>
