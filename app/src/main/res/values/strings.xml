@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name" translatable="false">Sudoku</string>
-    <string name="title_activity_game_view">Sudoku</string>
+    <string name="title_activity_game_view" translatable="false">Sudoku</string>
 
     <string name="cancel">Cancel</string>
 
@@ -17,15 +17,14 @@
 
     <string name="description">a privacy friendly app</string>
 
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
+    <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
 
     <string name="title_activity_load_game">Load Game</string>
     <string name="generating">Generating new level in the background&#8230;</string>
 
     <!-- ###SETTINGS### -->
     <string name="title_activity_settings">Settings</string>
-    <string name="action_settings">Settings</string>
     <!-- #Highlight -->
     <string name="pref_header_highlight">Highlighting</string>
     <string name="pref_group_highlight_selection">Selection highlight</string>
@@ -60,16 +59,15 @@
 
     <!-- ###ABOUT### -->
     <string name="app_name_long" translatable="false">Privacy friendly Sudoku</string>
-    <string name="version_number">v0.9</string>
+    <string name="version_number" translatable="false">v0.9</string>
     <string name="about_author">Author:</string>
     <string name="about_author_names" translatable="false">Christopher Beckmann, Timm Lippert</string>
     <string name="about_affiliation">In affiliation with:</string>
     <string name="privacy_friendly">This application belongs to the Privacy Friendly Apps.</string>
-    <string name="qqwing">This application uses a modified version of QQWing v1.3.4</string>
     <string name="more_info">More information can be found on:</string>
-    <string name="url"><a href="https://www.secuso.informatik.tu-darmstadt.de/en/research/results/">https://www.secuso.org</a></string>
-    <string name="about_qqwing">This App uses QQWing.</string>
-    <string name="about_qqwingLink"><a href="http://qqwing.com/download.html">http://qqwing.com/</a></string>
+    <string name="url" translatable="false"><a href="https://www.secuso.informatik.tu-darmstadt.de/en/research/results/">https://www.secuso.org</a></string>
+    <string name="about_qqwing">This application uses a modified version of QQWing v1.3.4</string>
+    <string name="about_qqwingLink" translatable="false"><a href="http://qqwing.com/download.html">http://qqwing.com/</a></string>
 
     <!-- ###GameDifficulty### -->
     <string name="difficulty_easy">Easy</string>
@@ -84,7 +82,6 @@
     <string name="gametype_default_12x12" translatable="false">Standard Sudoku 12x12</string>
     <string name="gametype_x_9x9" translatable="false">X Sudoku 9x9</string>
     <string name="gametype_hyper_9x9" translatable="false">Hyper Sudoku 9x9</string>
-    <string name="title_activity_stats_game">Statistics</string>
     <string name="hint_usage">Select a valid field and then press the hint button to reveal the solution.</string>
     <string name="hint_confirmation">Are you sure you want to use this hint? When using hints, you will not be able to achieve a personal best time.</string>
     <string name="hint_confirmation_confirm">Use</string>
@@ -94,20 +91,21 @@
     <!-- ### Continue Game ### -->
     <string name="loadgame_delete_confirmation">Are you sure you want to delete this save?</string>
     <string name="loadgame_delete_confirm">Delete</string>
-    <string name="title_activity_stats">StatsActivity</string>
 
     <!-- ### Stats ###-->
     <string name="stats_name">Statistics</string>
     <string name="number_of_hints"># used hints:</string>
     <string name="number_of_games"># completed games:</string>
     <string name="total_of_time">Total time played:</string>
+    <string name="average_time">&#2205; time:</string>
+    <string name="min_time">Best time:</string>
     <string name="average_time">average time:</string>
     <string name="min_time">best time:</string>
     <string name="reset_stats">Reset All</string>
 
 
     <!--### Win Strings -->
-    <string name="win_text">Congratulations, you have solved the puzzle!</string>
+    <string name="win_text">Congratulations!</string>
     <string name="win_button_text">continue</string>
 
 </resources>
