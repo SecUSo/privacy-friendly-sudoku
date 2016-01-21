@@ -210,9 +210,9 @@ public class StatsActivity extends AppCompatActivity {
 
         }
         private void updateGeneralIfo(int time, int games, int hints){
-            totalHints =hints;
-            totalGames =games;
-            totalTime =time;
+            totalHints +=hints;
+            totalGames +=games;
+            totalTime +=time;
         }
         private void setGeneralInfo(){
             TextView generalInfoView;
