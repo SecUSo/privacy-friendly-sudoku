@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Sudoku</string>
+    <string name="app_name" translatable="false">Sudoku</string>
     <string name="title_activity_game_view">Sudoku</string>
 
     <string name="cancel">Cancel</string>
@@ -15,13 +15,13 @@
     <string name="menu_reset">Reset Board</string>
     <string name="menu_continue_game">Continue Game</string>
 
-    <string name="description">a privacy friendly logic puzzle</string>
+    <string name="description">a privacy friendly app</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="title_activity_load_game">Load Game</string>
-    <string name="generating">Generating new level in the background...</string>
+    <string name="generating">Generating new level in the background&#8230;</string>
 
     <!-- ###SETTINGS### -->
     <string name="title_activity_settings">Settings</string>
@@ -59,15 +59,17 @@
     <string name="pref_automatic_note_deletion_summary">Automatically remove notes when setting values on connected cells</string>
 
     <!-- ###ABOUT### -->
-    <string name="app_name_long">Privacy friendly Sudoku</string>
+    <string name="app_name_long" translatable="false">Privacy friendly Sudoku</string>
     <string name="version_number">v0.9</string>
     <string name="about_author">Author:</string>
-    <string name="about_author_names">Christopher Beckmann, Timm Lippert</string>
+    <string name="about_author_names" translatable="false">Christopher Beckmann, Timm Lippert</string>
     <string name="about_affiliation">In affiliation with:</string>
     <string name="privacy_friendly">This application belongs to the Privacy Friendly Apps.</string>
     <string name="qqwing">This application uses a modified version of QQWing v1.3.4</string>
     <string name="more_info">More information can be found on:</string>
     <string name="url"><a href="https://www.secuso.informatik.tu-darmstadt.de/en/research/results/">https://www.secuso.org</a></string>
+    <string name="about_qqwing">This App uses QQWing.</string>
+    <string name="about_qqwingLink"><a href="http://qqwing.com/download.html">http://qqwing.com/</a></string>
 
     <!-- ###GameDifficulty### -->
     <string name="difficulty_easy">Easy</string>
@@ -75,13 +77,13 @@
     <string name="difficulty_hard">Hard</string>
 
     <!--###GameActivity -->
-    <string name="Sudoku">Sudoku</string>
-    <string name="gametype_default_9x9">Standart Sudoku 9x9</string>
-    <string name="gametype_default_6x6">Standart Sudoku 6x6</string>
-    <string name="gametype_unspecified">Unspec</string>
-    <string name="gametype_default_12x12">Standart Sudoku 12x12</string>
-    <string name="gametype_x_9x9">X Sudoku 9x9</string>
-    <string name="gametype_hyper_9x9">Hyper Sudoku 9x9</string>
+    <string name="Sudoku" translatable="false">Sudoku</string>
+    <string name="gametype_default_9x9" translatable="false">Standard Sudoku 9x9</string>
+    <string name="gametype_default_6x6" translatable="false">Standard Sudoku 6x6</string>
+    <string name="gametype_unspecified">Unspecified</string>
+    <string name="gametype_default_12x12" translatable="false">Standard Sudoku 12x12</string>
+    <string name="gametype_x_9x9" translatable="false">X Sudoku 9x9</string>
+    <string name="gametype_hyper_9x9" translatable="false">Hyper Sudoku 9x9</string>
     <string name="title_activity_stats_game">Statistics</string>
     <string name="hint_usage">Select a valid field and then press the hint button to reveal the solution.</string>
     <string name="hint_confirmation">Are you sure you want to use this hint? When using hints, you will not be able to achieve a personal best time.</string>
@@ -105,7 +107,7 @@
 
 
     <!--### Win Strings -->
-    <string name="win_text">Congratulations, you have solved the puzzle.</string>
-    <string name="win_button_text">OK!</string>
+    <string name="win_text">Congratulations, you have solved the puzzle!</string>
+    <string name="win_button_text">continue</string>
 
 </resources>

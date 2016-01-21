@@ -90,4 +90,19 @@
         android:layout_gravity="center_horizontal"
         android:autoLink="web"/>
 
+    <TextView
+        android:id="@+id/qqWing"
+        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/about_qqwing"
+        android:layout_gravity="center_horizontal"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/about_qqwingLink"
+        android:layout_gravity="center_horizontal"
+        android:autoLink="web"/>
+
 </LinearLayout>
