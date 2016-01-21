@@ -144,14 +144,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         DialogWinScreen winScreen = new DialogWinScreen();
 
         winScreen.show(fm,"win_screen_layout");*/
-        Dialog dialog = new Dialog(this);
-        //dialog.setContentView(getLayoutInflater().inflate(R.layout.win_screen_layout,null));
-        dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
-        //dialog.setContentView(R.layout.win_screen_layout);
-        dialog.getWindow().setGravity(Gravity.CENTER_HORIZONTAL);
-        dialog.getWindow().setContentView(R.layout.win_screen_layout);
-        dialog.getWindow().setBackgroundDrawableResource(R.color.transparent);
-        dialog.show();
+
     }
 
     public void onClick(View view) {

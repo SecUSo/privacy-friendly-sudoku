@@ -98,11 +98,11 @@
 
     <!-- ### Stats ###-->
     <string name="stats_name">Statistics</string>
-    <string name="number_of_hints">Number of hints used:</string>
-    <string name="number_of_games">Number of games played:</string>
+    <string name="number_of_hints"># used hints:</string>
+    <string name="number_of_games"># completed games:</string>
     <string name="total_of_time">Total time played:</string>
-    <string name="average_time">Average time:</string>
-    <string name="min_time">Minimum time:</string>
+    <string name="average_time">average time:</string>
+    <string name="min_time">best time:</string>
     <string name="reset_stats">Reset All</string>
 
 

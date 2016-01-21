@@ -115,6 +115,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/colorPrimaryDark"
+            android:textColor="@color/white"
             android:text="@string/win_button_text"/>
 
     </LinearLayout>

@@ -13,11 +13,13 @@ import java.util.List;
 import org.secuso.privacyfriendlysudoku.controller.helper.HighscoreInfoContainer;
 import org.secuso.privacyfriendlysudoku.game.GameDifficulty;
 import org.secuso.privacyfriendlysudoku.game.GameType;
+import org.secuso.privacyfriendlysudoku.game.listener.IHintListener;
+import org.secuso.privacyfriendlysudoku.game.listener.ITimerListener;
 
 /**
  * Created by TMZ_LToP on 19.11.2015.
  */
-public class SaveLoadStatistics implements ITimerListener {
+public class SaveLoadStatistics implements ITimerListener, IHintListener {
 
 
     private static String FILE_EXTENSION = ".txt";
@@ -114,15 +116,14 @@ public class SaveLoadStatistics implements ITimerListener {
 
     }
 
-    public void saveTime(GameDifficulty gd, GameType gameType) {
-        //TODO: Increse time every second
+    public void incTime(GameDifficulty gd, GameType gameType) {
         HighscoreInfoContainer infos = loadStats(gameType, gd);
         infos.incTime();
         saveContainer(infos,gd,gameType);
 
 
     }
-    public void saveHints(GameDifficulty gd, GameType gameType){
+    public void incHints(GameDifficulty gd, GameType gameType){
         HighscoreInfoContainer infos = loadStats(gameType,gd);
         infos.incHints();
         saveContainer(infos,gd,gameType);
@@ -202,7 +203,12 @@ public class SaveLoadStatistics implements ITimerListener {
 
     @Override
     public void onTick(int time) {
-        saveTime(gc.getDifficulty(),gc.getGameType());
+        incTime(gc.getDifficulty(), gc.getGameType());
         //gc.getUsedHints();
+    }
+
+    @Override
+    public void onHintUsed() {
+        incHints(gc.getDifficulty(),gc.getGameType());
     }
 }

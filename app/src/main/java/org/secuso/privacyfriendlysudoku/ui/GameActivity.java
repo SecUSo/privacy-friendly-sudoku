@@ -18,7 +18,9 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.MenuItem;
+import android.view.WindowManager;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -252,15 +254,18 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
         gameController.pauseTimer();
         gameController.deleteGame(this);
 
-        Toast t = Toast.makeText(this, R.string.win_text, Toast.LENGTH_SHORT);
-        t.show();
+        //Show time hints new plus old best time
 
         statistics.saveGameStats();
 
-        FragmentManager fr = getSupportFragmentManager();
-        DialogWinScreen win = new DialogWinScreen();
-        win.setProps(gameController, this);
-        win.show(fr, "win_screen_layout");
+        Dialog dialog = new Dialog(this);
+        //dialog.setContentView(getLayoutInflater().inflate(R.layout.win_screen_layout,null));
+        dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        //dialog.setContentView(R.layout.win_screen_layout);
+        dialog.getWindow().setGravity(Gravity.CENTER_HORIZONTAL);
+        dialog.getWindow().setContentView(R.layout.win_screen_layout);
+        dialog.getWindow().setBackgroundDrawableResource(R.color.transparent);
+        dialog.show();
 
         keyboard.setButtonsEnabled(false);
         specialButtonLayout.setButtonsEnabled(false);

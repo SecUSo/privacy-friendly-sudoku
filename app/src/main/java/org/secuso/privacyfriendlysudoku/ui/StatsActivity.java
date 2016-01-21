@@ -181,7 +181,7 @@ public class StatsActivity extends AppCompatActivity {
             List<HighscoreInfoContainer> stats = s.loadStats(GameType.getValidGameTypes().get(getArguments().getInt(ARG_SECTION_NUMBER)));
             int j =0;
             for (HighscoreInfoContainer i : stats){
-                updateGeneralIfo(i.getTime(), i.getNumberOfGames(), i.getNumberOfHintsUsed());
+                updateGeneralInfo(i.getTime(), i.getNumberOfGames(), i.getNumberOfHintsUsed());
                 setStats(i,j++);
             }
             setGeneralInfo();
@@ -209,7 +209,7 @@ public class StatsActivity extends AppCompatActivity {
             return (h + ":" + m + ":" + s);
 
         }
-        private void updateGeneralIfo(int time, int games, int hints){
+        private void updateGeneralInfo(int time, int games, int hints){
             totalHints +=hints;
             totalGames +=games;
             totalTime +=time;
@@ -264,6 +264,7 @@ public class StatsActivity extends AppCompatActivity {
 
             View rootView = inflater.inflate(R.layout.fragment_stats, container, false);
             this.rootView = rootView;
+            resetGeneral();
             TextView textView = (TextView) rootView.findViewById(R.id.section_label);
 
             SaveLoadStatistics s = new SaveLoadStatistics(this.getContext());
@@ -272,7 +273,7 @@ public class StatsActivity extends AppCompatActivity {
 
             int j =0;
             for (HighscoreInfoContainer i : stats){
-                updateGeneralIfo(i.getTime(), i.getNumberOfGames(), i.getNumberOfHintsUsed());
+                updateGeneralInfo(i.getTime(), i.getNumberOfGames(), i.getNumberOfHintsUsed());
                 setStats(i,j++);
             }
             setGeneralInfo();

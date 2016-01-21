@@ -173,8 +173,8 @@ public class GameController implements IModelChangedListener {
         }
 
         int[] solved = solve();
-        //
-        // reveal the selected value.
+        // TODO test every placed value so far
+        // and reveal the selected value.
         selectValue(solved[selectedRow * getSize() + selectedCol]);
         usedHints++;
 
