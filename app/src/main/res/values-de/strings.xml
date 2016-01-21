@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <string name="title_activity_game_view">Sudoku</string>
-
     <!-- Strings related to Menu -->
     <string name="new_game">Neues Spiel</string>
     <string name="menu_settings">Einstellungen</string>
@@ -14,11 +11,6 @@
 
     <!-- Strings related to Settings -->
     <string name="title_activity_settings">Einstellungen</string>
-    <string name="action_settings">Einstellungen</string>
-
-    <!-- Strings related to Highlight -->
-    <string name="pref_highlighting_selection">Feld Auswahl</string>
-    <string name="pref_highlighting_selection_values">Werte</string>
 
     <!-- About Page -->
     <string name="privacy_friendly">Diese App gehört zur Gruppe der Privacy Friendly Apps.</string>
@@ -26,14 +18,11 @@
     <string name="about_affiliation">In Zusammenarbeit mit:</string>
     <string name="about_author">Autor:</string>
 
-    <!-- New Game -->
-    <string name="start_game">Spiel starten</string>
-
     <!-- ###GameDifficulty### -->
     <string name="difficulty_easy">Leicht</string>
     <string name="difficulty_moderate">Normal</string>
     <string name="difficulty_hard">Schwer</string>
-    <string name="about_qqwing">Diese App benutzt QQWing.</string>
+    <string name="about_qqwing">Diese App benutzt eine modifizierte Version des QQWing v1.3.4.</string>
     <string name="average_time">&#2205; Zeit:</string>
     <string name="cancel">Abbrechen</string>
     <string name="description">eine privacy friendly App</string>
@@ -45,5 +34,31 @@
     <string name="hint_usage">Wähle ein gültiges Feld aus und drücke dann auf den Hinweis Knopf um dann das makierte Feld aufzulösen.</string>
     <string name="loadgame_delete_confirmation">Bist du sicher, dass du den Spielstand löschen möchtest?</string>
     <string name="menu_continue_game">Spiel Fortsetzen</string>
+    <string name="menu_reset">Spielfeld zurücksetzen</string>
+    <string name="min_time">Beste Zeit:</string>
+    <string name="number_of_games">Abgeschlossene Spiele:</string>
+    <string name="number_of_hints">Benutzte Hinweise:</string>
+    <string name="pref_automatic_note_deletion">Notizen Löschung</string>
+    <string name="pref_automatic_note_deletion_summary">Automatisches löschen von Notizen, wenn Zahlen in verbundenen Feldern gesetzt werden</string>
+    <string name="pref_group_game">Spiel Einstellungen</string>
+    <string name="pref_group_highlight_selection">Auswahl hervorheben</string>
+    <string name="pref_group_highlight_value">Wert hervorheben</string>
+    <string name="pref_header_game">Spiel</string>
+    <string name="pref_header_highlight">Hervorhebung</string>
+    <string name="pref_highlight_cols">Verbundene Spalten</string>
+    <string name="pref_highlight_notes">Notizen</string>
+    <string name="pref_highlight_rows">Verbundene Reihen</string>
+    <string name="pref_highlight_secs">Verbundene Sektionen</string>
+    <string name="pref_highlight_vals">Gleiche Werte</string>
+    <string name="pref_symbols">Symbole</string>
+    <string name="title_activity_load_game">Spiel laden</string>
+    <string name="stats_name">Statistik</string>
+    <string name="reset_stats">Alles zurücksetzen</string>
+    <string name="reset_confirmation_confirm">zurücksetzen</string>
+    <string name="reset_confirmation">Bist du dir sicher, dass du das komplette Spielfeld zurücksetzen möchtest?</string>
+    <string name="total_of_time">Gesamtspielzeit:</string>
+    <string name="win_button_text">fortsetzen</string>
+    <string name="win_text">Glückwunsch!</string>
+    <string name="app_name" translatable="false">Sudoku</string>
 
 </resources>
