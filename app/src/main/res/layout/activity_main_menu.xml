@@ -114,7 +114,7 @@
                 android:capitalize="none"
                 android:clickable="false"
                 android:elevation="10dp"
-                android:background="@drawable/mnenomic_numpad_button"/>
+                android:background="@drawable/standalone_button"/>
 
             <Button
                 android:textColor="@color/white"
@@ -131,7 +131,7 @@
                 android:onClick="onClick"
                 android:capitalize="none"
                 android:clickable="false"
-                android:background="@drawable/mnenomic_numpad_button"/>
+                android:background="@drawable/standalone_button"/>
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

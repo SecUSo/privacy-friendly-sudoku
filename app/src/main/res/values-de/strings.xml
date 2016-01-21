@@ -33,5 +33,17 @@
     <string name="difficulty_easy">Leicht</string>
     <string name="difficulty_moderate">Normal</string>
     <string name="difficulty_hard">Schwer</string>
+    <string name="about_qqwing">Diese App benutzt QQWing.</string>
+    <string name="average_time">&#2205; Zeit:</string>
+    <string name="cancel">Abbrechen</string>
+    <string name="description">eine privacy friendly App</string>
+    <string name="gametype_unspecified">Unspezifiziert</string>
+    <string name="generating">Generiere neue Level im Hintergrund&#8230;</string>
+    <string name="hint_confirmation">Bist du sicher, dass du einen Hinweis verwenden möchtest? Wenn Hinweise benutzt wurden, kann in dem Spiel keine Bestzeit mehr erreicht werden.</string>
+    <string name="hint_confirmation_confirm">Benutzen</string>
+    <string name="loadgame_delete_confirm">Löschen</string>
+    <string name="hint_usage">Wähle ein gültiges Feld aus und drücke dann auf den Hinweis Knopf um dann das makierte Feld aufzulösen.</string>
+    <string name="loadgame_delete_confirmation">Bist du sicher, dass du den Spielstand löschen möchtest?</string>
+    <string name="menu_continue_game">Spiel Fortsetzen</string>
 
 </resources>

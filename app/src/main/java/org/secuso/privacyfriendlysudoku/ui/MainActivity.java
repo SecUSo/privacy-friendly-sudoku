@@ -3,6 +3,7 @@ package org.secuso.privacyfriendlysudoku.ui;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -209,8 +210,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         List<GameInfoContainer> gic = fm.loadGameStateInfo();
         if(gic.size() > 0) {
             continueButton.setEnabled(true);
+            continueButton.setBackgroundResource(R.drawable.standalone_button);
         } else {
             continueButton.setEnabled(false);
+            continueButton.setBackgroundResource(R.drawable.inactive_button);
         }
     }
 

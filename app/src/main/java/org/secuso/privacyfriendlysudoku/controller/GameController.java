@@ -19,6 +19,7 @@ import org.secuso.privacyfriendlysudoku.game.GameType;
 import org.secuso.privacyfriendlysudoku.game.ICellAction;
 import org.secuso.privacyfriendlysudoku.game.listener.IGameSolvedListener;
 import org.secuso.privacyfriendlysudoku.game.listener.IHighlightChangedListener;
+import org.secuso.privacyfriendlysudoku.game.listener.IHintListener;
 import org.secuso.privacyfriendlysudoku.game.listener.IModelChangedListener;
 import org.secuso.privacyfriendlysudoku.game.listener.ITimerListener;
 
@@ -39,6 +40,7 @@ public class GameController implements IModelChangedListener {
 
     private LinkedList<IHighlightChangedListener> highlightListeners = new LinkedList<>();
     private LinkedList<IGameSolvedListener> solvedListeners = new LinkedList<>();
+    private LinkedList<IHintListener> hintListener = new LinkedList<>();
     private boolean notifiedOnSolvedListeners = false;
 
     // Game
@@ -175,6 +177,8 @@ public class GameController implements IModelChangedListener {
         // reveal the selected value.
         selectValue(solved[selectedRow * getSize() + selectedCol]);
         usedHints++;
+
+        notifyHintListener();
     }
 
     private void setGameType(GameType type) {
@@ -553,6 +557,19 @@ public class GameController implements IModelChangedListener {
             timerListeners.add(listener);
         }
     }
+
+    public void notifyHintListener() {
+        for (IHintListener listener : hintListener){
+            listener.onHintUsed();
+        }
+    }
+
+    public void registerHintListener(IHintListener listener){
+        if (!hintListener.contains(listener)){
+            hintListener.add(listener);
+        }
+    }
+
     public int getUsedHints(){
         return usedHints;
     }
