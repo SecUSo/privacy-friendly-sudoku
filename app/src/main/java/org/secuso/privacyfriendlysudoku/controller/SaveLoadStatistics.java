@@ -13,6 +13,7 @@ import java.util.List;
 import org.secuso.privacyfriendlysudoku.controller.helper.HighscoreInfoContainer;
 import org.secuso.privacyfriendlysudoku.game.GameDifficulty;
 import org.secuso.privacyfriendlysudoku.game.GameType;
+import org.secuso.privacyfriendlysudoku.game.listener.ITimerListener;
 
 /**
  * Created by TMZ_LToP on 19.11.2015.
@@ -202,7 +203,7 @@ public class SaveLoadStatistics implements ITimerListener {
 
     @Override
     public void onTick(int time) {
-        saveTime(gc.getDifficulty(),gc.getGameType());
+        saveTime(gc.getDifficulty(), gc.getGameType());
         //gc.getUsedHints();
     }
 }
