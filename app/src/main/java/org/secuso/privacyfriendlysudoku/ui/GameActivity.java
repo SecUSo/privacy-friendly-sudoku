@@ -53,6 +53,7 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
     TextView viewName ;
     RatingBar ratingBar;
     private boolean gameSolved = false;
+    SaveLoadStatistics statistics = new SaveLoadStatistics(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,7 +89,7 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
         gameController = new GameController(sharedPref, getApplicationContext());
         gameController.registerGameSolvedListener(this);
         gameController.registerTimerListener(this);
-
+        statistics.setGameController(gameController);
         List<GameInfoContainer> loadableGames = GameStateManager.getLoadableGameList();
 
         if(loadLevel && loadableGames.size() > loadLevelID) {
@@ -254,8 +255,7 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
         Toast t = Toast.makeText(this, R.string.win_text, Toast.LENGTH_SHORT);
         t.show();
 
-        SaveLoadStatistics s = new SaveLoadStatistics(this);
-        s.saveGameStats(gameController);
+        statistics.saveGameStats();
 
         FragmentManager fr = getSupportFragmentManager();
         DialogWinScreen win = new DialogWinScreen();

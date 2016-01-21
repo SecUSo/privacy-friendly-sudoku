@@ -17,19 +17,52 @@ import org.secuso.privacyfriendlysudoku.game.GameType;
 /**
  * Created by TMZ_LToP on 19.11.2015.
  */
-public class SaveLoadStatistics {
+public class SaveLoadStatistics implements ITimerListener {
 
 
     private static String FILE_EXTENSION = ".txt";
     private static String SAVE_PREFIX = "stat";
     private static String SAVES_DIR = "stats";
-
+    private GameController gc;
     Context context;
     private int numberOfArguents = 2;
 
     //GameDifficulty, time, gamemode, #hints, AvTime, amountOf Games per GameDifficulty,
     public SaveLoadStatistics(Context context){
         this.context = context;
+    }
+    public void setGameController(GameController gc) {
+        this.gc = gc;
+        gc.registerTimerListener(this);
+    }
+
+    public HighscoreInfoContainer loadStats(GameType t, GameDifficulty gd){
+        File dir = context.getDir(SAVES_DIR, 0);
+        HighscoreInfoContainer infos;
+        byte[] bytes;
+        FileInputStream inputStream;
+        File file;
+        file = new File(dir,SAVE_PREFIX+t.name()+"_"+gd.name()+FILE_EXTENSION);
+        bytes = new byte[(int)file.length()];
+
+        try {
+            inputStream = new FileInputStream(file);
+            try {
+                inputStream.read(bytes);
+            }finally {
+                inputStream.close();
+            }
+        }  catch (IOException e) {
+            Log.e("Failed to read file","File could not be read");
+        }
+        infos = new HighscoreInfoContainer(t,gd);
+        try {
+            infos.setInfosFromFile(new String(bytes));
+        } catch (IllegalArgumentException e){
+            file.delete();
+        }
+        return infos;
+
     }
 
     public List<HighscoreInfoContainer> loadStats(GameType t) {
@@ -81,16 +114,49 @@ public class SaveLoadStatistics {
 
     }
 
+    public void saveTime(GameDifficulty gd, GameType gameType) {
+        //TODO: Increse time every second
+        HighscoreInfoContainer infos = loadStats(gameType, gd);
+        infos.incTime();
+        saveContainer(infos,gd,gameType);
 
-    public void saveGameStats(GameController gameController) {
 
+    }
+    public void saveHints(GameDifficulty gd, GameType gameType){
+        HighscoreInfoContainer infos = loadStats(gameType,gd);
+        infos.incHints();
+        saveContainer(infos,gd,gameType);
+    }
+
+    public void saveContainer (HighscoreInfoContainer infos, GameDifficulty gd, GameType t){
+
+        File dir = context.getDir(SAVES_DIR, 0);
+        File file = new File(dir, SAVE_PREFIX+t.name()+"_"+gd.name()+FILE_EXTENSION);
+
+
+        String stats = infos.getActualStats();
+        try {
+            FileOutputStream stream = new FileOutputStream(file);
+            try {
+                stream.write(stats.getBytes());
+            } finally {
+                stream.close();
+            }
+        } catch(IOException e) {
+            Log.e("File Manager", "Could not save game. IOException occured.");
+        }
+    }
+
+    public void saveGameStats() {
+
+        if (gc == null) return;
 
         HighscoreInfoContainer infoContainer = new HighscoreInfoContainer();
 
         // Read existing stats
         File dir = context.getDir(SAVES_DIR, 0);
 
-        File file = new File(dir, SAVE_PREFIX+gameController.getGameType().name()+"_"+gameController.getDifficulty().name()+FILE_EXTENSION);
+        File file = new File(dir, SAVE_PREFIX+gc.getGameType().name()+"_"+gc.getDifficulty().name()+FILE_EXTENSION);
 
 
         if (file.isFile()){
@@ -119,7 +185,7 @@ public class SaveLoadStatistics {
         }
 
         //add stats of current game stats or create init stats
-        infoContainer.add(gameController);
+        infoContainer.add(gc);
 
         String stats = infoContainer.getActualStats();
         try {
@@ -132,5 +198,11 @@ public class SaveLoadStatistics {
         } catch(IOException e) {
             Log.e("File Manager", "Could not save game. IOException occured.");
         }
+    }
+
+    @Override
+    public void onTick(int time) {
+        saveTime(gc.getDifficulty(),gc.getGameType());
+        //gc.getUsedHints();
     }
 }
