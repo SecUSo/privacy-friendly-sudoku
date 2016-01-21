@@ -33,14 +33,20 @@ public class HighscoreInfoContainer {
         //add all wanted Game Stats
         difficulty = (difficulty== null) ? gc.getDifficulty() : difficulty;
         type = (type == null) ? gc.getGameType() : type;
-        time += gc.getTime();
-        numberOfHintsUsed += gc.getUsedHints();
+        //time += gc.getTime();
+        //numberOfHintsUsed += gc.getUsedHints();
         numberOfGames++;
         // min time is only minTime of games without hints used
         minTime = (gc.getUsedHints() == 0 && gc.getTime()< minTime) ? gc.getTime() : minTime;
         numberOfGamesNoHints = (gc.getUsedHints() == 0) ? numberOfGamesNoHints + 1 : numberOfGamesNoHints;
         timeNoHints = (gc.getUsedHints() == 0) ? timeNoHints + gc.getTime() : timeNoHints;
 
+    }
+    public void incHints(){
+        numberOfHintsUsed++;
+    }
+    public void incTime() {
+        time++;
     }
 
     public void setInfosFromFile(String s){
