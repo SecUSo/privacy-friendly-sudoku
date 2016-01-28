@@ -28,9 +28,7 @@
     <!-- #Highlight -->
     <string name="pref_header_highlight">Highlighting</string>
     <string name="pref_group_highlight_selection">Selection highlight</string>
-    <string name="pref_highlight_rows">Connected rows</string>
-    <string name="pref_highlight_cols">Connected columns</string>
-    <string name="pref_highlight_secs">Connected sections</string>
+    <string name="pref_highlight_connected">Connected Fields</string>
     <string name="pref_group_highlight_value">Value highlight</string>
     <string name="pref_highlight_vals">Same values</string>
     <string name="pref_highlight_notes">Notes</string>
@@ -97,8 +95,6 @@
     <string name="number_of_hints"># used hints:</string>
     <string name="number_of_games"># completed games:</string>
     <string name="total_of_time">Total time played:</string>
-    <string name="average_time">&#2205; time:</string>
-    <string name="min_time">Best time:</string>
     <string name="average_time">average time:</string>
     <string name="min_time">best time:</string>
     <string name="reset_stats">Reset All</string>

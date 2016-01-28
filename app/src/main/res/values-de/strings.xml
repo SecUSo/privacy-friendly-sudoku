@@ -23,7 +23,7 @@
     <string name="difficulty_moderate">Normal</string>
     <string name="difficulty_hard">Schwer</string>
     <string name="about_qqwing">Diese App benutzt eine modifizierte Version des QQWing v1.3.4.</string>
-    <string name="average_time">&#2205; Zeit:</string>
+    <string name="average_time">Durchschnittliche Zeit:</string>
     <string name="cancel">Abbrechen</string>
     <string name="description">eine privacy friendly App</string>
     <string name="gametype_unspecified">Unspezifiziert</string>
@@ -34,7 +34,7 @@
     <string name="hint_usage">Wähle ein gültiges Feld aus und drücke dann auf den Hinweis Knopf um dann das makierte Feld aufzulösen.</string>
     <string name="loadgame_delete_confirmation">Bist du sicher, dass du den Spielstand löschen möchtest?</string>
     <string name="menu_continue_game">Spiel Fortsetzen</string>
-    <string name="menu_reset">Spielfeld zurücksetzen</string>
+    <string name="menu_reset">Zurücksetzen</string>
     <string name="min_time">Beste Zeit:</string>
     <string name="number_of_games">Abgeschlossene Spiele:</string>
     <string name="number_of_hints">Benutzte Hinweise:</string>

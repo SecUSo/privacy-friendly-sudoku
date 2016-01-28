@@ -5,17 +5,23 @@
         <item android:id="@+id/menu_reset" android:icon="@android:drawable/ic_menu_delete"
             android:title="@string/menu_reset" />
     </group>
-    <group android:id="@+id/group2">
+    <group android:id="@+id/group4">
         <item android:id="@+id/nav_newgame" android:icon="@android:drawable/ic_menu_today"
             android:title="@string/menu_main" />
+    </group>
+    <group android:id="@+id/group2">
         <item android:id="@+id/nav_highscore" android:icon="@android:drawable/ic_menu_myplaces"
             android:title="@string/menu_highscore" />
+    </group>
+    <group android:id="@+id/group5">
         <item android:id="@+id/menu_settings" android:icon="@android:drawable/ic_menu_manage"
             android:title="@string/menu_settings" />
     </group>
     <group android:id="@+id/group3">
             <item android:id="@+id/menu_help" android:icon="@android:drawable/ic_menu_help"
                 android:title="@string/menu_help" />
+    </group>
+    <group android:id="@+id/group6">
             <item android:id="@+id/menu_about" android:icon="@android:drawable/ic_menu_info_details"
                 android:title="@string/menu_about" />
     </group>
