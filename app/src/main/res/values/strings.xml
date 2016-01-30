@@ -104,6 +104,10 @@
     <string name="win_text">Congratulations!</string>
     <string name="win_button_text">continue</string>
     <string name="title_activity_help">Help</string>
+    <string name="win_time">needed time:</string>
+    <string name="win_hint">hints used:</string>
+    <string name="win_show_game">Show gamefield</string>
+    <string name="win_best_time">New best time !</string>
 
     <!-- Strings related to Settings -->
 
@@ -164,4 +168,26 @@
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="header_help">Help</string>
 
+
+    <!-- ### HELP prefs ###-->
+
+    <string name="pref_help_keyboard">Keyboard</string>
+    <string name="pref_help_gamefield">Game field</string>
+    <string name="pref_help_statusbar">Statusbar</string>
+    <string name="pref_help_keyheighlited">Key Heighlighted with black border</string>
+    <string name="pref_help_keyheighlited_summary">Indicates that the number is selected and will be set in every clicked field</string>
+    <string name="pref_help_keyheighlited_yellow">Key Heighlighted with yellow border</string>
+    <string name="pref_help_keyheighlited_yellow_summary">Indicates that all numbers have been set</string>
+
+    <!-- ### Special buttons description ###-->
+    <string name="pref_help_do">Do button</string>
+    <string name="pref_help_do_summary">Redoes the last action</string>
+    <string name="pref_help_undo">Undo button</string>
+    <string name="pref_help_undo_summary">Undoes the last action</string>
+    <string name="pref_help_hint">Hint button</string>
+    <string name="pref_help_hint_summary">Unveals the selected field Warning:When used the game is not appear as best in the Statistics</string>
+    <string name="pref_help_delete">Delete button</string>
+    <string name="pref_help_delete_summary">deletes a selected cell</string>
+    <string name="pref_help_notes">Toggle notes button</string>
+    <string name="pref_help_notes_summary">toggles if numbers should be set as notes or as value in a cell</string>
 </resources>

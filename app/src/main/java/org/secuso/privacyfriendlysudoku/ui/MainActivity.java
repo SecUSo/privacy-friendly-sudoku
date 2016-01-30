@@ -244,8 +244,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             case R.id.menu_help_main:
                 //open about page
-                //intent = new Intent(this,HelpActivity.class);
-                //startActivity(intent);
+                intent = new Intent(this,HelpActivity.class);
+                intent.putExtra( HelpActivity.EXTRA_SHOW_FRAGMENT, HelpActivity.HelpFragment.class.getName() );
+                intent.putExtra( HelpActivity.EXTRA_NO_HEADERS, true );
+                startActivity(intent);
                 break;
             default:
         }

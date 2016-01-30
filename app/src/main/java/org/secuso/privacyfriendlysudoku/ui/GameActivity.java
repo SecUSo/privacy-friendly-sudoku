@@ -21,7 +21,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,6 +42,7 @@ import org.secuso.privacyfriendlysudoku.game.listener.IGameSolvedListener;
 import org.secuso.privacyfriendlysudoku.game.listener.ITimerListener;
 import org.secuso.privacyfriendlysudoku.ui.listener.IHintDialogFragmentListener;
 import org.secuso.privacyfriendlysudoku.ui.listener.IResetDialogFragmentListener;
+import org.secuso.privacyfriendlysudoku.ui.view.DialogActivity;
 import org.secuso.privacyfriendlysudoku.ui.view.DialogWinScreen;
 import org.secuso.privacyfriendlysudoku.ui.view.R;
 import org.secuso.privacyfriendlysudoku.ui.view.SudokuFieldLayout;
@@ -57,6 +60,7 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
     RatingBar ratingBar;
     private boolean gameSolved = false;
     SaveLoadStatistics statistics = new SaveLoadStatistics(this);
+    DialogActivity dialog = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -238,8 +242,10 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
 
             case R.id.menu_help:
                 //open about page
-                //intent = new Intent(this,HelpActivity.class);
-                //startActivity(intent);
+                intent = new Intent(this,HelpActivity.class);
+                intent.putExtra( HelpActivity.EXTRA_SHOW_FRAGMENT, HelpActivity.HelpFragment.class.getName() );
+                intent.putExtra( HelpActivity.EXTRA_NO_HEADERS, true );
+                startActivity(intent);
                 break;
             default:
         }
@@ -261,25 +267,48 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
 
         statistics.saveGameStats();
 
-        Dialog dialog = new Dialog(this);
+
+        if (gameController.getUsedHints() == 0){
+            if (statistics.loadStats(gameController.getGameType(),gameController.getDifficulty()).getMinTime() >= gameController.getTime()) {
+                //         ((TextView) dialog.findViewById(R.id.win_new_besttime)).setVisibility(View.VISIBLE);
+                dialog = new DialogActivity(this,R.style.WinDialog,timeToString(gameController.getTime()),String.valueOf(gameController.getUsedHints()),true);
+            }
+        }else dialog = new DialogActivity(this,R.style.WinDialog,timeToString(gameController.getTime()),String.valueOf(gameController.getUsedHints()),true);
+
+        dialog.getWindow().setContentView(R.layout.win_screen_layout);
         //dialog.setContentView(getLayoutInflater().inflate(R.layout.win_screen_layout,null));
-        dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
         //dialog.setContentView(R.layout.win_screen_layout);
         dialog.getWindow().setGravity(Gravity.CENTER_HORIZONTAL);
-        dialog.getWindow().setContentView(R.layout.win_screen_layout);
         dialog.getWindow().setBackgroundDrawableResource(R.color.transparent);
+
+        //((TextView)dialog.findViewById(R.id.win_hints)).setText(gameController.getUsedHints());
+        //((TextView)dialog.findViewById(R.id.win_time)).setText(timeToString(gameController.getTime()));
+
         dialog.show();
+
+        final Activity activity = this;
+        ((Button)dialog.findViewById(R.id.win_button)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                activity.finish();
+                startActivity(new Intent(activity,MainActivity.class));
+            }
+        });
+        ((Button)dialog.findViewById(R.id.win_button2)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
 
         layout.setEnabled(false);
         keyboard.setButtonsEnabled(false);
         specialButtonLayout.setButtonsEnabled(false);
     }
 
-    @Override
-    public void onTick(int time) {
-        if(gameSolved) return;
-
-        //do something not so awesome
+    public String timeToString(int time) {
         int seconds = time % 60;
         int minutes = ((time -seconds)/60)%60 ;
         int hours = (time - minutes - seconds)/(3600);
@@ -287,7 +316,15 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
         s = (seconds< 10)? "0"+String.valueOf(seconds):String.valueOf(seconds);
         m = (minutes< 10)? "0"+String.valueOf(minutes):String.valueOf(minutes);
         h = (hours< 10)? "0"+String.valueOf(hours):String.valueOf(hours);
-        timerView.setText(h + ":" + m + ":" + s);
+        return h + ":" + m + ":" + s;
+    }
+
+    @Override
+    public void onTick(int time) {
+        if(gameSolved) return;
+
+        //do something not so awesome
+        timerView.setText(timeToString(time));
 
         // save time
         gameController.saveGame(this);

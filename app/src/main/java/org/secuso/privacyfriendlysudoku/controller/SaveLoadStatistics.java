@@ -36,6 +36,7 @@ public class SaveLoadStatistics implements ITimerListener, IHintListener {
     public void setGameController(GameController gc) {
         this.gc = gc;
         gc.registerTimerListener(this);
+        gc.registerHintListener(this);
     }
 
     public HighscoreInfoContainer loadStats(GameType t, GameDifficulty gd){

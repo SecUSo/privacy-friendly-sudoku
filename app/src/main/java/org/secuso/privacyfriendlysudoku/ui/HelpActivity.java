@@ -184,7 +184,7 @@ public class HelpActivity extends AppCompatPreferenceActivity {
         public boolean onOptionsItemSelected(MenuItem item) {
             int id = item.getItemId();
             if (id == android.R.id.home) {
-                startActivity(new Intent(getActivity(), SettingsActivity.class));
+                getActivity().finish();
                 return true;
             }
             return super.onOptionsItemSelected(item);
