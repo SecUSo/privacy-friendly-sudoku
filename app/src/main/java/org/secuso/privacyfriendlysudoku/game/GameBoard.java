@@ -245,4 +245,31 @@ public class GameBoard implements Cloneable {
             modelChangedListeners.remove(listener);
         }
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if(o instanceof GameBoard) {
+            GameBoard other = (GameBoard) o;
+
+            if(!other.gameType.equals(gameType)
+                    || other.sectionHeight != sectionHeight
+                    || other.sectionWidth != sectionWidth
+                    || other.size != size) {
+                return false;
+            }
+            try {
+                for(int i = 0; i < size; i++) {
+                    for(int j = 0; j < size; j++) {
+                        if(!other.field[i][j].equals(field[i][j])) {
+                            return false;
+                        }
+                    }
+                }
+            } catch(IndexOutOfBoundsException e) {
+                return false;
+            }
+            return true;
+        }
+        return false;
+    }
 }

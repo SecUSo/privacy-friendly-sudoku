@@ -30,6 +30,22 @@ public class SudokuFieldLayout extends RelativeLayout implements IHighlightChang
     private int gameCellHeight;
     private SharedPreferences settings;
 
+    private OnTouchListener listener = new OnTouchListener() {
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            if(v instanceof SudokuCellView) {
+
+                SudokuCellView scv = ((SudokuCellView) v);
+
+                int row = scv.getRow();
+                int col = scv.getCol();
+
+                gameController.selectCell(row, col);
+            }
+            return false;
+        }
+    };
+
     private Paint p = new Paint();
 
     public SudokuCellView [][] gamecells;
@@ -52,22 +68,6 @@ public class SudokuFieldLayout extends RelativeLayout implements IHighlightChang
 
         gamecells = new SudokuCellView[gc.getSize()][gc.getSize()];
 
-        OnTouchListener listener = new OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if(v instanceof SudokuCellView) {
-
-                    SudokuCellView scv = ((SudokuCellView) v);
-
-                    int row = scv.getRow();
-                    int col = scv.getCol();
-
-                    gameController.selectCell(row, col);
-                }
-                return false;
-            }
-        };
-
         sectionHeight = gameController.getSectionHeight();
         sectionWidth = gameController.getSectionWidth();
 
@@ -78,6 +78,17 @@ public class SudokuFieldLayout extends RelativeLayout implements IHighlightChang
                 addView(gamecells[i][j]);
             }
         }
+    }
+
+    @Override
+    public void setEnabled(boolean enabled) {
+        for (int i = 0; i < gameController.getSize(); i++) {
+            for (int j = 0; j < gameController.getSize(); j++) {
+                gamecells[i][j].setEnabled(false);
+                gamecells[i][j].setOnTouchListener(null);
+            }
+        }
+        return;
     }
 
     @Override
@@ -143,12 +154,12 @@ public class SudokuFieldLayout extends RelativeLayout implements IHighlightChang
         // Set connected Fields
         if(gameController.isValidCellSelected()) {
             //String syncConnPref = sharedPref.getString(SettingsActivity., "");
-            final boolean highlightConnectedRow = settings.getBoolean("pref_highlight_rows", true);
-            final boolean highlightConnectedColumn = settings.getBoolean("pref_highlight_cols", true);
-            final boolean highlightConnectedSection = settings.getBoolean("pref_highlight_secs", true);
+            final boolean highlightConnected = settings.getBoolean("pref_highlight_connected", true);
 
-            for (GameCell c : gameController.getConnectedCells(row, col, highlightConnectedRow, highlightConnectedColumn, highlightConnectedSection)) {
-                gamecells[c.getRow()][c.getCol()].setHighlightType(CellHighlightTypes.Connected);
+            if(highlightConnected) {
+                for (GameCell c : gameController.getConnectedCells(row, col)) {
+                    gamecells[c.getRow()][c.getCol()].setHighlightType(CellHighlightTypes.Connected);
+                }
             }
         }
 
@@ -180,5 +191,13 @@ public class SudokuFieldLayout extends RelativeLayout implements IHighlightChang
                 gamecells[gc.getRow()][gc.getCol()].setHighlightType(CellHighlightTypes.Selected);
             }
         }
+
+        // invalidate everything, so it gets redrawn
+        for(int i = 0; i < gameController.getSize(); i++) {
+            for(int j = 0; j < gameController.getSize(); j++) {
+                gamecells[i][j].invalidate();
+            }
+        }
+
     }
 }

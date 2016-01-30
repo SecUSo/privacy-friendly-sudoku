@@ -50,6 +50,11 @@ public class UndoRedoManager {
 
     public void addState(GameBoard gameBoard) {
 
+        // don't add duplicates right after each other..
+        if(gameBoard.equals(states.get(activeState))) {
+            return;
+        }
+
         LinkedList<GameBoard> deleteList = new LinkedList<>();
 
         for(int i = 0; i < states.size(); i++) {

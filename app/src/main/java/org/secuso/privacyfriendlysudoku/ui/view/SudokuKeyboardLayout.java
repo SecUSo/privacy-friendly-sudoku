@@ -4,12 +4,8 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.util.TypedValue;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.GridLayout;
-import android.widget.GridView;
 import android.widget.LinearLayout;
 
 import org.secuso.privacyfriendlysudoku.controller.GameController;
@@ -58,10 +54,11 @@ public class SudokuKeyboardLayout extends LinearLayout implements IHighlightChan
 
     public void setKeyBoard(int size,int width, int height) {
         LayoutParams p;
-        buttons = new SudokuButton[size];
         int number = 0;
-        int torun = (size % 2 == 0) ? size/2 :(size+1)/2 ;
-        int realSize = torun;
+        int numberOfButtonsPerRow = (size % 2 == 0) ? size/2 :(size+1)/2;
+        int numberOfButtons = numberOfButtonsPerRow * 2;
+
+        buttons = new SudokuButton[numberOfButtons];
 
 
         //set layout parameters and init Layouts
@@ -71,7 +68,7 @@ public class SudokuKeyboardLayout extends LinearLayout implements IHighlightChan
             p.setMargins(0,5,0,5);
             layouts[i] = new LinearLayout(getContext(),null);
             layouts[i].setLayoutParams(p);
-            layouts[i].setWeightSum(torun);
+            layouts[i].setWeightSum(numberOfButtonsPerRow);
             layouts[i].setOrientation(LinearLayout.HORIZONTAL);
             addView(layouts[i]);
         }
@@ -80,15 +77,13 @@ public class SudokuKeyboardLayout extends LinearLayout implements IHighlightChan
 
 
 
-        for (int k = 0; k<2;k++){
-            for (int i = 0; i< torun; i++){
-                if (number == size) {
-                    break;
-                }
-                buttons[number] = new SudokuButton(getContext(),null);
+        for (int layoutNumber = 0; layoutNumber <= 1 ; layoutNumber++){
+            for (int i = 0; i < numberOfButtonsPerRow; i++){
+                int buttonIndex = i + layoutNumber * numberOfButtonsPerRow;
+                buttons[buttonIndex] = new SudokuButton(getContext(),null);
                 p = new LayoutParams(0, LayoutParams.MATCH_PARENT,1);
                 p.setMargins(5,5,5,5);
-                buttons[number].setLayoutParams(p);
+                buttons[buttonIndex].setLayoutParams(p);
                 /* removed GridLayout because of bad scaling will use now a Linearlayout
                 Spec rowSpec = spec(k,1);
                 Spec colSpec = spec(i,1);
@@ -106,14 +101,18 @@ public class SudokuKeyboardLayout extends LinearLayout implements IHighlightChan
 
           //      buttons[number].setLayoutParams(p);
                 //buttons[number].setGravity(Gravity.CENTER);
-                buttons[number].setType(SudokuButtonType.Value);
-                buttons[number].setTextColor(getResources().getColor(R.color.white));
-                buttons[number].setBackgroundResource(R.drawable.mnenomic_numpad_button);
-                buttons[number].setText(Symbol.getSymbol(symbolsToUse, number));
-                buttons[number].setValue(number + 1);
-                buttons[number].setOnClickListener(listener);
-                layouts[k].addView(buttons[number]);
-                number++;
+                buttons[buttonIndex].setType(SudokuButtonType.Value);
+                buttons[buttonIndex].setTextColor(getResources().getColor(R.color.white));
+                buttons[buttonIndex].setBackgroundResource(R.drawable.mnenomic_numpad_button);
+                buttons[buttonIndex].setText(Symbol.getSymbol(symbolsToUse, buttonIndex));
+                buttons[buttonIndex].setValue(buttonIndex + 1);
+                buttons[buttonIndex].setOnClickListener(listener);
+
+                if (buttonIndex == size) {
+                    buttons[buttonIndex].setVisibility(INVISIBLE);
+                }
+
+                layouts[layoutNumber].addView(buttons[buttonIndex]);
             }
         }
     }
@@ -175,6 +174,7 @@ public class SudokuKeyboardLayout extends LinearLayout implements IHighlightChan
             }
         }
     }
+
     public void fixHeight (){
         int i = getHeight();
         i = buttons[0].getHeight();

@@ -5,9 +5,4 @@
     <header android:fragment="org.secuso.privacyfriendlysudoku.ui.SettingsActivity$GamePreferenceFragment"
         android:title="@string/pref_header_game" android:icon="@drawable/ic_info_black_24dp" />
 
-    <header
-        android:fragment="org.secuso.privacyfriendlysudoku.ui.SettingsActivity$HighlightingPreferenceFragment"
-        android:title="Highlighting"
-        android:icon="@drawable/ic_notifications_black_24dp" />
-
 </preference-headers>

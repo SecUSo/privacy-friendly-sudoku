@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -58,8 +59,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         settings = PreferenceManager.getDefaultSharedPreferences(this);
 
-        NewLevelManager.init(getApplicationContext(), settings);
-        NewLevelManager newLevelManager = NewLevelManager.getInstance();
+        NewLevelManager newLevelManager = NewLevelManager.getInstance(getApplicationContext(), settings);
 
         // Is this the very first time we start this app?
         boolean firstStart = settings.getBoolean("firstStart", true);
@@ -151,38 +151,41 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         Intent i = null;
 
-        if(view instanceof Button) {
-            Button b = (Button)view;
-            switch(b.getId()) {
-                case R.id.continueButton:
-                    i = new Intent(this, LoadGameActivity.class);
-                    break;
-                case R.id.playButton:
-                    GameType gameType = GameType.getValidGameTypes().get(mViewPager.getCurrentItem());
-                    int index = difficultyBar.getProgress()-1;
-                    GameDifficulty gameDifficulty = GameDifficulty.getValidDifficultyList().get(index < 0 ? 0 : index);
+        switch(view.getId()) {
+            case R.id.arrow_left:
+                mViewPager.arrowScroll(View.FOCUS_LEFT);
+                break;
+            case R.id.arrow_right:
+                mViewPager.arrowScroll(View.FOCUS_RIGHT);
+                break;
+            case R.id.continueButton:
+                i = new Intent(this, LoadGameActivity.class);
+                break;
+            case R.id.playButton:
+                GameType gameType = GameType.getValidGameTypes().get(mViewPager.getCurrentItem());
+                int index = difficultyBar.getProgress()-1;
+                GameDifficulty gameDifficulty = GameDifficulty.getValidDifficultyList().get(index < 0 ? 0 : index);
 
-                    NewLevelManager newLevelManager = NewLevelManager.getInstance();
-                    if(newLevelManager.isLevelLoadable(gameType, gameDifficulty)) {
-                        // save current setting for later
-                        SharedPreferences.Editor editor = settings.edit();
-                        editor.putString("lastChosenGameType", gameType.name());
-                        editor.putString("lastChosenDifficulty", gameDifficulty.name());
-                        editor.apply();
+                NewLevelManager newLevelManager = NewLevelManager.getInstance(getApplicationContext(), settings);
+                if(newLevelManager.isLevelLoadable(gameType, gameDifficulty)) {
+                    // save current setting for later
+                    SharedPreferences.Editor editor = settings.edit();
+                    editor.putString("lastChosenGameType", gameType.name());
+                    editor.putString("lastChosenDifficulty", gameDifficulty.name());
+                    editor.apply();
 
-                        // send everything to game activity
-                        i = new Intent(this, GameActivity.class);
-                        i.putExtra("gameType", gameType);
-                        i.putExtra("gameDifficulty", gameDifficulty);
-                    } else {
-                        newLevelManager.checkAndRestock();
-                        Toast t = Toast.makeText(getApplicationContext(), R.string.generating, Toast.LENGTH_SHORT);
-                        t.show();
-                        return;
-                    }
-                    break;
-                default:
-            }
+                    // send everything to game activity
+                    i = new Intent(this, GameActivity.class);
+                    i.putExtra("gameType", gameType);
+                    i.putExtra("gameDifficulty", gameDifficulty);
+                } else {
+                    newLevelManager.checkAndRestock();
+                    Toast t = Toast.makeText(getApplicationContext(), R.string.generating, Toast.LENGTH_SHORT);
+                    t.show();
+                    return;
+                }
+                break;
+            default:
         }
         if(i != null) {
             startActivity(i);
@@ -221,6 +224,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.menu_settings_main:
                 //open settings
                 intent = new Intent(this,SettingsActivity.class);
+                intent.putExtra( PreferenceActivity.EXTRA_SHOW_FRAGMENT, SettingsActivity.GamePreferenceFragment.class.getName() );
+                intent.putExtra( PreferenceActivity.EXTRA_NO_HEADERS, true );
                 startActivity(intent);
                 break;
 

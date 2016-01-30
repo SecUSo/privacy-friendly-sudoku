@@ -1,0 +1,8 @@
+<preference-headers xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- These settings headers are only used on tablets. -->
+
+    <header android:fragment="org.secuso.privacyfriendlysudoku.ui.HelpActivity$HelpFragment"
+        android:title="@string/header_help" android:icon="@drawable/ic_info_black_24dp" />
+
+</preference-headers>

@@ -22,16 +22,19 @@ import android.widget.Toast;
 import java.util.LinkedList;
 
 import org.secuso.privacyfriendlysudoku.controller.GameController;
+import org.secuso.privacyfriendlysudoku.game.listener.IHighlightChangedListener;
 import org.secuso.privacyfriendlysudoku.ui.listener.IHintDialogFragmentListener;
+
+import static org.secuso.privacyfriendlysudoku.ui.view.SudokuButtonType.*;
 
 /**
  * Created by TMZ_LToP on 17.11.2015.
  */
-public class SudokuSpecialButtonLayout extends LinearLayout {
+public class SudokuSpecialButtonLayout extends LinearLayout implements IHighlightChangedListener {
 
 
     SudokuSpecialButton[] fixedButtons;
-    public int fixedButtonsCount = SudokuButtonType.getSpecialButtons().size();
+    public int fixedButtonsCount = getSpecialButtons().size();
     GameController gameController;
     SudokuKeyboardLayout keyboard;
     Bitmap bitMap,bitResult;
@@ -114,18 +117,21 @@ public class SudokuSpecialButtonLayout extends LinearLayout {
         fragmentManager = fm;
         keyboard=key;
         gameController = gc;
+        if(gc != null) {
+            gc.registerHighlightChangedListener(this);
+        }
         fixedButtons = new SudokuSpecialButton[fixedButtonsCount];
         LayoutParams p;
         int i = 0;
         //ArrayList<SudokuButtonType> type = (ArrayList<SudokuButtonType>) SudokuButtonType.getSpecialButtons();
-        for (SudokuButtonType t : SudokuButtonType.getSpecialButtons()){
+        for (SudokuButtonType t : getSpecialButtons()){
             fixedButtons[i] = new SudokuSpecialButton(getContext(),null);
             p = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT,1);
             p.setMargins(5, 5, 5, 5);
 
             //int width2 =width/(fixedButtonsCount);
             //p.width= width2-15;
-            if(t == SudokuButtonType.Spacer) {
+            if(t == Spacer) {
                 fixedButtons[i].setVisibility(View.INVISIBLE);
             }
             /*if(t == SudokuButtonType.Do && !gameController.isRedoAvailable()) {
@@ -146,6 +152,24 @@ public class SudokuSpecialButtonLayout extends LinearLayout {
             i++;
         }
 
+    }
+
+    @Override
+    public void onHighlightChanged() {
+        for(int i = 0; i < fixedButtons.length; i++) {
+            switch(fixedButtons[i].getType()) {
+                case Undo:
+                    fixedButtons[i].setBackgroundResource(gameController.isUndoAvailable() ?
+                            R.drawable.numpad_highlighted_four : R.drawable.inactive_button);
+                    break;
+                case Do:
+                    fixedButtons[i].setBackgroundResource(gameController.isRedoAvailable() ?
+                            R.drawable.numpad_highlighted_four : R.drawable.inactive_button);
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 
     @SuppressLint("ValidFragment")

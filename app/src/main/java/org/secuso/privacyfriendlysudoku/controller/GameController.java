@@ -92,7 +92,7 @@ public class GameController implements IModelChangedListener {
     }
 
     public void loadNewLevel(GameType type, GameDifficulty difficulty) {
-        NewLevelManager newLevelManager = NewLevelManager.getInstance();
+        NewLevelManager newLevelManager = NewLevelManager.getInstance(context, settings);
 
         int[] level = newLevelManager.loadLevel(type, difficulty);
 
@@ -173,7 +173,6 @@ public class GameController implements IModelChangedListener {
         }
 
         int[] solved = solve();
-        // TODO test every placed value so far
         // and reveal the selected value.
         selectValue(solved[selectedRow * getSize() + selectedCol]);
         usedHints++;
@@ -215,14 +214,14 @@ public class GameController implements IModelChangedListener {
         }
     }
 
-    public LinkedList<GameCell> getConnectedCells(int row, int col, boolean connectedRow, boolean connectedCol, boolean connectedSec) {
+    public LinkedList<GameCell> getConnectedCells(int row, int col) {
         LinkedList<GameCell> list = new LinkedList<>();
 
-        if(connectedRow) list.addAll(gameBoard.getRow(row));
+        list.addAll(gameBoard.getRow(row));
         list.remove(gameBoard.getCell(row, col));
-        if(connectedCol) list.addAll(gameBoard.getColumn(col));
+        list.addAll(gameBoard.getColumn(col));
         list.remove(gameBoard.getCell(row, col));
-        if(connectedSec) list.addAll(gameBoard.getSection(row, col));
+        list.addAll(gameBoard.getSection(row, col));
         list.remove(gameBoard.getCell(row, col));
 
         return list;
@@ -308,6 +307,7 @@ public class GameController implements IModelChangedListener {
 
     public void resetLevel() {
         gameBoard.reset();
+        undoRedoManager.addState(gameBoard);
         //notifyListeners();
         notifyHighlightChangedListeners();
     }
@@ -441,10 +441,11 @@ public class GameController implements IModelChangedListener {
                     highlightValue = value;
                 }
             }
-        } else {
+        } else if(selectedRow == -1 && selectedCol == -1){
             if(value == selectedValue) {
                 // if the value we are selecting is the one we already have selected... deselect it
                 selectedValue = 0;
+                highlightValue = 0;
             } else {
                 selectedValue = value;
                 highlightValue = value;
@@ -506,6 +507,7 @@ public class GameController implements IModelChangedListener {
                 if(!notifiedOnSolvedListeners) {
                     notifiedOnSolvedListeners = true;
                     notifySolvedListeners();
+                    resetSelects();
                 }
             } else {
                 // notifyErrorListener();
@@ -515,6 +517,14 @@ public class GameController implements IModelChangedListener {
         } else {
             notifiedOnSolvedListeners = false;
         }
+    }
+
+    private void resetSelects() {
+        selectedCol = -1;
+        selectedRow = -1;
+        selectedValue = 0;
+        highlightValue = 0;
+        notifyHighlightChangedListeners();
     }
 
     public void registerGameSolvedListener(IGameSolvedListener l) {

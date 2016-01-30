@@ -11,6 +11,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 import org.secuso.privacyfriendlysudoku.game.GameDifficulty;
 import org.secuso.privacyfriendlysudoku.game.GameType;
@@ -30,10 +31,7 @@ public class NewLevelManager {
     private static String LEVELS_DIR = "level";
     private static File DIR;
 
-    public static NewLevelManager getInstance() {
-        return instance;
-    }
-    public static NewLevelManager init(Context context, SharedPreferences settings) {
+    public static NewLevelManager getInstance(Context context, SharedPreferences settings) {
         if(instance == null) {
             instance = new NewLevelManager(context, settings);
         }
@@ -118,8 +116,10 @@ public class NewLevelManager {
         }
 
         if(result.size() > 0) {
-            int chosen = availableFiles.get(0);
-            int[] resultPuzzle = result.get(0);
+            Random r = new Random();
+            int i = r.nextInt(availableFiles.size());
+            int chosen = availableFiles.get(i);
+            int[] resultPuzzle = result.get(i);
 
             StringBuilder sb = new StringBuilder();
             sb.append(LEVEL_PREFIX);

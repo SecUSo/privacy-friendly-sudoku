@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
@@ -218,6 +219,8 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
             case R.id.menu_settings:
                 //open settings
                 intent = new Intent(this,SettingsActivity.class);
+                intent.putExtra( PreferenceActivity.EXTRA_SHOW_FRAGMENT, SettingsActivity.GamePreferenceFragment.class.getName() );
+                intent.putExtra( PreferenceActivity.EXTRA_NO_HEADERS, true );
                 startActivity(intent);
                 break;
 
@@ -267,6 +270,7 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
         dialog.getWindow().setBackgroundDrawableResource(R.color.transparent);
         dialog.show();
 
+        layout.setEnabled(false);
         keyboard.setButtonsEnabled(false);
         specialButtonLayout.setButtonsEnabled(false);
     }

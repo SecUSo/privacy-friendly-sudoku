@@ -26,7 +26,6 @@
         <activity
             android:name="org.secuso.privacyfriendlysudoku.ui.GameActivity"
             android:label="@string/title_activity_game_view"
-            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
         <activity android:name="org.secuso.privacyfriendlysudoku.ui.AboutActivity" >
@@ -35,7 +34,11 @@
         </activity>
         <activity
             android:name="org.secuso.privacyfriendlysudoku.ui.StatsActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+        <activity
+            android:name="org.secuso.privacyfriendlysudoku.ui.HelpActivity"
+            android:label="@string/title_activity_help" >
         </activity>
     </application>
 

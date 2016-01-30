@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="text_size">25sp</dimen>
+
+    <dimen name="main_text_difficulty">40sp</dimen>
+
+    <dimen name="main_button_padding">200dp</dimen>
+
+
+</resources>
