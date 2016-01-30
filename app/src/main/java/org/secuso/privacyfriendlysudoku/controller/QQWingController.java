@@ -1,5 +1,6 @@
 package org.secuso.privacyfriendlysudoku.controller;
 
+import android.os.Parcelable;
 import android.util.Log;
 
 import java.util.LinkedList;

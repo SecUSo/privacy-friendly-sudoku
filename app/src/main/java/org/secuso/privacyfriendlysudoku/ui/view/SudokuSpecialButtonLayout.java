@@ -58,17 +58,7 @@ public class SudokuSpecialButtonLayout extends LinearLayout implements IHighligh
                         // rotates the Drawable
                         gameController.setNoteStatus(!gameController.getNoteStatus());
                         keyboard.updateNotesEnabled();
-
-                        bitMap = BitmapFactory.decodeResource(getResources(), btn.getType().getResID());
-                        bitResult = Bitmap.createBitmap(bitMap.getWidth(), bitMap.getHeight(), Bitmap.Config.ARGB_8888);
-
-                        canvas = new Canvas(bitResult);
-                        canvas.rotate(gameController.getNoteStatus() ? 45.0f : 0.0f, bitMap.getWidth()/2, bitMap.getHeight()/2);
-                        canvas.drawBitmap(bitMap, 0, 0, null);
-
-                        btn.setImageBitmap(bitResult);
-                        btn.setBackgroundResource(gameController.getNoteStatus() ? R.drawable.numpad_highlighted_three : R.drawable.numpad_highlighted_four);
-
+                        onHighlightChanged();
                         break;
                     case Do:
                         gameController.ReDo();
@@ -117,8 +107,8 @@ public class SudokuSpecialButtonLayout extends LinearLayout implements IHighligh
         fragmentManager = fm;
         keyboard=key;
         gameController = gc;
-        if(gc != null) {
-            gc.registerHighlightChangedListener(this);
+        if(gameController != null) {
+            gameController.registerHighlightChangedListener(this);
         }
         fixedButtons = new SudokuSpecialButton[fixedButtonsCount];
         LayoutParams p;
@@ -165,6 +155,17 @@ public class SudokuSpecialButtonLayout extends LinearLayout implements IHighligh
                 case Do:
                     fixedButtons[i].setBackgroundResource(gameController.isRedoAvailable() ?
                             R.drawable.numpad_highlighted_four : R.drawable.inactive_button);
+                    break;
+                case NoteToggle:
+                    bitMap = BitmapFactory.decodeResource(getResources(), fixedButtons[i].getType().getResID());
+                    bitResult = Bitmap.createBitmap(bitMap.getWidth(), bitMap.getHeight(), Bitmap.Config.ARGB_8888);
+
+                    canvas = new Canvas(bitResult);
+                    canvas.rotate(gameController.getNoteStatus() ? 45.0f : 0.0f, bitMap.getWidth()/2, bitMap.getHeight()/2);
+                    canvas.drawBitmap(bitMap, 0, 0, null);
+
+                    fixedButtons[i].setImageBitmap(bitResult);
+                    fixedButtons[i].setBackgroundResource(gameController.getNoteStatus() ? R.drawable.numpad_highlighted_three : R.drawable.numpad_highlighted_four);
                     break;
                 default:
                     break;

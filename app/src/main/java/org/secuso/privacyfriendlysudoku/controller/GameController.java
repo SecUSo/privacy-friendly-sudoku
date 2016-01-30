@@ -3,11 +3,15 @@ package org.secuso.privacyfriendlysudoku.controller;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Handler;
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.util.Log;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.secuso.privacyfriendlysudoku.controller.helper.GameInfoContainer;
 import org.secuso.privacyfriendlysudoku.game.CellConflict;
@@ -26,7 +30,7 @@ import org.secuso.privacyfriendlysudoku.game.listener.ITimerListener;
 /**
  * Created by Chris on 06.11.2015.
  */
-public class GameController implements IModelChangedListener {
+public class GameController implements IModelChangedListener, Parcelable {
 
     // General
     private SharedPreferences settings;
@@ -63,11 +67,12 @@ public class GameController implements IModelChangedListener {
 
     // Timer
     private int time = 0;
-    private boolean timerRunning = false;
+    private AtomicBoolean timerRunning = new AtomicBoolean(false);
     private LinkedList<ITimerListener> timerListeners = new LinkedList<>();
     private Handler timerHandler = new Handler();
     private Timer timer = new Timer();
     private TimerTask timerTask;
+
     private boolean noteStatus = false;
 
     // Constructors
@@ -584,31 +589,40 @@ public class GameController implements IModelChangedListener {
         return usedHints;
     }
 
-    private void initTimer() {
+    public void initTimer() {
+        deleteTimer();
+
         timerTask = new TimerTask() {
             @Override
             public void run() {
                 timerHandler.post(new Runnable() {
                     @Override
                     public void run() {
-                        if(timerRunning) {
+                        if(timerRunning.get()) {
                             notifyTimerListener(time++);
+                            //Log.d("Timer", "calling notifyTimerListener(" + time + ");");
                         }
                     }
                 });
             }
         };
         timer = new Timer();
-        timer.scheduleAtFixedRate(timerTask,0,1000);
+        timer.scheduleAtFixedRate(timerTask, 0, 1000);
+    }
+
+    public void deleteTimer() {
+        pauseTimer();
+        timer.cancel();
+        timer.purge();
     }
 
     public void startTimer() {
-        timerRunning = true;
+        timerRunning.set(true);
         notifyHighlightChangedListeners();
     }
 
     public void pauseTimer(){
-        timerRunning = false;
+        timerRunning.set(false);
     }
 
     public void ReDo() {
@@ -665,4 +679,83 @@ public class GameController implements IModelChangedListener {
         }, 0);
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel out, int flags) {
+
+        // get the gamecontroller a new context
+        out.writeInt(selectedRow);
+        out.writeInt(selectedCol);
+        out.writeInt(selectedValue);
+        out.writeInt(highlightValue);
+        out.writeInt(gameID);
+        out.writeInt(size);
+        out.writeInt(sectionHeight);
+        out.writeInt(sectionWidth);
+        out.writeInt(usedHints);
+        out.writeInt(time);
+
+        out.writeIntArray(solution);
+
+        out.writeInt(noteStatus ? 1 : 0);
+        out.writeInt(notifiedOnSolvedListeners ? 1 : 0);
+
+        out.writeParcelable(gameType, 0);
+        out.writeParcelable(difficulty, 0);
+        out.writeParcelable(gameBoard, 0);
+        out.writeParcelable(undoRedoManager, 0);
+
+        // delete lists, in case we get the same object back from Parcel
+        removeAllListeners();
+
+    }
+
+    public static final Parcelable.Creator<GameController> CREATOR = new Parcelable.Creator<GameController>() {
+        public GameController createFromParcel(Parcel in) {
+            return new GameController(in);
+        }
+
+        public GameController[] newArray(int size) {
+            return new GameController[size];
+        }
+    };
+
+    /** recreate object from parcel */
+    private GameController(Parcel in) {
+
+        selectedRow = in.readInt();
+        selectedCol = in.readInt();
+        selectedValue = in.readInt();
+        highlightValue = in.readInt();
+        gameID = in.readInt();
+        size = in.readInt();
+        sectionHeight = in.readInt();
+        sectionWidth = in.readInt();
+        usedHints = in.readInt();
+        time = in.readInt();
+
+        in.readIntArray(solution);
+
+        noteStatus = in.readInt() == 1;
+        notifiedOnSolvedListeners = in.readInt() == 1;
+
+        gameType = in.readParcelable(null);
+        difficulty = in.readParcelable(null);
+        gameBoard = in.readParcelable(null);
+        undoRedoManager = in.readParcelable(null);
+
+        removeAllListeners();
+
+    }
+
+    public void removeAllListeners() {
+        highlightListeners = new LinkedList<>();
+        solvedListeners = new LinkedList<>();
+        hintListener = new LinkedList<>();
+        timerListeners = new LinkedList<>();
+    }
 }

@@ -1,5 +1,8 @@
 package org.secuso.privacyfriendlysudoku.game;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -8,7 +11,7 @@ import org.secuso.privacyfriendlysudoku.game.listener.IModelChangedListener;
 /**
  * Created by Christopher Beckmann on 06.11.2015.
  */
-public class GameBoard implements Cloneable {
+public class GameBoard implements Cloneable, Parcelable {
 
     //private int id;
     private GameType gameType;
@@ -271,5 +274,52 @@ public class GameBoard implements Cloneable {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
+        dest.writeParcelable(gameType, 0);
+        dest.writeInt(sectionHeight);
+        dest.writeInt(sectionWidth);
+        dest.writeInt(size);
+
+        for(int i = 0; i < field.length; i++) {
+            dest.writeParcelableArray(field[i], 0);
+        }
+
+    }
+    public static final Parcelable.Creator<GameBoard> CREATOR
+            = new Parcelable.Creator<GameBoard>() {
+        public GameBoard createFromParcel(Parcel in) {
+            return new GameBoard(in);
+        }
+
+        public GameBoard[] newArray(int size) {
+            return new GameBoard[size];
+        }
+    };
+
+    /** recreate object from parcel */
+    private GameBoard(Parcel in) {
+        //private int id;
+        gameType = in.readParcelable(null);
+        sectionHeight = in.readInt();
+        sectionWidth = in.readInt();
+        size = in.readInt();
+
+        field = new GameCell[size][size];
+
+        for(int i = 0; i < field.length; i++) {
+            // TODO: does this work?!
+            field[i] = (GameCell[]) in.readParcelableArray(null);
+        }
+
+        modelChangedListeners = new LinkedList<>();
     }
 }

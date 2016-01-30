@@ -1,5 +1,6 @@
 package org.secuso.privacyfriendlysudoku.ui.view;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
@@ -52,7 +53,7 @@ public class SudokuKeyboardLayout extends LinearLayout implements IHighlightChan
         }
     }
 
-    public void setKeyBoard(int size,int width, int height) {
+    public void setKeyBoard(int size,int width, int height, int orientation) {
         LayoutParams p;
         int number = 0;
         int numberOfButtonsPerRow = (size % 2 == 0) ? size/2 :(size+1)/2;
@@ -60,16 +61,19 @@ public class SudokuKeyboardLayout extends LinearLayout implements IHighlightChan
 
         buttons = new SudokuButton[numberOfButtons];
 
-
         //set layout parameters and init Layouts
         for (int i = 0; i < 2; i++) {
-            p = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,0,1);
+            if(orientation == LinearLayout.HORIZONTAL) {
+                p = new LayoutParams(LayoutParams.MATCH_PARENT, 0, 1);
+            } else {
+                p = new LayoutParams(0, LayoutParams.MATCH_PARENT, 1);
+            }
             //if (i == 0) p.bottomMargin=10; else p.topMargin=10;
             p.setMargins(0,5,0,5);
             layouts[i] = new LinearLayout(getContext(),null);
             layouts[i].setLayoutParams(p);
             layouts[i].setWeightSum(numberOfButtonsPerRow);
-            layouts[i].setOrientation(LinearLayout.HORIZONTAL);
+            layouts[i].setOrientation(orientation);
             addView(layouts[i]);
         }
 
@@ -81,7 +85,11 @@ public class SudokuKeyboardLayout extends LinearLayout implements IHighlightChan
             for (int i = 0; i < numberOfButtonsPerRow; i++){
                 int buttonIndex = i + layoutNumber * numberOfButtonsPerRow;
                 buttons[buttonIndex] = new SudokuButton(getContext(),null);
-                p = new LayoutParams(0, LayoutParams.MATCH_PARENT,1);
+                if(orientation == LinearLayout.HORIZONTAL) {
+                    p = new LayoutParams(0, LayoutParams.MATCH_PARENT, 1);
+                } else {
+                    p = new LayoutParams(LayoutParams.MATCH_PARENT, 0, 1);
+                }
                 p.setMargins(5,5,5,5);
                 buttons[buttonIndex].setLayoutParams(p);
                 /* removed GridLayout because of bad scaling will use now a Linearlayout
