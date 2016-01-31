@@ -708,10 +708,6 @@ public class GameController implements IModelChangedListener, Parcelable {
         out.writeParcelable(difficulty, 0);
         out.writeParcelable(gameBoard, 0);
         out.writeParcelable(undoRedoManager, 0);
-
-        // delete lists, in case we get the same object back from Parcel
-        removeAllListeners();
-
     }
 
     public static final Parcelable.Creator<GameController> CREATOR = new Parcelable.Creator<GameController>() {

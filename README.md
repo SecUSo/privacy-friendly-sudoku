@@ -1,6 +1,6 @@
 ## Privacy Friendly Sudoku
 
-Privacy Friendly Sudoku is a game... // TODO
+Privacy Friendly Sudoku is a logic based game.
 
 It does not use any permission, as the app can provide its full functionality without the usage of permissions. 
 It also does neither include advertisement nor tracking mechanisms.
