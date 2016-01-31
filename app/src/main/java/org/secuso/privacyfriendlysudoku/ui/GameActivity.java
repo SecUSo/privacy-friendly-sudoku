@@ -15,7 +15,6 @@ import android.os.Parcelable;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -24,12 +23,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -46,7 +43,6 @@ import org.secuso.privacyfriendlysudoku.game.listener.ITimerListener;
 import org.secuso.privacyfriendlysudoku.ui.listener.IHintDialogFragmentListener;
 import org.secuso.privacyfriendlysudoku.ui.listener.IResetDialogFragmentListener;
 import org.secuso.privacyfriendlysudoku.ui.view.DialogActivity;
-import org.secuso.privacyfriendlysudoku.ui.view.DialogWinScreen;
 import org.secuso.privacyfriendlysudoku.ui.view.R;
 import org.secuso.privacyfriendlysudoku.ui.view.SudokuFieldLayout;
 import org.secuso.privacyfriendlysudoku.ui.view.SudokuKeyboardLayout;
@@ -336,18 +332,14 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
         specialButtonLayout.setButtonsEnabled(false);
     }
 
-    @Override
-    public void onTick(int time) {
-
-        //do something not so awesome
     public String timeToString(int time) {
         int seconds = time % 60;
-        int minutes = ((time -seconds)/60)%60 ;
-        int hours = (time - minutes - seconds)/(3600);
-        String h,m,s;
-        s = (seconds< 10)? "0"+String.valueOf(seconds):String.valueOf(seconds);
-        m = (minutes< 10)? "0"+String.valueOf(minutes):String.valueOf(minutes);
-        h = (hours< 10)? "0"+String.valueOf(hours):String.valueOf(hours);
+        int minutes = ((time - seconds) / 60) % 60;
+        int hours = (time - minutes - seconds) / (3600);
+        String h, m, s;
+        s = (seconds < 10) ? "0" + String.valueOf(seconds) : String.valueOf(seconds);
+        m = (minutes < 10) ? "0" + String.valueOf(minutes) : String.valueOf(minutes);
+        h = (hours < 10) ? "0" + String.valueOf(hours) : String.valueOf(hours);
         return h + ":" + m + ":" + s;
     }
 

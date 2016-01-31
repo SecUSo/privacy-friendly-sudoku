@@ -1,32 +1,32 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory android:title="@string/pref_help_keyboard">
-        <ListPreference android:title="@string/pref_help_keyheighlited"
+        <Preference android:title="@string/pref_help_keyheighlited"
                         android:selectable="false"
                         android:icon="@drawable/numpad_highlighted"
                         android:summary="@string/pref_help_keyheighlited_summary"/>
-        <ListPreference android:title="@string/pref_help_keyheighlited_yellow"
+        <Preference android:title="@string/pref_help_keyheighlited_yellow"
             android:selectable="false"
             android:icon="@drawable/numpad_highlighted_three"
             android:summary="@string/pref_help_keyheighlited_yellow_summary"/>
 
-        <ListPreference android:title="@string/pref_help_do"
+        <Preference android:title="@string/pref_help_do"
             android:selectable="false"
             android:icon="@drawable/ic_redo_black_48dp"
             android:summary="@string/pref_help_do_summary"/>
-        <ListPreference android:title="@string/pref_help_undo"
+        <Preference android:title="@string/pref_help_undo"
             android:selectable="false"
             android:icon="@drawable/ic_undo_black_48dp"
             android:summary="@string/pref_help_undo_summary"/>
-        <ListPreference android:title="@string/pref_help_hint"
+        <Preference android:title="@string/pref_help_hint"
             android:selectable="false"
             android:icon="@drawable/ic_lightbulb_outline_black_48dp"
             android:summary="@string/pref_help_hint_summary"/>
-        <ListPreference android:title="@string/pref_help_delete"
+        <Preference android:title="@string/pref_help_delete"
             android:selectable="false"
-            android:icon="@drawable/ic_delete_black_24dp"
+            android:icon="@drawable/ic_delete_black_48dp"
             android:summary="@string/pref_help_delete_summary"/>
-        <ListPreference android:title="@string/pref_help_notes"
+        <Preference android:title="@string/pref_help_notes"
             android:selectable="false"
             android:icon="@drawable/ic_create_black_48dp"
             android:summary="@string/pref_help_notes_summary"/>
@@ -37,6 +37,14 @@
 
     <PreferenceCategory android:title="@string/pref_help_statusbar">
     </PreferenceCategory>
+
+    <PreferenceCategory android:title="Privacy Info">
+
+    <Preference android:title="Privacy Friendly Sudoku" android:summary=""/>
+
+    <Preference android:title="Permissions" android:summary="Privacy Friendly Sudoku app whiche does not need any permission."/>
+
+</PreferenceCategory>
 
     <!-- NOTE: EditTextPreference accepts EditText attributes. -->
     <!-- NOTE: EditTextPreference's summary should be set to its value by the activity code. -->

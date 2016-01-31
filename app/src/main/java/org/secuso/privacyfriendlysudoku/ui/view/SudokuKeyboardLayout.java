@@ -3,6 +3,7 @@ package org.secuso.privacyfriendlysudoku.ui.view;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.LinearLayout;
 import org.secuso.privacyfriendlysudoku.controller.GameController;
 import org.secuso.privacyfriendlysudoku.controller.Symbol;
 import org.secuso.privacyfriendlysudoku.game.listener.IHighlightChangedListener;
+import org.w3c.dom.Text;
 
 /**
  * Created by TMZ_LToP on 12.11.2015.
@@ -24,7 +26,7 @@ public class SudokuKeyboardLayout extends LinearLayout implements IHighlightChan
     SudokuButton [] buttons;
     GameController gameController;
     Symbol symbolsToUse = Symbol.Default;
-    float normalTextSize = 0;
+    float normalTextSize = 30; // in dp
     LinearLayout [] layouts = new LinearLayout[2];
 
     OnClickListener listener = new OnClickListener() {
@@ -113,6 +115,7 @@ public class SudokuKeyboardLayout extends LinearLayout implements IHighlightChan
                 buttons[buttonIndex].setTextColor(getResources().getColor(R.color.white));
                 buttons[buttonIndex].setBackgroundResource(R.drawable.mnenomic_numpad_button);
                 buttons[buttonIndex].setText(Symbol.getSymbol(symbolsToUse, buttonIndex));
+                buttons[buttonIndex].setTextSize(TypedValue.COMPLEX_UNIT_DIP,normalTextSize);
                 buttons[buttonIndex].setValue(buttonIndex + 1);
                 buttons[buttonIndex].setOnClickListener(listener);
 
@@ -141,21 +144,18 @@ public class SudokuKeyboardLayout extends LinearLayout implements IHighlightChan
     }
 
     public void updateNotesEnabled() {
-        if (normalTextSize == 0) {
-            normalTextSize = buttons[0].getTextSize();
-        }
 
         if(gameController.getNoteStatus()) {
-            setTextSize(normalTextSize*0.6f);
+            setTextSize(TypedValue.COMPLEX_UNIT_DIP,normalTextSize*0.55f);
         } else {
-            setTextSize(normalTextSize);
+            setTextSize(TypedValue.COMPLEX_UNIT_DIP,normalTextSize);
         }
     }
 
-    private void setTextSize(float size){
+    private void setTextSize(int unit,float size){
         for (SudokuButton b : buttons){
             //b.setTextSize(size);
-            b.setTextSize(TypedValue.COMPLEX_UNIT_PX,size);
+            b.setTextSize(unit,size);
         }
     }
 
@@ -183,9 +183,5 @@ public class SudokuKeyboardLayout extends LinearLayout implements IHighlightChan
         }
     }
 
-    public void fixHeight (){
-        int i = getHeight();
-        i = buttons[0].getHeight();
-        i = buttons[5].getHeight();
-    }
+
 }

@@ -11,7 +11,7 @@
     <dimen name="text_margin">16dp</dimen>
 
 
-    <dimen name="text_size">14sp</dimen>
+    <dimen name="text_size">20sp</dimen>
     <dimen name="main_text_difficulty">35sp</dimen>
     <dimen name="main_button_padding">30dp</dimen>
 
