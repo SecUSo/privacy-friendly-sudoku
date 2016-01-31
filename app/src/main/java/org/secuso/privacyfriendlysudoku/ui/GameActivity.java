@@ -103,6 +103,7 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
             // in case we get the same object back
             // because parceling the Object does not always parcel it. Only if needed.
             gameController.removeAllListeners();
+            gameController.setContextAndSettings(getApplicationContext(), sharedPref);
             gameSolved = savedInstanceState.getInt("gameSolved") == 1;
         }
 

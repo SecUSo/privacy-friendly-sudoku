@@ -54,7 +54,7 @@ public class GameController implements IModelChangedListener, Parcelable {
     private int sectionWidth;
     private int usedHints = 0;
     private GameBoard gameBoard;
-    private int[] solution;
+    private int[] solution = new int[0];
     private GameType gameType;
     private GameDifficulty difficulty;
     private CellConflictList errorList = new CellConflictList();
@@ -699,6 +699,7 @@ public class GameController implements IModelChangedListener, Parcelable {
         out.writeInt(usedHints);
         out.writeInt(time);
 
+        out.writeInt(solution.length);
         out.writeIntArray(solution);
 
         out.writeInt(noteStatus ? 1 : 0);
@@ -738,18 +739,18 @@ public class GameController implements IModelChangedListener, Parcelable {
         usedHints = in.readInt();
         time = in.readInt();
 
+        solution = new int[in.readInt()];
         in.readIntArray(solution);
 
         noteStatus = in.readInt() == 1;
         notifiedOnSolvedListeners = in.readInt() == 1;
 
-        gameType = in.readParcelable(null);
-        difficulty = in.readParcelable(null);
-        gameBoard = in.readParcelable(null);
-        undoRedoManager = in.readParcelable(null);
+        gameType = in.readParcelable(GameType.class.getClassLoader());
+        difficulty = in.readParcelable(GameDifficulty.class.getClassLoader());
+        gameBoard = in.readParcelable(GameBoard.class.getClassLoader());
+        undoRedoManager = in.readParcelable(UndoRedoManager.class.getClassLoader());
 
         removeAllListeners();
-
     }
 
     public void removeAllListeners() {
@@ -757,5 +758,10 @@ public class GameController implements IModelChangedListener, Parcelable {
         solvedListeners = new LinkedList<>();
         hintListener = new LinkedList<>();
         timerListeners = new LinkedList<>();
+    }
+
+    public void setContextAndSettings(Context applicationContext, SharedPreferences sharedPref) {
+        context = applicationContext;
+        setSettings(sharedPref);
     }
 }

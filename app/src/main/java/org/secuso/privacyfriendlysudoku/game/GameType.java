@@ -72,8 +72,7 @@ public enum GameType implements Parcelable{
         dest.writeInt(resIDImage);
     }
 
-    public static final Parcelable.Creator<GameType> CREATOR
-            = new Parcelable.Creator<GameType>() {
+    public static final Parcelable.Creator<GameType> CREATOR = new Parcelable.Creator<GameType>() {
         public GameType createFromParcel(Parcel in) {
             GameType g = GameType.values()[in.readInt()];
             g.resIDString = in.readInt();

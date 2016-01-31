@@ -290,7 +290,7 @@ public class GameBoard implements Cloneable, Parcelable {
         dest.writeInt(size);
 
         for(int i = 0; i < field.length; i++) {
-            dest.writeParcelableArray(field[i], 0);
+            dest.writeTypedArray(field[i], 0);
         }
 
     }
@@ -308,7 +308,7 @@ public class GameBoard implements Cloneable, Parcelable {
     /** recreate object from parcel */
     private GameBoard(Parcel in) {
         //private int id;
-        gameType = in.readParcelable(null);
+        gameType = in.readParcelable(GameType.class.getClassLoader());
         sectionHeight = in.readInt();
         sectionWidth = in.readInt();
         size = in.readInt();
@@ -316,8 +316,7 @@ public class GameBoard implements Cloneable, Parcelable {
         field = new GameCell[size][size];
 
         for(int i = 0; i < field.length; i++) {
-            // TODO: does this work?!
-            field[i] = (GameCell[]) in.readParcelableArray(null);
+            field[i] = in.createTypedArray(GameCell.CREATOR);
         }
 
         modelChangedListeners = new LinkedList<>();

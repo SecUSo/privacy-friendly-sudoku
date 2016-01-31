@@ -213,10 +213,10 @@ public class GameCell implements Cloneable, Parcelable {
         dest.writeInt(row);
         dest.writeInt(col);
         dest.writeInt(value);
+        dest.writeInt(size);
         dest.writeInt(fixed ? 1 : 0);
         dest.writeInt(noteCount);
         dest.writeBooleanArray(notes);
-        dest.writeInt(size);
     }
 
     public static final Parcelable.Creator<GameCell> CREATOR
@@ -235,9 +235,10 @@ public class GameCell implements Cloneable, Parcelable {
         row = in.readInt();
         col = in.readInt();
         value = in.readInt();
+        size = in.readInt();
         fixed = in.readInt() == 1;
         noteCount = in.readInt();
+        notes = new boolean[size];
         in.readBooleanArray(notes);
-        size = in.readInt();
     }
 }
