@@ -160,7 +160,7 @@ public class GameController implements IModelChangedListener, Parcelable {
 
     public int[] solve() {
 
-        if(solution == null) {
+        if(solution == null || solution.length == 0) {
             solution = qqWingController.solve(gameBoard);
         }
         return solution;
@@ -469,7 +469,7 @@ public class GameController implements IModelChangedListener, Parcelable {
     }
 
     public void deleteSelectedCellsValue() {
-        if(isValidCellSelected() && getSelectedCellsValue() != 0) {
+        if(isValidCellSelected()) {
             deleteValue(selectedRow, selectedCol);
             // add state to undo
             undoRedoManager.addState(gameBoard);
@@ -751,6 +751,9 @@ public class GameController implements IModelChangedListener, Parcelable {
         undoRedoManager = in.readParcelable(UndoRedoManager.class.getClassLoader());
 
         removeAllListeners();
+
+        gameBoard.removeAllListeners();
+        gameBoard.registerOnModelChangeListener(this);
     }
 
     public void removeAllListeners() {

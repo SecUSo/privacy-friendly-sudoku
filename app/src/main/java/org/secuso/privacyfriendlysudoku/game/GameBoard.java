@@ -20,7 +20,6 @@ public class GameBoard implements Cloneable, Parcelable {
     //private List additionalSections
     private int size;
     private GameCell[][] field;
-    private List<IModelChangedListener> modelChangedListeners = new LinkedList<>();
 
     public GameBoard(GameType gameType) {
         this.gameType = gameType;
@@ -223,7 +222,6 @@ public class GameBoard implements Cloneable, Parcelable {
     }
 
     public void registerOnModelChangeListener(final IModelChangedListener listener) {
-        if(!modelChangedListeners.contains(listener)) {
             actionOnCells(new ICellAction<Boolean>() {
                 @Override
                 public Boolean action(GameCell gc, Boolean existing) {
@@ -231,22 +229,6 @@ public class GameBoard implements Cloneable, Parcelable {
                     return existing;
                 }
             }, false);
-            modelChangedListeners.add(listener);
-        }
-    }
-
-    public void deleteOnModelChangeListener(final IModelChangedListener listener) {
-        if(modelChangedListeners.contains(listener)) {
-            actionOnCells(new ICellAction<Boolean>() {
-
-                @Override
-                public Boolean action(GameCell gc, Boolean existing) {
-                    gc.removeOnModelChangeListener(listener);
-                    return existing;
-                }
-            }, false);
-            modelChangedListeners.remove(listener);
-        }
     }
 
     @Override
@@ -318,7 +300,15 @@ public class GameBoard implements Cloneable, Parcelable {
         for(int i = 0; i < field.length; i++) {
             field[i] = in.createTypedArray(GameCell.CREATOR);
         }
+    }
 
-        modelChangedListeners = new LinkedList<>();
+    public void removeAllListeners() {
+        actionOnCells(new ICellAction<Boolean>() {
+            @Override
+            public Boolean action(GameCell gc, Boolean existing) {
+                gc.removeAllListeners();
+                return existing;
+            }
+        }, false);
     }
 }

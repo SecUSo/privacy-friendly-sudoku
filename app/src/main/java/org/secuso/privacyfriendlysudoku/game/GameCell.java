@@ -2,10 +2,14 @@ package org.secuso.privacyfriendlysudoku.game;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.ListIterator;
 
 import org.secuso.privacyfriendlysudoku.game.listener.IModelChangedListener;
 
@@ -240,5 +244,11 @@ public class GameCell implements Cloneable, Parcelable {
         noteCount = in.readInt();
         notes = new boolean[size];
         in.readBooleanArray(notes);
+
+        removeAllListeners();
+    }
+
+    public void removeAllListeners() {
+        modelChangedListeners = new LinkedList<>();
     }
 }
