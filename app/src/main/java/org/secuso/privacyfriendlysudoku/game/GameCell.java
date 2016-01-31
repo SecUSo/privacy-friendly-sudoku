@@ -1,15 +1,22 @@
 package org.secuso.privacyfriendlysudoku.game;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.support.annotation.NonNull;
+
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.ListIterator;
 
 import org.secuso.privacyfriendlysudoku.game.listener.IModelChangedListener;
 
 /**
  * Created by Chris on 06.11.2015.
  */
-public class GameCell implements Cloneable {
+public class GameCell implements Cloneable, Parcelable {
 
     private int row = 0;
     private int col = 0;
@@ -198,5 +205,50 @@ public class GameCell implements Cloneable {
         for(IModelChangedListener m : modelChangedListeners) {
             m.onModelChange(this);
         }
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(row);
+        dest.writeInt(col);
+        dest.writeInt(value);
+        dest.writeInt(size);
+        dest.writeInt(fixed ? 1 : 0);
+        dest.writeInt(noteCount);
+        dest.writeBooleanArray(notes);
+    }
+
+    public static final Parcelable.Creator<GameCell> CREATOR
+            = new Parcelable.Creator<GameCell>() {
+        public GameCell createFromParcel(Parcel in) {
+            return new GameCell(in);
+        }
+
+        public GameCell[] newArray(int size) {
+            return new GameCell[size];
+        }
+    };
+
+    /** recreate object from parcel */
+    private GameCell(Parcel in) {
+        row = in.readInt();
+        col = in.readInt();
+        value = in.readInt();
+        size = in.readInt();
+        fixed = in.readInt() == 1;
+        noteCount = in.readInt();
+        notes = new boolean[size];
+        in.readBooleanArray(notes);
+
+        removeAllListeners();
+    }
+
+    public void removeAllListeners() {
+        modelChangedListeners = new LinkedList<>();
     }
 }

@@ -1,5 +1,8 @@
 package org.secuso.privacyfriendlysudoku.game;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.LinkedList;
 
 import org.secuso.privacyfriendlysudoku.ui.view.R;
@@ -7,14 +10,15 @@ import org.secuso.privacyfriendlysudoku.ui.view.R;
 /**
  * Created by Chris on 09.11.2015.
  */
-public enum GameType {
+public enum GameType implements Parcelable{
     Unspecified(1,1,1,R.string.gametype_unspecified,R.drawable.icon_default_6x6),
     Default_9x9(9,3,3,R.string.gametype_default_9x9,R.drawable.icon_default_9x9),
     Default_12x12(12,3,4,R.string.gametype_default_12x12,R.drawable.icon_default_12x12),
     Default_6x6(6,2,3,R.string.gametype_default_6x6,R.drawable.icon_default_6x6),
     X_9x9(9,3,3,R.string.gametype_x_9x9,R.drawable.icon_default_9x9),
     Hyper_9x9(9,3,3,R.string.gametype_hyper_9x9,R.drawable.icon_default_9x9);
-    //TODO: change pictures for unsepc x9x9 and hyper 9x9 as soon as available
+
+    // change pictures for unsepc x9x9 and hyper 9x9 as soon as available
     int resIDString;
     int sectionWidth;
     int sectionHeight;
@@ -53,4 +57,34 @@ public enum GameType {
         return resIDString;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(ordinal());
+        dest.writeInt(resIDString);
+        dest.writeInt(sectionWidth);
+        dest.writeInt(sectionHeight);
+        dest.writeInt(size);
+        dest.writeInt(resIDImage);
+    }
+
+    public static final Parcelable.Creator<GameType> CREATOR = new Parcelable.Creator<GameType>() {
+        public GameType createFromParcel(Parcel in) {
+            GameType g = GameType.values()[in.readInt()];
+            g.resIDString = in.readInt();
+            g.sectionWidth = in.readInt();
+            g.sectionHeight = in.readInt();
+            g.size = in.readInt();
+            g.resIDImage = in.readInt();
+            return g;
+        }
+
+        public GameType[] newArray(int size) {
+            return new GameType[size];
+        }
+    };
 }

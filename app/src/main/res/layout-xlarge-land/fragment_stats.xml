@@ -1,104 +1,20 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    android:weightSum="5"
+    android:weightSum="10"
     android:orientation="vertical"
     tools:context="tu_darmstadt.sudoku.ui.StatsActivity$PlaceholderFragment">
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="0px"
-        android:layout_weight="1"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:weightSum="3">
-            <LinearLayout
-                android:layout_width="0px"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="@string/number_of_hints"
-                    android:layout_weight="1"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="0"
-                    android:id="@+id/numb_of_hints"
-                    android:layout_weight="1"/>
-            </LinearLayout>
-        <LinearLayout
-            android:layout_width="0px"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/number_of_games"
-                android:layout_weight="1"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="0"
-                android:id="@+id/numb_of_total_games"
-                android:layout_weight="1"/>
-            </LinearLayout>
-        <LinearLayout
-            android:layout_width="0px"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/total_of_time"
-                android:layout_weight="1"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="0"
-                android:id="@+id/numb_of_total_time"
-                android:layout_weight="1"/>
-            </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.5">
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_gravity="center_vertical"
-            android:foregroundGravity="center_vertical"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"
-            android:background="@color/colorPrimary" />
-
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0px"
-        android:layout_weight="3.5"
-        android:weightSum="9"
-        android:orientation="horizontal">
-
-
+        android:layout_weight="4"
+        android:weightSum="5">
         <ImageView
-            android:layout_weight="3"
+            android:layout_weight="2"
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:layout_gravity="center"
@@ -121,20 +37,82 @@
                 android:layout_marginBottom="@dimen/activity_horizontal_margin"/>
 
         </RelativeLayout>
-
-
         <LinearLayout
-            android:layout_width="0px"
-            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:weightSum="6"
+            android:layout_weight="2"
             android:orientation="vertical"
-            android:layout_weight="5.5"
+            android:paddingTop="@dimen/activity_horizontal_margin">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/number_of_hints"
+                android:layout_weight="1"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="0"
+                android:id="@+id/numb_of_hints"
+                android:layout_weight="1"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/number_of_games"
+                android:layout_weight="1"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="0"
+                android:id="@+id/numb_of_total_games"
+                android:layout_weight="1"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/total_of_time"
+                android:layout_weight="1"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="0"
+                android:id="@+id/numb_of_total_time"
+                android:layout_weight="1"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_gravity="center_vertical"
+            android:foregroundGravity="center_vertical"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:background="@color/colorPrimary" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="4"
+        android:weightSum="3"
+        android:orientation="vertical">
+        <!-- ### first row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:weightSum="3">
-            <!-- ### first row -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:weightSum="3">
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"
@@ -195,8 +173,8 @@
             </RelativeLayout>
 
         </LinearLayout>
-            <!-- ### second row -->
-            <LinearLayout
+        <!-- ### second row -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -260,11 +238,16 @@
                     android:layout_below="@+id/second_min_text"/>
             </RelativeLayout>
         </LinearLayout>
-            <!-- ### third row -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1">
+
+
+
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
             <RelativeLayout
                 android:layout_width="0dp"
@@ -323,10 +306,11 @@
                     android:gravity="center_vertical"
                     android:layout_below="@+id/third_min_text"/>
             </RelativeLayout>
-        </LinearLayout>
-        </LinearLayout>
 
+        </LinearLayout>
 
 
     </LinearLayout>
+
+
 </LinearLayout>

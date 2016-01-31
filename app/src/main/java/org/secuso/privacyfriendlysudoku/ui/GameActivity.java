@@ -8,8 +8,10 @@ import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
@@ -24,6 +26,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -66,25 +69,48 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         GameType gameType = GameType.Unspecified;
         GameDifficulty gameDifficulty = GameDifficulty.Unspecified;
         int loadLevelID = 0;
         boolean loadLevel = false;
 
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            Object o = extras.get("gameType");
-            if(o instanceof GameType) {
-                gameType = (GameType)extras.get("gameType");
+        if(savedInstanceState == null) {
+
+            Bundle extras = getIntent().getExtras();
+            if (extras != null) {
+                Object o = extras.get("gameType");
+                if (o instanceof GameType) {
+                    gameType = (GameType) extras.get("gameType");
+                }
+                gameDifficulty = (GameDifficulty) (extras.get("gameDifficulty"));
+                loadLevel = extras.getBoolean("loadLevel", false);
+                if (loadLevel) {
+                    loadLevelID = extras.getInt("loadLevelID");
+                }
             }
-            gameDifficulty = (GameDifficulty)(extras.get("gameDifficulty"));
-            loadLevel = extras.getBoolean("loadLevel", false);
-            if(loadLevel) {
-                loadLevelID = extras.getInt("loadLevelID");
+
+            gameController = new GameController(sharedPref, getApplicationContext());
+
+            List<GameInfoContainer> loadableGames = GameStateManager.getLoadableGameList();
+
+            if (loadLevel && loadableGames.size() > loadLevelID) {
+                // load level from GameStateManager
+                gameController.loadLevel(loadableGames.get(loadLevelID));
+            } else {
+                // load a new level
+                gameController.loadNewLevel(gameType, gameDifficulty);
             }
+        } else {
+            gameController = savedInstanceState.getParcelable("gameController");
+            // in case we get the same object back
+            // because parceling the Object does not always parcel it. Only if needed.
+            gameController.removeAllListeners();
+            gameController.setContextAndSettings(getApplicationContext(), sharedPref);
+            gameSolved = savedInstanceState.getInt("gameSolved") == 1;
         }
 
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
 
         setContentView(R.layout.activity_game_view);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -93,19 +119,9 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
 
         //Create new GameField
         layout = (SudokuFieldLayout)findViewById(R.id.sudokuLayout);
-        gameController = new GameController(sharedPref, getApplicationContext());
         gameController.registerGameSolvedListener(this);
         gameController.registerTimerListener(this);
         statistics.setGameController(gameController);
-        List<GameInfoContainer> loadableGames = GameStateManager.getLoadableGameList();
-
-        if(loadLevel && loadableGames.size() > loadLevelID) {
-            // load level from GameStateManager
-            gameController.loadLevel(loadableGames.get(loadLevelID));
-        } else {
-            // load a new level
-            gameController.loadNewLevel(gameType, gameDifficulty);
-        }
 
         layout.setSettingsAndGame(sharedPref, gameController);
 
@@ -118,13 +134,16 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
         Point p = new Point();
         getWindowManager().getDefaultDisplay().getSize(p);
 
-        //int width = p.x;
-        keyboard.setKeyBoard(gameController.getSize(), p.x,layout.getHeight()-p.y);
+        // set keyboard orientation
+        int orientation = getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT ?
+                LinearLayout.HORIZONTAL : LinearLayout.VERTICAL;
+
+        keyboard.setKeyBoard(gameController.getSize(), p.x,layout.getHeight()-p.y, orientation);
 
 
         //set Special keys
         specialButtonLayout = (SudokuSpecialButtonLayout) findViewById(R.id.sudokuSpecialLayout);
-        specialButtonLayout.setButtons(p.x, gameController, keyboard, getFragmentManager());
+        specialButtonLayout.setButtons(p.x, gameController, keyboard, getFragmentManager(), orientation);
 
         //set TimerView
         timerView = (TextView)findViewById(R.id.timerView);
@@ -133,7 +152,6 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
         //set GameName
         viewName = (TextView) findViewById(R.id.gameModeText);
         viewName.setText(getString(gameController.getGameType().getStringResID()));
-
 
         //set Rating bar
         List<GameDifficulty> difficutyList = GameDifficulty.getValidDifficultyList();
@@ -154,8 +172,16 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        // start the game
-        gameController.startTimer();
+        if(gameSolved) {
+            layout.setEnabled(false);
+            keyboard.setButtonsEnabled(false);
+            specialButtonLayout.setButtonsEnabled(false);
+            gameController.pauseTimer();
+        } else {
+            // start the game
+            gameController.startTimer();
+        }
+        onTick(gameController.getTime());
     }
 
     @Override
@@ -163,12 +189,14 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
         super.onPause();
         if(!gameSolved) {
             gameController.saveGame(this);
-            gameController.pauseTimer();
         }
+        gameController.deleteTimer();
     }
     @Override
     public void onResume(){
         super.onResume();
+        gameController.initTimer();
+
         if(!gameSolved) {
             gameController.startTimer();
         }
@@ -308,6 +336,10 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
         specialButtonLayout.setButtonsEnabled(false);
     }
 
+    @Override
+    public void onTick(int time) {
+
+        //do something not so awesome
     public String timeToString(int time) {
         int seconds = time % 60;
         int minutes = ((time -seconds)/60)%60 ;
@@ -326,6 +358,7 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
         //do something not so awesome
         timerView.setText(timeToString(time));
 
+        if(gameSolved) return;
         // save time
         gameController.saveGame(this);
     }
@@ -378,4 +411,21 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
             return builder.create();
         }
     }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        // Save the user's current game state
+
+        savedInstanceState.putParcelable("gameController", gameController);
+        savedInstanceState.putInt("gameSolved", gameSolved ? 1 : 0);
+
+        // Always call the superclass so it can save the view hierarchy state
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        //super.onRestoreInstanceState(savedInstanceState);
+    }
+
 }

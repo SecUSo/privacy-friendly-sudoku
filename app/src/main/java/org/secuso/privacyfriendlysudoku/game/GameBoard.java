@@ -1,5 +1,8 @@
 package org.secuso.privacyfriendlysudoku.game;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -8,7 +11,7 @@ import org.secuso.privacyfriendlysudoku.game.listener.IModelChangedListener;
 /**
  * Created by Christopher Beckmann on 06.11.2015.
  */
-public class GameBoard implements Cloneable {
+public class GameBoard implements Cloneable, Parcelable {
 
     //private int id;
     private GameType gameType;
@@ -17,7 +20,6 @@ public class GameBoard implements Cloneable {
     //private List additionalSections
     private int size;
     private GameCell[][] field;
-    private List<IModelChangedListener> modelChangedListeners = new LinkedList<>();
 
     public GameBoard(GameType gameType) {
         this.gameType = gameType;
@@ -220,7 +222,6 @@ public class GameBoard implements Cloneable {
     }
 
     public void registerOnModelChangeListener(final IModelChangedListener listener) {
-        if(!modelChangedListeners.contains(listener)) {
             actionOnCells(new ICellAction<Boolean>() {
                 @Override
                 public Boolean action(GameCell gc, Boolean existing) {
@@ -228,22 +229,6 @@ public class GameBoard implements Cloneable {
                     return existing;
                 }
             }, false);
-            modelChangedListeners.add(listener);
-        }
-    }
-
-    public void deleteOnModelChangeListener(final IModelChangedListener listener) {
-        if(modelChangedListeners.contains(listener)) {
-            actionOnCells(new ICellAction<Boolean>() {
-
-                @Override
-                public Boolean action(GameCell gc, Boolean existing) {
-                    gc.removeOnModelChangeListener(listener);
-                    return existing;
-                }
-            }, false);
-            modelChangedListeners.remove(listener);
-        }
     }
 
     @Override
@@ -271,5 +256,59 @@ public class GameBoard implements Cloneable {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
+        dest.writeParcelable(gameType, 0);
+        dest.writeInt(sectionHeight);
+        dest.writeInt(sectionWidth);
+        dest.writeInt(size);
+
+        for(int i = 0; i < field.length; i++) {
+            dest.writeTypedArray(field[i], 0);
+        }
+
+    }
+    public static final Parcelable.Creator<GameBoard> CREATOR
+            = new Parcelable.Creator<GameBoard>() {
+        public GameBoard createFromParcel(Parcel in) {
+            return new GameBoard(in);
+        }
+
+        public GameBoard[] newArray(int size) {
+            return new GameBoard[size];
+        }
+    };
+
+    /** recreate object from parcel */
+    private GameBoard(Parcel in) {
+        //private int id;
+        gameType = in.readParcelable(GameType.class.getClassLoader());
+        sectionHeight = in.readInt();
+        sectionWidth = in.readInt();
+        size = in.readInt();
+
+        field = new GameCell[size][size];
+
+        for(int i = 0; i < field.length; i++) {
+            field[i] = in.createTypedArray(GameCell.CREATOR);
+        }
+    }
+
+    public void removeAllListeners() {
+        actionOnCells(new ICellAction<Boolean>() {
+            @Override
+            public Boolean action(GameCell gc, Boolean existing) {
+                gc.removeAllListeners();
+                return existing;
+            }
+        }, false);
     }
 }

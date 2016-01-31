@@ -31,6 +31,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -176,8 +177,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                     // send everything to game activity
                     i = new Intent(this, GameActivity.class);
-                    i.putExtra("gameType", gameType);
-                    i.putExtra("gameDifficulty", gameDifficulty);
+                    i.putExtra("gameType", (Serializable)gameType);
+                    i.putExtra("gameDifficulty", (Serializable)gameDifficulty);
                 } else {
                     newLevelManager.checkAndRestock();
                     Toast t = Toast.makeText(getApplicationContext(), R.string.generating, Toast.LENGTH_SHORT);

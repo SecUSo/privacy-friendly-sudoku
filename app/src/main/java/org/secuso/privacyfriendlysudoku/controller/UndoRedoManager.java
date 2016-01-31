@@ -1,5 +1,8 @@
 package org.secuso.privacyfriendlysudoku.controller;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.LinkedList;
 
 import org.secuso.privacyfriendlysudoku.game.GameBoard;
@@ -7,7 +10,7 @@ import org.secuso.privacyfriendlysudoku.game.GameBoard;
 /**
  * Created by Chris on 24.11.2015.
  */
-public class UndoRedoManager {
+public class UndoRedoManager implements Parcelable {
 
     private int activeState;
     private LinkedList<GameBoard> states = new LinkedList<>();
@@ -78,4 +81,33 @@ public class UndoRedoManager {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel out, int flags) {
+        out.writeInt(activeState);
+        out.writeTypedList(states);
+    }
+
+    public static final Parcelable.Creator<UndoRedoManager> CREATOR
+            = new Parcelable.Creator<UndoRedoManager>() {
+        public UndoRedoManager createFromParcel(Parcel in) {
+            return new UndoRedoManager(in);
+        }
+
+        public UndoRedoManager[] newArray(int size) {
+            return new UndoRedoManager[size];
+        }
+    };
+
+    /** recreate object from parcel */
+    private UndoRedoManager(Parcel in) {
+        activeState = in.readInt();
+        in.readTypedList(states, GameBoard.CREATOR);
+    }
+
 }
