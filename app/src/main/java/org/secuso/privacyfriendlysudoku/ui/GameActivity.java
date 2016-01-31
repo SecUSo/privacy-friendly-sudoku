@@ -11,7 +11,6 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Point;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
@@ -42,7 +41,7 @@ import org.secuso.privacyfriendlysudoku.game.listener.IGameSolvedListener;
 import org.secuso.privacyfriendlysudoku.game.listener.ITimerListener;
 import org.secuso.privacyfriendlysudoku.ui.listener.IHintDialogFragmentListener;
 import org.secuso.privacyfriendlysudoku.ui.listener.IResetDialogFragmentListener;
-import org.secuso.privacyfriendlysudoku.ui.view.DialogActivity;
+import org.secuso.privacyfriendlysudoku.ui.view.WinDialog;
 import org.secuso.privacyfriendlysudoku.ui.view.R;
 import org.secuso.privacyfriendlysudoku.ui.view.SudokuFieldLayout;
 import org.secuso.privacyfriendlysudoku.ui.view.SudokuKeyboardLayout;
@@ -59,7 +58,7 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
     RatingBar ratingBar;
     private boolean gameSolved = false;
     SaveLoadStatistics statistics = new SaveLoadStatistics(this);
-    DialogActivity dialog = null;
+    WinDialog dialog = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -291,13 +290,10 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
 
         statistics.saveGameStats();
 
+        boolean isNewBestTime = gameController.getUsedHints() == 0
+                && statistics.loadStats(gameController.getGameType(),gameController.getDifficulty()).getMinTime() >= gameController.getTime();
 
-        if (gameController.getUsedHints() == 0){
-            if (statistics.loadStats(gameController.getGameType(),gameController.getDifficulty()).getMinTime() >= gameController.getTime()) {
-                //         ((TextView) dialog.findViewById(R.id.win_new_besttime)).setVisibility(View.VISIBLE);
-                dialog = new DialogActivity(this,R.style.WinDialog,timeToString(gameController.getTime()),String.valueOf(gameController.getUsedHints()),true);
-            }
-        }else dialog = new DialogActivity(this,R.style.WinDialog,timeToString(gameController.getTime()),String.valueOf(gameController.getUsedHints()),true);
+        dialog = new WinDialog(this, R.style.WinDialog , timeToString(gameController.getTime()), String.valueOf(gameController.getUsedHints()), isNewBestTime);
 
         dialog.getWindow().setContentView(R.layout.win_screen_layout);
         //dialog.setContentView(getLayoutInflater().inflate(R.layout.win_screen_layout,null));
@@ -315,8 +311,10 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
+                Intent intent = new Intent(activity, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
                 activity.finish();
-                startActivity(new Intent(activity,MainActivity.class));
             }
         });
         ((Button)dialog.findViewById(R.id.win_button2)).setOnClickListener(new View.OnClickListener() {

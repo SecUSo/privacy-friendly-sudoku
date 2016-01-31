@@ -162,7 +162,7 @@ public class GameInfoContainer {
     public static String getGameInfo(GameController controller) {
         StringBuilder sb = new StringBuilder();
         Date today = new Date();
-        // TODO add some game information
+
         sb.append(controller.getGameType().name());
         sb.append("/");
         sb.append(controller.getTime());

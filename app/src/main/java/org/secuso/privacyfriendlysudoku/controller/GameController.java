@@ -516,8 +516,7 @@ public class GameController implements IModelChangedListener, Parcelable {
                 }
             } else {
                 // notifyErrorListener();
-                // TODO: errorList now holds all the errors
-                // TODO: display errors .. notify some view?
+                // TODO: errorList now holds all the errors => display errors .. notify some view?
             }
         } else {
             notifiedOnSolvedListeners = false;
