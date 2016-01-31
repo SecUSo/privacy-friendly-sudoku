@@ -103,7 +103,7 @@ public class SudokuSpecialButtonLayout extends LinearLayout implements IHighligh
         }
     }
 
-    public void setButtons(int width, GameController gc, SudokuKeyboardLayout key, FragmentManager fm) {
+    public void setButtons(int width, GameController gc, SudokuKeyboardLayout key, FragmentManager fm, int orientation) {
         fragmentManager = fm;
         keyboard=key;
         gameController = gc;
@@ -116,7 +116,12 @@ public class SudokuSpecialButtonLayout extends LinearLayout implements IHighligh
         //ArrayList<SudokuButtonType> type = (ArrayList<SudokuButtonType>) SudokuButtonType.getSpecialButtons();
         for (SudokuButtonType t : getSpecialButtons()){
             fixedButtons[i] = new SudokuSpecialButton(getContext(),null);
-            p = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT,1);
+            if(orientation == LinearLayout.HORIZONTAL) {
+                p = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1);
+            } else {
+                p = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1);
+                fixedButtons[i].setPadding(25, 0, 25, 0);
+            }
             p.setMargins(5, 5, 5, 5);
 
             //int width2 =width/(fixedButtonsCount);

@@ -100,6 +100,8 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
             }
         } else {
             gameController = savedInstanceState.getParcelable("gameController");
+            // in case we get the same object back
+            // because parceling the Object does not always parcel it. Only if needed.
             gameController.removeAllListeners();
             gameSolved = savedInstanceState.getInt("gameSolved") == 1;
         }
@@ -136,7 +138,7 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
 
         //set Special keys
         specialButtonLayout = (SudokuSpecialButtonLayout) findViewById(R.id.sudokuSpecialLayout);
-        specialButtonLayout.setButtons(p.x, gameController, keyboard, getFragmentManager());
+        specialButtonLayout.setButtons(p.x, gameController, keyboard, getFragmentManager(), orientation);
 
         //set TimerView
         timerView = (TextView)findViewById(R.id.timerView);
