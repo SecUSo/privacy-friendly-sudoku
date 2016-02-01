@@ -126,5 +126,5 @@
     <string name="help_notes_summary">toggles if numbers should be set as notes or as values in a field</string>
     <string name="help_privacyInfo">Privacy Info</string>
     <string name="help_permissions">Permissions</string>
-    <string name="help_permissions_summary">Privacy Friendly Sudoku does not use any permissions.</string>
+    <string name="help_permissions_summary">Privacy Friendly Sudonku does not use any permissions.</string>
 </resources>
