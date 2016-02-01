@@ -4,11 +4,11 @@
 
         <Preference android:title=""
             android:selectable="false"
-            android:icon="@drawable/numpad_highlighted"
+            android:icon="@drawable/numfirst"
             android:summary="@string/help_keyhighlighted_summary"/>
         <Preference android:title=""
             android:selectable="false"
-            android:icon="@drawable/numpad_highlighted_three"
+            android:icon="@drawable/numfull"
             android:summary="@string/help_keyhighlighted_yellow_summary"/>
         <Preference android:title="@string/help_do"
             android:selectable="false"
