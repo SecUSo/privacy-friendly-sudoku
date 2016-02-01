@@ -111,7 +111,9 @@
                     android:clickable="true"
                     android:numStars="4"
                     android:rating="1"
-                    android:stepSize="1"/>
+                    android:stepSize="1"
+                    android:scaleX="1.2"
+                    android:scaleY="1.2"/>
 
                 <Button
                     android:textColor="@color/white"

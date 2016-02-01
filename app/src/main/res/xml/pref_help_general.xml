@@ -3,11 +3,11 @@
     <PreferenceCategory android:title="@string/pref_help_keyboard">
         <Preference android:title="@string/pref_help_keyheighlited"
                         android:selectable="false"
-                        android:icon="@drawable/numpad_highlighted"
+                        android:icon="@drawable/numfirst"
                         android:summary="@string/pref_help_keyheighlited_summary"/>
         <Preference android:title="@string/pref_help_keyheighlited_yellow"
             android:selectable="false"
-            android:icon="@drawable/numpad_highlighted_three"
+            android:icon="@drawable/numfull"
             android:summary="@string/pref_help_keyheighlited_yellow_summary"/>
 
         <Preference android:title="@string/pref_help_do"

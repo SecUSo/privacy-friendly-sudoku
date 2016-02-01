@@ -26,7 +26,7 @@ public class SudokuKeyboardLayout extends LinearLayout implements IHighlightChan
     SudokuButton [] buttons;
     GameController gameController;
     Symbol symbolsToUse = Symbol.Default;
-    float normalTextSize = 30; // in dp
+    float normalTextSize = 30; // in sp
     LinearLayout [] layouts = new LinearLayout[2];
 
     OnClickListener listener = new OnClickListener() {
@@ -115,7 +115,7 @@ public class SudokuKeyboardLayout extends LinearLayout implements IHighlightChan
                 buttons[buttonIndex].setTextColor(getResources().getColor(R.color.white));
                 buttons[buttonIndex].setBackgroundResource(R.drawable.mnenomic_numpad_button);
                 buttons[buttonIndex].setText(Symbol.getSymbol(symbolsToUse, buttonIndex));
-                buttons[buttonIndex].setTextSize(TypedValue.COMPLEX_UNIT_DIP,normalTextSize);
+                buttons[buttonIndex].setTextSize(TypedValue.COMPLEX_UNIT_SP,normalTextSize);
                 buttons[buttonIndex].setValue(buttonIndex + 1);
                 buttons[buttonIndex].setOnClickListener(listener);
 
@@ -146,9 +146,9 @@ public class SudokuKeyboardLayout extends LinearLayout implements IHighlightChan
     public void updateNotesEnabled() {
 
         if(gameController.getNoteStatus()) {
-            setTextSize(TypedValue.COMPLEX_UNIT_DIP,normalTextSize*0.55f);
+            setTextSize(TypedValue.COMPLEX_UNIT_SP,normalTextSize*0.55f);
         } else {
-            setTextSize(TypedValue.COMPLEX_UNIT_DIP,normalTextSize);
+            setTextSize(TypedValue.COMPLEX_UNIT_SP,normalTextSize);
         }
     }
 
