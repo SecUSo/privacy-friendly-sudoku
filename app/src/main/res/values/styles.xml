@@ -29,6 +29,8 @@
         <item name="android:windowSoftInputMode">adjustPan|stateUnspecified</item>
     </style>
 
+    <style name="BlueRatingBarSize">
+    </style>
 
     <!-- <style name="FontStyle">
         <item name="android:fontFamily"></item>
