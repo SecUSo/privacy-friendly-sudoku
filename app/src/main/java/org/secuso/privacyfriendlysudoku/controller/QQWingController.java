@@ -72,9 +72,9 @@ public class QQWingController {
         opts.threads = 1;
         opts.gameType = gameBoard.getGameType();
         doAction();
-        if(solveImpossible) {
-            // TODO: do something else.
-        }
+        //if(solveImpossible) {
+            // Can not occur with normal use of the app.
+        //}
         return solution;
     }
 

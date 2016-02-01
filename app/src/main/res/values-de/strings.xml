@@ -25,7 +25,6 @@
     <string name="about_qqwing">Diese App benutzt eine modifizierte Version des QQWing v1.3.4.</string>
     <string name="average_time">Durchschnittliche Zeit:</string>
     <string name="cancel">Abbrechen</string>
-    <string name="description">eine privacy friendly App</string>
     <string name="gametype_unspecified">Unspezifiziert</string>
     <string name="generating">Generiere neue Level im Hintergrund&#8230;</string>
     <string name="hint_confirmation">Bist du sicher, dass du einen Hinweis verwenden möchtest? Wenn Hinweise benutzt wurden, kann in dem Spiel keine Bestzeit mehr erreicht werden.</string>
@@ -45,20 +44,41 @@
     <string name="pref_group_highlight_value">Wert hervorheben</string>
     <string name="pref_header_game">Spiel</string>
     <string name="pref_header_highlight">Hervorhebung</string>
-    <string name="pref_highlight_cols">Verbundene Spalten</string>
     <string name="pref_highlight_notes">Notizen</string>
-    <string name="pref_highlight_rows">Verbundene Reihen</string>
-    <string name="pref_highlight_secs">Verbundene Sektionen</string>
     <string name="pref_highlight_vals">Gleiche Werte</string>
     <string name="pref_symbols">Symbole</string>
     <string name="title_activity_load_game">Spiel laden</string>
     <string name="stats_name">Statistik</string>
     <string name="reset_stats">Alles zurücksetzen</string>
-    <string name="reset_confirmation_confirm">zurücksetzen</string>
+    <string name="reset_confirmation_confirm">Zurücksetzen</string>
     <string name="reset_confirmation">Bist du dir sicher, dass du das komplette Spielfeld zurücksetzen möchtest?</string>
     <string name="total_of_time">Gesamtspielzeit:</string>
     <string name="win_button_text">fortsetzen</string>
     <string name="win_text">Glückwunsch!</string>
     <string name="app_name" translatable="false">Sudoku</string>
+    <string name="win_best_time">Neue Bestzeit!</string>
+    <string name="win_hint">Hinweise:</string>
+    <string name="win_show_game">Zeige Spielfeld</string>
+    <string name="win_time">Zeit:</string>
+    <string name="title_activity_help">Hilfe</string>
+    <string name="pref_highlight_connected">Verbundene Felder</string>
+    <string name="help_undo_summary">Macht die letzte Aktion rückgängig</string>
+    <string name="help_undo">Rückgängig</string>
+    <string name="help_permissions_summary">Privacy Friendly Sudoku verwendet keine Berechtigungen.</string>
+    <string name="help_permissions">Berechtigungen</string>
+    <string name="help_notes_summary">Schaltet zwischen Notizen- und Werteingabe hin und her</string>
+    <string name="help_notes">Notizen</string>
+    <string name="help_keyhighlighted_yellow_summary">Zeigt an, ob die korrekte Anzahl des Wertes im Spielfeld vorkommt.</string>
+    <string name="help_keyhighlighted_summary">Zeigt an, dass der Wert ausgewählt ist. Jede Berührung eines Feldes setzt in diesem Modus die Zahl direkt, ohne das Feld vorher auszuwählen.</string>
+    <string name="help_keyboard">Tastatur</string>
+    <string name="help_hint_summary">Zeige die korrekte Lösung für das ausgewählte Feld</string>
+    <string name="help_hint">Hinweis</string>
+    <string name="help_gamefield">Spielfeld</string>
+    <string name="help_do_summary">Stellt die letzte rückgängig gemachte Aktion wieder her</string>
+    <string name="help_do">Wiederherstellen</string>
+    <string name="help_delete_summary">Löscht das ausgewählte Feld</string>
+    <string name="help_delete">Löschen</string>
+    <string name="header_help">Hilfe</string>
+    <string name="help_privacyInfo">Privatsphäre Information</string>
 
 </resources>

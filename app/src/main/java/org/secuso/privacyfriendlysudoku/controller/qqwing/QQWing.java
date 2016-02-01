@@ -452,7 +452,6 @@ public class QQWing {
             // Some hack to make easy levels on 12x12 .. because the generator wasn't able to create some
             if(gameType == GameType.Default_12x12 &&  difficulty == GameDifficulty.Easy ) {
                 i += 4; // skip every 2nd round to find "easy" levels more frequent. Still takes about 20 Seconds.
-				// TODO . save games be4 hand to load them when needed
             }
         }
 	}
@@ -741,7 +740,6 @@ public class QQWing {
 		return false;
 	}
 
-    // TODO:  checked
 	private boolean colBoxReduction(int round) {
 		for (int valIndex = 0; valIndex < ROW_COL_SEC_SIZE; valIndex++) {
 			for (int col = 0; col < ROW_COL_SEC_SIZE; col++) {

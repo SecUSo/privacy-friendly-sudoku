@@ -516,8 +516,7 @@ public class GameController implements IModelChangedListener, Parcelable {
                 }
             } else {
                 // notifyErrorListener();
-                // TODO: errorList now holds all the errors
-                // TODO: display errors .. notify some view?
+                // TODO: errorList now holds all the errors => display errors .. notify some view?
             }
         } else {
             notifiedOnSolvedListeners = false;
@@ -709,10 +708,6 @@ public class GameController implements IModelChangedListener, Parcelable {
         out.writeParcelable(difficulty, 0);
         out.writeParcelable(gameBoard, 0);
         out.writeParcelable(undoRedoManager, 0);
-
-        // delete lists, in case we get the same object back from Parcel
-        removeAllListeners();
-
     }
 
     public static final Parcelable.Creator<GameController> CREATOR = new Parcelable.Creator<GameController>() {
