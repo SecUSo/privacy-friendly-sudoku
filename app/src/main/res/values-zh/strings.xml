@@ -1,4 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Sudoku</string>
+    <string name="win_time">时间：</string>
+    <string name="win_button_text">继续</string>
+    <string name="about_author">作者：</string>
+    <string name="average_time">平均时间：</string>
+    <string name="cancel">退出</string>
+    <string name="difficulty_easy">简单</string>
+    <string name="difficulty_hard">难</string>
+    <string name="difficulty_moderate">普通</string>
+    <string name="gametype_unspecified">不明</string>
+    <string name="help_delete">删除</string>
+    <string name="win_text">祝贺！</string>
+    <string name="win_hint">提示：</string>
+    <string name="win_show_game">显示游戏版</string>
+    <string name="win_best_time">新纪录！</string>
+    <string name="about_affiliation"></string>
 </resources>

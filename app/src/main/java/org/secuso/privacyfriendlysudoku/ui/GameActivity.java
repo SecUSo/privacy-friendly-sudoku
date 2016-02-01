@@ -176,7 +176,8 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
             // start the game
             gameController.startTimer();
         }
-        onTick(gameController.getTime());
+        gameController.notifyHighlightChangedListeners();
+        gameController.notifyTimerListener(gameController.getTime());
     }
 
     @Override
@@ -343,9 +344,8 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onTick(int time) {
-        if(gameSolved) return;
 
-        //do something not so awesome
+        // display the time
         timerView.setText(timeToString(time));
 
         if(gameSolved) return;

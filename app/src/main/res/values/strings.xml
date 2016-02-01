@@ -15,8 +15,6 @@
     <string name="menu_reset">Reset Board</string>
     <string name="menu_continue_game">Continue Game</string>
 
-    <string name="description">a privacy friendly app</string>
-
     <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
     <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
 
@@ -74,10 +72,10 @@
 
     <!--###GameActivity -->
     <string name="Sudoku" translatable="false">Sudoku</string>
-    <string name="gametype_default_9x9" translatable="false">Standard Sudoku 9x9</string>
-    <string name="gametype_default_6x6" translatable="false">Standard Sudoku 6x6</string>
+    <string name="gametype_default_9x9" translatable="false">Sudoku 9x9</string>
+    <string name="gametype_default_6x6" translatable="false">Sudoku 6x6</string>
     <string name="gametype_unspecified">Unspecified</string>
-    <string name="gametype_default_12x12" translatable="false">Standard Sudoku 12x12</string>
+    <string name="gametype_default_12x12" translatable="false">Sudoku 12x12</string>
     <string name="gametype_x_9x9" translatable="false">X Sudoku 9x9</string>
     <string name="gametype_hyper_9x9" translatable="false">Hyper Sudoku 9x9</string>
     <string name="hint_usage">Select a valid field and then press the hint button to reveal the solution.</string>
@@ -95,99 +93,38 @@
     <string name="number_of_hints"># used hints:</string>
     <string name="number_of_games"># completed games:</string>
     <string name="total_of_time">Total time played:</string>
-    <string name="average_time">average time:</string>
-    <string name="min_time">best time:</string>
+    <string name="average_time">Average time:</string>
+    <string name="min_time">Best time:</string>
     <string name="reset_stats">Reset All</string>
-
 
     <!--### Win Strings -->
     <string name="win_text">Congratulations!</string>
-    <string name="win_button_text">continue</string>
+    <string name="win_button_text">Continue</string>
     <string name="title_activity_help">Help</string>
-    <string name="win_time">needed time:</string>
-    <string name="win_hint">hints used:</string>
+    <string name="win_time">Time:</string>
+    <string name="win_hint">Hints:</string>
     <string name="win_show_game">Show gamefield</string>
-    <string name="win_best_time">New best time !</string>
-
-    <!-- Strings related to Settings -->
-
-    <!-- Example General settings -->
-    <string name="pref_header_general">General</string>
-
-    <string name="pref_title_social_recommendations">Enable social recommendations</string>
-    <string name="pref_description_social_recommendations">Recommendations for people to contact
-        based on your message history
-    </string>
-
-    <string name="pref_title_display_name">Display name</string>
-    <string name="pref_default_display_name">John Smith</string>
-
-    <string name="pref_title_add_friends_to_messages">Add friends to messages</string>
-    <string-array name="pref_example_list_titles">
-        <item>Always</item>
-        <item>When possible</item>
-        <item>Never</item>
-    </string-array>
-    <string-array name="pref_example_list_values">
-        <item>1</item>
-        <item>0</item>
-        <item>-1</item>
-    </string-array>
-
-    <!-- Example settings for Data & Sync -->
-    <string name="pref_header_data_sync">Data &amp; sync</string>
-
-    <string name="pref_title_sync_frequency">Sync frequency</string>
-    <string-array name="pref_sync_frequency_titles">
-        <item>15 minutes</item>
-        <item>30 minutes</item>
-        <item>1 hour</item>
-        <item>3 hours</item>
-        <item>6 hours</item>
-        <item>Never</item>
-    </string-array>
-    <string-array name="pref_sync_frequency_values">
-        <item>15</item>
-        <item>30</item>
-        <item>60</item>
-        <item>180</item>
-        <item>360</item>
-        <item>-1</item>
-    </string-array>
-
-    <string name="pref_title_system_sync_settings">System sync settings</string>
-
-    <!-- Example settings for Notifications -->
-    <string name="pref_header_notifications">Notifications</string>
-
-    <string name="pref_title_new_message_notifications">New message notifications</string>
-
-    <string name="pref_title_ringtone">Ringtone</string>
-    <string name="pref_ringtone_silent">Silent</string>
-
-    <string name="pref_title_vibrate">Vibrate</string>
-    <string name="header_help">Help</string>
-
+    <string name="win_best_time">New personal best time!</string>
 
     <!-- ### HELP prefs ###-->
-
-    <string name="pref_help_keyboard">Keyboard</string>
-    <string name="pref_help_gamefield">Game field</string>
-    <string name="pref_help_statusbar">Statusbar</string>
-    <string name="pref_help_keyheighlited">Key Heighlighted with black border</string>
-    <string name="pref_help_keyheighlited_summary">Indicates that the number is selected and will be set in every clicked field</string>
-    <string name="pref_help_keyheighlited_yellow">Key Heighlighted with yellow border</string>
-    <string name="pref_help_keyheighlited_yellow_summary">Indicates that all numbers have been set</string>
+    <string name="header_help">Help</string>
+    <string name="help_keyboard">Keyboard</string>
+    <string name="help_gamefield">Game field</string>
+    <string name="help_keyhighlighted_summary">Indicates that the value is selected and will be set in every clicked field</string>
+    <string name="help_keyhighlighted_yellow_summary">Indicates that the correct number of values for this number have been placed.</string>
 
     <!-- ### Special buttons description ###-->
-    <string name="pref_help_do">Do button</string>
-    <string name="pref_help_do_summary">Redoes the last action</string>
-    <string name="pref_help_undo">Undo button</string>
-    <string name="pref_help_undo_summary">Undoes the last action</string>
-    <string name="pref_help_hint">Hint button</string>
-    <string name="pref_help_hint_summary">Unveals the selected field Warning:When used the game is not appear as best in the Statistics</string>
-    <string name="pref_help_delete">Delete button</string>
-    <string name="pref_help_delete_summary">deletes a selected cell</string>
-    <string name="pref_help_notes">Toggle notes button</string>
-    <string name="pref_help_notes_summary">toggles if numbers should be set as notes or as value in a cell</string>
+    <string name="help_do">Do button</string>
+    <string name="help_do_summary">Redoes the last undone action</string>
+    <string name="help_undo">Undo button</string>
+    <string name="help_undo_summary">Undoes the last action</string>
+    <string name="help_hint">Hint button</string>
+    <string name="help_hint_summary">Unveals the selected field\nWarning: When used, the current game can not count towards a new best time.</string>
+    <string name="help_delete">Delete button</string>
+    <string name="help_delete_summary">Deletes a selected field</string>
+    <string name="help_notes">Note toggle button</string>
+    <string name="help_notes_summary">toggles if numbers should be set as notes or as values in a field</string>
+    <string name="help_privacyInfo">Privacy Info</string>
+    <string name="help_permissions">Permissions</string>
+    <string name="help_permissions_summary">Privacy Friendly Sudoku does not use any permissions.</string>
 </resources>
