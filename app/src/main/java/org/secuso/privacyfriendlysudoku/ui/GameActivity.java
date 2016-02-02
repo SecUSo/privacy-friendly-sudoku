@@ -20,6 +20,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -112,6 +113,10 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(toolbar);
         //toolbar.addView();
 
+        if(gameSolved) {
+            disableReset();
+        }
+
         //Create new GameField
         layout = (SudokuFieldLayout)findViewById(R.id.sudokuLayout);
         gameController.registerGameSolvedListener(this);
@@ -178,6 +183,7 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
         }
         gameController.notifyHighlightChangedListeners();
         gameController.notifyTimerListener(gameController.getTime());
+
     }
 
     @Override
@@ -286,6 +292,7 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
 
         gameController.pauseTimer();
         gameController.deleteGame(this);
+        disableReset();
 
         //Show time hints new plus old best time
 
@@ -342,6 +349,12 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
         return h + ":" + m + ":" + s;
     }
 
+
+    private void disableReset(){
+        NavigationView navView = (NavigationView)findViewById(R.id.nav_view);
+        Menu navMenu = navView.getMenu();
+        navMenu.findItem(R.id.menu_reset).setEnabled(false);
+    }
     @Override
     public void onTick(int time) {
 

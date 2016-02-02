@@ -221,13 +221,31 @@ public class SudokuFieldLayout extends RelativeLayout implements IHighlightChang
 
             int row2 = conflict.getRowCell2();
             int col2 = conflict.getColCell2();
-            canvas.drawCircle(gameCellWidth * col2 + gameCellWidth / 2, gameCellHeight * row2 + gameCellHeight / 2, gameCellWidth/2 - gameCellWidth / 8, p);
+            canvas.drawCircle(gameCellWidth * col2 + gameCellWidth / 2, gameCellHeight * row2 + gameCellHeight / 2, gameCellWidth / 2 - gameCellWidth / 8, p);
+
+            float offset1=0;
+            float offset2= 0;
+
+            float radius = gameCellWidth/2 - gameCellWidth / 8;
+            if (col == col2 || row == row2) {
+                offset1 = (col > col2)? 0-radius:radius;
+                offset2 = (row > row2)? 0-radius:radius;
+                offset1 = (col == col2)?0f:offset1;
+                offset2 = (row == row2)?0f:offset2;
+            } else {
+                double alpha = Math.atan((Math.abs(col2-col))/(Math.abs(row2 - row)));
+                offset1 = (col > col2)? 0-radius:radius;
+                offset2 = (row > row2)? 0-radius:radius;
+                offset1*=Math.sin(alpha);
+                offset2*=Math.cos(alpha);
+            }
+
 
             canvas.drawLine(
-                    gameCellWidth * col + gameCellWidth / 2,
-                    gameCellHeight * row + gameCellHeight / 2,
-                    gameCellWidth * col2 + gameCellWidth / 2,
-                    gameCellHeight * row2 + gameCellHeight / 2, p);
+                    (gameCellWidth * col + gameCellWidth / 2)+offset1,
+                    (gameCellHeight * row + gameCellHeight / 2)+offset2,
+                    (gameCellWidth * col2 + gameCellWidth / 2)-offset1,
+                    (gameCellHeight * row2 + gameCellHeight / 2)-offset2, p);
         }
     }
 }
