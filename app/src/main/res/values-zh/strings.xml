@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name" translatable="false">数独</string>
     <string name="win_time">时间：</string>
     <string name="win_button_text">继续</string>
     <string name="about_author">作者：</string>
@@ -8,72 +9,72 @@
     <string name="difficulty_easy">简单</string>
     <string name="difficulty_hard">难</string>
     <string name="difficulty_moderate">普通</string>
-    <string name="gametype_unspecified">不明</string>
+    <string name="gametype_unspecified">未详细说明的</string>
     <string name="help_delete">删除</string>
     <string name="win_text">祝贺！</string>
     <string name="win_hint">提示：</string>
     <string name="win_show_game">显示游戏版</string>
     <string name="win_best_time">新纪录！</string>
-	
-	<!-- habe hier mal alle rein kopiert, damit du eine art template hast, was noch fehlt -->
-	
-    <string name="new_game">Neues Spiel</string>
-    <string name="menu_settings">Einstellungen</string>
-    <string name="menu_highscore">Statistik</string>
-    <string name="menu_main">Hauptmenü</string>
-    <string name="menu_group">Gruppe</string>
-    <string name="menu_help">Hilfe</string>
-    <string name="menu_about">Über</string>
-    <string name="title_activity_settings">Einstellungen</string>
-    <string name="privacy_friendly">Diese App gehört zur Gruppe der Privacy Friendly Apps.</string>
-    <string name="more_info">Mehr Informationen unter:</string>
-    <string name="about_affiliation">In Zusammenarbeit mit:</string>
-    <string name="about_qqwing">Diese App benutzt eine modifizierte Version des QQWing v1.3.4.</string>
-    <string name="generating">Generiere neue Level im Hintergrund&#8230;</string>
-    <string name="hint_confirmation">Bist du sicher, dass du einen Hinweis verwenden möchtest? Wenn Hinweise benutzt wurden, kann in dem Spiel keine Bestzeit mehr erreicht werden.</string>
-    <string name="hint_confirmation_confirm">Benutzen</string>
-    <string name="loadgame_delete_confirm">Löschen</string>
-    <string name="hint_usage">Wähle ein gültiges Feld aus und drücke dann auf den Hinweis Knopf um dann das makierte Feld aufzulösen.</string>
-    <string name="loadgame_delete_confirmation">Bist du sicher, dass du den Spielstand löschen möchtest?</string>
-    <string name="menu_continue_game">Spiel Fortsetzen</string>
-    <string name="menu_reset">Zurücksetzen</string>
-    <string name="min_time">Beste Zeit:</string>
-    <string name="number_of_games">Abgeschlossene Spiele:</string>
-    <string name="number_of_hints">Benutzte Hinweise:</string>
-    <string name="pref_automatic_note_deletion">Notizen Löschung</string>
-    <string name="pref_automatic_note_deletion_summary">Automatisches löschen von Notizen, wenn Zahlen in verbundenen Feldern gesetzt werden</string>
-    <string name="pref_group_game">Spiel Einstellungen</string>
-    <string name="pref_group_highlight_selection">Auswahl hervorheben</string>
-    <string name="pref_group_highlight_value">Wert hervorheben</string>
-    <string name="pref_header_game">Spiel</string>
-    <string name="pref_header_highlight">Hervorhebung</string>
-    <string name="pref_highlight_notes">Notizen</string>
-    <string name="pref_highlight_vals">Gleiche Werte</string>
-    <string name="pref_symbols">Symbole</string>
-    <string name="title_activity_load_game">Spiel laden</string>
-    <string name="stats_name">Statistik</string>
-    <string name="reset_stats">Alles zurücksetzen</string>
-    <string name="reset_confirmation_confirm">Zurücksetzen</string>
-    <string name="reset_confirmation">Bist du dir sicher, dass du das komplette Spielfeld zurücksetzen möchtest?</string>
-    <string name="total_of_time">Gesamtspielzeit:</string>
-    <string name="title_activity_help">Hilfe</string>
-    <string name="pref_highlight_connected">Verbundene Felder</string>
-    <string name="help_undo_summary">Macht die letzte Aktion rückgängig</string>
-    <string name="help_undo">Rückgängig</string>
-    <string name="help_permissions_summary">Privacy Friendly Sudoku verwendet keine Berechtigungen.</string>
-    <string name="help_permissions">Berechtigungen</string>
-    <string name="help_notes_summary">Schaltet zwischen Notizen- und Werteingabe hin und her</string>
-    <string name="help_notes">Notizen</string>
-    <string name="help_keyhighlighted_yellow_summary">Zeigt an, ob die korrekte Anzahl des Wertes im Spielfeld vorkommt.</string>
-    <string name="help_keyhighlighted_summary">Zeigt an, dass der Wert ausgewählt ist. Jede Berührung eines Feldes setzt in diesem Modus die Zahl direkt, ohne das Feld vorher auszuwählen.</string>
-    <string name="help_keyboard">Tastatur</string>
-    <string name="help_hint_summary">Zeige die korrekte Lösung für das ausgewählte Feld</string>
-    <string name="help_hint">Hinweis</string>
-    <string name="help_gamefield">Spielfeld</string>
-    <string name="help_do_summary">Stellt die letzte rückgängig gemachte Aktion wieder her</string>
-    <string name="help_do">Wiederherstellen</string>
-    <string name="help_delete_summary">Löscht das ausgewählte Feld</string>
-    <string name="header_help">Hilfe</string>
-    <string name="help_privacyInfo">Privatsphäre Information</string>
-	
+
+    <!-- habe hier mal alle rein kopiert, damit du eine art template hast, was noch fehlt -->
+
+    <string name="new_game">开局</string>
+    <string name="menu_settings">设置</string>
+    <string name="menu_highscore">统计</string>
+    <string name="menu_main">主页</string>
+    <string name="menu_group">组</string>
+    <string name="menu_help">帮助</string>
+    <string name="menu_about">关于</string>
+    <string name="title_activity_settings">设置</string>
+    <string name="privacy_friendly">这个软件是Privacy Friendly Apps中的一员.</string>
+    <string name="more_info">更多信息:</string>
+    <string name="about_affiliation">合作方:</string>
+    <string name="about_qqwing">这个软件并需要使用修缮后的QQwing v1.3.4版本</string>
+    <string name="generating">在后台做一个新的游戏领域&#8230;</string>
+    <string name="hint_confirmation">确定使用提示? 如果使用提示 可能会在游戏中错过最佳时间.</string>
+    <string name="hint_confirmation_confirm">使用</string>
+    <string name="loadgame_delete_confirm">删除</string>
+    <string name="hint_usage">选择空格，按提示可显示答案</string>
+    <string name="loadgame_delete_confirmation">你确定要删除当前游戏吗？</string>
+    <string name="menu_continue_game">继续游戏</string>
+    <string name="menu_reset">重置</string>
+    <string name="min_time">最快时间:</string>
+    <string name="number_of_games">玩的次数:</string>
+    <string name="number_of_hints">请求帮助的次数:</string>
+    <string name="pref_automatic_note_deletion">删除备注</string>
+    <string name="pref_automatic_note_deletion_summary">自动删除备注信息如果数字连接成功</string>
+    <string name="pref_group_game">游戏设置</string>
+    <string name="pref_group_highlight_selection">突出选择</string>
+    <string name="pref_group_highlight_value">突出数字</string>
+    <string name="pref_header_game">游戏</string>
+    <string name="pref_header_highlight">突出</string>
+    <string name="pref_highlight_notes">备注ƒ</string>
+    <string name="pref_highlight_vals">相同数字</string>
+    <string name="pref_symbols">符号</string>
+    <string name="title_activity_load_game">读取游戏</string>
+    <string name="stats_name">统计</string>
+    <string name="reset_stats">全部重置</string>
+    <string name="reset_confirmation_confirm">重置</string>
+    <string name="reset_confirmation">你确定想要重置游戏领域吗？</string>
+    <string name="total_of_time">总玩的时间:</string>
+    <string name="title_activity_help">帮助</string>
+    <string name="pref_highlight_connected">相连的空格</string>
+    <string name="help_undo_summary">撤消最后一步</string>
+    <string name="help_undo">撤消</string>
+    <string name="help_permissions_summary">Privacy Friendly Suduko 不使用权限</string>
+    <string name="help_permissions">许可</string>
+    <string name="help_notes_summary">切换页面</string>
+    <string name="help_notes">备注</string>
+    <string name="help_keyhighlighted_yellow_summary">显示正确的号码是否出现在空格里</string>
+    <string name="help_keyhighlighted_summary">显示已选数字.数字会直接写到空格里.</string>
+    <string name="help_keyboard">键盘</string>
+    <string name="help_hint_summary">显示选择空格的答案</string>
+    <string name="help_hint">提示</string>
+    <string name="help_gamefield">游戏领域</string>
+    <string name="help_do_summary">恢复删除的选择</string>
+    <string name="help_do">恢复</string>
+    <string name="help_delete_summary">删除你选择的数字</string>
+    <string name="header_help">帮助</string>
+    <string name="help_privacyInfo">私人信息</string>
+
 </resources>

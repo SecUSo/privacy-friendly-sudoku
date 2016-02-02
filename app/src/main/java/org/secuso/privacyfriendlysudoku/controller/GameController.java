@@ -7,6 +7,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import org.secuso.privacyfriendlysudoku.controller.helper.GameInfoContainer;
+import org.secuso.privacyfriendlysudoku.game.CellConflict;
 import org.secuso.privacyfriendlysudoku.game.CellConflictList;
 import org.secuso.privacyfriendlysudoku.game.GameBoard;
 import org.secuso.privacyfriendlysudoku.game.GameCell;
@@ -721,6 +722,8 @@ public class GameController implements IModelChangedListener, Parcelable {
         out.writeParcelable(difficulty, 0);
         out.writeParcelable(gameBoard, 0);
         out.writeParcelable(undoRedoManager, 0);
+
+        out.writeTypedList(errorList);
     }
 
     public static final Parcelable.Creator<GameController> CREATOR = new Parcelable.Creator<GameController>() {
@@ -757,6 +760,8 @@ public class GameController implements IModelChangedListener, Parcelable {
         difficulty = in.readParcelable(GameDifficulty.class.getClassLoader());
         gameBoard = in.readParcelable(GameBoard.class.getClassLoader());
         undoRedoManager = in.readParcelable(UndoRedoManager.class.getClassLoader());
+
+        in.readTypedList(errorList, CellConflict.CREATOR);
 
         removeAllListeners();
 

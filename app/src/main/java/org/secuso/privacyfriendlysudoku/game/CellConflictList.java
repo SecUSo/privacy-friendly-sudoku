@@ -34,6 +34,4 @@ public class CellConflictList extends ArrayList<CellConflict> {
         sb.append("]");
         return sb.toString();
     }
-
-
 }
