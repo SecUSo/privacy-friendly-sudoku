@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Sudoku</string>
     <string name="about_affiliation">Совместно с:</string>
     <string name="about_author">Авторы：</string>
     <string name="about_qqwing">Данное приложение использует модифицированную версию QQWing v1.3.4.</string>

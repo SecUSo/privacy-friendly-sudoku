@@ -55,7 +55,6 @@
     <string name="total_of_time">Gesamtspielzeit:</string>
     <string name="win_button_text">fortsetzen</string>
     <string name="win_text">Glückwunsch!</string>
-    <string name="app_name" translatable="false">Sudoku</string>
     <string name="win_best_time">Neue Bestzeit!</string>
     <string name="win_hint">Hinweise:</string>
     <string name="win_show_game">Zeige Spielfeld</string>

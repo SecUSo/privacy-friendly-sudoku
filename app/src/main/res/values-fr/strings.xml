@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Sudoku</string>
     <string name="about_affiliation">En coopération avec:</string>
     <string name="about_author">Auteur</string>
     <string name="about_qqwing">Cette Aplication utilise une version modifié de QQWing v1.3.4</string>
@@ -73,5 +72,4 @@
     <string name="win_show_game">Montrer champs de jeu</string>
     <string name="win_text">Félicitations!</string>
     <string name="win_time">Temps:</string>
-    <string name="Sudoku" translatable="false"></string>
 </resources>
