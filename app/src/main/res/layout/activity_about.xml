@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:background="#FFFFFF">
+
+<LinearLayout
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     android:background="#FFFFFF"
     android:orientation="vertical"
     android:isScrollContainer="true"
@@ -10,9 +16,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".AboutActivity"
-    android:weightSum="1">
-
+    tools:context=".AboutActivity">
     <ImageView
         android:id="@+id/barcodeLogo"
         android:layout_width="fill_parent"
@@ -107,3 +111,4 @@
         android:autoLink="web"/>
 
 </LinearLayout>
+</ScrollView>
