@@ -109,6 +109,8 @@
                 android:numStars="3"
                 android:rating="1"
                 android:stepSize="1"
+                android:scaleX="0.75"
+                android:scaleY="0.75"
                 style="@style/RatingBar"/>
 
             <Button

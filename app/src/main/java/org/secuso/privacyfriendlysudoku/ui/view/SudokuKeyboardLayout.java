@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -26,7 +27,7 @@ public class SudokuKeyboardLayout extends LinearLayout implements IHighlightChan
     SudokuButton [] buttons;
     GameController gameController;
     Symbol symbolsToUse = Symbol.Default;
-    float normalTextSize = 30; // in sp
+    float normalTextSize = 20; // in sp
     LinearLayout [] layouts = new LinearLayout[2];
 
     OnClickListener listener = new OnClickListener() {
@@ -61,6 +62,8 @@ public class SudokuKeyboardLayout extends LinearLayout implements IHighlightChan
         int numberOfButtonsPerRow = (size % 2 == 0) ? size/2 :(size+1)/2;
         int numberOfButtons = numberOfButtonsPerRow * 2;
 
+        normalTextSize = (int) getResources().getDimension(R.dimen.text_size) / getResources().getDisplayMetrics().scaledDensity;
+
         buttons = new SudokuButton[numberOfButtons];
 
         //set layout parameters and init Layouts
@@ -71,7 +74,7 @@ public class SudokuKeyboardLayout extends LinearLayout implements IHighlightChan
                 p = new LayoutParams(0, LayoutParams.MATCH_PARENT, 1);
             }
             //if (i == 0) p.bottomMargin=10; else p.topMargin=10;
-            p.setMargins(0,5,0,5);
+            p.setMargins(0, 5, 0, 5);
             layouts[i] = new LinearLayout(getContext(),null);
             layouts[i].setLayoutParams(p);
             layouts[i].setWeightSum(numberOfButtonsPerRow);
@@ -110,12 +113,13 @@ public class SudokuKeyboardLayout extends LinearLayout implements IHighlightChan
                 */
 
           //      buttons[number].setLayoutParams(p);
-                //buttons[number].setGravity(Gravity.CENTER);
                 buttons[buttonIndex].setType(SudokuButtonType.Value);
                 buttons[buttonIndex].setTextColor(getResources().getColor(R.color.white));
                 buttons[buttonIndex].setBackgroundResource(R.drawable.mnenomic_numpad_button);
+                buttons[buttonIndex].setPadding(0, 0, 0, 0);
+                buttons[buttonIndex].setGravity(Gravity.CENTER);
                 buttons[buttonIndex].setText(Symbol.getSymbol(symbolsToUse, buttonIndex));
-                buttons[buttonIndex].setTextSize(TypedValue.COMPLEX_UNIT_SP,normalTextSize);
+                buttons[buttonIndex].setTextSize(TypedValue.COMPLEX_UNIT_SP, normalTextSize);
                 buttons[buttonIndex].setValue(buttonIndex + 1);
                 buttons[buttonIndex].setOnClickListener(listener);
 

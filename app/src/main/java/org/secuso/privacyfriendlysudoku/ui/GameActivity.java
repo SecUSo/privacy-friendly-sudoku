@@ -308,7 +308,7 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
         dialog.show();
 
         final Activity activity = this;
-        ((Button)dialog.findViewById(R.id.win_button)).setOnClickListener(new View.OnClickListener() {
+        ((Button)dialog.findViewById(R.id.win_continue_button)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
@@ -318,7 +318,7 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
                 activity.finish();
             }
         });
-        ((Button)dialog.findViewById(R.id.win_button2)).setOnClickListener(new View.OnClickListener() {
+        ((Button)dialog.findViewById(R.id.win_showGame_button)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();

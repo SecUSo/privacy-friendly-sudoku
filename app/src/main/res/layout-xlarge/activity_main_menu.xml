@@ -102,23 +102,25 @@
                 android:text="@string/difficulty_easy"
                 android:textSize="@dimen/main_text_difficulty"/>
 
-            <RatingBar style="@style/BlueRatingBarSize"
+            <RatingBar
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/difficultyBar"
                 android:layout_gravity="center_horizontal"
                 android:clickable="true"
-                android:numStars="4"
+                android:numStars="3"
                 android:rating="1"
+                android:padding="0dp"
+                android:layout_margin="0dp"
                 android:stepSize="1"
-                android:scaleX="3"
-                android:scaleY="3"
-                android:paddingTop="70dp"/>
+                android:paddingTop="70dp"
+                style="@style/RatingBar"/>
 
             <Button
                 android:textColor="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
                 android:layout_marginLeft="@dimen/main_button_padding"
                 android:layout_marginRight="@dimen/main_button_padding"
                 android:text="@string/new_game"

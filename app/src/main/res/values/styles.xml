@@ -29,8 +29,17 @@
         <item name="android:windowSoftInputMode">adjustPan|stateUnspecified</item>
     </style>
 
-    <style name="BlueRatingBarSize">
+
+    <style name="RatingBarStyle" parent="@android:style/Widget.RatingBar">
+        <item name="android:progressDrawable">@drawable/ratingbar</item>
     </style>
+
+    <style name="RatingBar" parent="RatingBarStyle">
+        <item name="android:minHeight">57dip</item>
+        <item name="android:maxHeight">57dip</item>
+    </style>
+
+
 
     <!-- <style name="FontStyle">
         <item name="android:fontFamily"></item>

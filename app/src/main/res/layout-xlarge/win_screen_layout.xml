@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent" android:layout_height="300dp"
+    android:layout_width="fill_parent" android:layout_height="370dp"
     android:orientation="vertical"
     android:background="@color/white"
-    android:layout_gravity="center"
-    >
+    android:layout_gravity="center">
 
     <LinearLayout
         android:layout_width="250dp" android:layout_height="250dp"
         android:background="@drawable/ic_trophy_black_48dp"
         android:weightSum="5"
         android:orientation="horizontal"
-        android:layout_gravity="center"
-        >
+        android:layout_gravity="center">
 
         <LinearLayout
             android:layout_width="0dp"
@@ -47,10 +45,10 @@
             android:weightSum="5"
             >
             <LinearLayout
-                android:layout_width="100dp"
+                android:layout_width="120dp"
                 android:layout_height="0dp"
                 android:layout_weight="4"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="46dp"
                 android:layout_gravity="center_horizontal"
                 android:orientation="vertical">
                 <TextView
@@ -133,25 +131,26 @@
 
     </LinearLayout>
     <LinearLayout
-        android:layout_width="250dp"
+        android:layout_width="400dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="20dp"
+        android:paddingBottom="20dp"
+        android:paddingTop="5dp"
         android:weightSum="2">
         <Button
-            android:id="@+id/win_button"
+            android:id="@+id/win_continue_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimaryDark"
+            android:background="@drawable/standalone_button"
             android:textColor="@color/white"
             android:layout_weight="1"
             android:text="@string/win_button_text"
             android:layout_marginRight="5dp"/>
         <Button
-            android:id="@+id/win_button2"
+            android:id="@+id/win_showGame_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimaryDark"
+            android:background="@drawable/standalone_button"
             android:textColor="@color/white"
             android:layout_weight="1"
             android:text="@string/win_show_game"

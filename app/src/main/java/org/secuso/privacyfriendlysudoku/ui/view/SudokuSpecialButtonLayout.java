@@ -171,6 +171,9 @@ public class SudokuSpecialButtonLayout extends LinearLayout implements IHighligh
 
                     fixedButtons[i].setImageBitmap(bitResult);
                     fixedButtons[i].setBackgroundResource(gameController.getNoteStatus() ? R.drawable.numpad_highlighted_three : R.drawable.numpad_highlighted_four);
+
+                    keyboard.updateNotesEnabled();
+
                     break;
                 default:
                     break;
