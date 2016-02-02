@@ -10,8 +10,8 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.RelativeLayout;
 
-import org.secuso.privacyfriendlysudoku.game.GameCell;
 import org.secuso.privacyfriendlysudoku.controller.Symbol;
+import org.secuso.privacyfriendlysudoku.game.GameCell;
 
 /**
  * Created by TMZ_LToP on 10.11.2015.
@@ -116,6 +116,7 @@ public class SudokuCellView extends View {
 
 
         drawBackground(canvas, 3, 3, mWidth - 3, mHeight - 3, p);
+
         // if there is no mGameCell .. we can not retrieve the information to draw
         if(mGameCell != null) {
             drawValue(canvas);

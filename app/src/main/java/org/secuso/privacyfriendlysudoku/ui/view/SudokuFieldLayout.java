@@ -10,13 +10,14 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.RelativeLayout;
 
-import java.util.LinkedList;
-
 import org.secuso.privacyfriendlysudoku.controller.GameController;
 import org.secuso.privacyfriendlysudoku.controller.Symbol;
+import org.secuso.privacyfriendlysudoku.game.CellConflict;
 import org.secuso.privacyfriendlysudoku.game.GameCell;
 import org.secuso.privacyfriendlysudoku.game.ICellAction;
 import org.secuso.privacyfriendlysudoku.game.listener.IHighlightChangedListener;
+
+import java.util.LinkedList;
 
 /**
  * Created by Timm Lippert on 11.11.2015.
@@ -29,6 +30,7 @@ public class SudokuFieldLayout extends RelativeLayout implements IHighlightChang
     private int gameCellWidth;
     private int gameCellHeight;
     private SharedPreferences settings;
+    private Paint p = new Paint();
 
     private OnTouchListener listener = new OnTouchListener() {
         @Override
@@ -46,14 +48,13 @@ public class SudokuFieldLayout extends RelativeLayout implements IHighlightChang
         }
     };
 
-    private Paint p = new Paint();
-
     public SudokuCellView [][] gamecells;
     AttributeSet attrs;
 
     public SudokuFieldLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.attrs=attrs;
+        setWillNotDraw(false);
         setBackgroundColor(Color.argb(255, 200, 200, 200));
     }
 
@@ -198,6 +199,35 @@ public class SudokuFieldLayout extends RelativeLayout implements IHighlightChang
                 gamecells[i][j].invalidate();
             }
         }
+    }
 
+    @Override
+    public void dispatchDraw(Canvas canvas) {
+        super.dispatchDraw(canvas);
+
+        // draw error list
+        p = new Paint(Paint.ANTI_ALIAS_FLAG);
+        p.setStyle(Paint.Style.STROKE);
+        p.setStrokeWidth(4);
+        p.setColor(Color.RED);
+
+        for(CellConflict conflict : gameController.getErrorList()) {
+
+            //gamecells[conflict.getRowCell1()][conflict.getColCell1()].
+
+            int row = conflict.getRowCell1();
+            int col = conflict.getColCell1();
+            canvas.drawCircle(gameCellWidth * col + gameCellWidth / 2, gameCellHeight * row + gameCellHeight / 2, gameCellWidth/2 - gameCellWidth / 8, p);
+
+            int row2 = conflict.getRowCell2();
+            int col2 = conflict.getColCell2();
+            canvas.drawCircle(gameCellWidth * col2 + gameCellWidth / 2, gameCellHeight * row2 + gameCellHeight / 2, gameCellWidth/2 - gameCellWidth / 8, p);
+
+            canvas.drawLine(
+                    gameCellWidth * col + gameCellWidth / 2,
+                    gameCellHeight * row + gameCellHeight / 2,
+                    gameCellWidth * col2 + gameCellWidth / 2,
+                    gameCellHeight * row2 + gameCellHeight / 2, p);
+        }
     }
 }

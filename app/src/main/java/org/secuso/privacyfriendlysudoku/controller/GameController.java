@@ -5,27 +5,26 @@ import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
-
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.secuso.privacyfriendlysudoku.controller.helper.GameInfoContainer;
-import org.secuso.privacyfriendlysudoku.game.CellConflict;
 import org.secuso.privacyfriendlysudoku.game.CellConflictList;
 import org.secuso.privacyfriendlysudoku.game.GameBoard;
 import org.secuso.privacyfriendlysudoku.game.GameCell;
 import org.secuso.privacyfriendlysudoku.game.GameDifficulty;
 import org.secuso.privacyfriendlysudoku.game.GameType;
 import org.secuso.privacyfriendlysudoku.game.ICellAction;
+import org.secuso.privacyfriendlysudoku.game.listener.IGameErrorListener;
 import org.secuso.privacyfriendlysudoku.game.listener.IGameSolvedListener;
 import org.secuso.privacyfriendlysudoku.game.listener.IHighlightChangedListener;
 import org.secuso.privacyfriendlysudoku.game.listener.IHintListener;
 import org.secuso.privacyfriendlysudoku.game.listener.IModelChangedListener;
 import org.secuso.privacyfriendlysudoku.game.listener.ITimerListener;
+
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Created by Chris on 06.11.2015.
@@ -45,6 +44,7 @@ public class GameController implements IModelChangedListener, Parcelable {
     private LinkedList<IHighlightChangedListener> highlightListeners = new LinkedList<>();
     private LinkedList<IGameSolvedListener> solvedListeners = new LinkedList<>();
     private LinkedList<IHintListener> hintListener = new LinkedList<>();
+    private LinkedList<IGameErrorListener> errorListeners = new LinkedList<>();
     private boolean notifiedOnSolvedListeners = false;
 
     // Game
@@ -306,7 +306,7 @@ public class GameController implements IModelChangedListener, Parcelable {
         return 0 < val && val <= size;
     }
 
-    public List<CellConflict> getErrorList() {
+    public CellConflictList getErrorList() {
         return errorList;
     }
 
@@ -507,23 +507,24 @@ public class GameController implements IModelChangedListener, Parcelable {
     @Override
     public void onModelChange(GameCell c) {
         if(gameBoard.isFilled()) {
-            List<CellConflict> errorList = new LinkedList<>();
+            errorList = new CellConflictList();
             if(gameBoard.isSolved(errorList)) {
                 if(!notifiedOnSolvedListeners) {
                     notifiedOnSolvedListeners = true;
                     notifySolvedListeners();
                     resetSelects();
                 }
-            } else {
-                // notifyErrorListener();
-                // TODO: errorList now holds all the errors => display errors .. notify some view?
-            }
+            }// else {
+                // errorList now holds all the errors => display errors
+                //notifyErrorListener(errorList);
+                //resetSelects();
+            //}
         } else {
             notifiedOnSolvedListeners = false;
         }
     }
 
-    private void resetSelects() {
+    public void resetSelects() {
         selectedCol = -1;
         selectedRow = -1;
         selectedValue = 0;
@@ -542,6 +543,12 @@ public class GameController implements IModelChangedListener, Parcelable {
             highlightListeners.add(l);
         }
     }
+
+    /*public void registerGameErrorListener(IGameErrorListener l) {
+        if(!errorListeners.contains(l)) {
+            errorListeners.add(l);
+        }
+    }*/
 
     public void removeGameSolvedListener(IGameSolvedListener l) {
         if(solvedListeners.contains(l)) {
@@ -577,6 +584,12 @@ public class GameController implements IModelChangedListener, Parcelable {
             listener.onHintUsed();
         }
     }
+
+    /*public void notifyErrorListener(List<CellConflict> errorList) {
+        for (IGameErrorListener listener : errorListeners){
+            listener.onGameFilledWithErrors(errorList);
+        }
+    }*/
 
     public void registerHintListener(IHintListener listener){
         if (!hintListener.contains(listener)){
@@ -756,6 +769,7 @@ public class GameController implements IModelChangedListener, Parcelable {
         solvedListeners = new LinkedList<>();
         hintListener = new LinkedList<>();
         timerListeners = new LinkedList<>();
+        errorListeners = new LinkedList<>();
     }
 
     public void setContextAndSettings(Context applicationContext, SharedPreferences sharedPref) {

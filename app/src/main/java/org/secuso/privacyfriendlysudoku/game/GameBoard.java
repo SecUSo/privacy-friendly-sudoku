@@ -3,10 +3,10 @@ package org.secuso.privacyfriendlysudoku.game;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import org.secuso.privacyfriendlysudoku.game.listener.IModelChangedListener;
+
 import java.util.LinkedList;
 import java.util.List;
-
-import org.secuso.privacyfriendlysudoku.game.listener.IModelChangedListener;
 
 /**
  * Created by Christopher Beckmann on 06.11.2015.
@@ -127,7 +127,7 @@ public class GameBoard implements Cloneable, Parcelable {
         return existing;
     }
 
-    public boolean isSolved(final List<CellConflict> errorList) {
+    public boolean isSolved(final CellConflictList errorList) {
         boolean solved = true;
 
         if(errorList == null) {

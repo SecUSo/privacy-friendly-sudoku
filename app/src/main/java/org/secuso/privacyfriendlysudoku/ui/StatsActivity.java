@@ -3,31 +3,29 @@ package org.secuso.privacyfriendlysudoku.ui;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
-
-import java.util.List;
 
 import org.secuso.privacyfriendlysudoku.controller.SaveLoadStatistics;
 import org.secuso.privacyfriendlysudoku.controller.helper.HighscoreInfoContainer;
 import org.secuso.privacyfriendlysudoku.game.GameType;
 import org.secuso.privacyfriendlysudoku.ui.view.R;
+
+import java.util.List;
 
 public class StatsActivity extends AppCompatActivity {
 
@@ -198,14 +196,14 @@ public class StatsActivity extends AppCompatActivity {
 
 
         private String formatTime(int totalTime){
-            if (totalTime==0) return "/";
+            if (totalTime==0) return "-";
             int seconds = totalTime % 60;
             int minutes = ((totalTime -seconds)/60)%60 ;
             int hours = (totalTime - minutes - seconds)/(3600);
             String h,m,s;
-            s = (seconds< 10)? "0"+String.valueOf(seconds):String.valueOf(seconds);
-            m = (minutes< 10)? "0"+String.valueOf(minutes):String.valueOf(minutes);
-            h = (hours< 10)? "0"+String.valueOf(hours):String.valueOf(hours);
+            s = (seconds < 10)? "0"+String.valueOf(seconds):String.valueOf(seconds);
+            m = (minutes < 10)? "0"+String.valueOf(minutes):String.valueOf(minutes);
+            h = (hours < 10)? "0"+String.valueOf(hours):String.valueOf(hours);
             return (h + ":" + m + ":" + s);
 
         }

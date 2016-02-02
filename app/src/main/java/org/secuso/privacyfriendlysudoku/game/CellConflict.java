@@ -11,6 +11,19 @@ public class CellConflict {
     private GameCell c1 = null;
     private GameCell c2 = null;
 
+    public int getRowCell1() {
+        return c1.getRow();
+    }
+    public int getRowCell2() {
+        return c2.getRow();
+    }
+    public int getColCell1() {
+        return c1.getCol();
+    }
+    public int getColCell2() {
+        return c2.getCol();
+    }
+
 
     public CellConflict(GameCell first, GameCell second) {
         c1 = first;

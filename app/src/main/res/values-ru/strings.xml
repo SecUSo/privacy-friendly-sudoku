@@ -39,7 +39,7 @@
     <string name="hint_usage">Выбери поле которое должно быть решено.</string>
     <string name="loadgame_delete_confirm">Удалить</string>
     <string name="loadgame_delete_confirmation">Ты уверен что хочеш удалить эту игру?</string>
-    <string name="menu_about">О</string>
+    <string name="menu_about">О нас</string>
     <string name="menu_continue_game">Продолжить игру</string>
     <string name="total_of_time">Общее время:</string>
     <string name="title_activity_settings">Настройки</string>
@@ -72,4 +72,5 @@
     <string name="menu_settings">Настройки</string>
     <string name="min_time">Лучшее время:</string>
     <string name="more_info">Больше информации на:</string>
+    <string name="help_privacyInfo">Информация конфиденциальности</string>
 </resources>
