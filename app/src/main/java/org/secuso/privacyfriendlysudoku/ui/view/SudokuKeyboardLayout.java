@@ -1,20 +1,16 @@
 package org.secuso.privacyfriendlysudoku.ui.view;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import org.secuso.privacyfriendlysudoku.controller.GameController;
 import org.secuso.privacyfriendlysudoku.controller.Symbol;
 import org.secuso.privacyfriendlysudoku.game.listener.IHighlightChangedListener;
-import org.w3c.dom.Text;
 
 /**
  * Created by TMZ_LToP on 12.11.2015.
@@ -37,8 +33,6 @@ public class SudokuKeyboardLayout extends LinearLayout implements IHighlightChan
                 SudokuButton btn = (SudokuButton)v;
 
                 gameController.selectValue(btn.getValue());
-
-                gameController.saveGame(getContext());
             }
         }
     };

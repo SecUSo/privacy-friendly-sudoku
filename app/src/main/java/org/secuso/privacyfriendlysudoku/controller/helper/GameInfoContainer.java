@@ -2,14 +2,14 @@ package org.secuso.privacyfriendlysudoku.controller.helper;
 
 import android.util.Log;
 
-import java.util.Date;
-
 import org.secuso.privacyfriendlysudoku.controller.GameController;
 import org.secuso.privacyfriendlysudoku.controller.Symbol;
 import org.secuso.privacyfriendlysudoku.game.GameCell;
 import org.secuso.privacyfriendlysudoku.game.GameDifficulty;
 import org.secuso.privacyfriendlysudoku.game.GameType;
 import org.secuso.privacyfriendlysudoku.game.ICellAction;
+
+import java.util.Date;
 
 /**
  * Created by Chris on 17.11.2015.
@@ -24,12 +24,13 @@ public class GameInfoContainer {
     int[] fixedValues;
     int[] setValues;
     boolean[][] setNotes;
+    int hintsUsed;
 
     public GameInfoContainer() {}
     public GameInfoContainer(int ID, GameDifficulty difficulty, GameType gameType, int[] fixedValues, int[] setValues, boolean[][] setNotes) {
-        this(ID, difficulty, new Date(), 0, gameType, fixedValues, setValues, setNotes);
+        this(ID, difficulty, new Date(), 0, gameType, fixedValues, setValues, setNotes, 0);
     }
-    public GameInfoContainer(int ID, GameDifficulty difficulty, Date lastTimePlayed, int timePlayed, GameType gameType, int[] fixedValues, int[] setValues, boolean[][] setNotes) {
+    public GameInfoContainer(int ID, GameDifficulty difficulty, Date lastTimePlayed, int timePlayed, GameType gameType, int[] fixedValues, int[] setValues, boolean[][] setNotes, int hintsUsed) {
         this.ID = ID;
         this.timePlayed = timePlayed;
         this.difficulty = difficulty;
@@ -38,6 +39,7 @@ public class GameInfoContainer {
         this.fixedValues = fixedValues;
         this.setValues = setValues;
         this.setNotes = setNotes;
+        this.hintsUsed = hintsUsed;
     }
 
     public void setID(int ID) {
@@ -64,6 +66,14 @@ public class GameInfoContainer {
             this.timePlayed = Integer.valueOf(s);
         } catch(NumberFormatException e) {
             throw new IllegalArgumentException("GameInfoContainer: Can not parse time.", e);
+        }
+    }
+
+    public void parseHintsUsed(String s) {
+        try {
+            this.hintsUsed = Integer.valueOf(s);
+        } catch(NumberFormatException e) {
+            throw new IllegalArgumentException("GameInfoContainer: Can not parse hints used.", e);
         }
     }
 
@@ -130,7 +140,7 @@ public class GameInfoContainer {
                 throw new IllegalArgumentException("The string must be "+size+" characters long.");
             }
             for(int k = 0; k < strings[i].length(); k++) {
-                setNotes[i][k] = (strings[i].charAt(k)) == '1' ? true : false;
+                setNotes[i][k] = (strings[i].charAt(k)) == '1';
             }
         }
     }
@@ -159,6 +169,8 @@ public class GameInfoContainer {
         return ID;
     }
 
+    public int getHintsUsed() { return hintsUsed; }
+
     public static String getGameInfo(GameController controller) {
         StringBuilder sb = new StringBuilder();
         Date today = new Date();
@@ -176,6 +188,8 @@ public class GameInfoContainer {
         sb.append(getSetCells(controller));
         sb.append("/");
         sb.append(getNotes(controller));
+        sb.append("/");
+        sb.append(controller.getUsedHints());
 
         String result = sb.toString();
 

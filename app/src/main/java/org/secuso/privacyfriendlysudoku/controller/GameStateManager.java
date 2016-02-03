@@ -4,14 +4,14 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import org.secuso.privacyfriendlysudoku.controller.helper.GameInfoContainer;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
-
-import org.secuso.privacyfriendlysudoku.controller.helper.GameInfoContainer;
 
 /**
  * Created by Chris on 16.11.2015.
@@ -86,7 +86,11 @@ public class GameStateManager {
                     gic.parseFixedValues(values[i++]);
                     gic.parseSetValues(values[i++]);
                     gic.parseNotes(values[i++]);
+                    gic.parseHintsUsed(values[i++]);
                 } catch(IllegalArgumentException e) {
+                    file.delete();
+                    continue;
+                } catch(IndexOutOfBoundsException e) {
                     file.delete();
                     continue;
                 }

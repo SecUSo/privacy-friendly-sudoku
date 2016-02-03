@@ -116,6 +116,7 @@ public class GameController implements IModelChangedListener, Parcelable {
         this.gameID = gic.getID();
         this.difficulty = gic.getDifficulty();
         this.time = gic.getTimePlayed();
+        this.usedHints = gic.getHintsUsed();
 
         setGameType(gic.getGameType());
         this.gameBoard = new GameBoard(gic.getGameType());
@@ -472,7 +473,6 @@ public class GameController implements IModelChangedListener, Parcelable {
             undoRedoManager.addState(gameBoard);
             notifyHighlightChangedListeners();
         }
-
     }
 
     public void toggleSelectedCellsNote(int value) {
@@ -486,12 +486,6 @@ public class GameController implements IModelChangedListener, Parcelable {
     public boolean isValidCellSelected() {
         return selectedRow != -1 && selectedCol != -1 && !getGameCell(selectedRow, selectedCol).isFixed();
     }
-
-//    public void registerListener(IModelChangeListener l) {
-//        if(!listeners.contains(l)) {
-//            listeners.add(l);
-//        }
-//    }
 
     public int getSectionHeight() {
         return sectionHeight;
@@ -553,12 +547,6 @@ public class GameController implements IModelChangedListener, Parcelable {
             highlightListeners.add(l);
         }
     }
-
-    /*public void registerGameErrorListener(IGameErrorListener l) {
-        if(!errorListeners.contains(l)) {
-            errorListeners.add(l);
-        }
-    }*/
 
     public void removeGameSolvedListener(IGameSolvedListener l) {
         if(solvedListeners.contains(l)) {

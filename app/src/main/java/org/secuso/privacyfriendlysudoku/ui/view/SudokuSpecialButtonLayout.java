@@ -19,13 +19,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import java.util.LinkedList;
-
 import org.secuso.privacyfriendlysudoku.controller.GameController;
 import org.secuso.privacyfriendlysudoku.game.listener.IHighlightChangedListener;
 import org.secuso.privacyfriendlysudoku.ui.listener.IHintDialogFragmentListener;
 
-import static org.secuso.privacyfriendlysudoku.ui.view.SudokuButtonType.*;
+import java.util.LinkedList;
+
+import static org.secuso.privacyfriendlysudoku.ui.view.SudokuButtonType.Spacer;
+import static org.secuso.privacyfriendlysudoku.ui.view.SudokuButtonType.getSpecialButtons;
 
 /**
  * Created by TMZ_LToP on 17.11.2015.
@@ -62,11 +63,9 @@ public class SudokuSpecialButtonLayout extends LinearLayout implements IHighligh
                         break;
                     case Do:
                         gameController.ReDo();
-                        gameController.saveGame(getContext());
                         break;
                     case Undo:
                         gameController.UnDo();
-                        gameController.saveGame(getContext());
                         break;
                     case Hint:
                         if(gameController.isValidCellSelected()) {
