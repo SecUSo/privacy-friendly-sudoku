@@ -27,6 +27,8 @@ public class CellConflict implements Parcelable {
         return c2.getCol();
     }
 
+    public GameCell getCell1() { return c1; }
+    public GameCell getCell2() { return c2; }
 
     public CellConflict(GameCell first, GameCell second) {
         c1 = first;

@@ -28,11 +28,8 @@ import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import java.util.LinkedList;
-import java.util.List;
-
-import org.secuso.privacyfriendlysudoku.controller.GameStateManager;
 import org.secuso.privacyfriendlysudoku.controller.GameController;
+import org.secuso.privacyfriendlysudoku.controller.GameStateManager;
 import org.secuso.privacyfriendlysudoku.controller.SaveLoadStatistics;
 import org.secuso.privacyfriendlysudoku.controller.Symbol;
 import org.secuso.privacyfriendlysudoku.controller.helper.GameInfoContainer;
@@ -42,11 +39,14 @@ import org.secuso.privacyfriendlysudoku.game.listener.IGameSolvedListener;
 import org.secuso.privacyfriendlysudoku.game.listener.ITimerListener;
 import org.secuso.privacyfriendlysudoku.ui.listener.IHintDialogFragmentListener;
 import org.secuso.privacyfriendlysudoku.ui.listener.IResetDialogFragmentListener;
-import org.secuso.privacyfriendlysudoku.ui.view.WinDialog;
 import org.secuso.privacyfriendlysudoku.ui.view.R;
 import org.secuso.privacyfriendlysudoku.ui.view.SudokuFieldLayout;
 import org.secuso.privacyfriendlysudoku.ui.view.SudokuKeyboardLayout;
 import org.secuso.privacyfriendlysudoku.ui.view.SudokuSpecialButtonLayout;
+import org.secuso.privacyfriendlysudoku.ui.view.WinDialog;
+
+import java.util.LinkedList;
+import java.util.List;
 
 public class GameActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, IGameSolvedListener ,ITimerListener, IHintDialogFragmentListener, IResetDialogFragmentListener {
 
@@ -183,6 +183,9 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
         }
         gameController.notifyHighlightChangedListeners();
         gameController.notifyTimerListener(gameController.getTime());
+
+        // run this so the error list gets build again.
+        gameController.onModelChange(null);
 
     }
 

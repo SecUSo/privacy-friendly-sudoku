@@ -14,7 +14,6 @@ import org.secuso.privacyfriendlysudoku.game.GameCell;
 import org.secuso.privacyfriendlysudoku.game.GameDifficulty;
 import org.secuso.privacyfriendlysudoku.game.GameType;
 import org.secuso.privacyfriendlysudoku.game.ICellAction;
-import org.secuso.privacyfriendlysudoku.game.listener.IGameErrorListener;
 import org.secuso.privacyfriendlysudoku.game.listener.IGameSolvedListener;
 import org.secuso.privacyfriendlysudoku.game.listener.IHighlightChangedListener;
 import org.secuso.privacyfriendlysudoku.game.listener.IHintListener;
@@ -45,7 +44,6 @@ public class GameController implements IModelChangedListener, Parcelable {
     private LinkedList<IHighlightChangedListener> highlightListeners = new LinkedList<>();
     private LinkedList<IGameSolvedListener> solvedListeners = new LinkedList<>();
     private LinkedList<IHintListener> hintListener = new LinkedList<>();
-    private LinkedList<IGameErrorListener> errorListeners = new LinkedList<>();
     private boolean notifiedOnSolvedListeners = false;
 
     // Game
@@ -207,7 +205,6 @@ public class GameController implements IModelChangedListener, Parcelable {
     public void setValue(int row, int col, int value) {
         GameCell cell = gameBoard.getCell(row, col);
         if (!cell.isFixed() && isValidNumber(value)) {
-            cell.deleteNotes();
             cell.setValue(value);
 
             if(settings != null && settings.getBoolean("pref_automatic_note_deletion",true)) {
@@ -323,7 +320,6 @@ public class GameController implements IModelChangedListener, Parcelable {
         if(!c.isFixed()) {
             c.setValue(0);
             //notifyListeners();
-
             return true;
         }
         return false;
@@ -507,6 +503,9 @@ public class GameController implements IModelChangedListener, Parcelable {
 
     @Override
     public void onModelChange(GameCell c) {
+
+        checkErrorList();
+
         if(gameBoard.isFilled()) {
             errorList = new CellConflictList();
             if(gameBoard.isSolved(errorList)) {
@@ -523,6 +522,16 @@ public class GameController implements IModelChangedListener, Parcelable {
         } else {
             notifiedOnSolvedListeners = false;
         }
+    }
+
+    public void checkErrorList() {
+        LinkedList<CellConflict> toRemove = new LinkedList<>();
+        for(CellConflict cc : errorList) {
+            if(cc.getCell1().getValue() != cc.getCell2().getValue()) {
+                toRemove.add(cc);
+            }
+        }
+        errorList.removeAll(toRemove);
     }
 
     public void resetSelects() {
@@ -774,7 +783,6 @@ public class GameController implements IModelChangedListener, Parcelable {
         solvedListeners = new LinkedList<>();
         hintListener = new LinkedList<>();
         timerListeners = new LinkedList<>();
-        errorListeners = new LinkedList<>();
     }
 
     public void setContextAndSettings(Context applicationContext, SharedPreferences sharedPref) {
