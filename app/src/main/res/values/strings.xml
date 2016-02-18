@@ -104,13 +104,13 @@
     <string name="win_time">Time:</string>
     <string name="win_hint">Hints:</string>
     <string name="win_show_game">Show gamefield</string>
-    <string name="win_best_time">New personal best time!</string>
+    <string name="win_best_time">New record!</string>
 
     <!-- ### HELP prefs ###-->
     <string name="header_help">Help</string>
     <string name="help_keyboard">Keyboard</string>
     <string name="help_gamefield">Game field</string>
-    <string name="help_keyhighlighted_summary">Indicates that the value is selected and will be set in every clicked field</string>
+    <string name="help_keyhighlighted_summary">Indicates that the value is selected. Values are set directly when touching fields in this mode, without selecting the field.</string>
     <string name="help_keyhighlighted_yellow_summary">Indicates that the correct number of values for this number have been placed.</string>
 
     <!-- ### Special buttons description ###-->
@@ -123,7 +123,7 @@
     <string name="help_delete">Delete button</string>
     <string name="help_delete_summary">Deletes a selected field</string>
     <string name="help_notes">Note toggle button</string>
-    <string name="help_notes_summary">toggles if numbers should be set as notes or as values in a field</string>
+    <string name="help_notes_summary">Toggles if numbers should be set as notes or as values in a field</string>
     <string name="help_privacyInfo">Privacy Info</string>
     <string name="help_permissions">Permissions</string>
     <string name="help_permissions_summary">Privacy Friendly Sudonku does not use any permissions.</string>

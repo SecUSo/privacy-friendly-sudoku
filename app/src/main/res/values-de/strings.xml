@@ -53,7 +53,7 @@
     <string name="reset_confirmation_confirm">Zurücksetzen</string>
     <string name="reset_confirmation">Bist du dir sicher, dass du das komplette Spielfeld zurücksetzen möchtest?</string>
     <string name="total_of_time">Gesamtspielzeit:</string>
-    <string name="win_button_text">fortsetzen</string>
+    <string name="win_button_text">Fortsetzen</string>
     <string name="win_text">Glückwunsch!</string>
     <string name="win_best_time">Neue Bestzeit!</string>
     <string name="win_hint">Hinweise:</string>
