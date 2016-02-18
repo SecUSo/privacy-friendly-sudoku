@@ -94,7 +94,7 @@ public class SudokuCellView extends View {
                 p.setColor(Color.WHITE);
                 break;
             case Error:
-                p.setColor(Color.RED);
+                p.setColor(Color.LTGRAY);
                 break;
             case Selected:
                 p.setColor(Color.GREEN);
