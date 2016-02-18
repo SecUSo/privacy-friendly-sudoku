@@ -1,5 +1,6 @@
 package org.secuso.privacyfriendlysudoku.ui;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
@@ -45,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     RatingBar difficultyBar;
     TextView difficultyText;
     SharedPreferences settings;
+    ImageView arrowLeft, arrowRight;
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -88,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
           may be best to switch to a
           {@link android.support.v4.app.FragmentStatePagerAdapter}.
          */
-        SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        final SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
 
         // Set up the ViewPager with the sections adapter.
@@ -100,6 +102,31 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         String lastChosenGameType = settings.getString("lastChosenGameType", GameType.Default_9x9.name());
         int index = validGameTypes.indexOf(Enum.valueOf(GameType.class, lastChosenGameType));
         mViewPager.setCurrentItem(index);
+        arrowLeft = (ImageView)findViewById(R.id.arrow_left);
+        arrowRight = (ImageView) findViewById(R.id.arrow_right);
+
+        //care for initial postiton of the ViewPager
+        arrowLeft.setVisibility((index==0)?View.INVISIBLE:View.VISIBLE);
+        arrowRight.setVisibility((index==mSectionsPagerAdapter.getCount()-1)?View.INVISIBLE:View.VISIBLE);
+
+        //Update ViewPager on change
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                arrowLeft.setVisibility((position==0)?View.INVISIBLE:View.VISIBLE);
+                arrowRight.setVisibility((position==mSectionsPagerAdapter.getCount()-1)?View.INVISIBLE:View.VISIBLE);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+            }
+        });
+
 
         // Set the difficulty Slider to whatever was chosen the last time
         difficultyBar = (RatingBar)findViewById(R.id.difficultyBar);
@@ -116,7 +143,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 difficultyText.setText(getString(difficultyList.get((int) ratingBar.getRating() - 1).getStringResID()));
             }
         });
-        GameDifficulty lastChosenDifficulty = GameDifficulty.valueOf(settings.getString("lastChosenDifficulty", "Easy"));
+        GameDifficulty lastChosenDifficulty = GameDifficulty.valueOf(settings.getString("lastChosenDifficulty", "Moderate"));
         difficultyBar.setRating(GameDifficulty.getValidDifficultyList().indexOf(lastChosenDifficulty) + 1);
         /*LayerDrawable stars = (LayerDrawable)difficultyBar.getProgressDrawable();
         stars.getDrawable(2).setColorFilter(getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_ATOP);//Color for Stars fully selected
@@ -148,6 +175,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         winScreen.show(fm,"win_screen_layout");*/
 
     }
+
 
     public void onClick(View view) {
 
@@ -280,6 +308,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             super(fm);
         }
 
+
         @Override
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
@@ -287,12 +316,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             return GameTypeFragment.newInstance(position);
         }
 
+
+
         @Override
         public int getCount() {
             // Show 3 total pages.
             return GameType.getValidGameTypes().size();
         }
     }
+
 
     /**
      * A placeholder fragment containing a simple view.
@@ -302,6 +334,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
          * The fragment argument representing the section number for this
          * fragment.
          */
+
+
         private static final String ARG_SECTION_NUMBER = "section_number";
 
         /**
@@ -317,7 +351,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
         public GameTypeFragment() {
+
         }
+
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,

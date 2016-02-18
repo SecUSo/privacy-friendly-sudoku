@@ -24,7 +24,7 @@
     <string name="help_notes">Remarques</string>
     <string name="help_notes_summary">Change si les numeros se montre étant des valeurs ou des remarques sur le champs</string>
     <string name="help_permissions">Droits</string>
-    <string name="help_permissions_summary">Privacy Friendly Sudonku n\'utilise pas d\'autorisations.</string>
+    <string name="help_permissions_summary">Privacy Friendly Sudoku n\'utilise pas d\'autorisations.</string>
     <string name="help_privacyInfo">Information de confidentialité</string>
     <string name="help_undo">Défaire</string>
     <string name="help_undo_summary">Défais la dernière action</string>

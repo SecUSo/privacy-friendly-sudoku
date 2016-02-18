@@ -147,12 +147,12 @@
                 android:clickable="false"
                 android:background="@drawable/standalone_button"/>
 
-            <Button
+          <!--  <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Win Debug"
-                android:visibility="invisible"
-                android:onClick="callFragment"/>
+                android:text="coachMark"
+                android:visibility="visible"
+                android:onClick="coachMark"/> -->
 <!--
             <LinearLayout
                 android:layout_width="match_parent"

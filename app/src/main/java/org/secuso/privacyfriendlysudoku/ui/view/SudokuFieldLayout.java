@@ -211,22 +211,29 @@ public class SudokuFieldLayout extends RelativeLayout implements IHighlightChang
         p.setStrokeWidth(4);
         p.setColor(Color.RED);
 
+        float offset1=0;
+        float offset2= 0;
+        int row;
+        int col;
+        int row2;
+        int col2;
+        float radius;
         for(CellConflict conflict : gameController.getErrorList()) {
 
             //gamecells[conflict.getRowCell1()][conflict.getColCell1()].
 
-            int row = conflict.getRowCell1();
-            int col = conflict.getColCell1();
-            canvas.drawCircle(gameCellWidth * col + gameCellWidth / 2, gameCellHeight * row + gameCellHeight / 2, gameCellWidth/2 - gameCellWidth / 8, p);
+            row = conflict.getRowCell1();
+            col = conflict.getColCell1();
+            radius = gameCellWidth/2 - gameCellWidth / 8;
+            canvas.drawCircle(gameCellWidth * col + gameCellWidth / 2, gameCellHeight * row + gameCellHeight / 2, radius, p);
 
-            int row2 = conflict.getRowCell2();
-            int col2 = conflict.getColCell2();
-            canvas.drawCircle(gameCellWidth * col2 + gameCellWidth / 2, gameCellHeight * row2 + gameCellHeight / 2, gameCellWidth / 2 - gameCellWidth / 8, p);
+            row2 = conflict.getRowCell2();
+            col2 = conflict.getColCell2();
+            canvas.drawCircle(gameCellWidth * col2 + gameCellWidth / 2, gameCellHeight * row2 + gameCellHeight / 2, radius, p);
 
-            float offset1=0;
-            float offset2= 0;
 
-            float radius = gameCellWidth/2 - gameCellWidth / 8;
+
+
             if (col == col2 || row == row2) {
                 offset1 = (col > col2)? 0-radius:radius;
                 offset2 = (row > row2)? 0-radius:radius;
