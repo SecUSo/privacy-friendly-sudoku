@@ -179,10 +179,16 @@ public class GameController implements IModelChangedListener, Parcelable {
 
         int[] solved = solve();
         // and reveal the selected value.
-        selectValue(solved[selectedRow * getSize() + selectedCol]);
+        int value = solved[selectedRow * getSize() + selectedCol];
+        setValue(selectedRow, selectedCol, value);
+        // add state to undo
+        undoRedoManager.addState(gameBoard);
+        highlightValue = value;
+
         usedHints++;
 
         notifyHintListener();
+        notifyHighlightChangedListeners();
     }
 
     private void setGameType(GameType type) {
