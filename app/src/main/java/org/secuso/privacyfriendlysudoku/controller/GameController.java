@@ -317,8 +317,14 @@ public class GameController implements IModelChangedListener, Parcelable {
 
     public void resetLevel() {
         gameBoard.reset();
-        undoRedoManager.addState(gameBoard);
-        //notifyListeners();
+
+        if(settings.getBoolean("pref_timer_reset", true)) {
+            time = 0;
+            undoRedoManager = new UndoRedoManager(gameBoard);
+        } else {
+            undoRedoManager.addState(gameBoard);
+        }
+
         notifyHighlightChangedListeners();
     }
 

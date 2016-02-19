@@ -52,6 +52,8 @@
     </array>
     <string name="pref_automatic_note_deletion">Note deletion</string>
     <string name="pref_automatic_note_deletion_summary">Automatically remove notes when setting values on connected cells</string>
+    <string name="pref_timer_reset">Timer Reset</string>
+    <string name="pref_timer_reset_summary">Also reset the timer, when resetting the game board.</string>
 
     <!-- ###ABOUT### -->
     <string name="app_name_long" translatable="false">Privacy friendly Sudoku</string>
