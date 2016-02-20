@@ -24,6 +24,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -75,9 +76,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             editor.apply();
         }
 
-        // TODO: remove this after testing
-        WelcomeDialog welcomeDialog = new WelcomeDialog();
-        welcomeDialog.show(getFragmentManager(), "WelcomeDialog");
 
 
         // check if we need to pre generate levels.
