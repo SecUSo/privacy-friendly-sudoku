@@ -1,6 +1,5 @@
 package org.secuso.privacyfriendlysudoku.ui.view;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -180,8 +179,7 @@ public class SudokuSpecialButtonLayout extends LinearLayout implements IHighligh
         }
     }
 
-    @SuppressLint("ValidFragment")
-    public class HintConfirmationDialog extends DialogFragment {
+    public static class HintConfirmationDialog extends DialogFragment {
 
         LinkedList<IHintDialogFragmentListener> listeners = new LinkedList<>();
 

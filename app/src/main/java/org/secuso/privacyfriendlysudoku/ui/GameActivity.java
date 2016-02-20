@@ -240,8 +240,8 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
 
         switch(id) {
             case R.id.menu_reset:
-                ResetConfirmationDialog hintDialog = new ResetConfirmationDialog();
-                hintDialog.show(getFragmentManager(), "ResetDialogFragment");
+                ResetConfirmationDialog resetDialog = new ResetConfirmationDialog();
+                resetDialog.show(getFragmentManager(), "ResetDialogFragment");
                 break;
 
             case R.id.nav_newgame:
@@ -391,7 +391,7 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
         public void onAttach(Activity activity) {
             super.onAttach(activity);
             // Verify that the host activity implements the callback interface
-            if(activity instanceof IHintDialogFragmentListener) {
+            if(activity instanceof IResetDialogFragmentListener) {
                 listeners.add((IResetDialogFragmentListener) activity);
             }
         }
