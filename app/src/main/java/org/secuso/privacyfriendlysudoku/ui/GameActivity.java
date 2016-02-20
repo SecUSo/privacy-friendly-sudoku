@@ -1,6 +1,5 @@
 package org.secuso.privacyfriendlysudoku.ui;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -383,8 +382,8 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
     public void onDialogNegativeClick() {
         // do nothing
     }
-    @SuppressLint("ValidFragment")
-    public class ResetConfirmationDialog extends DialogFragment {
+
+    public static class ResetConfirmationDialog extends DialogFragment {
 
         LinkedList<IResetDialogFragmentListener> listeners = new LinkedList<>();
 

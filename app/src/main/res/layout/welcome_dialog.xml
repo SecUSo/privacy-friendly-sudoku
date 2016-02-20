@@ -4,7 +4,7 @@
     android:gravity="center"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:weightSum="3">
+    android:padding="@dimen/activity_horizontal_margin">
 
     <TextView
         android:layout_width="wrap_content"
@@ -21,9 +21,7 @@
         style="@style/Base.DialogWindowTitle.AppCompat"/>
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_weight="1.25"
-        android:weightSum="1"
+        android:layout_height="wrap_content"
         android:orientation="horizontal">
         <ImageView
             android:layout_width="wrap_content"
@@ -34,7 +32,6 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:adjustViewBounds="true"
-            android:layout_weight="1"
             android:layout_gravity="center"
             android:src="@drawable/icon_default_9x9"/>
         <ImageView
@@ -62,7 +59,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/difficultyBar"
         android:layout_gravity="center_horizontal"
-        android:clickable="false"
+        android:isIndicator="true"
         android:numStars="3"
         android:rating="1"
         android:stepSize="1"

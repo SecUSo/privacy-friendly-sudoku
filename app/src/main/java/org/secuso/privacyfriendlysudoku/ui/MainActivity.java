@@ -1,6 +1,5 @@
 package org.secuso.privacyfriendlysudoku.ui;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -24,7 +23,6 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -73,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             SharedPreferences.Editor editor = settings.edit();
             editor.putBoolean("firstStart", false);
-            editor.apply();
+            editor.commit();
         }
 
         // check if we need to pre generate levels.
@@ -377,8 +375,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    @SuppressLint("ValidFragment")
-    public class WelcomeDialog extends DialogFragment {
+    public static class WelcomeDialog extends DialogFragment {
 
         @Override
         public void onAttach(Activity activity) {

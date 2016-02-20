@@ -1,6 +1,5 @@
 package org.secuso.privacyfriendlysudoku.ui;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -9,9 +8,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,17 +22,17 @@ import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import java.text.DateFormat;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.TimeZone;
-
 import org.secuso.privacyfriendlysudoku.controller.GameStateManager;
 import org.secuso.privacyfriendlysudoku.controller.helper.GameInfoContainer;
 import org.secuso.privacyfriendlysudoku.game.GameDifficulty;
 import org.secuso.privacyfriendlysudoku.ui.listener.IDeleteDialogFragmentListener;
 import org.secuso.privacyfriendlysudoku.ui.view.R;
+
+import java.text.DateFormat;
+import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.TimeZone;
 
 public class LoadGameActivity extends AppCompatActivity implements IDeleteDialogFragmentListener {
 
@@ -114,8 +113,7 @@ public class LoadGameActivity extends AppCompatActivity implements IDeleteDialog
         // do nothing
     }
 
-    @SuppressLint("ValidFragment")
-    public class DeleteDialogFragment extends DialogFragment {
+    public static class DeleteDialogFragment extends DialogFragment {
 
         private int position = 0;
 
