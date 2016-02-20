@@ -1,38 +1,34 @@
 package org.secuso.privacyfriendlysudoku.ui;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.DialogFragment;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.LayerDrawable;
+import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import java.io.Serializable;
-import java.util.LinkedList;
-import java.util.List;
 
 import org.secuso.privacyfriendlysudoku.controller.GameStateManager;
 import org.secuso.privacyfriendlysudoku.controller.NewLevelManager;
@@ -40,6 +36,10 @@ import org.secuso.privacyfriendlysudoku.controller.helper.GameInfoContainer;
 import org.secuso.privacyfriendlysudoku.game.GameDifficulty;
 import org.secuso.privacyfriendlysudoku.game.GameType;
 import org.secuso.privacyfriendlysudoku.ui.view.R;
+
+import java.io.Serializable;
+import java.util.LinkedList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
@@ -67,10 +67,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             // preload some levels so we don't have to generate as many and we can start playing right away.
             newLevelManager.loadFirstStartLevels();
 
+            WelcomeDialog welcomeDialog = new WelcomeDialog();
+            welcomeDialog.show(getFragmentManager(), "WelcomeDialog");
+
             SharedPreferences.Editor editor = settings.edit();
             editor.putBoolean("firstStart", false);
-            editor.commit();
+            editor.apply();
         }
+
+        // TODO: remove this after testing
+        WelcomeDialog welcomeDialog = new WelcomeDialog();
+        welcomeDialog.show(getFragmentManager(), "WelcomeDialog");
+
 
         // check if we need to pre generate levels.
         newLevelManager.checkAndRestock();
@@ -370,6 +378,29 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             TextView textView = (TextView) rootView.findViewById(R.id.section_label);
             textView.setText(getString(gameType.getStringResID()));
             return rootView;
+        }
+    }
+
+    @SuppressLint("ValidFragment")
+    public class WelcomeDialog extends DialogFragment {
+
+        @Override
+        public void onAttach(Activity activity) {
+            super.onAttach(activity);
+        }
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+
+            LayoutInflater i = getActivity().getLayoutInflater();
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+            builder.setView(i.inflate(R.layout.welcome_dialog, null));
+            builder.setIcon(R.mipmap.ic_launcher);
+            builder.setTitle(getActivity().getString(R.string.app_name_long));
+            builder.setPositiveButton(getActivity().getString(R.string.win_button_text), null);
+
+            return builder.create();
         }
     }
 }

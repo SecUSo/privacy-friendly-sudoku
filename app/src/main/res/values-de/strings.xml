@@ -79,5 +79,7 @@
     <string name="help_delete">Löschen</string>
     <string name="header_help">Hilfe</string>
     <string name="help_privacyInfo">Privatsphäre Information</string>
+    <string name="pref_timer_reset">Zeit zurücksetzen</string>
+    <string name="pref_timer_reset_summary">Beim zurücksetzen des Spielfeldes wird die Zeit auch zurückgesetzt.</string>
 
 </resources>
