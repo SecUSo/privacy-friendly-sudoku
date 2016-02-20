@@ -87,7 +87,11 @@
     <string name="reset_confirmation_confirm">Reset</string>
 
     <!-- ### Welcome Dialog ### -->
-    <string name="welcome1">Welcome to Privacy Friendly Sudoku.</string>
+    <string name="welcome">Welcome to Privacy Friendly Sudoku.</string>
+    <string name="field_select_description">Swipe or press the arrow buttons on the left nd right to change the game filed mode</string>
+    <string name="field_select_description_headline">Field mode:</string>
+    <string name="difficulty_description">Press or swipe the stars to change the difficulty</string>
+    <string name="difficulty_description_headline">Difficulty:</string>
 
     <!-- ### Continue Game ### -->
     <string name="loadgame_delete_confirmation">Are you sure you want to delete this save?</string>
