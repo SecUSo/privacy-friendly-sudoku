@@ -17,16 +17,11 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@android:id/background">
         <bitmap
-            android:src="@drawable/ic_star_grey_48dp"/>
-    </item>
-    <item android:id="@android:id/secondaryProgress">
-        <bitmap
-            android:src="@drawable/ic_star_half_black_48dp"
-            android:tint="@color/middlegrey" />
+            android:src="@drawable/ic_star_grey_36dp" />
     </item>
     <item android:id="@android:id/progress">
         <bitmap
-            android:src="@drawable/ic_star_blue_48dp" />
+            android:src="@drawable/ic_star_blue_36dp" />
     </item>
 </layer-list>
 

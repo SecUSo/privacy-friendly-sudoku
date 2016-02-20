@@ -49,8 +49,9 @@
     </style>
 
     <style name="RatingBar" parent="RatingBarStyle">
-        <item name="android:minHeight">57dip</item>
-        <item name="android:maxHeight">57dip</item>
+        <item name="android:minHeight">50dp</item>
+        <item name="android:maxHeight">50dp</item>
+        <item name="android:layout_height">50dp</item>
     </style>
 
 

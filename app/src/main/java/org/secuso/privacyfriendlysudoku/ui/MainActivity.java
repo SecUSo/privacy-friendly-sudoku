@@ -75,11 +75,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             editor.apply();
         }
 
-        // TODO: remove this after testing
-        WelcomeDialog welcomeDialog = new WelcomeDialog();
-        welcomeDialog.show(getFragmentManager(), "WelcomeDialog");
-
-
         // check if we need to pre generate levels.
         newLevelManager.checkAndRestock();
 
