@@ -72,4 +72,11 @@
     <string name="win_show_game">Montrer champs de jeu</string>
     <string name="win_text">Félicitations!</string>
     <string name="win_time">Temps:</string>
+    <string name="difficulty_description">Appuyez ou faites glisser les étoiles pour changer la difficulté.</string>
+    <string name="difficulty_description_headline">Difficulté:</string>
+    <string name="field_select_description">Faites glisser ou appuyez les boutons flèches à gauche et à droite pour changer le mode de jeu.</string>
+    <string name="field_select_description_headline">Mode de jeu:</string>
+    <string name="pref_timer_reset">Réinitialiser le minuteur</string>
+    <string name="pref_timer_reset_summary">Aussi réinitialiser le minuteur en réinitialisant le jeux en cours.</string>
+    <string name="welcome">Bienvenue à Privacy Friendly Sudoku.</string>
 </resources>

@@ -14,9 +14,6 @@
     <string name="win_hint">提示：</string>
     <string name="win_show_game">显示游戏版</string>
     <string name="win_best_time">新纪录！</string>
-
-    <!-- habe hier mal alle rein kopiert, damit du eine art template hast, was noch fehlt -->
-
     <string name="new_game">开局</string>
     <string name="menu_settings">设置</string>
     <string name="menu_highscore">统计</string>
@@ -75,5 +72,12 @@
     <string name="help_delete_summary">删除你选择的数字</string>
     <string name="header_help">帮助</string>
     <string name="help_privacyInfo">私人信息</string>
+    <string name="difficulty_description">扫或者点击星星换难度</string>
+    <string name="difficulty_description_headline">难度</string>
+    <string name="field_select_description">扫或者点击左边箭头或者右边肩头换游戏模式</string>
+    <string name="field_select_description_headline">游戏模式</string>
+    <string name="pref_timer_reset">定时复位</string>
+    <string name="pref_timer_reset_summary">定时复位如果重置领域</string>
+    <string name="welcome">欢迎</string>
 
 </resources>
