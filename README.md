@@ -17,4 +17,5 @@ Further development requires Android Studio.
 ## License
 
 Privacy Friendly Sudoku is lisenced under the GPLv3.
+The icons ic_trophy_award_black_48dp and ic_trophy_black_48dp are licensed under the Sil Open Font License Version 1.1.
 
