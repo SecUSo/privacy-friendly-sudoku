@@ -33,7 +33,7 @@
     <string name="hint_usage">Sélectionnez un champs valide et appuyez le bouton d\'aide pour voir la solution.</string>
     <string name="loadgame_delete_confirm">Éffacer</string>
     <string name="loadgame_delete_confirmation">Êtes-vous sûre que voulez éffacez l\'enregistrement?</string>
-    <string name="menu_about">Sur nous les enculés</string>
+    <string name="menu_about">À propos</string>
     <string name="menu_continue_game">Continuer</string>
     <string name="menu_group">Groupe</string>
     <string name="menu_help">Aide</string>
