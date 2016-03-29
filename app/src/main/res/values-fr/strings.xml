@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="about_affiliation">En coopération avec:</string>
-    <string name="about_author">Auteur</string>
+    <string name="about_author">Auteur:</string>
     <string name="about_qqwing">Cette Aplication utilise une version modifié de QQWing v1.3.4</string>
     <string name="average_time">Temps en moyenne</string>
     <string name="cancel">Annuler</string>
