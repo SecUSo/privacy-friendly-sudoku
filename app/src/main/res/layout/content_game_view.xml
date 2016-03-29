@@ -13,6 +13,7 @@
     <org.secuso.privacyfriendlysudoku.ui.view.SudokuFieldLayout
         android:id="@+id/sudokuLayout"
         android:layout_width="match_parent"
+        android:layoutDirection="ltr"
         android:layout_height="wrap_content"
         android:clickable="true"
         android:gravity="center" />

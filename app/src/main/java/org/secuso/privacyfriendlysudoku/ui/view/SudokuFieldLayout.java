@@ -205,6 +205,11 @@ public class SudokuFieldLayout extends RelativeLayout implements IHighlightChang
     public void dispatchDraw(Canvas canvas) {
         super.dispatchDraw(canvas);
 
+
+        if(gameController == null) {
+            return;
+        }
+
         // draw error list
         p = new Paint(Paint.ANTI_ALIAS_FLAG);
         p.setStyle(Paint.Style.STROKE);
