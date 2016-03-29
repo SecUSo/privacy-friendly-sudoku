@@ -43,13 +43,13 @@
             <RelativeLayout
                 android:layout_width="0px"
                 android:layout_height="match_parent"
+                android:layoutDirection="ltr"
                 android:layout_weight="1">
 
                 <android.support.v4.view.ViewPager
                     android:id="@+id/scroller"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layoutDirection="ltr"
                     app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
                 <ImageView
