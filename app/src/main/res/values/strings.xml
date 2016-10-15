@@ -138,6 +138,4 @@
     <string name="help_privacyInfo">Privacy Info</string>
     <string name="help_permissions">Permissions</string>
     <string name="help_permissions_summary">Privacy Friendly Sudoku does not use any permissions.</string>
-
-    <string name="action_settings">Settings</string>
 </resources>
