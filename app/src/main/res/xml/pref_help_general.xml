@@ -3,10 +3,14 @@
     <PreferenceCategory android:title="@string/help_keyboard">
 
         <Preference android:title=""
+            android:id="@+id/help1"
+            android:key="help1"
             android:selectable="false"
             android:icon="@drawable/numfirst"
             android:summary="@string/help_keyhighlighted_summary"/>
         <Preference android:title=""
+            android:id="@+id/help2"
+            android:key="help2"
             android:selectable="false"
             android:icon="@drawable/numfull"
             android:summary="@string/help_keyhighlighted_yellow_summary"/>

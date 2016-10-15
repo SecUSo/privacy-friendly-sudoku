@@ -320,6 +320,7 @@ public class GameController implements IModelChangedListener, Parcelable {
 
         if(settings.getBoolean("pref_timer_reset", true)) {
             time = 0;
+            notifyTimerListener(0);
             undoRedoManager = new UndoRedoManager(gameBoard);
         } else {
             undoRedoManager.addState(gameBoard);
@@ -611,6 +612,11 @@ public class GameController implements IModelChangedListener, Parcelable {
         return usedHints;
     }
 
+    public void resetTime() {
+        time = 0;
+        notifyTimerListener(0);
+    }
+
     public void initTimer() {
         deleteTimer();
 
@@ -621,7 +627,7 @@ public class GameController implements IModelChangedListener, Parcelable {
                     @Override
                     public void run() {
                         if(timerRunning.get()) {
-                            notifyTimerListener(time++);
+                            notifyTimerListener(++time);
                             //Log.d("Timer", "calling notifyTimerListener(" + time + ");");
                         }
                     }

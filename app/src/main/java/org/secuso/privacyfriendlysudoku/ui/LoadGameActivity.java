@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,7 +33,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.TimeZone;
 
-public class LoadGameActivity extends AppCompatActivity implements IDeleteDialogFragmentListener {
+public class LoadGameActivity extends BaseActivity implements IDeleteDialogFragmentListener {
 
     List<GameInfoContainer> loadableGameList;
     SharedPreferences settings;
@@ -93,7 +92,7 @@ public class LoadGameActivity extends AppCompatActivity implements IDeleteDialog
             }
         };
 
-        ListView listView = (ListView)findViewById(R.id.load_game_list);
+        ListView listView = (ListView)findViewById(R.id.main_content);
         loadGameAdapter = new LoadGameAdapter(this, loadableGameList);
         listView.setAdapter(loadGameAdapter);
         listView.setOnItemClickListener(clickListener);

@@ -13,6 +13,7 @@ import android.support.v7.app.ActionBar;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.view.MenuItem;
+import android.view.View;
 
 import org.secuso.privacyfriendlysudoku.ui.view.R;
 
@@ -34,6 +35,14 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setupActionBar();
+
+        overridePendingTransition(0, 0);
+
+        View mainContent = findViewById(R.id.main_content);
+        if (mainContent != null) {
+            mainContent.setAlpha(0);
+            mainContent.animate().alpha(1).setDuration(BaseActivity.MAIN_CONTENT_FADEIN_DURATION);
+        }
     }
 
     /**

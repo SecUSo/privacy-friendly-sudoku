@@ -47,8 +47,9 @@ import org.secuso.privacyfriendlysudoku.ui.view.WinDialog;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.RunnableFuture;
 
-public class GameActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, IGameSolvedListener ,ITimerListener, IHintDialogFragmentListener, IResetDialogFragmentListener {
+public class GameActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, IGameSolvedListener ,ITimerListener, IHintDialogFragmentListener, IResetDialogFragmentListener {
 
     GameController gameController;
     SudokuFieldLayout layout;
@@ -62,11 +63,29 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
     WinDialog dialog = null;
 
     @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+
+        if(gameSolved) {
+            gameController.pauseTimer();
+        } else {
+            // start the game
+            mHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    gameController.startTimer();
+                }
+            }, MAIN_CONTENT_FADEIN_DURATION);
+        }
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         GameType gameType = GameType.Unspecified;
         GameDifficulty gameDifficulty = GameDifficulty.Unspecified;
@@ -103,8 +122,17 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
             gameController = savedInstanceState.getParcelable("gameController");
             // in case we get the same object back
             // because parceling the Object does not always parcel it. Only if needed.
-            gameController.removeAllListeners();
-            gameController.setContextAndSettings(getApplicationContext(), sharedPref);
+            if(gameController != null) {
+                gameController.removeAllListeners();
+                gameController.setContextAndSettings(getApplicationContext(), sharedPref);
+            } else {
+                // Error: no game could be restored. Go back to main menu.
+                Intent intent = new Intent(this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                finish();
+                overridePendingTransition(0, 0);
+            }
             gameSolved = savedInstanceState.getInt("gameSolved") == 1;
         }
 
@@ -177,17 +205,15 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
             layout.setEnabled(false);
             keyboard.setButtonsEnabled(false);
             specialButtonLayout.setButtonsEnabled(false);
-            gameController.pauseTimer();
-        } else {
-            // start the game
-            gameController.startTimer();
         }
+
         gameController.notifyHighlightChangedListeners();
         gameController.notifyTimerListener(gameController.getTime());
 
         // run this so the error list gets build again.
         gameController.onModelChange(null);
 
+        overridePendingTransition(0, 0);
     }
 
     @Override
@@ -201,10 +227,21 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onResume(){
         super.onResume();
+
+        View mainContent = findViewById(R.id.main_content);
+        if (mainContent != null) {
+            mainContent.animate().alpha(1).setDuration(MAIN_CONTENT_FADEOUT_DURATION);
+        }
+
         gameController.initTimer();
 
         if(!gameSolved) {
-            gameController.startTimer();
+            mHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    gameController.startTimer();
+                }
+            }, MAIN_CONTENT_FADEIN_DURATION);
         }
 
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
@@ -238,7 +275,7 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        Intent intent;
+        Intent intent = null;
 
         switch(id) {
             case R.id.menu_reset:
@@ -250,7 +287,6 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
                 //create new game
                 intent = new Intent(this, MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
                 finish();
                 break;
 
@@ -259,29 +295,42 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
                 intent = new Intent(this,SettingsActivity.class);
                 intent.putExtra( PreferenceActivity.EXTRA_SHOW_FRAGMENT, SettingsActivity.GamePreferenceFragment.class.getName() );
                 intent.putExtra( PreferenceActivity.EXTRA_NO_HEADERS, true );
-                startActivity(intent);
                 break;
 
             case R.id.nav_highscore:
                 // see highscore list
                 intent = new Intent(this, StatsActivity.class);
-                startActivity(intent);
                 break;
 
             case R.id.menu_about:
                 //open about page
                 intent = new Intent(this,AboutActivity.class);
-                startActivity(intent);
                 break;
 
             case R.id.menu_help:
                 //open about page
                 intent = new Intent(this,HelpActivity.class);
-                intent.putExtra( HelpActivity.EXTRA_SHOW_FRAGMENT, HelpActivity.HelpFragment.class.getName() );
-                intent.putExtra( HelpActivity.EXTRA_NO_HEADERS, true );
-                startActivity(intent);
                 break;
             default:
+        }
+
+        if(intent != null) {
+
+            final Intent i = intent;
+            // fade out the active activity
+            View mainContent = findViewById(R.id.main_content);
+            if (mainContent != null) {
+                mainContent.animate().alpha(0).setDuration(MAIN_CONTENT_FADEOUT_DURATION);
+            }
+
+            mHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    startActivity(i);
+                    overridePendingTransition(0, 0);
+                }
+            }, NAVDRAWER_LAUNCH_DELAY);
+
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -326,6 +375,7 @@ public class GameActivity extends AppCompatActivity implements NavigationView.On
                 Intent intent = new Intent(activity, MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
+                overridePendingTransition(0, 0);
                 activity.finish();
             }
         });

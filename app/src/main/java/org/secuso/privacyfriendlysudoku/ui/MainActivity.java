@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -40,12 +41,13 @@ import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     RatingBar difficultyBar;
     TextView difficultyText;
     SharedPreferences settings;
     ImageView arrowLeft, arrowRight;
+    DrawerLayout drawer;
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -160,7 +162,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
         // set Nav_Bar
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_main);
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout_main);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
@@ -169,7 +171,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view_main);
         navigationView.setNavigationItemSelectedListener(this);
 
+        overridePendingTransition(0, 0);
     }
+
     public void callFragment(View view){
         /*FragmentManager fm = getSupportFragmentManager();
         DialogWinScreen winScreen = new DialogWinScreen();
@@ -219,8 +223,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             default:
         }
-        if(i != null) {
-            startActivity(i);
+
+        final Intent intent = i;
+
+        if(intent != null) {
+
+            View mainContent = findViewById(R.id.main_content);
+            if (mainContent != null) {
+                mainContent.animate().alpha(0).setDuration(MAIN_CONTENT_FADEOUT_DURATION);
+            }
+
+            mHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    startActivity(intent);
+                }
+            }, MAIN_CONTENT_FADEOUT_DURATION);
+
         }
     }
 
@@ -248,8 +267,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
-        int id = item.getItemId();
+        final int id = item.getItemId();
 
+        // delay transition so the drawer can close
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                goToNavigationItem(id);
+            }
+        }, NAVDRAWER_LAUNCH_DELAY);
+
+        drawer.closeDrawer(GravityCompat.START);
+
+        // fade out the active activity
+        View mainContent = findViewById(R.id.main_content);
+        if (mainContent != null) {
+            mainContent.animate().alpha(0).setDuration(MAIN_CONTENT_FADEOUT_DURATION);
+        }
+        return true;
+    }
+
+    private boolean goToNavigationItem(int id) {
         Intent intent;
 
         switch(id) {
@@ -259,6 +297,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 intent.putExtra( PreferenceActivity.EXTRA_SHOW_FRAGMENT, SettingsActivity.GamePreferenceFragment.class.getName() );
                 intent.putExtra( PreferenceActivity.EXTRA_NO_HEADERS, true );
                 startActivity(intent);
+                overridePendingTransition(0, 0);
                 break;
 
             case R.id.nav_highscore_main:
@@ -266,26 +305,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 intent = new Intent(this, StatsActivity.class);
                 startActivity(intent);
+                overridePendingTransition(0, 0);
                 break;
 
             case R.id.menu_about_main:
                 //open about page
                 intent = new Intent(this,AboutActivity.class);
                 startActivity(intent);
+                overridePendingTransition(0, 0);
                 break;
 
             case R.id.menu_help_main:
                 //open about page
                 intent = new Intent(this,HelpActivity.class);
-                intent.putExtra( HelpActivity.EXTRA_SHOW_FRAGMENT, HelpActivity.HelpFragment.class.getName() );
-                intent.putExtra( HelpActivity.EXTRA_NO_HEADERS, true );
                 startActivity(intent);
+                overridePendingTransition(0, 0);
                 break;
             default:
         }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_main);
-        drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
@@ -389,7 +426,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
             builder.setView(i.inflate(R.layout.welcome_dialog, null));
-            builder.setIcon(R.mipmap.ic_launcher);
+            builder.setIcon(R.mipmap.ic_launcher_nopfa);
             builder.setTitle(getActivity().getString(R.string.app_name_long));
             builder.setPositiveButton(getActivity().getString(R.string.win_button_text), null);
 

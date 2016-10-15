@@ -1,45 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="org.secuso.privacyfriendlysudoku.ui.view" >
+    package="org.secuso.privacyfriendlysudoku.ui.view">
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
         <activity
             android:name="org.secuso.privacyfriendlysudoku.ui.MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name="org.secuso.privacyfriendlysudoku.ui.SettingsActivity"
             android:label="@string/title_activity_settings"
-            android:parentActivityName="org.secuso.privacyfriendlysudoku.ui.MainActivity" >
-        </activity>
+            android:parentActivityName="org.secuso.privacyfriendlysudoku.ui.MainActivity" />
         <activity
             android:name="org.secuso.privacyfriendlysudoku.ui.GameActivity"
             android:label="@string/title_activity_game_view"
-            android:theme="@style/AppTheme.NoActionBar" >
-        </activity>
-        <activity android:name="org.secuso.privacyfriendlysudoku.ui.AboutActivity" >
-        </activity>
-        <activity android:name="org.secuso.privacyfriendlysudoku.ui.LoadGameActivity" >
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name="org.secuso.privacyfriendlysudoku.ui.AboutActivity" />
+        <activity android:name="org.secuso.privacyfriendlysudoku.ui.LoadGameActivity" />
         <activity
             android:name="org.secuso.privacyfriendlysudoku.ui.StatsActivity"
-            android:theme="@style/AppTheme.NoActionBar" >
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="org.secuso.privacyfriendlysudoku.ui.HelpActivity"
-            android:label="@string/title_activity_help" >
-        </activity>
+            android:label="@string/title_activity_help" />
     </application>
 
 </manifest>

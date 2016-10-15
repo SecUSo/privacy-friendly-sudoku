@@ -2,9 +2,9 @@
 <android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/main_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent" android:layout_height="match_parent"
-    android:fitsSystemWindows="true" tools:context="tu_darmstadt.sudoku.ui.StatsActivity">
+    android:fitsSystemWindows="true">
 
     <android.support.design.widget.AppBarLayout android:id="@+id/appbar"
         android:layout_width="match_parent" android:layout_height="wrap_content"
@@ -22,7 +22,7 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v4.view.ViewPager android:id="@+id/container"
+    <android.support.v4.view.ViewPager android:id="@+id/main_content"
         android:layout_width="fill_parent" android:layout_height="fill_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 

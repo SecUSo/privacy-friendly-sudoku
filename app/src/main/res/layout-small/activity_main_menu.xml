@@ -1,4 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout android:id="@+id/drawer_layout_main"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:fitsSystemWindows="true"
+    tools:openDrawer="start"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
 <android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -26,20 +35,14 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v4.widget.DrawerLayout
-        android:id="@+id/drawer_layout_main"
-        android:layout_height="match_parent"
-        android:layout_width="match_parent"
-        android:layout_marginTop="?attr/actionBarSize"
-        android:fitsSystemWindows="true"
-        tools:openDrawer="start">
-
    <LinearLayout
         android:layout_height="match_parent"
         android:layout_width="match_parent"
         android:orientation="vertical"
         android:weightSum="10"
-        style="?android:buttonBarStyle">
+       android:id="@+id/main_content"
+        style="?android:buttonBarStyle"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="0dp"
@@ -226,14 +229,16 @@
 
    </LinearLayout>
 
+</android.support.design.widget.CoordinatorLayout>
+
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view_main"
-        android:layout_width="200dp"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
+        android:fitsSystemWindows="true"
         android:background="@color/white"
-        app:menu="@menu/menu_drawer_main"/>
+        app:menu="@menu/menu_drawer_main"
+        app:headerLayout="@layout/nav_header" />
 
     </android.support.v4.widget.DrawerLayout>
-
-</android.support.design.widget.CoordinatorLayout>

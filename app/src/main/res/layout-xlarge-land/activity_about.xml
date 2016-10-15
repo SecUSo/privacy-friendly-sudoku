@@ -1,39 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
-    android:orientation="horizontal"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".AboutActivity"
-    android:weightSum="2">
+    android:background="#FFFFFF">
 
-    <LinearLayout
-        android:layout_width="0px"
-        android:layout_height="fill_parent"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:id="@+id/main_content"
+        android:fitsSystemWindows="true"
         android:orientation="vertical"
-        android:layout_weight="1">
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:weightSum="1"
+        tools:context=".AboutActivity">
 
-        <ImageView
-            android:id="@+id/barcodeLogo"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:src="@drawable/privacyfriendlyappslogo" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.36">
 
+            <ImageView
+                android:id="@+id/barcodeLogo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:src="@drawable/privacyfriendlyappslogo" />
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/appName"
             android:layout_width="wrap_content"
-            android:gravity="center"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
-            android:textSize="@dimen/text_size"
+            android:layout_marginTop="15dp"
             android:text="@string/app_name_long" />
 
         <TextView
@@ -41,8 +47,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
-            android:textSize="@dimen/text_size"
+            android:layout_marginTop="5dp"
             android:text="@string/version_number" />
 
         <TextView
@@ -50,50 +55,35 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
-            android:textSize="@dimen/text_size"
+            android:layout_marginTop="5dp"
             android:text="@string/about_author" />
 
         <TextView
-            android:id="@+id/textFieldAuthorNames"
+            android:id="@+id/authornames"
+            android:layout_marginTop="5dp"
             android:layout_width="wrap_content"
-            android:gravity="center"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="0dp"
-            android:textSize="@dimen/text_size"
-            android:text="@string/about_author_names" />
+            android:text="@string/about_author_names"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_marginTop="30dp"
             android:layout_gravity="center_horizontal"
-            android:textSize="@dimen/text_size"
-            android:text="@string/privacy_friendly"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="0px"
-        android:layout_height="fill_parent"
-        android:orientation="vertical"
-        android:layout_weight="1">
+            android:text="@string/about_author_contributors"/>
 
         <TextView
             android:id="@+id/textFieldAffiliation"
             android:layout_width="wrap_content"
-            android:gravity="center"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:textSize="@dimen/text_size"
+            android:layout_marginTop="15dp"
             android:text="@string/about_affiliation"
             android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/imageView1"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
             android:src="@drawable/secuso_logo_blau_blau" />
@@ -102,21 +92,34 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:textSize="@dimen/text_size"
-            android:layout_marginTop="20dp"
-            android:gravity="center"
-            android:text="@string/more_info"/>
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal"
+            android:text="@string/privacy_friendly" />
 
         <TextView
-            android:id="@+id/linkID"
             android:layout_width="wrap_content"
-            android:gravity="center"
             android:layout_height="wrap_content"
-            android:text="@string/url"
-            android:textSize="@dimen/text_size"
-            android:textStyle="bold"
             android:layout_gravity="center_horizontal"
-            android:autoLink="web"/>
+            android:layout_marginTop="15dp"
+            android:gravity="center"
+            android:text="@string/more_info" />
+
+        <TextView
+            android:id="@+id/secusoWebsite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/url"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/githubURL"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
+            android:text="@string/github"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/qqWing"
@@ -124,31 +127,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:textSize="@dimen/text_size"
             android:text="@string/about_qqwing"
             android:layout_gravity="center_horizontal"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/text_size"
             android:text="@string/about_qqwingLink"
-            android:gravity="center"
             android:layout_gravity="center_horizontal"
             android:autoLink="web"/>
 
     </LinearLayout>
 
-
-
-    <!--
-
-
-
-
-
-
-
-    -->
-
-</LinearLayout>
+</ScrollView>

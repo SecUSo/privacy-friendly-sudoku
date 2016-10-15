@@ -57,13 +57,15 @@
 
     <!-- ###ABOUT### -->
     <string name="app_name_long" translatable="false">Privacy Friendly Sudoku</string>
-    <string name="version_number" translatable="false">v1.0</string>
+    <string name="version_number" translatable="false">v2.0</string>
     <string name="about_author">Author:</string>
-    <string name="about_author_names" translatable="false">Christopher Beckmann,\nTimm Lippert</string>
-    <string name="about_affiliation">In affiliation with:</string>
-    <string name="privacy_friendly">This application belongs to the Privacy Friendly Apps.</string>
+    <string name="about_author_names" translatable="false">Christopher Beckmann, Timm Lippert</string>
+    <string name="about_author_contributors">and contributors.</string>
+    <string name="about_affiliation">In affiliation with</string>
+    <string name="privacy_friendly">This application belongs to the group of Privacy Friendly Apps developed by Technische Universität Darmstadt. Sourcecode licensed under GPLv3. Images copyright TU Darmstadt and Google Inc.</string>
     <string name="more_info">More information can be found on:</string>
-    <string name="url" translatable="false"><a href="https://www.secuso.informatik.tu-darmstadt.de/en/research/results/">https://www.secuso.org</a></string>
+    <string name="github" translatable="false"><a href="https://github.com/SecUSo/privacy-friendly-sudoku">Github-Repo</a></string>
+    <string name="url" translatable="false"><a href="https://www.secuso.org/pfa">SECUSO-Website</a></string>
     <string name="about_qqwing">This application uses a modified version of QQWing v1.3.4</string>
     <string name="about_qqwingLink" translatable="false"><a href="http://qqwing.com/download.html">http://qqwing.com/</a></string>
 
@@ -87,7 +89,7 @@
     <string name="reset_confirmation_confirm">Reset</string>
 
     <!-- ### Welcome Dialog ### -->
-    <string name="welcome">Welcome to Privacy Friendly Sudoku. </string>
+    <string name="welcome">Welcome to Privacy Friendly Sudoku.</string>
     <string name="field_select_description">Swipe or press the arrow buttons on the left and right to change the game mode.</string>
     <string name="field_select_description_headline">Game mode:</string>
     <string name="difficulty_description">Press or swipe the stars to change the difficulty.</string>
@@ -136,4 +138,6 @@
     <string name="help_privacyInfo">Privacy Info</string>
     <string name="help_permissions">Permissions</string>
     <string name="help_permissions_summary">Privacy Friendly Sudoku does not use any permissions.</string>
+
+    <string name="action_settings">Settings</string>
 </resources>
