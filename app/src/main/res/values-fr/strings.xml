@@ -80,4 +80,6 @@
     <string name="pref_timer_reset_summary">Aussi réinitialiser le minuteur en réinitialisant le jeux en cours.</string>
     <string name="welcome">Bienvenue à Privacy Friendly Sudoku.</string>
     <string name="about_author_contributors">" "</string>
+    <string name="okay">Ok</string>
+    <string name="view_help">Aide</string>
 </resources>

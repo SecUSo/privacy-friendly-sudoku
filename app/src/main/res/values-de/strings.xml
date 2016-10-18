@@ -87,5 +87,7 @@
     <string name="field_select_description">Wische oder drücke auf die Pfeile auf der linken und rechten Seite um den Spielmodus zu ändern.</string>
     <string name="difficulty_description_headline">Schwierigkeitsstufe:</string>
     <string name="difficulty_description">Drücke oder wische über die Sterne um den Schwierigkeitsgrad zu ändern.</string>
+    <string name="view_help">Siehe Hilfe</string>
+    <string name="okay">Okay</string>
 
 </resources>

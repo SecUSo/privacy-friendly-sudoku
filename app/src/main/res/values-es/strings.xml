@@ -80,4 +80,6 @@
     <string name="pref_timer_reset_summary">El tiempo se resetea tambien, cuando el tablero se resetea.</string>
     <string name="welcome">Bienvenido a Privacy Friendly Sudoku.</string>
     <string name="about_author_contributors">" "</string>
+    <string name="okay">Ok</string>
+    <string name="view_help">Ayuda</string>
 </resources>

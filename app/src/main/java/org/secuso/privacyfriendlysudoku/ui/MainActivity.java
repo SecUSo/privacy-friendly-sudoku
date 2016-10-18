@@ -428,7 +428,14 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             builder.setView(i.inflate(R.layout.welcome_dialog, null));
             builder.setIcon(R.mipmap.ic_launcher_nopfa);
             builder.setTitle(getActivity().getString(R.string.app_name_long));
-            builder.setPositiveButton(getActivity().getString(R.string.win_button_text), null);
+            builder.setPositiveButton(getActivity().getString(R.string.okay), null);
+            builder.setNegativeButton(getActivity().getString(R.string.view_help), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Intent intent = new Intent(getActivity(),HelpActivity.class);
+                    startActivity(intent);
+                }
+            });
 
             return builder.create();
         }
