@@ -14,15 +14,14 @@ Universtität Darmstadt in Germany it is optimized due to user's privacy.
 
 ## Download and more Information
 
-Further development requires Android Studio, we recommend to use at least version 2.1.3
+Further development requires Android Studio, we recommend to use at least version 2.2.3
 
 ### API Reference
 
 Mininum SDK: 16
-Target SDK: 24 
+Target SDK: 25 
 
 ## License
-
 
 Privacy Friendly Sudoku is lisenced under the GPLv3.
 
@@ -32,7 +31,7 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
 
 You should have received a copy of the GNU General Public License along with this program. If not, see http://www.gnu.org/licenses/.
 
-The icons used in the nagivation drawer are licensed under the CC BY 2.5. In addition to them the app uses icons from Google Design Material Icons licensed under Apache License Version 2.0. All other images (the logo of Privacy Friendly Apps, the SECUSO logo and the header in the navigation drawer) copyright Technische Universtität Darmstadt (2016).
+The icons used in the nagivation drawer are licensed under the CC BY 2.5. In addition to them the app uses icons from Google Design Material Icons licensed under Apache License Version 2.0. All other images (the logo of Privacy Friendly Apps, the SECUSO logo, the splash screen logo and the header in the navigation drawer) copyright Technische Universtität Darmstadt (2016).
 
 The icons ic_trophy_award_black_48dp and ic_trophy_black_48dp are licensed under the Sil Open Font License Version 1.1.
 
