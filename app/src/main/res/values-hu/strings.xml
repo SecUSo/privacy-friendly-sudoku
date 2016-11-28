@@ -1,0 +1,131 @@
+<resources>
+
+    <string name="cancel">Mégsem</string>
+
+    <!-- ###MAIN MENU### -->
+    <string name="new_game">Új játék</string>
+    <string name="menu_main">Főmenü</string>
+    <string name="menu_settings">Beállítások</string>
+    <string name="menu_highscore">Játékadatok</string>
+    <string name="menu_group">Csoport</string>
+    <string name="menu_help">Súgó</string>
+    <string name="menu_about">Alkalmazásinformációk</string>
+    <string name="menu_reset">Tábla visszaállítása</string>
+    <string name="menu_continue_game">Játék folytatása</string>
+
+    <string name="title_activity_load_game">Játék betöltése</string>
+    <string name="generating">Új tábla készítése a háttérben&#8230;</string>
+
+    <!-- ###SETTINGS### -->
+    <string name="title_activity_settings">Beállítások</string>
+    <!-- #Highlight -->
+    <string name="pref_header_highlight">Kiemelés</string>
+    <string name="pref_group_highlight_selection">Kijelölés kiemelése</string>
+    <string name="pref_highlight_connected">Kapcsolódó mezőket</string>
+    <string name="pref_group_highlight_value">Értékek kiemelése</string>
+    <string name="pref_highlight_vals">Ugyanolyan értékeket</string>
+    <string name="pref_highlight_notes">Megjegyzéseket</string>
+    <!-- #Game -->
+    <string name="pref_header_game">Játék</string>
+    <string name="pref_group_game">Játékbeállítások</string>
+    <string name="pref_symbols">Szimbólumok</string>
+    <array name="pref_symbols_list_titles">
+        <item>Alapértelmezett 1,2,3,..</item>
+        <item>Római I,II,III,..</item>
+        <item>Díszes ♪,♫,☼,..</item>
+        <item>Kínai 一,二,三,..</item>
+        <item>Görög α,β,γ,..</item>
+        <item>Indiai १,२,३,..</item>
+    </array>
+    <array name="pref_symbols_list_values">
+        <item>Alapértelmezett</item>
+        <item>Római</item>
+        <item>Díszes</item>
+        <item>Kínai</item>
+        <item>Görög</item>
+        <item>Indiai</item>
+    </array>
+    <string name="pref_automatic_note_deletion">Megjegyzések eltávolítása</string>
+    <string name="pref_automatic_note_deletion_summary">Megjegyzések automatikus eltávolítása amikor kapcsolódó cellákba érték kerül</string>
+    <string name="pref_timer_reset">Időmérő újraindítása</string>
+    <string name="pref_timer_reset_summary">Időmérő újraindítása új játék kezdetén</string>
+
+    <!-- ###ABOUT### -->
+
+    <string name="about_author">Fejlesztők:</string>
+
+    <string name="about_author_contributors">és további hozzájárulók.</string>
+    <string name="about_affiliation">Együttműködők:</string>
+    <string name="privacy_friendly">Ez az alkalmazás a Darmstadt-i Műszaki Egyetemen fejlesztett magánszféra-barát alkalmazások közé tartozik. A forráskód GPLv3 licensz alatt kibocsátott. A képek szerzői jogai a TU Darmstadt-ot és a Google Inc.-et illetik.</string>
+    <string name="more_info">További információk:</string>
+
+    <string name="about_qqwing">Ez az alkalmazás a QQWing v1.3.4 egy módosított verzióját használja.</string>
+
+    <!-- ###GameDifficulty### -->
+    <string name="difficulty_easy">Egyszerű</string>
+    <string name="difficulty_moderate">Közepes</string>
+    <string name="difficulty_hard">Nehéz</string>
+
+    <!--###GameActivity -->
+
+    <string name="gametype_unspecified">Nem meghatározott</string>
+
+    <string name="hint_usage">Válassz ki egy üres mezőt és nyomd meg a tipp gombot hogy felfedd a megoldást.</string>
+    <string name="hint_confirmation">Biztosan szeretnél tippet kérni? Így nem tudod megdönteni a rekodidődet.</string>
+    <string name="hint_confirmation_confirm">Tipp</string>
+    <string name="reset_confirmation">Biztos visszaállítod a táblát az alapállapotba?</string>
+    <string name="reset_confirmation_confirm">Vissza</string>
+
+    <!-- ### Welcome Dialog ### -->
+    <string name="welcome">Köszönt a magánszféra-barát Sudoku!</string>
+    <string name="field_select_description">Csúsztass balra-jobbra, vagy használd a nyilakat a játékmód kiválasztásához.</string>
+    <string name="field_select_description_headline">Játékmód:</string>
+    <string name="difficulty_description">Nyomj rá vagy csúsztass a csillagokon a nehézségi fok beállításához.</string>
+    <string name="difficulty_description_headline">Nehézségi fok:</string>
+
+    <!-- ### Continue Game ### -->
+    <string name="loadgame_delete_confirmation">Biztosan törölni szeretnéd ezt a mentést?</string>
+    <string name="loadgame_delete_confirm">Törlés</string>
+
+    <!-- ### Stats ###-->
+    <string name="stats_name">Statisztikák</string>
+    <string name="number_of_hints">Használt tippek:</string>
+    <string name="number_of_games">Befejezett játékok:</string>
+    <string name="total_of_time">Teljes játékidő:</string>
+    <string name="average_time">Átlagidő:</string>
+    <string name="min_time">Csúcsidő:</string>
+    <string name="reset_stats">Összes lenullázása</string>
+
+    <!--### Win Strings -->
+    <string name="win_text">Gratulálunk!</string>
+    <string name="win_button_text">Folytatás</string>
+    <string name="title_activity_help">Súgó</string>
+    <string name="win_time">Idő:</string>
+    <string name="win_hint">Tippek:</string>
+    <string name="win_show_game">Tábla mutatása</string>
+    <string name="win_best_time">Új rekord!</string>
+
+    <!-- ### HELP prefs ###-->
+    <string name="header_help">Súgó</string>
+    <string name="help_keyboard">Gombok</string>
+    <string name="help_gamefield">Tábla</string>
+    <string name="help_keyhighlighted_summary">Az érték kiválasztottságát jelzi. Ezzel egy mezőbe egyetlen érintéssel helyezhetsz értékeket, a mezők előzetes kiválasztása nélkül.</string>
+    <string name="help_keyhighlighted_yellow_summary">Azt jelzi, hogy az adott értékből pont a helyes mennyiség lett elhelyezve a táblán.</string>
+
+    <!-- ### Special buttons description ###-->
+    <string name="help_do">Újra gomb</string>
+    <string name="help_do_summary">A legutóbb visszavont lépést ismét meglépi</string>
+    <string name="help_undo">Visszavonás gomb</string>
+    <string name="help_undo_summary">A legutóbbi lépést visszavonja</string>
+    <string name="help_hint">Tipp gomb</string>
+    <string name="help_hint_summary">Felfedi a kijelölt mező helyes értékét\nFigyelem: Ha használod, az aktuális játék nem kerül a legjobb időid közé.</string>
+    <string name="help_delete">Törlés gomb</string>
+    <string name="help_delete_summary">A kiválasztott mező tartalmát törli</string>
+    <string name="help_notes">Megjegyzés-választó gomb</string>
+    <string name="help_notes_summary">Megadja, hogy megjegyzésként vagy értékként kerüljön az érték a kijelölt mezőbe</string>
+    <string name="help_privacyInfo">Magánszféra-infó</string>
+    <string name="help_permissions">Hozzáférések</string>
+    <string name="help_permissions_summary">A magánszféra-barát Sudoku nem igényel hozzáféréseket.</string>
+    <string name="okay">OK</string>
+    <string name="view_help">Súgó megtekintése</string>
+</resources>
