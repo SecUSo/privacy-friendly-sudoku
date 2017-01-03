@@ -1,332 +1,317 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:weightSum="5"
-    android:orientation="vertical"
-    tools:context="tu_darmstadt.sudoku.ui.StatsActivity$PlaceholderFragment">
+<?xml version='1.0' encoding='UTF-8'?>
+  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:paddingLeft="@dimen/activity_horizontal_margin"
+  android:paddingRight="@dimen/activity_horizontal_margin"
+  android:paddingTop="@dimen/activity_vertical_margin"
+  android:paddingBottom="@dimen/activity_vertical_margin"
+  android:weightSum="5"
+  android:orientation="vertical"
+  tools:context="tu_darmstadt.sudoku.ui.StatsActivity$PlaceholderFragment">
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="0px"
-        android:layout_weight="1"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:weightSum="3">
-            <LinearLayout
-                android:layout_width="0px"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="@string/number_of_hints"
-                    android:layout_weight="1"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="0"
-                    android:id="@+id/numb_of_hints"
-                    android:layout_weight="1"/>
-            </LinearLayout>
-        <LinearLayout
-            android:layout_width="0px"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/number_of_games"
-                android:layout_weight="1"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="0"
-                android:id="@+id/numb_of_total_games"
-                android:layout_weight="1"/>
-            </LinearLayout>
-        <LinearLayout
-            android:layout_width="0px"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/total_of_time"
-                android:layout_weight="1"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="0"
-                android:id="@+id/numb_of_total_time"
-                android:layout_weight="1"/>
-            </LinearLayout>
+  <LinearLayout android:layout_width="fill_parent"
+    android:layout_height="0px"
+    android:layout_weight="1"
+    android:orientation="horizontal"
+    android:gravity="center"
+    android:weightSum="3">
+
+    <LinearLayout android:layout_width="0px"
+      android:layout_weight="1"
+      android:layout_height="wrap_content"
+      android:orientation="vertical">
+
+      <TextView android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/number_of_hints"
+        android:layout_weight="1"/>
+
+      <TextView android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="0"
+        android:id="@+id/numb_of_hints"
+        android:layout_weight="1"/>
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="fill_parent"
+    <LinearLayout android:layout_width="0px"
+      android:layout_weight="1"
+      android:layout_height="wrap_content"
+      android:orientation="vertical">
+
+      <TextView android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/number_of_games"
+        android:layout_weight="1"/>
+
+      <TextView android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="0"
+        android:id="@+id/numb_of_total_games"
+        android:layout_weight="1"/>
+    </LinearLayout>
+
+    <LinearLayout android:layout_width="0px"
+      android:layout_weight="1"
+      android:layout_height="wrap_content"
+      android:orientation="vertical">
+
+      <TextView android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/total_of_time"
+        android:layout_weight="1"/>
+
+      <TextView android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="0"
+        android:id="@+id/numb_of_total_time"
+        android:layout_weight="1"/>
+    </LinearLayout>
+  </LinearLayout>
+
+  <LinearLayout android:layout_width="fill_parent"
+    android:layout_height="0dp"
+    android:layout_weight="0.5">
+
+    <View android:layout_width="match_parent"
+      android:layout_height="2dp"
+      android:layout_gravity="center_vertical"
+      android:foregroundGravity="center_vertical"
+      android:background="@color/colorPrimary">
+      <!--Removed ObsoleteLayoutParam: layout_centerVertical-->
+      <!--Removed ObsoleteLayoutParam: layout_centerHorizontal-->
+    </View>
+  </LinearLayout>
+
+  <LinearLayout android:layout_width="match_parent"
+    android:layout_height="0px"
+    android:layout_weight="3.5"
+    android:weightSum="9"
+    android:orientation="horizontal">
+
+    <ImageView android:layout_weight="3"
+      android:layout_width="0dp"
+      android:layout_height="fill_parent"
+      android:layout_gravity="center"
+      android:id="@+id/statistic_image"
+      android:src="@drawable/icon_default_9x9"
+      android:adjustViewBounds="true"/>
+
+    <RelativeLayout android:layout_width="0dp"
+      android:layout_height="match_parent"
+      android:layout_weight="1">
+
+      <View android:layout_width="2dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
+        android:foregroundGravity="center_vertical"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:background="@color/colorPrimary"
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
+        android:layout_marginBottom="@dimen/activity_horizontal_margin"/>
+    </RelativeLayout>
+
+    <LinearLayout android:layout_width="0px"
+      android:layout_height="match_parent"
+      android:orientation="vertical"
+      android:layout_weight="5.5"
+      android:weightSum="3">
+      <!-- ### first row -->
+
+      <LinearLayout android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.5">
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_gravity="center_vertical"
-            android:foregroundGravity="center_vertical"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"
-            android:background="@color/colorPrimary" />
+        android:layout_weight="1"
+        android:weightSum="3">
 
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0px"
-        android:layout_weight="3.5"
-        android:weightSum="9"
-        android:orientation="horizontal">
+        <RelativeLayout android:layout_width="0dp"
+          android:layout_height="fill_parent"
+          android:layout_weight="1"
+          android:gravity="center_vertical">
 
-
-        <ImageView
-            android:layout_weight="3"
-            android:layout_width="0dp"
-            android:layout_height="fill_parent"
+          <RatingBar android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numStars="3"
             android:layout_gravity="center"
-            android:id="@+id/statistic_image"
-            android:src="@drawable/icon_default_9x9"
-            android:adjustViewBounds="true"/>
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-            <View
-                android:layout_width="2dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_vertical"
-                android:foregroundGravity="center_vertical"
-                android:layout_centerVertical="true"
-                android:layout_centerHorizontal="true"
-                android:background="@color/colorPrimary"
-                android:layout_marginTop="@dimen/activity_horizontal_margin"
-                android:layout_marginBottom="@dimen/activity_horizontal_margin"/>
+            android:id="@+id/first_diff_bar"
+            android:layout_below="@+id/first_diff_text"
+            style="?android:attr/ratingBarStyleSmall"/>
 
+          <TextView android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="diffi"
+            android:id="@+id/first_diff_text"
+            android:gravity="center_vertical"/>
         </RelativeLayout>
 
+        <RelativeLayout android:layout_width="0dp"
+          android:layout_height="fill_parent"
+          android:layout_weight="1"
+          android:gravity="center_vertical">
 
-        <LinearLayout
-            android:layout_width="0px"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_weight="5.5"
-            android:weightSum="3">
-            <!-- ### first row -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:weightSum="3">
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="fill_parent"
-                android:layout_weight="1"
-                android:gravity="center_vertical">
-                <RatingBar
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:numStars="3"
-                    android:layout_gravity="center"
-                    android:id="@+id/first_diff_bar"
-                    android:layout_below="@+id/first_diff_text"
-                    style="?android:attr/ratingBarStyleSmall"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="diffi"
-                    android:id="@+id/first_diff_text"
-                    android:gravity="center_vertical"/>
-            </RelativeLayout>
+          <TextView android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/average_time"
+            android:id="@+id/first_av_text"/>
 
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="fill_parent"
-                android:layout_weight="1"
-                android:gravity="center_vertical">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/average_time"
-                    android:id="@+id/first_av_text"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0"
-                    android:id="@+id/first_ava_time"
-                    android:gravity="center_vertical"
-                    android:layout_below="@+id/first_av_text"/>
-            </RelativeLayout>
+          <TextView android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:id="@+id/first_ava_time"
+            android:gravity="center_vertical"
+            android:layout_below="@+id/first_av_text"/>
+        </RelativeLayout>
 
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="fill_parent"
-                android:layout_weight="1"
-                android:gravity="center_vertical">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/min_time"
-                    android:id="@+id/first_min_text"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0"
-                    android:id="@+id/first_min_time"
-                    android:gravity="center_vertical"
-                    android:layout_below="@+id/first_min_text"/>
-            </RelativeLayout>
+        <RelativeLayout android:layout_width="0dp"
+          android:layout_height="fill_parent"
+          android:layout_weight="1"
+          android:gravity="center_vertical">
 
-        </LinearLayout>
-            <!-- ### second row -->
-            <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:weightSum="3">
+          <TextView android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/min_time"
+            android:id="@+id/first_min_text"/>
 
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="fill_parent"
-                android:layout_weight="1"
-                android:gravity="center_vertical">
-                <RatingBar
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:numStars="3"
-                    android:layout_gravity="center"
-                    android:id="@+id/second_diff_bar"
-                    android:layout_below="@+id/second_diff_text"
-                    style="?android:attr/ratingBarStyleSmall"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="diffi"
-                    android:id="@+id/second_diff_text"
-                    android:gravity="center_vertical"/>
-            </RelativeLayout>
+          <TextView android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:id="@+id/first_min_time"
+            android:gravity="center_vertical"
+            android:layout_below="@+id/first_min_text"/>
+        </RelativeLayout>
+      </LinearLayout>
+      <!-- ### second row -->
 
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="fill_parent"
-                android:layout_weight="1"
-                android:gravity="center_vertical">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/average_time"
-                    android:id="@+id/second_av_text"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0"
-                    android:id="@+id/second_ava_time"
-                    android:gravity="center_vertical"
-                    android:layout_below="@+id/second_av_text"/>
-            </RelativeLayout>
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="fill_parent"
-                android:layout_weight="1"
-                android:gravity="center_vertical">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/min_time"
-                    android:id="@+id/second_min_text"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0"
-                    android:id="@+id/second_min_time"
-                    android:gravity="center_vertical"
-                    android:layout_below="@+id/second_min_text"/>
-            </RelativeLayout>
-        </LinearLayout>
-            <!-- ### third row -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1">
+      <LinearLayout android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:weightSum="3">
 
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="fill_parent"
-                android:layout_weight="1"
-                android:gravity="center_vertical">
-                <RatingBar
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:numStars="3"
-                    android:layout_gravity="center"
-                    android:id="@+id/third_diff_bar"
-                    android:layout_below="@+id/third_diff_text"
-                    style="?android:attr/ratingBarStyleSmall"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="diffi"
-                    android:id="@+id/third_diff_text"
-                    android:gravity="center_vertical"/>
-            </RelativeLayout>
+        <RelativeLayout android:layout_width="0dp"
+          android:layout_height="fill_parent"
+          android:layout_weight="1"
+          android:gravity="center_vertical">
 
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="fill_parent"
-                android:layout_weight="1"
-                android:gravity="center_vertical">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/average_time"
-                    android:id="@+id/third_av_text"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0"
-                    android:id="@+id/third_ava_time"
-                    android:gravity="center_vertical"
-                    android:layout_below="@+id/third_av_text"/>
-            </RelativeLayout>
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="fill_parent"
-                android:layout_weight="1"
-                android:gravity="center_vertical">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/min_time"
-                    android:id="@+id/third_min_text"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0"
-                    android:id="@+id/third_min_time"
-                    android:gravity="center_vertical"
-                    android:layout_below="@+id/third_min_text"/>
-            </RelativeLayout>
-        </LinearLayout>
-        </LinearLayout>
+          <RatingBar android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numStars="3"
+            android:layout_gravity="center"
+            android:id="@+id/second_diff_bar"
+            android:layout_below="@+id/second_diff_text"
+            style="?android:attr/ratingBarStyleSmall"/>
 
+          <TextView android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="diffi"
+            android:id="@+id/second_diff_text"
+            android:gravity="center_vertical"/>
+        </RelativeLayout>
 
+        <RelativeLayout android:layout_width="0dp"
+          android:layout_height="fill_parent"
+          android:layout_weight="1"
+          android:gravity="center_vertical">
 
+          <TextView android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/average_time"
+            android:id="@+id/second_av_text"/>
+
+          <TextView android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:id="@+id/second_ava_time"
+            android:gravity="center_vertical"
+            android:layout_below="@+id/second_av_text"/>
+        </RelativeLayout>
+
+        <RelativeLayout android:layout_width="0dp"
+          android:layout_height="fill_parent"
+          android:layout_weight="1"
+          android:gravity="center_vertical">
+
+          <TextView android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/min_time"
+            android:id="@+id/second_min_text"/>
+
+          <TextView android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:id="@+id/second_min_time"
+            android:gravity="center_vertical"
+            android:layout_below="@+id/second_min_text"/>
+        </RelativeLayout>
+      </LinearLayout>
+      <!-- ### third row -->
+
+      <LinearLayout android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <RelativeLayout android:layout_width="0dp"
+          android:layout_height="fill_parent"
+          android:layout_weight="1"
+          android:gravity="center_vertical">
+
+          <RatingBar android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numStars="3"
+            android:layout_gravity="center"
+            android:id="@+id/third_diff_bar"
+            android:layout_below="@+id/third_diff_text"
+            style="?android:attr/ratingBarStyleSmall"/>
+
+          <TextView android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="diffi"
+            android:id="@+id/third_diff_text"
+            android:gravity="center_vertical"/>
+        </RelativeLayout>
+
+        <RelativeLayout android:layout_width="0dp"
+          android:layout_height="fill_parent"
+          android:layout_weight="1"
+          android:gravity="center_vertical">
+
+          <TextView android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/average_time"
+            android:id="@+id/third_av_text"/>
+
+          <TextView android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:id="@+id/third_ava_time"
+            android:gravity="center_vertical"
+            android:layout_below="@+id/third_av_text"/>
+        </RelativeLayout>
+
+        <RelativeLayout android:layout_width="0dp"
+          android:layout_height="fill_parent"
+          android:layout_weight="1"
+          android:gravity="center_vertical">
+
+          <TextView android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/min_time"
+            android:id="@+id/third_min_text"/>
+
+          <TextView android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:id="@+id/third_min_time"
+            android:gravity="center_vertical"
+            android:layout_below="@+id/third_min_text"/>
+        </RelativeLayout>
+      </LinearLayout>
     </LinearLayout>
+  </LinearLayout>
 </LinearLayout>
