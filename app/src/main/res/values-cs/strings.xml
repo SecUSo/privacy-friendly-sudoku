@@ -1,0 +1,143 @@
+<resources>
+    <string name="app_name" translatable="false">Sudoku</string>
+    <string name="title_activity_game_view" translatable="false">Sudoku</string>
+
+    <string name="cancel">Zrušit</string>
+
+    <!-- ###MAIN MENU### -->
+    <string name="new_game">Nová hra</string>
+    <string name="menu_main">Hlavní menu</string>
+    <string name="menu_settings">Nastavení</string>
+    <string name="menu_highscore">Highscore</string>
+    <string name="menu_group">Skupina</string>
+    <string name="menu_help">Pomoc</string>
+    <string name="menu_about">O aplikaci</string>
+    <string name="menu_reset">Resetovat pole</string>
+    <string name="menu_continue_game">Pokračovat</string>
+
+    <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
+    <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
+
+    <string name="title_activity_load_game">Načíst hru</string>
+    <string name="generating">Generuji nový level na pozadí&#8230;</string>
+
+    <!-- ###SETTINGS### -->
+    <string name="title_activity_settings">Nastavení</string>
+    <!-- #Highlight -->
+    <string name="pref_header_highlight">Zvýraznění</string>
+    <string name="pref_group_highlight_selection">Zvýraznění výběru</string>
+    <string name="pref_highlight_connected">Spojená pole</string>
+    <string name="pref_group_highlight_value">Zvýraznění hodnot</string>
+    <string name="pref_highlight_vals">Stejné hodnoty</string>
+    <string name="pref_highlight_notes">Poznámky</string>
+    <!-- #Game -->
+    <string name="pref_header_game">Hra</string>
+    <string name="pref_group_game">Nastavení hry</string>
+    <string name="pref_symbols">Symboly</string>
+    <array name="pref_symbols_list_titles">
+        <item>Výchozí 1,2,3,..</item>
+        <item>Římské I,II,III,..</item>
+        <item>Ozdobné ♪,♫,☼,..</item>
+        <item>Čínské 一,二,三,..</item>
+        <item>Řecké α,β,γ,..</item>
+        <item>Indické १,२,३,..</item>
+    </array>
+    <array name="pref_symbols_list_values">
+        <item>Výchozí</item>
+        <item>Římské</item>
+        <item>Ozdobné</item>
+        <item>Čínské</item>
+        <item>Řecké</item>
+        <item>Indické</item>
+    </array>
+    <string name="pref_automatic_note_deletion">Smazání poznámky</string>
+    <string name="pref_automatic_note_deletion_summary">Automaticky odstranit poznámky při nastavení hodnot na spojených buňkách</string>
+    <string name="pref_timer_reset">Reset času</string>
+    <string name="pref_timer_reset_summary">Při resetování hracího pole resetovat i časomíru.</string>
+
+    <!-- ###ABOUT### -->
+    <string name="app_name_long" translatable="false">Privacy Friendly Sudoku</string>
+    <string name="version_number" translatable="false">2.0.1</string>
+    <string name="about_author">Autor:</string>
+    <string name="about_author_names" translatable="false">Christopher Beckmann, Timm Lippert</string>
+    <string name="about_author_contributors">a přispěvatelé.</string>
+    <string name="about_affiliation">Ve spolupráci s</string>
+    <string name="privacy_friendly">Tato aplikace patří ke skupině Privacy Friendly Apps vyvinutých v Technische Universität Darmstadt. Zdrojový kód je licencován pod GPLv3. Copyright obrázků TU Darmstadt a Google Inc.</string>
+    <string name="more_info">Více informací naleznete na:</string>
+    <string name="github" translatable="false"><a href="https://github.com/SecUSo/privacy-friendly-sudoku">Github-Repo</a></string>
+    <string name="url" translatable="false"><a href="https://www.secuso.org/pfa">SECUSO-Website</a></string>
+    <string name="about_qqwing">Tato aplikace používá modifikovanou verzi QQWing v1.3.4</string>
+    <string name="about_qqwingLink" translatable="false"><a href="http://qqwing.com/download.html">http://qqwing.com/</a></string>
+
+    <!-- ###GameDifficulty### -->
+    <string name="difficulty_easy">Snadná</string>
+    <string name="difficulty_moderate">Střední</string>
+    <string name="difficulty_hard">Těžká</string>
+
+    <!--###GameActivity -->
+    <string name="Sudoku" translatable="false">Sudoku</string>
+    <string name="gametype_default_9x9" translatable="false">Sudoku 9x9</string>
+    <string name="gametype_default_6x6" translatable="false">Sudoku 6x6</string>
+    <string name="gametype_unspecified">Nespecifikovaný</string>
+    <string name="gametype_default_12x12" translatable="false">Sudoku 12x12</string>
+    <string name="gametype_x_9x9" translatable="false">X Sudoku 9x9</string>
+    <string name="gametype_hyper_9x9" translatable="false">Hyper Sudoku 9x9</string>
+    <string name="hint_usage">Zvolte validní pole a klikněte na tlačítko nápovědy pro zobrazení řešení.</string>
+    <string name="hint_confirmation">Opravdu chcete použít nápovědu? Při použití nápovědy nelze dosáhnout osobního nejlepšího času.</string>
+    <string name="hint_confirmation_confirm">Použít</string>
+    <string name="reset_confirmation">Opravdu chcete resetovat hrací pole?</string>
+    <string name="reset_confirmation_confirm">Resetovat</string>
+
+    <!-- ### Welcome Dialog ### -->
+    <string name="welcome">Vítejte v Privacy Friendly Sudoku.</string>
+    <string name="field_select_description">Přejeďte prstem nebo klikněte na šipky doprava či doleva pro změnu módu hry.</string>
+    <string name="field_select_description_headline">Mód hry:</string>
+    <string name="difficulty_description">Klikněte na nebo přejeďte po hvězdičkách pro změnu obtížnosti.</string>
+    <string name="difficulty_description_headline">Obtížnost:</string>
+
+    <!-- ### Continue Game ### -->
+    <string name="loadgame_delete_confirmation">Opravdu chcete smazat tuto uloženou hru?</string>
+    <string name="loadgame_delete_confirm">Smazat</string>
+
+    <!-- ### Stats ###-->
+    <string name="stats_name">Statistika</string>
+    <string name="number_of_hints"># použitých nápověd:</string>
+    <string name="number_of_games"># dokončených her:</string>
+    <string name="total_of_time">Celkový herní čas:</string>
+    <string name="average_time">Průměrný čas:</string>
+    <string name="min_time">Nejlepší čas:</string>
+    <string name="reset_stats">Resetovat vše</string>
+
+    <!--### Win Strings -->
+    <string name="win_text">Gratuluji!</string>
+    <string name="win_button_text">Pokračovat</string>
+    <string name="title_activity_help">Pomoc</string>
+    <string name="win_time">Čas:</string>
+    <string name="win_hint">Nápověd:</string>
+    <string name="win_show_game">Ukázat pole</string>
+    <string name="win_best_time">Nový rekord!</string>
+
+    <!-- ### HELP prefs ###-->
+    <string name="header_help">Pomoc</string>
+    <string name="help_keyboard">Klávesnice</string>
+    <string name="help_gamefield">Herní pole</string>
+    <string name="help_keyhighlighted_summary">Indikuje označení dané hodnoty. Hodnoty jsou v tomto režimu polím přiřazovány pouhým dotykem bez nutnosti označení pole.</string>
+    <string name="help_keyhighlighted_yellow_summary">Indikuje, že byl položen správný počet hodnot pro dané číslo.</string>
+
+    <!-- ### Special buttons description ###-->
+    <string name="help_do">Tlačítko Vpřed</string>
+    <string name="help_do_summary">Provádí poslední akci vrácenou zpět</string>
+    <string name="help_undo">Tlačítko Zpět</string>
+    <string name="help_undo_summary">Vrací zpět poslední akci</string>
+    <string name="help_hint">Tlačítko Nápověda</string>
+    <string name="help_hint_summary">Odhaluje řešení zvoleného pole\nPozor: Při použití nápovědy hra nemůže být počítána jako nový nejlepší čas.</string>
+    <string name="help_delete">Tlačítko Smazat</string>
+    <string name="help_delete_summary">Vymaže zvolené pole.</string>
+    <string name="help_notes">Tlačítko poznámek</string>
+    <string name="help_notes_summary">Přepíná režimy, kdy jsou čísla přiřazována jako poznámky, nebo jako hodnoty v poli</string>
+    <string name="help_privacyInfo">Informace o soukromí</string>
+    <string name="help_permissions">Oprávnění</string>
+    <string name="help_permissions_summary">Privacy Friendly Sudoku nevyžaduje žádná oprávnění.</string>
+    <string name="okay">Ok</string>
+    <string name="view_help">Zobrazit nápovědu</string>
+</resources>
