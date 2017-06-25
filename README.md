@@ -1,5 +1,7 @@
 ## Privacy Friendly Sudoku
 
+[<img src="https://f-droid.org/badge/get-it-on.png" alt="Get it on F-Droid" height="60">](https://f-droid.org/repository/browse/?fdfilter=sudoku&fdid=org.secuso.privacyfriendlysudoku)<a href="https://play.google.com/store/apps/details?id=org.secuso.privacyfriendlysudoku"><img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" height="60"></a>
+
 Privacy Friendly Sudoku is a logic based game and belongs to the group of Privacy Friendly Apps developed by Technische Universität Darmstadt, Germany.
 
 This app is optimized regarding the user's privacy. It doesn't use any tracking mechanisms, neither it displays any advertisement.
@@ -11,11 +13,7 @@ It also does neither include advertisement nor tracking mechanisms.
 As it is part of the Privacy Friendly Apps developed by the SECUSO research group of the Technische 
 Universtität Darmstadt in Germany it is optimized due to user's privacy.
 
-## Download and more Information
-
-[<img src="https://f-droid.org/badge/get-it-on.png" alt="Get it on F-Droid" height="60">](https://f-droid.org/repository/browse/?fdfilter=sudoku&fdid=org.secuso.privacyfriendlysudoku)<a href="https://play.google.com/store/apps/details?id=org.secuso.privacyfriendlysudoku"><img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" height="60"></a>
-
-### Building
+## Building
 
 Further development requires Android Studio, we recommend to use at least version 2.2.3
 
@@ -40,7 +38,7 @@ The icons ic_trophy_award_black_48dp and ic_trophy_black_48dp are licensed under
 
 ## Contributors
 
-App-Icons:
+App-Icon:
 Markus Hau
 
 Github-Users: <br />
