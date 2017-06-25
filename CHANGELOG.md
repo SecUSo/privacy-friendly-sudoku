@@ -1,6 +1,14 @@
 Changelog
 ==========
 
+Version 2.1.0 *(2017-07-25)*
+----------------------------
+
+ * New difficulity level added
+ * New settings
+ * DB restructuring
+	
+
 Version 2.0.1 *(2016-11-07)*
 ----------------------------
 
