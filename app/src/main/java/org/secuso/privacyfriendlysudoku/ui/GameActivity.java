@@ -83,10 +83,12 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+
+        if(sharedPref.getBoolean("pref_keep_screen_on", true)) {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        }
+
         GameType gameType = GameType.Unspecified;
         GameDifficulty gameDifficulty = GameDifficulty.Unspecified;
         int loadLevelID = 0;
