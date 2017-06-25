@@ -53,6 +53,7 @@
     <!-- ###ABOUT### -->
     <string name="about_author">作者:</string>
     <string name="about_author_contributors">と貢献者。</string>
+    <string name="version_number">バージョン</string>
     <string name="about_affiliation">提携</string>
     <string name="privacy_friendly">このアプリケーションは、ダルムシュタット工科大学 (Technische Universität Darmstadt, Germany) が開発したプライバシーフレンドリーアプリのグループに属しています。 ソースコードは GPLv3 の下でライセンスされます。画像の著作権は TU Darmstadt および Google Inc.</string>
     <string name="more_info">さらに詳しい情報は以下でご覧ください:</string>

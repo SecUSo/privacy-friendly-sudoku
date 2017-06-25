@@ -8,6 +8,7 @@ import android.text.method.LinkMovementMethod;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import org.secuso.privacyfriendlysudoku.ui.view.BuildConfig;
 import org.secuso.privacyfriendlysudoku.ui.view.R;
 
 public class AboutActivity extends BaseActivity {
@@ -19,6 +20,7 @@ public class AboutActivity extends BaseActivity {
 
         ((TextView)findViewById(R.id.secusoWebsite)).setMovementMethod(LinkMovementMethod.getInstance());
         ((TextView)findViewById(R.id.githubURL)).setMovementMethod(LinkMovementMethod.getInstance());
+        ((TextView)findViewById(R.id.textFieldVersionName)).setText(BuildConfig.VERSION_NAME);
 
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(R.string.menu_about);

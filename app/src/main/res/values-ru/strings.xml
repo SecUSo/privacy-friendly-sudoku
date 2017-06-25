@@ -81,6 +81,7 @@
     <string name="pref_timer_reset_summary">Сброс таймера при сбросе доски.</string>
     <string name="welcome">Добро пожаловать в Privacy Friendly Sudoku.</string>
     <string name="about_author_contributors">" "</string>
+    <string name="version_number">Версия:</string>
     <string name="okay">Ok</string>
     <string name="view_help">Помощь</string>
 </resources>

@@ -57,8 +57,8 @@
 
     <!-- ###ABOUT### -->
     <string name="app_name_long" translatable="false">Privacy Friendly Sudoku</string>
-    <string name="version_number" translatable="false">2.1.1</string>
-    <string name="about_author">Author:</string>
+    <string name="version_number">Version:</string>
+    <string name="about_author">Authors:</string>
     <string name="about_author_names" translatable="false">Christopher Beckmann, Timm Lippert</string>
     <string name="about_author_contributors">and contributors.</string>
     <string name="about_affiliation">In affiliation with</string>
