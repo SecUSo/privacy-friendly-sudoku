@@ -11,8 +11,11 @@ It also does neither include advertisement nor tracking mechanisms.
 As it is part of the Privacy Friendly Apps developed by the SECUSO research group of the Technische 
 Universtität Darmstadt in Germany it is optimized due to user's privacy.
 
-
 ## Download and more Information
+
+[<img src="https://f-droid.org/badge/get-it-on.png" alt="Get it on F-Droid" height="60">](https://f-droid.org/repository/browse/?fdfilter=sudoku&fdid=org.secuso.privacyfriendlysudoku)<a href="https://play.google.com/store/apps/details?id=org.secuso.privacyfriendlysudoku"><img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" height="60"></a>
+
+### Building
 
 Further development requires Android Studio, we recommend to use at least version 2.2.3
 
