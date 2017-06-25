@@ -145,6 +145,8 @@ public class GameBoard implements Cloneable, Parcelable {
         return solved;
     }
 
+
+
     /**
      * Checks the given list if every number occurs only once.
      * This method will automatically build the errorList.

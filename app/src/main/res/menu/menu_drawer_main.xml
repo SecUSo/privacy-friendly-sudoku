@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/nav_highscore_main" android:icon="@android:drawable/ic_menu_myplaces"
-        android:title="@string/menu_highscore" />
 
-    <group android:id="@+id/group2">
+    <group android:id="@+id/group4"
+        android:checkableBehavior="all">
+        <item android:id="@+id/nav_newgame_main" android:icon="@android:drawable/ic_menu_today"
+            android:title="@string/menu_main" />
+        <item android:id="@+id/nav_highscore_main" android:icon="@android:drawable/ic_menu_myplaces"
+            android:title="@string/menu_highscore" />
+    </group>
+
+    <group android:id="@+id/group2"
+        android:checkableBehavior="all">
         <item android:id="@+id/menu_settings_main" android:icon="@android:drawable/ic_menu_manage"
             android:title="@string/menu_settings" />
         <item android:id="@+id/menu_help_main" android:icon="@android:drawable/ic_menu_help"

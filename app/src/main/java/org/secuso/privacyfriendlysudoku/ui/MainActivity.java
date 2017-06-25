@@ -48,6 +48,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     SharedPreferences settings;
     ImageView arrowLeft, arrowRight;
     DrawerLayout drawer;
+    NavigationView mNavigationView;
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -168,8 +169,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view_main);
-        navigationView.setNavigationItemSelectedListener(this);
+        mNavigationView = (NavigationView) findViewById(R.id.nav_view_main);
+        mNavigationView.setNavigationItemSelectedListener(this);
+
+        selectNavigationItem(R.id.nav_newgame_main);
 
         overridePendingTransition(0, 0);
     }
@@ -247,6 +250,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     public void onResume() {
         super.onResume();
 
+        selectNavigationItem(R.id.nav_newgame_main);
+
         refreshContinueButton();
     }
 
@@ -269,6 +274,13 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         // Handle navigation view item clicks here.
         final int id = item.getItemId();
 
+        drawer.closeDrawer(GravityCompat.START);
+
+        // return if we are not going to another page
+        if(id == R.id.nav_newgame_main) {
+            return true;
+        }
+
         // delay transition so the drawer can close
         mHandler.postDelayed(new Runnable() {
             @Override
@@ -277,14 +289,21 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             }
         }, NAVDRAWER_LAUNCH_DELAY);
 
-        drawer.closeDrawer(GravityCompat.START);
-
         // fade out the active activity
         View mainContent = findViewById(R.id.main_content);
         if (mainContent != null) {
             mainContent.animate().alpha(0).setDuration(MAIN_CONTENT_FADEOUT_DURATION);
         }
+
         return true;
+    }
+
+    // set active navigation item
+    private void selectNavigationItem(int itemId) {
+        for(int i = 0 ; i < mNavigationView.getMenu().size(); i++) {
+            boolean b = itemId == mNavigationView.getMenu().getItem(i).getItemId();
+            mNavigationView.getMenu().getItem(i).setChecked(b);
+        }
     }
 
     private boolean goToNavigationItem(int id) {

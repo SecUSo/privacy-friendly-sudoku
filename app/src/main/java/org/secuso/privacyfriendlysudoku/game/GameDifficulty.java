@@ -16,7 +16,8 @@ public enum GameDifficulty implements Parcelable {
     Unspecified(R.string.gametype_unspecified),
     Easy(R.string.difficulty_easy),
     Moderate(R.string.difficulty_moderate),
-    Hard(R.string.difficulty_hard);
+    Hard(R.string.difficulty_hard),
+    Challenge(R.string.difficulty_challenge);
 
     private int resID;
 
@@ -34,6 +35,7 @@ public enum GameDifficulty implements Parcelable {
         validList.add(Easy);
         validList.add(Moderate);
         validList.add(Hard);
+        validList.add(Challenge);
         return validList;
     }
 

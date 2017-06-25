@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion '24.0.1'
+    buildToolsVersion '25.0.0'
 
     testOptions {
         unitTests.returnDefaultValues = true
@@ -12,8 +12,8 @@ android {
         applicationId "org.secuso.privacyfriendlysudoku"
         minSdkVersion 16
         targetSdkVersion 25
-        versionCode 3
-        versionName "2.0.1"
+        versionCode 4
+        versionName "2.1.1"
     }
     buildTypes {
         release {

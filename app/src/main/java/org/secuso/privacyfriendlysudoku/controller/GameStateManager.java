@@ -203,6 +203,5 @@ public class GameStateManager {
         SharedPreferences.Editor editor = settings.edit();
         editor.putBoolean("savesChanged", true);
         editor.commit();
-
     }
 }

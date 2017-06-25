@@ -41,6 +41,11 @@
             android:title="@string/pref_highlight_notes"
             android:summary=""
             android:defaultValue="true"/>
+        <SwitchPreference android:id="@+id/pref_highlightInputError"
+            android:key="pref_highlightInputError"
+            android:title="@string/pref_highlightInputError"
+            android:summary=""
+            android:defaultValue="true"/>
     </PreferenceCategory>
 
     <!-- NOTE: EditTextPreference accepts EditText attributes. -->

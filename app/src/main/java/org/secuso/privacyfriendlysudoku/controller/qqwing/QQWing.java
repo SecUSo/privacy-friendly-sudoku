@@ -22,6 +22,8 @@
 // @formatter:on
 package org.secuso.privacyfriendlysudoku.controller.qqwing;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -228,17 +230,33 @@ public class QQWing {
 	 */
 	public GameDifficulty getDifficulty() {
 		if (getGuessCount() > 0)
-            return GameDifficulty.Hard;
+            return GameDifficulty.Challenge;
 		if (getBoxLineReductionCount() > 0)
-            return GameDifficulty.Moderate;
+            return GameDifficulty.Hard;
 		if (getPointingPairTripleCount() > 0)
-            return GameDifficulty.Moderate;
+            return GameDifficulty.Hard;
 		if (getHiddenPairCount() > 0)
-            return GameDifficulty.Moderate;
+            return GameDifficulty.Hard;
 		if (getNakedPairCount() > 0)
-            return GameDifficulty.Moderate;
-		if (getHiddenSingleCount() > 0)
-            return GameDifficulty.Easy;
+            return GameDifficulty.Hard;
+		switch (gameType) {
+			case Default_6x6:
+				if (getHiddenSingleCount() > 0)
+					return GameDifficulty.Moderate;
+				break;
+			case Default_9x9:
+				if (getHiddenSingleCount() > 10)
+					return GameDifficulty.Moderate;
+				break;
+			case Default_12x12:
+				Log.d("GeneratorService", "# HiddenSingleCount: "+ getHiddenSingleCount());
+				if (getHiddenSingleCount() > 20)
+					return GameDifficulty.Moderate;
+				break;
+			default:
+				if(getHiddenSingleCount() > 10)
+					return GameDifficulty.Moderate;
+		}
 		if (getSingleCount() > 0)
             return GameDifficulty.Easy;
 
@@ -450,9 +468,9 @@ public class QQWing {
 			rollbackRound(i);
 
             // Some hack to make easy levels on 12x12 .. because the generator wasn't able to create some
-            if(gameType == GameType.Default_12x12 &&  difficulty == GameDifficulty.Easy ) {
-                i += 4; // skip every 2nd round to find "easy" levels more frequent. Still takes about 20 Seconds.
-            }
+            //if(difficulty == GameDifficulty.Easy && gameType == GameType.Default_12x12) {
+            //    i += 2; // skip every 2nd round to find "easy" levels more frequent. Still takes about 20 Seconds.
+            //}
         }
 	}
 

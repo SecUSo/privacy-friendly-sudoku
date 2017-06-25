@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import org.secuso.privacyfriendlysudoku.controller.SaveLoadStatistics;
 import org.secuso.privacyfriendlysudoku.controller.helper.HighscoreInfoContainer;
+import org.secuso.privacyfriendlysudoku.game.GameDifficulty;
 import org.secuso.privacyfriendlysudoku.game.GameType;
 import org.secuso.privacyfriendlysudoku.ui.view.R;
 
@@ -243,9 +244,17 @@ public class StatsActivity extends BaseActivity {
                     averageTimeView = (TextView) rootView.findViewById(R.id.third_ava_time);
                     minTimeView = (TextView) rootView.findViewById(R.id.third_min_time);
                     break;
+                case 3:
+                    difficultyBarView = (RatingBar) rootView.findViewById(R.id.fourth_diff_bar);
+                    difficultyView = (TextView) rootView.findViewById(R.id.fourth_diff_text);
+                    averageTimeView = (TextView) rootView.findViewById(R.id.fourth_ava_time);
+                    minTimeView = (TextView) rootView.findViewById(R.id.fourth_min_time);
+                    break;
                 default: return;
             }
-            difficultyBarView.setRating(pos+1);
+            difficultyBarView.setMax(GameDifficulty.getValidDifficultyList().size());
+            difficultyBarView.setNumStars(GameDifficulty.getValidDifficultyList().size());
+            difficultyBarView.setRating(infos.getDifficulty().ordinal());
             difficultyView.setText(rootView.getResources().getString(infos.getDifficulty().getStringResID()));
             t= (infos.getTimeNoHints() == 0)?0:(infos.getTimeNoHints() / infos.getNumberOfGamesNoHints());
             averageTimeView.setText(formatTime(t));

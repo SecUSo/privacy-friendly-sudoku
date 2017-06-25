@@ -217,6 +217,8 @@ public class LoadGameActivity extends BaseActivity implements IDeleteDialogFragm
             }
             gameType.setText(gic.getGameType().getStringResID());
             difficulty.setText(gic.getDifficulty().getStringResID());
+            difficultyBar.setNumStars(GameDifficulty.getValidDifficultyList().size());
+            difficultyBar.setMax(GameDifficulty.getValidDifficultyList().size());
             difficultyBar.setRating(GameDifficulty.getValidDifficultyList().indexOf(gic.getDifficulty())+1);
 
             int time = gic.getTimePlayed();

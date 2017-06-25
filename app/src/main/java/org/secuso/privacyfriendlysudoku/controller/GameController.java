@@ -221,7 +221,42 @@ public class GameController implements IModelChangedListener, Parcelable {
                 updateList.addAll(gameBoard.getSection(cell.getRow(), cell.getCol()));
                 deleteNotes(updateList, value);
             }
+
+            if(settings != null && settings.getBoolean("pref_highlightInputError",true)) {
+                checkInputError(row, col);
+            }
         }
+    }
+
+    private void checkInputError(int row, int col) {
+        if(isValidNumber(row+1) && isValidNumber(col+1)) {
+
+            if (errorList == null) {
+                errorList = new CellConflictList();
+            }
+
+            errorList.addAll(checkInputErrorList(gameBoard.getCell(row,col), gameBoard.getRow(row)));
+            errorList.addAll(checkInputErrorList(gameBoard.getCell(row, col), gameBoard.getColumn(col)));
+            errorList.addAll(checkInputErrorList(gameBoard.getCell(row, col), gameBoard.getSection(row, col)));
+        }
+    }
+
+
+    private CellConflictList checkInputErrorList(GameCell cell, List<GameCell> list) {
+        CellConflictList errorList = new CellConflictList();
+        for (int i = 0; i < list.size(); i++) {
+            GameCell c2 = list.get(i);
+
+            if (!cell.equals(c2) && cell.getValue() != 0 && c2.getValue() != 0) {
+
+                // Same value in one set should not exist
+                if (cell.getValue() == c2.getValue()) {
+                    // we found an error..
+                    errorList.add(new CellConflict(cell, c2));
+                }
+            }
+        }
+        return errorList;
     }
 
     public LinkedList<GameCell> getConnectedCells(int row, int col) {

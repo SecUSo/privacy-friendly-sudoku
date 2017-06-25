@@ -216,48 +216,42 @@ public class SudokuFieldLayout extends RelativeLayout implements IHighlightChang
         p.setStrokeWidth(4);
         p.setColor(Color.RED);
 
-        float offset1=0;
-        float offset2= 0;
+        float offsetX = 0;
+        float offsetY = 0;
         int row;
         int col;
         int row2;
         int col2;
-        float radius;
+
+        float radius = gameCellWidth / 2 - gameCellWidth / 16;
+
         for(CellConflict conflict : gameController.getErrorList()) {
 
-            //gamecells[conflict.getRowCell1()][conflict.getColCell1()].
-
+            // draw the circles around the numbers
             row = conflict.getRowCell1();
             col = conflict.getColCell1();
-            radius = gameCellWidth/2 - gameCellWidth / 8;
             canvas.drawCircle(gameCellWidth * col + gameCellWidth / 2, gameCellHeight * row + gameCellHeight / 2, radius, p);
 
             row2 = conflict.getRowCell2();
             col2 = conflict.getColCell2();
             canvas.drawCircle(gameCellWidth * col2 + gameCellWidth / 2, gameCellHeight * row2 + gameCellHeight / 2, radius, p);
 
+            // draw the line between the circles
+            // either offset is 0 or it is the radius pointing in the direction of the other cell
+            offsetX = (col == col2) ? 0f : (col < col2) ? radius : -radius;
+            offsetY = (row == row2) ? 0f : (row < row2) ? radius : -radius;
 
-
-
-            if (col == col2 || row == row2) {
-                offset1 = (col > col2)? 0-radius:radius;
-                offset2 = (row > row2)? 0-radius:radius;
-                offset1 = (col == col2)?0f:offset1;
-                offset2 = (row == row2)?0f:offset2;
-            } else {
-                double alpha = Math.atan((Math.abs(col2-col))/(Math.abs(row2 - row)));
-                offset1 = (col > col2)? 0-radius:radius;
-                offset2 = (row > row2)? 0-radius:radius;
-                offset1*=Math.sin(alpha);
-                offset2*=Math.cos(alpha);
+            if(col != col2 && row != row2) {
+                double alpha = Math.atan(((float)Math.abs(col2 - col))/((float)Math.abs(row2 - row)));
+                offsetX *= Math.sin(alpha);
+                offsetY *= Math.cos(alpha);
             }
 
-
             canvas.drawLine(
-                    (gameCellWidth * col + gameCellWidth / 2)+offset1,
-                    (gameCellHeight * row + gameCellHeight / 2)+offset2,
-                    (gameCellWidth * col2 + gameCellWidth / 2)-offset1,
-                    (gameCellHeight * row2 + gameCellHeight / 2)-offset2, p);
+                    (gameCellWidth * col + gameCellWidth / 2)+offsetX,
+                    (gameCellHeight * row + gameCellHeight / 2)+offsetY,
+                    (gameCellWidth * col2 + gameCellWidth / 2)-offsetX,
+                    (gameCellHeight * row2 + gameCellHeight / 2)-offsetY, p);
         }
     }
 }

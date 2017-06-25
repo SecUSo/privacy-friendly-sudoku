@@ -57,7 +57,7 @@
 
     <!-- ###ABOUT### -->
     <string name="app_name_long" translatable="false">Privacy Friendly Sudoku</string>
-    <string name="version_number" translatable="false">2.0.1</string>
+    <string name="version_number" translatable="false">2.1.1</string>
     <string name="about_author">Author:</string>
     <string name="about_author_names" translatable="false">Christopher Beckmann, Timm Lippert</string>
     <string name="about_author_contributors">and contributors.</string>
@@ -140,4 +140,6 @@
     <string name="help_permissions_summary">Privacy Friendly Sudoku does not use any permissions.</string>
     <string name="okay">Okay</string>
     <string name="view_help">View Help</string>
+    <string name="difficulty_challenge">Challenge</string>
+    <string name="pref_highlightInputError">Highlight input mistakes</string>
 </resources>

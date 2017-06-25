@@ -6,7 +6,7 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:weightSum="10"
     android:orientation="vertical"
-    tools:context="tu_darmstadt.sudoku.ui.StatsActivity$PlaceholderFragment">
+    tools:context="org.secuso.privacyfriendlysudoku.ui.StatsActivity$PlaceholderFragment">
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -86,6 +86,7 @@
         </LinearLayout>
     </LinearLayout>
 
+
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="0dp"
@@ -105,7 +106,7 @@
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_weight="4"
-        android:weightSum="3"
+        android:weightSum="4"
         android:orientation="vertical">
         <!-- ### first row -->
         <LinearLayout
@@ -309,6 +310,71 @@
 
         </LinearLayout>
 
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical">
+                <RatingBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:numStars="3"
+                    android:layout_gravity="center"
+                    android:id="@+id/fourth_diff_bar"
+                    android:layout_below="@+id/fourth_diff_text"
+                    style="?android:attr/ratingBarStyleSmall"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="diffi"
+                    android:id="@+id/fourth_diff_text"
+                    android:gravity="center_vertical"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/average_time"
+                    android:id="@+id/fourth_av_text"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:id="@+id/fourth_ava_time"
+                    android:gravity="center_vertical"
+                    android:layout_below="@+id/fourth_av_text"/>
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/min_time"
+                    android:id="@+id/fourth_min_text"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:id="@+id/fourth_min_time"
+                    android:gravity="center_vertical"
+                    android:layout_below="@+id/fourth_min_text"/>
+            </RelativeLayout>
+
+        </LinearLayout>
 
     </LinearLayout>
 

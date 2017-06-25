@@ -38,6 +38,10 @@
         <activity
             android:name="org.secuso.privacyfriendlysudoku.ui.HelpActivity"
             android:label="@string/title_activity_help" />
+        <service
+            android:name="org.secuso.privacyfriendlysudoku.controller.GeneratorService"
+            android:enabled="true"
+            android:exported="false" />
     </application>
 
 </manifest>
