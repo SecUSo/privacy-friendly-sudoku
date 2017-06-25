@@ -9,6 +9,7 @@
     <string name="difficulty_easy">Fácil</string>
     <string name="difficulty_hard">Difícil</string>
     <string name="difficulty_moderate">Normal</string>
+    <string name="difficulty_challenge">Reto</string>
     <string name="gametype_unspecified">No especificado </string>
     <string name="generating">Generando nuevo nivel en segundo plano…</string>
     <string name="help_delete">Borrar</string>

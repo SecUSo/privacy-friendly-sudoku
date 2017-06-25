@@ -140,7 +140,7 @@
     <string name="help_permissions_summary">Privacy Friendly Sudoku does not use any permissions.</string>
     <string name="okay">Okay</string>
     <string name="view_help">View Help</string>
-    <string name="difficulty_challenge" translatable="false">Challenge</string>
+    <string name="difficulty_challenge">Challenge</string>
     <string name="pref_highlightInputError" translatable="false">Highlight input mistakes</string>
     <string name="pref_keep_screen_on">Keep Screen On</string>
     <string name="pref_keep_screen_on_summary">Don\'t turn the screen off while playing</string>

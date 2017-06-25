@@ -8,6 +8,7 @@
     <string name="difficulty_easy">Легкий</string>
     <string name="difficulty_hard">Сложный</string>
     <string name="difficulty_moderate">Средний</string>
+    <string name="difficulty_challenge">вызов</string>
     <string name="gametype_unspecified">Необычный</string>
     <string name="generating">Генерирую новый уровень на заднем плане…</string>
     <string name="header_help">Помощь</string>

@@ -8,6 +8,7 @@
     <string name="difficulty_easy">Facile</string>
     <string name="difficulty_hard">Difficile</string>
     <string name="difficulty_moderate">Normal</string>
+    <string name="difficulty_challenge">Challenge</string>
     <string name="gametype_unspecified">Indéterminé</string>
     <string name="generating">Générer nouveau niveau en arrière-plan…</string>
     <string name="header_help">Aide</string>

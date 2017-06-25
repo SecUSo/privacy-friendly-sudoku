@@ -62,6 +62,7 @@
     <string name="difficulty_easy">簡単</string>
     <string name="difficulty_moderate">標準</string>
     <string name="difficulty_hard">難しい</string>
+    <string name="difficulty_challenge">チャレンジ</string>
 
     <!--###GameActivity -->
     <string name="gametype_unspecified">未指定</string>

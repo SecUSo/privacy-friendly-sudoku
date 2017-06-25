@@ -89,5 +89,6 @@
     <string name="difficulty_description">Drücke oder wische über die Sterne um den Schwierigkeitsgrad zu ändern.</string>
     <string name="view_help">Siehe Hilfe</string>
     <string name="okay">Okay</string>
+    <string name="difficulty_challenge">Profi</string>
 
 </resources>
