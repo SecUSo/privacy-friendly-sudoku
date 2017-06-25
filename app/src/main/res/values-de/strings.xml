@@ -92,4 +92,7 @@
     <string name="okay">Okay</string>
     <string name="difficulty_challenge">Profi</string>
 
+    <string name="pref_keep_screen_on">Bildschirm dauerhaft an</string>
+    <string name="pref_keep_screen_on_summary">Der Bildschirm bleibt während des Spielens an.</string>
+
 </resources>

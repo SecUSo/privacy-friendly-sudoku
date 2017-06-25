@@ -84,4 +84,6 @@
     <string name="about_author_contributors">" "</string>
     <string name="okay">Ok</string>
     <string name="view_help">Ayuda</string>
+    <string name="pref_keep_screen_on">Keep Screen On</string>
+    <string name="pref_keep_screen_on_summary">Don\'t turn the screen off while playing</string>
 </resources>
