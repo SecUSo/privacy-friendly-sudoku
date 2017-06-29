@@ -1,6 +1,13 @@
 Changelog
 ==========
 
+Version 2.1.1 *(2017-07-29)*
+----------------------------
+
+ * New Tutorial
+ * Bug Fixing
+
+
 Version 2.1.0 *(2017-07-25)*
 ----------------------------
 
@@ -14,6 +21,7 @@ Version 2.0.1 *(2016-11-07)*
 
  * Splash Screen added
 
+
 Version 2.0 *(2016-10-15)*
 ----------------------------
 
@@ -22,10 +30,12 @@ Version 2.0 *(2016-10-15)*
  * New Logo
  * French translation updated
 
+
 Version 1.1 *(2016-03-29)*
 ----------------------------
 
  * French translation updated
+
 
 Version 1.0 *(2016-03-22)*
 ----------------------------
