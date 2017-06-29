@@ -63,20 +63,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         NewLevelManager newLevelManager = NewLevelManager.getInstance(getApplicationContext(), settings);
 
-        // Is this the very first time we start this app?
-        boolean firstStart = settings.getBoolean("firstStart", true);
-        if(firstStart) {
-            // preload some levels so we don't have to generate as many and we can start playing right away.
-            newLevelManager.loadFirstStartLevels();
-
-            WelcomeDialog welcomeDialog = new WelcomeDialog();
-            welcomeDialog.show(getFragmentManager(), "WelcomeDialog");
-
-            SharedPreferences.Editor editor = settings.edit();
-            editor.putBoolean("firstStart", false);
-            editor.commit();
-        }
-
         // check if we need to pre generate levels.
         newLevelManager.checkAndRestock();
 
@@ -431,32 +417,4 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         }
     }
 
-    public static class WelcomeDialog extends DialogFragment {
-
-        @Override
-        public void onAttach(Activity activity) {
-            super.onAttach(activity);
-        }
-
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-
-            LayoutInflater i = getActivity().getLayoutInflater();
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-
-            builder.setView(i.inflate(R.layout.welcome_dialog, null));
-            builder.setIcon(R.mipmap.ic_launcher_nopfa);
-            builder.setTitle(getActivity().getString(R.string.app_name_long));
-            builder.setPositiveButton(getActivity().getString(R.string.okay), null);
-            builder.setNegativeButton(getActivity().getString(R.string.view_help), new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    Intent intent = new Intent(getActivity(),HelpActivity.class);
-                    startActivity(intent);
-                }
-            });
-
-            return builder.create();
-        }
-    }
 }
