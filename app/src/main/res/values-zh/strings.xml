@@ -19,7 +19,6 @@
     <string name="menu_settings">设置</string>
     <string name="menu_highscore">统计</string>
     <string name="menu_main">主页</string>
-    <string name="menu_group">组</string>
     <string name="menu_help">帮助</string>
     <string name="menu_about">关于</string>
     <string name="title_activity_settings">设置</string>
@@ -44,12 +43,9 @@
     <string name="pref_group_highlight_selection">突出选择</string>
     <string name="pref_group_highlight_value">突出数字</string>
     <string name="pref_header_game">游戏</string>
-    <string name="pref_header_highlight">突出</string>
     <string name="pref_highlight_notes">备注ƒ</string>
     <string name="pref_highlight_vals">相同数字</string>
     <string name="pref_symbols">符号</string>
-    <string name="title_activity_load_game">读取游戏</string>
-    <string name="stats_name">统计</string>
     <string name="reset_stats">全部重置</string>
     <string name="reset_confirmation_confirm">重置</string>
     <string name="reset_confirmation">你确定想要重置游戏领域吗？</string>
@@ -67,22 +63,14 @@
     <string name="help_keyboard">键盘</string>
     <string name="help_hint_summary">显示选择空格的答案</string>
     <string name="help_hint">提示</string>
-    <string name="help_gamefield">游戏领域</string>
     <string name="help_do_summary">恢复删除的选择</string>
     <string name="help_do">恢复</string>
     <string name="help_delete_summary">删除你选择的数字</string>
-    <string name="header_help">帮助</string>
     <string name="help_privacyInfo">私人信息</string>
-    <string name="difficulty_description">扫或者点击星星换难度</string>
-    <string name="difficulty_description_headline">难度</string>
-    <string name="field_select_description">扫或者点击左边箭头或者右边肩头换游戏模式</string>
-    <string name="field_select_description_headline">游戏模式</string>
     <string name="pref_timer_reset">定时复位</string>
     <string name="pref_timer_reset_summary">定时复位如果重置领域</string>
-    <string name="welcome">欢迎</string>
     <string name="about_author_contributors">" "</string>
     <string name="okay">Ok</string>
-    <string name="view_help">帮助</string>
     <string name="version_number">Version</string>
 
     <string name="pref_keep_screen_on">Keep Screen On</string>

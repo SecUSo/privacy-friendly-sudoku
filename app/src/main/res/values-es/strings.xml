@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="about_affiliation">En conjunción con:</string>
-    <string name="header_help">Ayuda</string>
     <string name="about_author">Autor:</string>
     <string name="about_qqwing">Está Aplicación utiliza una versión modificada de QQWing v1.3.4</string>
     <string name="average_time">Tiempo promedio:</string>
@@ -16,7 +15,6 @@
     <string name="help_delete_summary">Borrar el campo seleccionado</string>
     <string name="help_do">Rehacer</string>
     <string name="help_do_summary">Rehacer la acción pasada</string>
-    <string name="help_gamefield">Campo de juego</string>
     <string name="help_hint">Consejo</string>
     <string name="help_hint_summary">Revelar el campo seleccionado\nAtención: Si se utiliza, el juego actual no va a valer como mejor tiempo.</string>
     <string name="help_keyboard">Teclado</string>
@@ -35,7 +33,6 @@
     <string name="loadgame_delete_confirmation">Está seguro que quiere borrar el juego actual?</string>
     <string name="menu_about">Sobre nosotros</string>
     <string name="menu_continue_game">Continuar juego</string>
-    <string name="menu_group">Grupo</string>
     <string name="menu_help">Ayuda</string>
     <string name="menu_highscore">Estadísticas</string>
     <string name="menu_main">Menu principal</string>
@@ -52,7 +49,6 @@
     <string name="pref_group_highlight_selection">Resaltar de las celdas conectadas.</string>
     <string name="pref_group_highlight_value">Resaltar de los valores.</string>
     <string name="pref_header_game">Juego</string>
-    <string name="pref_header_highlight">Resaltar</string>
     <string name="pref_highlight_connected">Celdas conectadas</string>
     <string name="pref_highlight_notes">Notas</string>
     <string name="pref_highlight_vals">Valores iguales</string>
@@ -61,9 +57,7 @@
     <string name="reset_confirmation">Está seguro que quiere reiniciar el juego actual?</string>
     <string name="reset_confirmation_confirm">Resetear</string>
     <string name="reset_stats">Resetear todo</string>
-    <string name="stats_name">Estadísticas</string>
     <string name="title_activity_help">Ayuda</string>
-    <string name="title_activity_load_game">Cargar juego</string>
     <string name="title_activity_settings">Configuraciones</string>
     <string name="total_of_time">Tiempo total jugado:</string>
     <string name="win_best_time">Nuevo mejor tiempo!</string>
@@ -73,17 +67,11 @@
     <string name="win_text">Felicitaciones!</string>
     <string name="win_time">Tiempo:</string>
     <string name="help_privacyInfo">Información de Privacidad</string>
-    <string name="difficulty_description">Presione o deslice para comenzar a cambiar la dificultad.</string>
-    <string name="difficulty_description_headline">Dificultad:</string>
-    <string name="field_select_description">Deslice o aprete el boton de la flecha a la izquierda o a la derecha para cambiar el modo de juego.</string>
-    <string name="field_select_description_headline">Modo de juego:</string>
     <string name="pref_timer_reset">Resetear Tiempo</string>
     <string name="pref_timer_reset_summary">El tiempo se resetea tambien, cuando el tablero se resetea.</string>
-    <string name="welcome">Bienvenido a Privacy Friendly Sudoku.</string>
     <string name="version_number">Versión:</string>
     <string name="about_author_contributors">" "</string>
     <string name="okay">Ok</string>
-    <string name="view_help">Ayuda</string>
     <string name="pref_keep_screen_on">Keep Screen On</string>
     <string name="pref_keep_screen_on_summary">Don\'t turn the screen off while playing</string>
 

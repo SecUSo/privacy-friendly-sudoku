@@ -11,12 +11,10 @@
     <string name="difficulty_challenge">Challenge</string>
     <string name="gametype_unspecified">Indéterminé</string>
     <string name="generating">Générer nouveau niveau en arrière-plan…</string>
-    <string name="header_help">Aide</string>
     <string name="help_delete">Éffacer</string>
     <string name="help_delete_summary">Efface un champ sélectionné</string>
     <string name="help_do">Refaire</string>
     <string name="help_do_summary">Refais la dernière action</string>
-    <string name="help_gamefield">Chamo de jeu</string>
     <string name="help_hint">Conseille</string>
     <string name="help_hint_summary">Montre le champ sélectionné</string>
     <string name="help_keyboard">Clavier</string>
@@ -36,7 +34,6 @@
     <string name="loadgame_delete_confirmation">Êtes-vous sûr que voulez effacer l\'enregistrement?</string>
     <string name="menu_about">À propos</string>
     <string name="menu_continue_game">Continuer</string>
-    <string name="menu_group">Groupe</string>
     <string name="menu_help">Aide</string>
     <string name="menu_highscore">Statistiques</string>
     <string name="menu_main">Menu principal</string>
@@ -53,7 +50,6 @@
     <string name="pref_group_highlight_selection">Mettre la sélection en surbrillance</string>
     <string name="pref_group_highlight_value">Mettre la valeur en surbrillance</string>
     <string name="pref_header_game">Jeu</string>
-    <string name="pref_header_highlight">Surbrillance</string>
     <string name="pref_highlight_connected">Cases connectées</string>
     <string name="pref_highlight_notes">Remarques</string>
     <string name="pref_highlight_vals">Valeurs différentes</string>
@@ -62,9 +58,7 @@
     <string name="reset_confirmation">Êtes-vous sûr que vous voulez refaire le tableau?</string>
     <string name="reset_confirmation_confirm">Refaire</string>
     <string name="reset_stats">Effacer statistiques</string>
-    <string name="stats_name">Statistiques</string>
     <string name="title_activity_help">Aide</string>
-    <string name="title_activity_load_game">Charger jeu</string>
     <string name="title_activity_settings">Paramètres</string>
     <string name="total_of_time">Temps total de jeu :</string>
     <string name="win_best_time">Nouveau record !</string>
@@ -73,17 +67,11 @@
     <string name="win_show_game">Montrer champs de jeu</string>
     <string name="win_text">Félicitations !</string>
     <string name="win_time">Temps :</string>
-    <string name="difficulty_description">Appuyez ou faites glisser les étoiles pour changer la difficulté.</string>
-    <string name="difficulty_description_headline">Difficulté :</string>
-    <string name="field_select_description">Faites glisser ou appuyez sur les boutons flèches à gauche et à droite pour changer le mode de jeu.</string>
-    <string name="field_select_description_headline">Mode de jeu :</string>
     <string name="pref_timer_reset">Réinitialiser le minuteur</string>
     <string name="pref_timer_reset_summary">Aussi réinitialiser le minuteur en réinitialisant le jeux en cours.</string>
-    <string name="welcome">Bienvenue à Privacy Friendly Sudoku.</string>
     <string name="about_author_contributors">" "</string>
     <string name="version_number">Version:</string>
     <string name="okay">Ok</string>
-    <string name="view_help">Aide</string>
     <string name="pref_keep_screen_on">Keep Screen On</string>
     <string name="pref_keep_screen_on_summary">Don\'t turn the screen off while playing</string>
 

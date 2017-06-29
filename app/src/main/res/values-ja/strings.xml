@@ -7,19 +7,16 @@
     <string name="menu_main">メインメニュー</string>
     <string name="menu_settings">設定</string>
     <string name="menu_highscore">ハイスコア</string>
-    <string name="menu_group">グループ</string>
     <string name="menu_help">ヘルプ</string>
     <string name="menu_about">アプリについて</string>
     <string name="menu_reset">ボードをリセット</string>
     <string name="menu_continue_game">ゲームを続ける</string>
 
-    <string name="title_activity_load_game">ゲームをロード</string>
     <string name="generating">バックグラウンドで新しいレベルを生成中&#8230;</string>
 
     <!-- ###SETTINGS### -->
     <string name="title_activity_settings">設定</string>
     <!-- #Highlight -->
-    <string name="pref_header_highlight">ハイライト</string>
     <string name="pref_group_highlight_selection">選択のハイライト</string>
     <string name="pref_highlight_connected">接続したフィールド</string>
     <string name="pref_group_highlight_value">数のハイライト</string>
@@ -74,18 +71,12 @@
     <string name="reset_confirmation_confirm">リセット</string>
 
     <!-- ### Welcome Dialog ### -->
-    <string name="welcome">プライバシーフレンドリー Sudoku へようこそ。</string>
-    <string name="field_select_description">スワイプまたは左右の矢印ボタンを押して、ゲームモードを変更します。</string>
-    <string name="field_select_description_headline">ゲームモード:</string>
-    <string name="difficulty_description">星を押すかスワイプして難易度を変えます。</string>
-    <string name="difficulty_description_headline">難易度:</string>
 
     <!-- ### Continue Game ### -->
     <string name="loadgame_delete_confirmation">このセーブを削除してもよろしいですか?</string>
     <string name="loadgame_delete_confirm">削除</string>
 
     <!-- ### Stats ###-->
-    <string name="stats_name">統計</string>
     <string name="number_of_hints"># 使用したヒント:</string>
     <string name="number_of_games"># 完了したゲーム:</string>
     <string name="total_of_time">合計プレイタイム:</string>
@@ -103,9 +94,7 @@
     <string name="win_best_time">新記録!</string>
 
     <!-- ### HELP prefs ###-->
-    <string name="header_help">ヘルプ</string>
     <string name="help_keyboard">キーボード</string>
-    <string name="help_gamefield">ゲームフィールド</string>
     <string name="help_keyhighlighted_summary">数が選択されていることを示します。 このモードでは、フィールドを選択しなくても、フィールドに触れると数がすぐにセットされます。</string>
     <string name="help_keyhighlighted_yellow_summary">ここに正しい数が置かれたことを示します。</string>
 
@@ -124,7 +113,6 @@
     <string name="help_permissions">アクセス許可</string>
     <string name="help_permissions_summary">プライバシーフレンドリー Sudoku はいかなるアクセス許可も使用していません。</string>
     <string name="okay">OK</string>
-    <string name="view_help">ヘルプを表示</string>
 
     <string name="pref_keep_screen_on">画面をオンのままにする</string>
     <string name="pref_keep_screen_on_summary">プレイ中は画面をオフにしません</string>

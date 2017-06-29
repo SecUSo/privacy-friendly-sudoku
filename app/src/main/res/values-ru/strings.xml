@@ -11,12 +11,10 @@
     <string name="difficulty_challenge">вызов</string>
     <string name="gametype_unspecified">Необычный</string>
     <string name="generating">Генерирую новый уровень на заднем плане…</string>
-    <string name="header_help">Помощь</string>
     <string name="help_delete">Удалить</string>
     <string name="help_delete_summary">Удаляет выбранное поле</string>
     <string name="help_do">Вернуть</string>
     <string name="help_do_summary">Возвращает отменённое действие</string>
-    <string name="help_gamefield">Игровое поле</string>
     <string name="help_hint">Подсказка</string>
     <string name="help_hint_summary">Показывает правильное решение для указанного поля</string>
     <string name="help_keyboard">Клавиатура</string>
@@ -43,9 +41,7 @@
     <string name="menu_continue_game">Продолжить игру</string>
     <string name="total_of_time">Общее время:</string>
     <string name="title_activity_settings">Настройки</string>
-    <string name="title_activity_load_game">Загрузить игру</string>
     <string name="title_activity_help">Помощь</string>
-    <string name="stats_name">Статистика</string>
     <string name="reset_stats">Сбросить всё.</string>
     <string name="reset_confirmation_confirm">Сброс</string>
     <string name="reset_confirmation">Ты уверен что хочеш сбросить поле?</string>
@@ -54,7 +50,6 @@
     <string name="pref_highlight_vals">Одинаковые значения</string>
     <string name="pref_highlight_notes">Заметки</string>
     <string name="pref_highlight_connected">Связанные поля</string>
-    <string name="pref_header_highlight">Выделение</string>
     <string name="pref_header_game">Игра</string>
     <string name="pref_group_highlight_value">Выделить поле</string>
     <string name="new_game">Новая игра</string>
@@ -64,7 +59,6 @@
     <string name="pref_automatic_note_deletion_summary">Автоматическое удаление заметок при вводе поля.</string>
     <string name="pref_group_game">Настройки</string>
     <string name="pref_group_highlight_selection">Выделить выбор</string>
-    <string name="menu_group">Група</string>
     <string name="menu_help">Помощь</string>
     <string name="menu_highscore">Статистика</string>
     <string name="menu_main">Главное меню</string>
@@ -73,17 +67,11 @@
     <string name="min_time">Лучшее время:</string>
     <string name="more_info">Больше информации на:</string>
     <string name="help_privacyInfo">Информация конфиденциальности</string>
-    <string name="difficulty_description_headline">Сложность:</string>
-    <string name="difficulty_description">Коснитесь для изменения уровня сложности.</string>
-    <string name="field_select_description">Используйте стрелки слева и справа, либо пролистайте режимы для выбора режима игры.</string>
-    <string name="field_select_description_headline">Режим игры:</string>
     <string name="pref_timer_reset">Сброс таймера</string>
     <string name="pref_timer_reset_summary">Сброс таймера при сбросе доски.</string>
-    <string name="welcome">Добро пожаловать в Privacy Friendly Sudoku.</string>
     <string name="about_author_contributors">" "</string>
     <string name="version_number">Версия:</string>
     <string name="okay">Ok</string>
-    <string name="view_help">Помощь</string>
 
     <string name="pref_keep_screen_on">Keep Screen On</string>
     <string name="pref_keep_screen_on_summary">Don\'t turn the screen off while playing</string>

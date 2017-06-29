@@ -5,7 +5,6 @@
     <string name="menu_settings">Einstellungen</string>
     <string name="menu_highscore">Statistik</string>
     <string name="menu_main">Hauptmenü</string>
-    <string name="menu_group">Gruppe</string>
     <string name="menu_help">Hilfe</string>
     <string name="menu_about">Über</string>
 
@@ -45,12 +44,9 @@
     <string name="pref_group_highlight_selection">Auswahl hervorheben</string>
     <string name="pref_group_highlight_value">Wert hervorheben</string>
     <string name="pref_header_game">Spiel</string>
-    <string name="pref_header_highlight">Hervorhebung</string>
     <string name="pref_highlight_notes">Notizen</string>
     <string name="pref_highlight_vals">Gleiche Werte</string>
     <string name="pref_symbols">Symbole</string>
-    <string name="title_activity_load_game">Spiel laden</string>
-    <string name="stats_name">Statistik</string>
     <string name="reset_stats">Alles zurücksetzen</string>
     <string name="reset_confirmation_confirm">Zurücksetzen</string>
     <string name="reset_confirmation">Bist du dir sicher, dass du das komplette Spielfeld zurücksetzen möchtest?</string>
@@ -74,21 +70,13 @@
     <string name="help_keyboard">Tastatur</string>
     <string name="help_hint_summary">Zeige die korrekte Lösung für das ausgewählte Feld</string>
     <string name="help_hint">Hinweis</string>
-    <string name="help_gamefield">Spielfeld</string>
     <string name="help_do_summary">Stellt die letzte rückgängig gemachte Aktion wieder her</string>
     <string name="help_do">Wiederherstellen</string>
     <string name="help_delete_summary">Löscht das ausgewählte Feld</string>
     <string name="help_delete">Löschen</string>
-    <string name="header_help">Hilfe</string>
     <string name="help_privacyInfo">Privatsphäre Information</string>
     <string name="pref_timer_reset">Zeit zurücksetzen</string>
     <string name="pref_timer_reset_summary">Beim zurücksetzen des Spielfeldes wird die Zeit auch zurückgesetzt.</string>
-    <string name="welcome">Willkommen zu Privacy Friendly Sudoku.</string>
-    <string name="field_select_description_headline">Spielmodus:</string>
-    <string name="field_select_description">Wische oder drücke auf die Pfeile auf der linken und rechten Seite um den Spielmodus zu ändern.</string>
-    <string name="difficulty_description_headline">Schwierigkeitsstufe:</string>
-    <string name="difficulty_description">Drücke oder wische über die Sterne um den Schwierigkeitsgrad zu ändern.</string>
-    <string name="view_help">Siehe Hilfe</string>
     <string name="okay">Okay</string>
     <string name="difficulty_challenge">Profi</string>
 
