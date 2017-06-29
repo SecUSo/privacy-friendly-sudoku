@@ -95,4 +95,17 @@
     <string name="pref_keep_screen_on">Bildschirm dauerhaft an</string>
     <string name="pref_keep_screen_on_summary">Der Bildschirm bleibt während des Spielens an.</string>
 
+    <!-- ### Tutorial ###-->
+    <string name="slide1_heading">Willommen!</string>
+    <string name="slide1_text">Willommen zu Privacy Friendly Sudoku!</string>
+
+    <string name="slide2_heading">Spielmodus</string>
+    <string name="slide2_text">Wischen oder drücken Sie auf die Pfeile auf der linken und rechten Seite um den Spielmodus zu ändern.</string>
+
+    <string name="slide3_heading">Schwierigkeit</string>
+    <string name="slide3_text">Drücken oder wischen Sie über die Sterne um den Schwierigkeitsgrad zu ändern.</string>
+
+    <string name="next">Weiter</string>
+    <string name="skip">Skip</string>
+
 </resources>

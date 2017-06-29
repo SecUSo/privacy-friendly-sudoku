@@ -155,7 +155,6 @@
     <string name="slide3_heading">Difficulty</string>
     <string name="slide3_text">Press or swipe the stars to change the difficulty.</string>
 
-    <string name="viewhelp">View Help</string>
     <string name="next">Next</string>
     <string name="skip">Skip</string>
 </resources>

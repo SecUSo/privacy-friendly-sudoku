@@ -87,4 +87,17 @@
 
     <string name="pref_keep_screen_on">Keep Screen On</string>
     <string name="pref_keep_screen_on_summary">Don\'t turn the screen off while playing</string>
+
+    <!-- ### Tutorial ###-->
+    <string name="slide1_heading">欢迎!</string>
+    <string name="slide1_text">Welcome to Privacy Friendly Sudoku!</string>
+
+    <string name="slide2_heading">游戏模式</string>
+    <string name="slide2_text">扫或者点击左边箭头或者右边肩头换游戏模式.</string>
+
+    <string name="slide3_heading">难度</string>
+    <string name="slide3_text">扫或者点击星星换难度.</string>
+
+    <string name="next">Next</string>
+    <string name="skip">Skip</string>
 </resources>
