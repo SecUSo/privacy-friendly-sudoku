@@ -87,4 +87,6 @@
 
     <string name="next">Próximo</string>
     <string name="skip">Skip</string>
+
+    <string name="menu_tutorial">Tutorial</string>
 </resources>

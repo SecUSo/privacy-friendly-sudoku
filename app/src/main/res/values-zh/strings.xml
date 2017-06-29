@@ -88,4 +88,6 @@
 
     <string name="next">Next</string>
     <string name="skip">Skip</string>
+
+    <string name="menu_tutorial">教程</string>
 </resources>

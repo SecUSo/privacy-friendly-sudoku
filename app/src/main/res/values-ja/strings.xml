@@ -130,4 +130,6 @@
     <string name="next">次</string>
     <string name="skip">Skip</string>
 
+    <string name="menu_tutorial">ガイダンス</string>
+
 </resources>
