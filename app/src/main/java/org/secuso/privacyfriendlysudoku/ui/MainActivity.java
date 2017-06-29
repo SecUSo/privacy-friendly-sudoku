@@ -215,8 +215,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
                     // send everything to game activity
                     i = new Intent(this, GameActivity.class);
-                    i.putExtra("gameType", (Serializable)gameType);
-                    i.putExtra("gameDifficulty", (Serializable)gameDifficulty);
+                    i.putExtra("gameType", gameType.name());
+                    i.putExtra("gameDifficulty", gameDifficulty.name());
                 } else {
                     newLevelManager.checkAndRestock();
                     Toast t = Toast.makeText(getApplicationContext(), R.string.generating, Toast.LENGTH_SHORT);

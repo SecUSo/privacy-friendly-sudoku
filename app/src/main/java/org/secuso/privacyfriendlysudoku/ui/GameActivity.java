@@ -96,11 +96,8 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
 
             Bundle extras = getIntent().getExtras();
             if (extras != null) {
-                Object o = extras.get("gameType");
-                if (o instanceof GameType) {
-                    gameType = (GameType) extras.get("gameType");
-                }
-                gameDifficulty = (GameDifficulty) (extras.get("gameDifficulty"));
+                gameType = GameType.valueOf(extras.getString("gameType", GameType.Default_9x9.name()));
+                gameDifficulty = GameDifficulty.valueOf(extras.getString("gameDifficulty", GameDifficulty.Moderate.name()));
                 loadLevel = extras.getBoolean("loadLevel", false);
                 if (loadLevel) {
                     loadLevelID = extras.getInt("loadLevelID");

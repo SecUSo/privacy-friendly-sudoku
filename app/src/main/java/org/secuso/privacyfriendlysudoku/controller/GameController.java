@@ -771,7 +771,7 @@ public class GameController implements IModelChangedListener, Parcelable {
         out.writeParcelable(gameType, 0);
         out.writeParcelable(difficulty, 0);
         out.writeParcelable(gameBoard, 0);
-        out.writeParcelable(undoRedoManager, 0);
+        //out.writeParcelable(undoRedoManager, 0);
 
         out.writeTypedList(errorList);
     }
@@ -809,7 +809,7 @@ public class GameController implements IModelChangedListener, Parcelable {
         gameType = in.readParcelable(GameType.class.getClassLoader());
         difficulty = in.readParcelable(GameDifficulty.class.getClassLoader());
         gameBoard = in.readParcelable(GameBoard.class.getClassLoader());
-        undoRedoManager = in.readParcelable(UndoRedoManager.class.getClassLoader());
+        undoRedoManager = new UndoRedoManager(gameBoard);//*/in.readParcelable(UndoRedoManager.class.getClassLoader());
 
         in.readTypedList(errorList, CellConflict.CREATOR);
 

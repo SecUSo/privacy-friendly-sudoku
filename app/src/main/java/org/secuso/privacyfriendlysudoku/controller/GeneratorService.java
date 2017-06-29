@@ -6,6 +6,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
 import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -26,6 +27,7 @@ import org.secuso.privacyfriendlysudoku.ui.MainActivity;
 import org.secuso.privacyfriendlysudoku.ui.view.R;
 
 import java.util.Date;
+import java.util.IllegalFormatCodePointException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -50,11 +52,15 @@ public class GeneratorService extends IntentService {
 
     private final List<Pair<GameType, GameDifficulty>> generationList = new LinkedList<>();
     private final DatabaseHelper dbHelper = new DatabaseHelper(this);
+    //private Handler mHandler = new Handler();
 
 
     public GeneratorService() {
         super("Generator Service");
     }
+
+    public GeneratorService(String name) { super(name); }
+
 
     private void buildGenerationList() {
         generationList.clear();
@@ -80,14 +86,21 @@ public class GeneratorService extends IntentService {
 
     private void handleGenerationStop() {
         stopForeground(true);
-        stopSelf();
+        //mHandler.removeCallbacksAndMessages(null);
     }
 
     private void handleGenerationStart(Intent intent) {
-        GameType gameType = intent.getParcelableExtra(EXTRA_GAMETYPE);
-        GameDifficulty gameDifficulty = intent.getParcelableExtra(EXTRA_DIFFICULTY);
+        GameType gameType;
+        GameDifficulty gameDifficulty;
+        try {
+            gameType = GameType.valueOf(intent.getExtras().getString(EXTRA_GAMETYPE, ""));
+            gameDifficulty = GameDifficulty.valueOf(intent.getExtras().getString(EXTRA_DIFFICULTY, ""));
+        } catch(IllegalArgumentException | NullPointerException e) {
+            gameType = null;
+            gameDifficulty = null;
+        }
 
-        if(gameType == null || gameDifficulty == null) {
+        if(gameType == null) {
             generateLevels();
         } else {
             generateLevel(gameType, gameDifficulty);
@@ -253,13 +266,6 @@ public class GeneratorService extends IntentService {
         builder.setSmallIcon(R.drawable.splash_icon);
         startForeground(50, builder.build());
     }
-
-    @Nullable
-    @Override
-    public IBinder onBind(Intent intent) {
-        return null;
-    }
-
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
         if (intent != null) {
