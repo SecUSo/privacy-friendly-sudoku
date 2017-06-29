@@ -41,6 +41,8 @@ import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
+import static org.secuso.privacyfriendlysudoku.ui.TutorialActivity.ACTION_SHOW_ANYWAYS;
+
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     RatingBar difficultyBar;
@@ -326,6 +328,14 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 startActivity(intent);
                 overridePendingTransition(0, 0);
                 break;
+
+            case R.id.menu_tutorial_main:
+                intent = new Intent(this, TutorialActivity.class);
+                intent.setAction(ACTION_SHOW_ANYWAYS);
+                startActivity(intent);
+                overridePendingTransition(0, 0);
+                break;
+
             default:
         }
         return true;

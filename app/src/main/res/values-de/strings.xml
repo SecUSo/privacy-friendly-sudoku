@@ -95,5 +95,6 @@
 
     <string name="next">Weiter</string>
     <string name="skip">Skip</string>
+    <string name="menu_tutorial">Tutorial</string>
 
 </resources>

@@ -13,6 +13,8 @@
         android:checkableBehavior="all">
         <item android:id="@+id/menu_settings_main" android:icon="@drawable/ic_menu_settings"
             android:title="@string/menu_settings" />
+        <item android:id="@+id/menu_tutorial_main" android:icon="@drawable/ic_school_black_24dp"
+            android:title="@string/menu_tutorial"/>
         <item android:id="@+id/menu_help_main" android:icon="@drawable/ic_menu_help"
             android:title="@string/menu_help" />
         <item android:id="@+id/menu_about_main" android:icon="@drawable/ic_menu_about"

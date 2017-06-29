@@ -4,7 +4,7 @@
         android:title="@string/menu_reset" />
 
     <group android:id="@+id/group4">
-        <item android:id="@+id/nav_newgame" android:icon="@android:drawable/ic_menu_today"
+        <item android:id="@+id/nav_newgame" android:icon="@drawable/ic_menu_home"
             android:title="@string/menu_main" />
         <item android:id="@+id/nav_highscore" android:icon="@android:drawable/ic_menu_myplaces"
             android:title="@string/menu_highscore" />

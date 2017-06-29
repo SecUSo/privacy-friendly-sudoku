@@ -29,6 +29,9 @@ import org.secuso.privacyfriendlysudoku.ui.view.R;
 
 public class TutorialActivity extends AppCompatActivity {
 
+    private static final String TAG = TutorialActivity.class.getSimpleName();
+    public static final String ACTION_SHOW_ANYWAYS = TAG + ".ACTION_SHOW_ANYWAYS";
+
     private ViewPager viewPager;
     private MyViewPagerAdapter myViewPagerAdapter;
     private LinearLayout dotsLayout;
@@ -41,11 +44,15 @@ public class TutorialActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Checking for first time launch - before calling setContentView()
         prefManager = new PrefManager(this);
-        if (!prefManager.isFirstTimeLaunch()) {
-            launchHomeScreen();
-            finish();
+
+        Intent i = getIntent();
+        if(i == null || !ACTION_SHOW_ANYWAYS.equals(i.getAction())) {
+            // Checking for first time launch - before calling setContentView()
+            if (!prefManager.isFirstTimeLaunch()) {
+                launchHomeScreen();
+                return;
+            }
         }
 
         // Making notification bar transparent
@@ -126,7 +133,10 @@ public class TutorialActivity extends AppCompatActivity {
 
     private void launchHomeScreen() {
         prefManager.setFirstTimeLaunch(false);
-        startActivity(new Intent(TutorialActivity.this, MainActivity.class));
+        Intent intent = new Intent(TutorialActivity.this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        //intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        startActivity(intent);
         finish();
     }
 

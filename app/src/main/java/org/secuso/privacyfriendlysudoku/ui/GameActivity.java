@@ -27,6 +27,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.secuso.privacyfriendlysudoku.controller.GameController;
 import org.secuso.privacyfriendlysudoku.controller.GameStateManager;
@@ -45,6 +46,7 @@ import org.secuso.privacyfriendlysudoku.ui.view.SudokuKeyboardLayout;
 import org.secuso.privacyfriendlysudoku.ui.view.SudokuSpecialButtonLayout;
 import org.secuso.privacyfriendlysudoku.ui.view.WinDialog;
 
+import java.util.IllegalFormatCodePointException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.RunnableFuture;
@@ -244,7 +246,12 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
         }
 
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-        Symbol s = Symbol.valueOf(Symbol.class, sharedPref.getString("pref_symbols", "Default"));
+        Symbol s;
+        try {
+            s = Symbol.valueOf(sharedPref.getString("pref_symbols", Symbol.Default.name()));
+        } catch(IllegalArgumentException e) {
+            s = Symbol.Default;
+        }
         layout.setSymbols(s);
         keyboard.setSymbols(s);
     }
