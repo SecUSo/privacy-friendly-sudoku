@@ -1,0 +1,131 @@
+﻿<resources>
+
+    <string name="cancel">キャンセル</string>
+
+    <!-- ###MAIN MENU### -->
+    <string name="new_game">新しいゲーム</string>
+    <string name="menu_main">メインメニュー</string>
+    <string name="menu_settings">設定</string>
+    <string name="menu_highscore">ハイスコア</string>
+    <string name="menu_group">グループ</string>
+    <string name="menu_help">ヘルプ</string>
+    <string name="menu_about">アプリについて</string>
+    <string name="menu_reset">ボードをリセット</string>
+    <string name="menu_continue_game">ゲームを続ける</string>
+
+    <string name="title_activity_load_game">ゲームをロード</string>
+    <string name="generating">バックグラウンドで新しいレベルを生成中&#8230;</string>
+
+    <!-- ###SETTINGS### -->
+    <string name="title_activity_settings">設定</string>
+    <!-- #Highlight -->
+    <string name="pref_header_highlight">ハイライト</string>
+    <string name="pref_group_highlight_selection">選択のハイライト</string>
+    <string name="pref_highlight_connected">接続したフィールド</string>
+    <string name="pref_group_highlight_value">数のハイライト</string>
+    <string name="pref_highlight_vals">同じ数</string>
+    <string name="pref_highlight_notes">メモ</string>
+    <!-- #Game -->
+    <string name="pref_header_game">ゲーム</string>
+    <string name="pref_group_game">ゲーム設定</string>
+    <string name="pref_symbols">シンボル</string>
+    <array name="pref_symbols_list_titles">
+        <item>デフォルト 1,2,3,..</item>
+        <item>ローマ I,II,III,..</item>
+        <item>ファンシー ♪,♫,☼,..</item>
+        <item>漢字 一,二,三,..</item>
+        <item>ギリシャ α,β,γ,..</item>
+        <item>インド १,२,३,..</item>
+    </array>
+    <array name="pref_symbols_list_values">
+        <item>Default</item>
+        <item>Roman</item>
+        <item>Fancy</item>
+        <item>Chinese</item>
+        <item>Greek</item>
+        <item>Indian</item>
+    </array>
+    <string name="pref_automatic_note_deletion">メモの削除</string>
+    <string name="pref_automatic_note_deletion_summary">接続されたセルの数をセットするときにメモを自動的に削除します</string>
+    <string name="pref_timer_reset">タイマーリセット</string>
+    <string name="pref_timer_reset_summary">ゲームボードをリセットするときに、タイマーもリセットします。</string>
+
+    <!-- ###ABOUT### -->
+    <string name="about_author">作者:</string>
+    <string name="about_author_contributors">と貢献者。</string>
+    <string name="version_number">バージョン</string>
+    <string name="about_affiliation">提携</string>
+    <string name="privacy_friendly">このアプリケーションは、ダルムシュタット工科大学 (Technische Universität Darmstadt, Germany) が開発したプライバシーフレンドリーアプリのグループに属しています。 ソースコードは GPLv3 の下でライセンスされます。画像の著作権は TU Darmstadt および Google Inc.</string>
+    <string name="more_info">さらに詳しい情報は以下でご覧ください:</string>
+    <string name="about_qqwing">このアプリケーションは QQWing v1.3.4 の修正版を使用しています</string>
+
+    <!-- ###GameDifficulty### -->
+    <string name="difficulty_easy">簡単</string>
+    <string name="difficulty_moderate">標準</string>
+    <string name="difficulty_hard">難しい</string>
+    <string name="difficulty_challenge">チャレンジ</string>
+
+    <!--###GameActivity -->
+    <string name="gametype_unspecified">未指定</string>
+    <string name="hint_usage">有効なフィールドを選択して、ヒントボタンを押すと、解決策を表示します。</string>
+    <string name="hint_confirmation">このヒントを使用してもよろしいですか? ヒントを使用すると、個人のベストタイムを達成することができなくなります。</string>
+    <string name="hint_confirmation_confirm">使用する</string>
+    <string name="reset_confirmation">ゲームボードをリセットしてもよろしいですか?</string>
+    <string name="reset_confirmation_confirm">リセット</string>
+
+    <!-- ### Welcome Dialog ### -->
+    <string name="welcome">プライバシーフレンドリー Sudoku へようこそ。</string>
+    <string name="field_select_description">スワイプまたは左右の矢印ボタンを押して、ゲームモードを変更します。</string>
+    <string name="field_select_description_headline">ゲームモード:</string>
+    <string name="difficulty_description">星を押すかスワイプして難易度を変えます。</string>
+    <string name="difficulty_description_headline">難易度:</string>
+
+    <!-- ### Continue Game ### -->
+    <string name="loadgame_delete_confirmation">このセーブを削除してもよろしいですか?</string>
+    <string name="loadgame_delete_confirm">削除</string>
+
+    <!-- ### Stats ###-->
+    <string name="stats_name">統計</string>
+    <string name="number_of_hints"># 使用したヒント:</string>
+    <string name="number_of_games"># 完了したゲーム:</string>
+    <string name="total_of_time">合計プレイタイム:</string>
+    <string name="average_time">平均タイム:</string>
+    <string name="min_time">ベストタイム:</string>
+    <string name="reset_stats">すべてリセット</string>
+
+    <!--### Win Strings -->
+    <string name="win_text">おめでとう!</string>
+    <string name="win_button_text">続ける</string>
+    <string name="title_activity_help">ヘルプ</string>
+    <string name="win_time">タイム:</string>
+    <string name="win_hint">ヒント:</string>
+    <string name="win_show_game">ゲームフィールドを表示</string>
+    <string name="win_best_time">新記録!</string>
+
+    <!-- ### HELP prefs ###-->
+    <string name="header_help">ヘルプ</string>
+    <string name="help_keyboard">キーボード</string>
+    <string name="help_gamefield">ゲームフィールド</string>
+    <string name="help_keyhighlighted_summary">数が選択されていることを示します。 このモードでは、フィールドを選択しなくても、フィールドに触れると数がすぐにセットされます。</string>
+    <string name="help_keyhighlighted_yellow_summary">ここに正しい数が置かれたことを示します。</string>
+
+    <!-- ### Special buttons description ###-->
+    <string name="help_do">実行ボタン</string>
+    <string name="help_do_summary">最後に取り消された操作をやり直します</string>
+    <string name="help_undo">取り消しボタン</string>
+    <string name="help_undo_summary">最後の操作を取り消します</string>
+    <string name="help_hint">ヒントボタン</string>
+    <string name="help_hint_summary">選択したフィールドを公開します\n警告: 使用すると、現在のゲームは新しいベストタイムにカウントされません。</string>
+    <string name="help_delete">削除ボタン</string>
+    <string name="help_delete_summary">選択したフィールドを削除します</string>
+    <string name="help_notes">メモ切り替えボタン</string>
+    <string name="help_notes_summary">フィールドの値を、数またはメモとしてセットするかどうかを切り替えます</string>
+    <string name="help_privacyInfo">プライバシー情報</string>
+    <string name="help_permissions">アクセス許可</string>
+    <string name="help_permissions_summary">プライバシーフレンドリー Sudoku はいかなるアクセス許可も使用していません。</string>
+    <string name="okay">OK</string>
+    <string name="view_help">ヘルプを表示</string>
+
+    <string name="pref_keep_screen_on">画面をオンのままにする</string>
+    <string name="pref_keep_screen_on_summary">プレイ中は画面をオフにしません</string>
+</resources>

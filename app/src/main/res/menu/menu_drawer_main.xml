@@ -3,7 +3,7 @@
 
     <group android:id="@+id/group4"
         android:checkableBehavior="all">
-        <item android:id="@+id/nav_newgame_main" android:icon="@android:drawable/ic_menu_today"
+        <item android:id="@+id/nav_newgame_main" android:icon="@drawable/ic_menu_home"
             android:title="@string/menu_main" />
         <item android:id="@+id/nav_highscore_main" android:icon="@android:drawable/ic_menu_myplaces"
             android:title="@string/menu_highscore" />
@@ -11,11 +11,11 @@
 
     <group android:id="@+id/group2"
         android:checkableBehavior="all">
-        <item android:id="@+id/menu_settings_main" android:icon="@android:drawable/ic_menu_manage"
+        <item android:id="@+id/menu_settings_main" android:icon="@drawable/ic_menu_settings"
             android:title="@string/menu_settings" />
-        <item android:id="@+id/menu_help_main" android:icon="@android:drawable/ic_menu_help"
+        <item android:id="@+id/menu_help_main" android:icon="@drawable/ic_menu_help"
             android:title="@string/menu_help" />
-        <item android:id="@+id/menu_about_main" android:icon="@android:drawable/ic_menu_info_details"
+        <item android:id="@+id/menu_about_main" android:icon="@drawable/ic_menu_about"
             android:title="@string/menu_about" />
     </group>
 </menu>

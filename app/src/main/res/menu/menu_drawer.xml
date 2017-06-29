@@ -11,11 +11,11 @@
     </group>
 
     <group android:id="@+id/group5">
-        <item android:id="@+id/menu_settings" android:icon="@android:drawable/ic_menu_manage"
+        <item android:id="@+id/menu_settings" android:icon="@drawable/ic_menu_settings"
             android:title="@string/menu_settings" />
-            <item android:id="@+id/menu_help" android:icon="@android:drawable/ic_menu_help"
+            <item android:id="@+id/menu_help" android:icon="@drawable/ic_menu_help"
                 android:title="@string/menu_help" />
-            <item android:id="@+id/menu_about" android:icon="@android:drawable/ic_menu_info_details"
+            <item android:id="@+id/menu_about" android:icon="@drawable/ic_menu_about"
                 android:title="@string/menu_about" />
     </group>
 

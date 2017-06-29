@@ -9,6 +9,7 @@
     <string name="difficulty_easy">Fácil</string>
     <string name="difficulty_hard">Difícil</string>
     <string name="difficulty_moderate">Normal</string>
+    <string name="difficulty_challenge">Reto</string>
     <string name="gametype_unspecified">No especificado </string>
     <string name="generating">Generando nuevo nivel en segundo plano…</string>
     <string name="help_delete">Borrar</string>
@@ -79,7 +80,10 @@
     <string name="pref_timer_reset">Resetear Tiempo</string>
     <string name="pref_timer_reset_summary">El tiempo se resetea tambien, cuando el tablero se resetea.</string>
     <string name="welcome">Bienvenido a Privacy Friendly Sudoku.</string>
+    <string name="version_number">Versión:</string>
     <string name="about_author_contributors">" "</string>
     <string name="okay">Ok</string>
     <string name="view_help">Ayuda</string>
+    <string name="pref_keep_screen_on">Keep Screen On</string>
+    <string name="pref_keep_screen_on_summary">Don\'t turn the screen off while playing</string>
 </resources>
