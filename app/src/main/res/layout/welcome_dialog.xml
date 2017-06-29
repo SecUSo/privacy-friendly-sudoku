@@ -64,7 +64,7 @@
         android:id="@+id/difficultyBar"
         android:layout_gravity="center_horizontal"
         android:isIndicator="true"
-        android:numStars="3"
+        android:numStars="4"
         android:rating="1"
         android:stepSize="1"
         style="@style/RatingBar"/>
