@@ -1,14 +1,14 @@
 Changelog
 ==========
 
-Version 2.1.1 *(2017-07-29)*
+Version 2.1.1 *(2017-06-29)*
 ----------------------------
 
  * New Tutorial
  * Bug Fixing
 
 
-Version 2.1.0 *(2017-07-25)*
+Version 2.1.0 *(2017-06-25)*
 ----------------------------
 
  * New difficulity level added
