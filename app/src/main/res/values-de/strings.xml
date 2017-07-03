@@ -24,7 +24,7 @@
     <string name="difficulty_moderate">Normal</string>
     <string name="difficulty_hard">Schwer</string>
     <string name="about_qqwing">Diese App benutzt eine modifizierte Version des QQWing v1.3.4.</string>
-    <string name="average_time">Durchschnittliche Zeit:</string>
+    <string name="average_time">Ø-Zeit:</string>
     <string name="cancel">Abbrechen</string>
     <string name="gametype_unspecified">Unspezifiziert</string>
     <string name="generating">Generiere neue Level im Hintergrund&#8230;</string>
