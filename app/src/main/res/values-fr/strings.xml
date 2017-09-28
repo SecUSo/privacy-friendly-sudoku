@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="about_affiliation">En coopération avec:</string>
-    <string name="about_author">Auteur:</string>
-    <string name="about_qqwing">Cette Aplication utilise une version modifié de QQWing v1.3.4</string>
+    <string name="about_affiliation">En coopération avec :</string>
+    <string name="about_author">Auteur :</string>
+    <string name="about_qqwing">Cette application utilise une version modifiée de QQWing v1.3.4</string>
     <string name="average_time">Ø-Temps:</string>
     <string name="cancel">Annuler</string>
     <string name="difficulty_easy">Facile</string>
@@ -11,11 +11,11 @@
     <string name="difficulty_challenge">Challenge</string>
     <string name="gametype_unspecified">Indéterminé</string>
     <string name="generating">Générer nouveau niveau en arrière-plan…</string>
-    <string name="help_delete">Éffacer</string>
+    <string name="help_delete">Effacer</string>
     <string name="help_delete_summary">Efface un champ sélectionné</string>
     <string name="help_do">Refaire</string>
     <string name="help_do_summary">Refais la dernière action</string>
-    <string name="help_hint">Conseille</string>
+    <string name="help_hint">Conseil</string>
     <string name="help_hint_summary">Montre le champ sélectionné</string>
     <string name="help_keyboard">Clavier</string>
     <string name="help_keyhighlighted_summary">Montre la valeur du bouton sélectionné.</string>
@@ -31,7 +31,7 @@
     <string name="hint_confirmation_confirm">Utiliser</string>
     <string name="hint_usage">Sélectionnez une case valide et appuyez le bouton d\'aide pour voir la solution.</string>
     <string name="loadgame_delete_confirm">Effacer</string>
-    <string name="loadgame_delete_confirmation">Êtes-vous sûr que voulez effacer l\'enregistrement?</string>
+    <string name="loadgame_delete_confirmation">Êtes-vous sûr de vouloir effacer l\'enregistrement ?</string>
     <string name="menu_about">À propos</string>
     <string name="menu_continue_game">Continuer</string>
     <string name="menu_help">Aide</string>
@@ -39,13 +39,13 @@
     <string name="menu_main">Menu principal</string>
     <string name="menu_reset">Refaire le tableau</string>
     <string name="menu_settings">Paramètres</string>
-    <string name="min_time">Meilleur temps:</string>
-    <string name="more_info">Plus d\'info:</string>
+    <string name="min_time">Meilleur temps :</string>
+    <string name="more_info">Plus d\'info :</string>
     <string name="new_game">Nouveau jeu</string>
     <string name="number_of_games">Jeux completés :</string>
     <string name="number_of_hints">Conseils utilisés :</string>
     <string name="pref_automatic_note_deletion">Effacer remarque</string>
-    <string name="pref_automatic_note_deletion_summary">efface les remarques automatiquement</string>
+    <string name="pref_automatic_note_deletion_summary">Efface les remarques automatiquement</string>
     <string name="pref_group_game">Paramètres de jeu</string>
     <string name="pref_group_highlight_selection">Mettre la sélection en surbrillance</string>
     <string name="pref_group_highlight_value">Mettre la valeur en surbrillance</string>
@@ -55,7 +55,7 @@
     <string name="pref_highlight_vals">Valeurs différentes</string>
     <string name="pref_symbols">Symboles</string>
     <string name="privacy_friendly">Cette application appartient à Privacy Friendly Apps.</string>
-    <string name="reset_confirmation">Êtes-vous sûr que vous voulez refaire le tableau?</string>
+    <string name="reset_confirmation">Êtes-vous sûr de vouloir refaire le tableau ?</string>
     <string name="reset_confirmation_confirm">Refaire</string>
     <string name="reset_stats">Effacer statistiques</string>
     <string name="title_activity_help">Aide</string>
@@ -68,16 +68,16 @@
     <string name="win_text">Félicitations !</string>
     <string name="win_time">Temps :</string>
     <string name="pref_timer_reset">Réinitialiser le minuteur</string>
-    <string name="pref_timer_reset_summary">Aussi réinitialiser le minuteur en réinitialisant le jeux en cours.</string>
-    <string name="about_author_contributors">" "</string>
-    <string name="version_number">Version:</string>
+    <string name="pref_timer_reset_summary">Réinitialiser également le minuteur en réinitialisant le jeu en cours.</string>
+    <string name="about_author_contributors">"et contributeurs."</string>
+    <string name="version_number">Version :</string>
     <string name="okay">Ok</string>
-    <string name="pref_keep_screen_on">Keep Screen On</string>
-    <string name="pref_keep_screen_on_summary">Don\'t turn the screen off while playing</string>
+    <string name="pref_keep_screen_on">Garder l\'écran allumé</string>
+    <string name="pref_keep_screen_on_summary">Ne pas éteindre l\'écran durant une partie</string>
 
     <!-- ### Tutorial ###-->
-    <string name="slide1_heading">Bienvenue!</string>
-    <string name="slide1_text">Bienvenue à Privacy Friendly Sudoku.</string>
+    <string name="slide1_heading">Bienvenue !</string>
+    <string name="slide1_text">Bienvenue dans Privacy Friendly Sudoku !</string>
 
     <string name="slide2_heading">Mode de jeu</string>
     <string name="slide2_text">Faites glisser ou appuyez sur les boutons flèches à gauche et à droite pour changer le mode de jeu.</string>
@@ -85,8 +85,8 @@
     <string name="slide3_heading">Difficulté</string>
     <string name="slide3_text">Appuyez ou faites glisser les étoiles pour changer la difficulté.</string>
 
-    <string name="next">Prochain</string>
-    <string name="skip">Skip</string>
+    <string name="next">Suivant</string>
+    <string name="skip">Passer</string>
 
     <string name="menu_tutorial">Didacticiel</string>
 </resources>
