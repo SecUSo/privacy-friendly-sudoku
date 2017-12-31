@@ -29,6 +29,7 @@ public class SudokuCellView extends View {
     boolean selected;
     CellHighlightTypes highlightType = CellHighlightTypes.Default;
     Symbol symbolsToUse = Symbol.Default;
+    RelativeLayout.LayoutParams params;
 
 
     public SudokuCellView(Context context) {
@@ -77,8 +78,13 @@ public class SudokuCellView extends View {
     public void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
+        if(this.params == null) {
+            params = new RelativeLayout.LayoutParams(mWidth, mHeight);
+        }
+
         // Set Layout
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(mWidth, mHeight);
+        params.width = mWidth;
+        params.height = mHeight;
         params.topMargin = mRow*mHeight;
         params.leftMargin = mCol*mWidth;
         this.setLayoutParams(params);

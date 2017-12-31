@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -50,6 +51,7 @@ public class SudokuFieldLayout extends RelativeLayout implements IHighlightChang
 
     public SudokuCellView [][] gamecells;
     AttributeSet attrs;
+    private boolean isWidthLimiting;
 
     public SudokuFieldLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -89,7 +91,6 @@ public class SudokuFieldLayout extends RelativeLayout implements IHighlightChang
                 gamecells[i][j].setOnTouchListener(null);
             }
         }
-        return;
     }
 
     @Override
@@ -99,19 +100,26 @@ public class SudokuFieldLayout extends RelativeLayout implements IHighlightChang
         if(gameController == null) return;
 
         p.setColor(Color.BLACK);
-        p.setStrokeWidth(2);
+        p.setStrokeWidth(5);
 
         int horizontalSections = gameController.getSize() / sectionWidth;
         for(int i = 0; i <= horizontalSections; i++) {
-            for(int j = -2; j < 2; j++) {
-                canvas.drawLine((i * getWidth() / horizontalSections) + j, 0, (i * getWidth() / horizontalSections) + j, getHeight(), p);
+            int offset = 0;
+            if(!isWidthLimiting) {
+                offset = (-2 + Math.round(i * 4f / (float)horizontalSections)) * -1;
             }
+            int w = (i * getWidth() / horizontalSections) + offset;
+            canvas.drawLine(w, 0, w, getHeight(), p);
         }
+
         int verticalSections = (gameController.getSize()/sectionHeight);
         for(int i = 0; i <= verticalSections; i++) {
-            for(int j = -2; j < 2; j++) {
-                canvas.drawLine(0, (i * getHeight() / verticalSections) + j, getHeight(), (i * getHeight() / verticalSections) + j, p);
+            int offset = 0;
+            if(isWidthLimiting) {
+                offset = (-2 + Math.round(i * 4f / (float)verticalSections)) * -1;
             }
+            int h = (i * getHeight() / verticalSections) + offset;
+            canvas.drawLine(0, h, getWidth(), h, p);
         }
     }
 
@@ -126,6 +134,8 @@ public class SudokuFieldLayout extends RelativeLayout implements IHighlightChang
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         super.onLayout(changed,l,t,r,b);
+
+        isWidthLimiting = r-l == Math.min(r-l, b-t);
 
         if(changed && gameController != null) {
             gameCellWidth = (Math.min(r-l, b-t)) / gameController.getSize();
