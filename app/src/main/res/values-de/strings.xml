@@ -84,8 +84,8 @@
     <string name="pref_keep_screen_on_summary">Der Bildschirm bleibt während des Spielens an.</string>
 
     <!-- ### Tutorial ###-->
-    <string name="slide1_heading">Willommen!</string>
-    <string name="slide1_text">Willommen zu Privacy Friendly Sudoku!</string>
+    <string name="slide1_heading">Willkommen!</string>
+    <string name="slide1_text">Willkommen zu Privacy Friendly Sudoku!</string>
 
     <string name="slide2_heading">Spielmodus</string>
     <string name="slide2_text">Wischen oder drücken Sie auf die Pfeile auf der linken und rechten Seite um den Spielmodus zu ändern.</string>
