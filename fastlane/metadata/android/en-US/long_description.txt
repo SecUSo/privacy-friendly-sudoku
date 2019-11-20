@@ -1,0 +1,13 @@
+Privacy Friendly Sudoku is a logic puzzle game. The goal is to fill the complete board with numbers. Every number may only occur once in every column, row and subsection.
+
+Privacy Friendly Sudoku has three different game modes:
+1. a 6x6 game field with 2x3 subsections
+2. a 9x9 game field with 3x3 subsections
+3. a 12x12 game field with 3x4 subsections
+
+For each game mode there are four different difficulty levels, that are not measured by the number of set values but rather by the solving strategies needed to solve the game. The generator always tries to provide a game that has the minimum amount of set values, that are needed to solve the game.
+
+Our Privacy Friendly App differs from other applications with respect to two aspects:
+1. The Privacy Friendly Sudoku App does not use any permission.
+2. The Privacy Friendly Sudoku App completely relinquishes advertisement.
+Many other free apps in the Google Play Store dazzle annoying advertising and also shortens battery life.
