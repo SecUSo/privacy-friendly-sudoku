@@ -53,6 +53,21 @@ public class SudokuCellView extends View {
         mRow = gameCell.getRow();
         mCol = gameCell.getCol();
         this.size = size;
+
+        initLayoutParams();
+    }
+
+    private void initLayoutParams() {
+        if(this.params == null) {
+            params = new RelativeLayout.LayoutParams(mWidth, mHeight);
+        }
+
+        // Set Layout
+        params.width = mWidth;
+        params.height = mHeight;
+        params.topMargin = mRow*mHeight;
+        params.leftMargin = mCol*mWidth;
+        this.setLayoutParams(params);
     }
 
     public void setSymbols(Symbol s) {
@@ -75,19 +90,15 @@ public class SudokuCellView extends View {
     }*/
 
     @Override
+    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+        super.onLayout(changed, left, top, right, bottom);
+
+
+    }
+
+    @Override
     public void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-
-        if(this.params == null) {
-            params = new RelativeLayout.LayoutParams(mWidth, mHeight);
-        }
-
-        // Set Layout
-        params.width = mWidth;
-        params.height = mHeight;
-        params.topMargin = mRow*mHeight;
-        params.leftMargin = mCol*mWidth;
-        this.setLayoutParams(params);
 
         // Draw single Field
         drawInfo(canvas);

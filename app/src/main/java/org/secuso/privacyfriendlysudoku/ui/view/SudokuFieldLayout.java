@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -134,7 +133,6 @@ public class SudokuFieldLayout extends RelativeLayout implements IHighlightChang
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         super.onLayout(changed,l,t,r,b);
-
         isWidthLimiting = r-l == Math.min(r-l, b-t);
 
         if(changed && gameController != null) {

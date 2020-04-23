@@ -39,7 +39,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onUpgrade(db, oldVersion, newVersion);
     }
 
-    public List<Level> getLevels(GameDifficulty difficulty, GameType gameType) {
+    public synchronized List<Level> getLevels(GameDifficulty difficulty, GameType gameType) {
         if(difficulty == null || gameType == null) {
             throw new IllegalArgumentException("Arguments may not be null");
         }
@@ -72,7 +72,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return levelList;
     }
 
-    public Level getLevel(GameDifficulty difficulty, GameType gameType) {
+    public synchronized Level getLevel(GameDifficulty difficulty, GameType gameType) {
         List<Level> levelList = getLevels(difficulty, gameType);
         if(levelList.size() == 0) {
             throw new IllegalArgumentException("There is no level");
@@ -80,7 +80,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return levelList.get(0);
     }
 
-    public void deleteLevel(int id) {
+    public synchronized void deleteLevel(int id) {
         SQLiteDatabase database = getWritableDatabase();
 
         String selection = LevelColumns._ID + " = ?";
@@ -89,7 +89,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         database.delete(LevelColumns.TABLE_NAME, selection, selectionArgs);
     }
 
-    public long addLevel(Level level) {
+    public synchronized long addLevel(Level level) {
         SQLiteDatabase database = getWritableDatabase();
         return database.insert(LevelColumns.TABLE_NAME, null, LevelColumns.getValues(level));
     }

@@ -2,32 +2,25 @@ package org.secuso.privacyfriendlysudoku.controller;
 
 import android.app.IntentService;
 import android.app.PendingIntent;
-import android.app.Service;
 import android.content.Intent;
-import android.os.Handler;
-import android.os.IBinder;
-import android.os.Looper;
-import android.support.annotation.IntDef;
-import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.NotificationCompat;
+import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
+import androidx.core.content.ContextCompat;
 import android.util.Log;
 import android.util.Pair;
 
+import org.secuso.privacyfriendlysudoku.SudokuApp;
 import org.secuso.privacyfriendlysudoku.controller.database.DatabaseHelper;
 import org.secuso.privacyfriendlysudoku.controller.database.model.Level;
 import org.secuso.privacyfriendlysudoku.controller.qqwing.Action;
 import org.secuso.privacyfriendlysudoku.controller.qqwing.PrintStyle;
 import org.secuso.privacyfriendlysudoku.controller.qqwing.QQWing;
 import org.secuso.privacyfriendlysudoku.controller.qqwing.Symmetry;
-import org.secuso.privacyfriendlysudoku.game.GameBoard;
 import org.secuso.privacyfriendlysudoku.game.GameDifficulty;
 import org.secuso.privacyfriendlysudoku.game.GameType;
 import org.secuso.privacyfriendlysudoku.ui.MainActivity;
 import org.secuso.privacyfriendlysudoku.ui.view.R;
 
-import java.util.Date;
-import java.util.IllegalFormatCodePointException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -255,7 +248,7 @@ public class GeneratorService extends IntentService {
     }
 
     private void showNotification(GameType gameType, GameDifficulty gameDifficulty) {
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, SudokuApp.CHANNEL_ID);
         builder.setContentTitle(getString(R.string.app_name));
         builder.setContentText(getString(R.string.generating));
         builder.setSubText(getString(gameType.getStringResID()) + ", " + getString(gameDifficulty.getStringResID()));

@@ -2,7 +2,7 @@ package org.secuso.privacyfriendlysudoku.game;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.annotation.StringRes;
+import androidx.annotation.StringRes;
 
 import java.util.LinkedList;
 

@@ -45,7 +45,7 @@ public class LoadGameActivity extends BaseActivity implements IDeleteDialogFragm
 
         setContentView(R.layout.activity_load_game);
 
-        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        androidx.appcompat.app.ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(R.string.menu_continue_game);
         actionBar.setDisplayHomeAsUpEnabled(true);
 

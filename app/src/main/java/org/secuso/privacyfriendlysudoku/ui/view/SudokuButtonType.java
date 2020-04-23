@@ -1,6 +1,6 @@
 package org.secuso.privacyfriendlysudoku.ui.view;
 
-import android.support.annotation.DrawableRes;
+import androidx.annotation.DrawableRes;
 
 import java.util.ArrayList;
 import java.util.List;

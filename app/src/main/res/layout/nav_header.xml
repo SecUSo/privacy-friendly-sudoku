@@ -23,7 +23,7 @@
         android:contentDescription="App Logo"
         android:paddingEnd="@dimen/activity_horizontal_margin"
         android:paddingStart="@dimen/activity_horizontal_margin"
-        android:src="@mipmap/ic_launcher_nopfa"/>
+        android:src="@mipmap/ic_drawer"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -35,7 +35,5 @@
         android:layout_centerVertical="true"
         android:layout_toRightOf="@+id/imageView"
         android:layout_toEndOf="@+id/imageView"/>
-
 </RelativeLayout>
-
 </LinearLayout>
