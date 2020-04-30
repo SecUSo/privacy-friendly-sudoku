@@ -207,12 +207,12 @@ public class SudokuFieldLayout extends RelativeLayout implements IHighlightChang
                 gamecells[i][j].invalidate();
             }
         }
+        this.invalidate();
     }
 
     @Override
     public void dispatchDraw(Canvas canvas) {
         super.dispatchDraw(canvas);
-
 
         if(gameController == null) {
             return;
