@@ -14,9 +14,6 @@
     <string name="menu_reset">Zresetuj planszę</string>
     <string name="menu_continue_game">Kontynuuj grę</string>
 
-    <string name="navigation_drawer_open" translatable="false">Otwórz pasek nawigacji</string>
-    <string name="navigation_drawer_close" translatable="false">Zamknij pasek nawigacji</string>
-
     <string name="generating">Generowanie nowego poziomu w background&#8230;</string>
 
     <!-- ###SETTINGS### -->
@@ -53,18 +50,13 @@
     <string name="pref_timer_reset_summary">Po zresetowaniu planszy, zresetuj także zegar.</string>
 
     <!-- ###ABOUT### -->
-    <string name="app_name_long" translatable="false">Przyjazne Prywatne Sudoku</string>
     <string name="version_number">Wersja:</string>
     <string name="about_author">Autorzy:</string>
-    <string name="about_author_names" translatable="false">Christopher Beckmann, Timm Lippert</string>
     <string name="about_author_contributors">i współtwórcy.</string>
     <string name="about_affiliation">W powiązaniu z</string>
     <string name="privacy_friendly">Ta aplikacja należy do grupy aplikacji Przyjaznych Prywatności opracowana przez Technische Universität Darmstadt. Kod na licencji GPLv3. Prawa autorskie do zdjęć TU Darmstadt i Google Inc..</string>
     <string name="more_info">Więcej informacji można znaleźć na stronie:</string>
-    <string name="github" translatable="false"><a href="https://github.com/SecUSo/privacy-friendly-sudoku">Github-Repo</a></string>
-    <string name="url" translatable="false"><a href="https://www.secuso.org/pfa">SECUSO-Website</a></string>
     <string name="about_qqwing">Ta aplikacja używa zmodyfikowanej wersji QQWing v1.3.4</string>
-    <string name="about_qqwingLink" translatable="false"><a href="http://qqwing.com/download.html">http://qqwing.com/</a></string>
 
     <!-- ###GameDifficulty### -->
     <string name="difficulty_easy">Łatwy</string>
@@ -73,12 +65,7 @@
 
     <!--###GameActivity -->
     <string name="Sudoku" translatable="false">Sudoku</string>
-    <string name="gametype_default_9x9" translatable="false">Sudoku 9x9</string>
-    <string name="gametype_default_6x6" translatable="false">Sudoku 6x6</string>
     <string name="gametype_unspecified">Nieokreślony</string>
-    <string name="gametype_default_12x12" translatable="false">Sudoku 12x12</string>
-    <string name="gametype_x_9x9" translatable="false">X Sudoku 9x9</string>
-    <string name="gametype_hyper_9x9" translatable="false">Hyper Sudoku 9x9</string>
     <string name="hint_usage">Wybierz prawidłowe pole, a następnie naciśnij przycisk podpowiedzi, aby wyświetlić rozwiązanie.</string>
     <string name="hint_confirmation">Czy na pewno chcesz skorzystać z tej podpowiedzi? Korzystając z podpowiedzi, nie będziesz w stanie osiągnąć najlepszego osobistego czasu.</string>
     <string name="hint_confirmation_confirm">Użycie</string>
@@ -129,7 +116,7 @@
     <string name="help_permissions_summary">Prywatność Przyjazna, Sudoku nie korzysta z żadnych uprawnień.</string>
     <string name="okay">Ok</string>
     <string name="difficulty_challenge">Wyzwanie</string>
-    <string name="pref_highlightInputError" translatable="false">Wyróżnij błędy wprowadzania</string>
+    <string name="pref_highlightInputError">Wyróżnij błędy wprowadzania</string>
     <string name="pref_keep_screen_on">Zachowaj ekran włączony</string>
     <string name="pref_keep_screen_on_summary">Nie wyłączaj ekranu podczas gry</string>
 
