@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -19,14 +22,17 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.secuso.privacyfriendlysudoku.controller.GameController;
 import org.secuso.privacyfriendlysudoku.controller.GameStateManager;
@@ -39,6 +45,7 @@ import org.secuso.privacyfriendlysudoku.game.listener.IGameSolvedListener;
 import org.secuso.privacyfriendlysudoku.game.listener.ITimerListener;
 import org.secuso.privacyfriendlysudoku.ui.listener.IHintDialogFragmentListener;
 import org.secuso.privacyfriendlysudoku.ui.listener.IResetDialogFragmentListener;
+import org.secuso.privacyfriendlysudoku.ui.listener.IShareDialogFragmentListener;
 import org.secuso.privacyfriendlysudoku.ui.view.R;
 import org.secuso.privacyfriendlysudoku.ui.view.SudokuFieldLayout;
 import org.secuso.privacyfriendlysudoku.ui.view.SudokuKeyboardLayout;
@@ -48,7 +55,7 @@ import org.secuso.privacyfriendlysudoku.ui.view.WinDialog;
 import java.util.LinkedList;
 import java.util.List;
 
-public class GameActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, IGameSolvedListener ,ITimerListener, IHintDialogFragmentListener, IResetDialogFragmentListener {
+public class GameActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, IGameSolvedListener ,ITimerListener, IHintDialogFragmentListener, IResetDialogFragmentListener, IShareDialogFragmentListener {
 
     GameController gameController;
     SudokuFieldLayout layout;
@@ -286,6 +293,25 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
                 resetDialog.show(getFragmentManager(), "ResetDialogFragment");
                 break;
 
+            case R.id.menu_share:
+                ShareBoardDialog shareDialog = new ShareBoardDialog();
+                shareDialog.setDisplayCode(gameController.getFieldAsString());
+                shareDialog.setCopyClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // remember to include alternate code for older android versions
+                        String codeForClipboard = gameController.getFieldAsString().toString();
+                        ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                        ClipData clip = ClipData.newPlainText("BoardCode", codeForClipboard);
+                        clipboard.setPrimaryClip(clip);
+
+                        Toast.makeText(GameActivity.this, R.string.copy_code_confirmation_toast,
+                                Toast.LENGTH_LONG).show();
+                    }
+                });
+                shareDialog.show(getFragmentManager(), "ShareDialogFragment");
+                break;
+
             case R.id.nav_newgame:
                 //create new game
                 intent = new Intent(this, MainActivity.class);
@@ -434,8 +460,73 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     @Override
+    public void onShareDialogPositiveClick() {
+        gameController.resetLevel();
+    }
+
+    @Override
     public void onDialogNegativeClick() {
         // do nothing
+    }
+
+    public static class ShareBoardDialog extends DialogFragment {
+        private LinkedList<IShareDialogFragmentListener> listeners = new LinkedList<>();
+
+        /*declare empty display code and click listener in case anyone
+         * tries to call the ShareBoardDialog without setting those attributes first
+         */
+
+        private String displayCode = "";
+        private View.OnClickListener copyClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        };
+
+        public void setDisplayCode(String displayCode) {
+            this.displayCode = displayCode;
+        }
+
+        public void setCopyClickListener(View.OnClickListener listener) {
+            copyClickListener = listener;
+        }
+
+        @Override
+        public void onAttach(Activity activity) {
+            super.onAttach(activity);
+            // Verify that the host activity implements the callback interface
+            if(activity instanceof IShareDialogFragmentListener) {
+                listeners.add((IShareDialogFragmentListener) activity);
+            }
+        }
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+            LayoutInflater inflater = getActivity().getLayoutInflater();
+            View layout = inflater.inflate(R.layout.dialog_fragment_share_board, null);
+
+            TextView displayText = (TextView)layout.findViewById(R.id.ver3_display_sudoku_text_view);
+            displayText.setText(displayCode);
+            ((ImageButton)layout.findViewById(R.id.ver3_copy_sudoku_to_clipboard_button)).setOnClickListener(copyClickListener);
+            builder.setView(layout);
+
+            builder.setPositiveButton(R.string.share_confirmation_confirm, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            for(IShareDialogFragmentListener l : listeners) {
+                                l.onShareDialogPositiveClick();
+                            }
+                        }
+                    })
+                    .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            // User cancelled the dialog
+                        }
+                    });
+            return builder.create();
+        }
     }
 
     public static class ResetConfirmationDialog extends DialogFragment {
