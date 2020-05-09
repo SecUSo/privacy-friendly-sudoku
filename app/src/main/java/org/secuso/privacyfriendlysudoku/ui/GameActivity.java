@@ -295,13 +295,13 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
                 break;
 
             case R.id.menu_share:
+                String codeForClipboard = "sudoku://" + gameController.getCodeOfField();
                 ShareBoardDialog shareDialog = new ShareBoardDialog();
-                shareDialog.setDisplayCode("sudoku://" + gameController.getCodeOfField());
+                shareDialog.setDisplayCode(codeForClipboard);
                 shareDialog.setCopyClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         // remember to include alternate code for older android versions
-                        String codeForClipboard = "sudoku://" + gameController.getCodeOfField();
                         ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
 
                         if (clipboard != null) {
@@ -310,8 +310,7 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
                             Toast.makeText(GameActivity.this, R.string.copy_code_confirmation_toast,
                                     Toast.LENGTH_LONG).show();
                         } else {
-                            //remember to replace hardcoded string
-                            Toast.makeText(GameActivity.this, "Cannot access clipboard",
+                            Toast.makeText(GameActivity.this, R.string.copy_code_error_toast,
                                     Toast.LENGTH_LONG).show();
                         }
                     }

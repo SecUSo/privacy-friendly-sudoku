@@ -87,6 +87,7 @@
     <string name="reset_confirmation_confirm">Reset</string>
     <string name="share_confirmation_confirm">Share</string>
     <string name="copy_code_confirmation_toast">Copied to clipboard</string>
+    <string name="copy_code_error_toast">Cannot access clipboard</string>
 
     <!-- ### Welcome Dialog ### -->
 

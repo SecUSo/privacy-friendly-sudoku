@@ -37,6 +37,7 @@
     <string name="menu_reset">Zurücksetzen</string>
     <string name="menu_share">Sudoku teilen</string>
     <string name="copy_code_confirmation_toast">In Zwischenablage gespeichert</string>
+    <string name="copy_code_error_toast">Kein Zugriff auf Zwischenablage möglich</string>
     <string name="min_time">Beste Zeit:</string>
     <string name="number_of_games">Abgeschlossene Spiele:</string>
     <string name="number_of_hints">Benutzte Hinweise:</string>
