@@ -51,6 +51,7 @@ import org.secuso.privacyfriendlysudoku.ui.view.SudokuFieldLayout;
 import org.secuso.privacyfriendlysudoku.ui.view.SudokuKeyboardLayout;
 import org.secuso.privacyfriendlysudoku.ui.view.SudokuSpecialButtonLayout;
 import org.secuso.privacyfriendlysudoku.ui.view.WinDialog;
+import org.secuso.privacyfriendlysudoku.ui.view.databinding.DialogFragmentShareBoardBinding;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -302,11 +303,15 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
                         // remember to include alternate code for older android versions
                         String codeForClipboard = gameController.getFieldAsString().toString();
                         ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-                        ClipData clip = ClipData.newPlainText("BoardCode", codeForClipboard);
-                        clipboard.setPrimaryClip(clip);
 
-                        Toast.makeText(GameActivity.this, R.string.copy_code_confirmation_toast,
-                                Toast.LENGTH_LONG).show();
+                        if (clipboard != null) {
+                            ClipData clip = ClipData.newPlainText("BoardCode", codeForClipboard);
+                            clipboard.setPrimaryClip(clip);
+                            Toast.makeText(GameActivity.this, R.string.copy_code_confirmation_toast,
+                                    Toast.LENGTH_LONG).show();
+                        } else {
+                            //
+                        }
                     }
                 });
                 shareDialog.show(getFragmentManager(), "ShareDialogFragment");
@@ -506,12 +511,11 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
             LayoutInflater inflater = getActivity().getLayoutInflater();
-            View layout = inflater.inflate(R.layout.dialog_fragment_share_board, null);
+            DialogFragmentShareBoardBinding binding = DialogFragmentShareBoardBinding.inflate(inflater);
 
-            TextView displayText = (TextView)layout.findViewById(R.id.ver3_display_sudoku_text_view);
-            displayText.setText(displayCode);
-            ((ImageButton)layout.findViewById(R.id.ver3_copy_sudoku_to_clipboard_button)).setOnClickListener(copyClickListener);
-            builder.setView(layout);
+            binding.ver3DisplaySudokuTextView.setText(displayCode);
+            binding.ver3CopySudokuToClipboardButton.setOnClickListener(copyClickListener);
+            builder.setView(binding.getRoot());
 
             builder.setPositiveButton(R.string.share_confirmation_confirm, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
