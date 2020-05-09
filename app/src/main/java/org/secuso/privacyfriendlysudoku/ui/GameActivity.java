@@ -296,12 +296,12 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
 
             case R.id.menu_share:
                 ShareBoardDialog shareDialog = new ShareBoardDialog();
-                shareDialog.setDisplayCode(gameController.getFieldAsString());
+                shareDialog.setDisplayCode("sudoku://" + gameController.getCodeOfField());
                 shareDialog.setCopyClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         // remember to include alternate code for older android versions
-                        String codeForClipboard = gameController.getFieldAsString().toString();
+                        String codeForClipboard = "sudoku://" + gameController.getCodeOfField();
                         ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
 
                         if (clipboard != null) {
@@ -310,7 +310,9 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
                             Toast.makeText(GameActivity.this, R.string.copy_code_confirmation_toast,
                                     Toast.LENGTH_LONG).show();
                         } else {
-                            //
+                            //remember to replace hardcoded string
+                            Toast.makeText(GameActivity.this, "Cannot access clipboard",
+                                    Toast.LENGTH_LONG).show();
                         }
                     }
                 });
@@ -465,8 +467,14 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     @Override
-    public void onShareDialogPositiveClick() {
-        gameController.resetLevel();
+    public void onShareDialogPositiveClick(String input) {
+        Intent sendBoardIntent = new Intent();
+        sendBoardIntent.setAction(Intent.ACTION_SEND);
+        sendBoardIntent.putExtra(Intent.EXTRA_TEXT, input);
+        sendBoardIntent.setType("text/plain");
+
+        Intent shareBoardIntent = Intent.createChooser(sendBoardIntent, null);
+        startActivity(shareBoardIntent);
     }
 
     @Override
@@ -520,7 +528,7 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
             builder.setPositiveButton(R.string.share_confirmation_confirm, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             for(IShareDialogFragmentListener l : listeners) {
-                                l.onShareDialogPositiveClick();
+                                l.onShareDialogPositiveClick(binding.ver3DisplaySudokuTextView.getText().toString());
                             }
                         }
                     })
