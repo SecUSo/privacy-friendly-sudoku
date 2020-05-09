@@ -3,6 +3,7 @@ package org.secuso.privacyfriendlysudoku.game;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import org.secuso.privacyfriendlysudoku.controller.Symbol;
 import org.secuso.privacyfriendlysudoku.game.listener.IModelChangedListener;
 
 import java.util.LinkedList;
@@ -210,6 +211,20 @@ public class GameBoard implements Cloneable, Parcelable {
             }
 
             sb.append("]");
+        }
+        return sb.toString();
+    }
+
+    public String transformToCode () {
+        StringBuilder sb = new StringBuilder();
+        for(int i = 0; i < field.length; i++) {
+            for (int j = 0; j < field[0].length; j++) {
+                if (field[i][j].getValue() == 0) {
+                    sb.append(0);
+                } else {
+                    sb.append(Symbol.getSymbol(Symbol.SaveFormat, field[i][j].getValue()-1));
+                }
+            }
         }
         return sb.toString();
     }

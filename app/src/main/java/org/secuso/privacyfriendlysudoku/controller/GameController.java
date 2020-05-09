@@ -414,6 +414,7 @@ public class GameController implements IModelChangedListener, Parcelable {
         return gameBoard.toString();
     }
 
+    public String getCodeOfField() { return gameBoard.transformToCode(); }
 
 
 
