@@ -12,6 +12,7 @@
     <string name="menu_help">Help</string>
     <string name="menu_about">About</string>
     <string name="menu_reset">Reset Board</string>
+    <string name="menu_share">Share Board</string>
     <string name="menu_continue_game">Continue Game</string>
 
     <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
@@ -84,6 +85,8 @@
     <string name="hint_confirmation_confirm">Use</string>
     <string name="reset_confirmation">Are you sure you want to reset the game board?</string>
     <string name="reset_confirmation_confirm">Reset</string>
+    <string name="share_confirmation_confirm">Share</string>
+    <string name="copy_code_confirmation_toast">Copied to clipboard</string>
 
     <!-- ### Welcome Dialog ### -->
 

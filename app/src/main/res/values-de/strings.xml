@@ -35,6 +35,8 @@
     <string name="loadgame_delete_confirmation">Bist du sicher, dass du den Spielstand löschen möchtest?</string>
     <string name="menu_continue_game">Spiel Fortsetzen</string>
     <string name="menu_reset">Zurücksetzen</string>
+    <string name="menu_share">Sudoku teilen</string>
+    <string name="copy_code_confirmation_toast">In Zwischenablage gespeichert</string>
     <string name="min_time">Beste Zeit:</string>
     <string name="number_of_games">Abgeschlossene Spiele:</string>
     <string name="number_of_hints">Benutzte Hinweise:</string>
@@ -49,6 +51,7 @@
     <string name="pref_symbols">Symbole</string>
     <string name="reset_stats">Alles zurücksetzen</string>
     <string name="reset_confirmation_confirm">Zurücksetzen</string>
+    <string name="share_confirmation_confirm">Teilen</string>
     <string name="reset_confirmation">Bist du dir sicher, dass du das komplette Spielfeld zurücksetzen möchtest?</string>
     <string name="total_of_time">Gesamtspielzeit:</string>
     <string name="win_button_text">Fortsetzen</string>
