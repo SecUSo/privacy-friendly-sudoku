@@ -37,4 +37,6 @@ dependencies {
     implementation 'com.google.android.material:material:1.1.0'
     implementation 'androidx.legacy:legacy-support-core-ui:1.0.0'
     implementation 'androidx.legacy:legacy-support-core-utils:1.0.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+
 }
