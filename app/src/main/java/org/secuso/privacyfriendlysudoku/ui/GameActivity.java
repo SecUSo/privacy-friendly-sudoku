@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Point;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
@@ -21,6 +22,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -28,7 +30,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -53,6 +54,7 @@ import org.secuso.privacyfriendlysudoku.ui.view.SudokuSpecialButtonLayout;
 import org.secuso.privacyfriendlysudoku.ui.view.WinDialog;
 import org.secuso.privacyfriendlysudoku.ui.view.databinding.DialogFragmentShareBoardBinding;
 
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -104,25 +106,44 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
         if(savedInstanceState == null) {
 
             Bundle extras = getIntent().getExtras();
-            if (extras != null) {
-                gameType = GameType.valueOf(extras.getString("gameType", GameType.Default_9x9.name()));
-                gameDifficulty = GameDifficulty.valueOf(extras.getString("gameDifficulty", GameDifficulty.Moderate.name()));
-                loadLevel = extras.getBoolean("loadLevel", false);
-                if (loadLevel) {
-                    loadLevelID = extras.getInt("loadLevelID");
-                }
-            }
-
+            Uri data = getIntent().getData();
             gameController = new GameController(sharedPref, getApplicationContext());
 
-            List<GameInfoContainer> loadableGames = GameStateManager.getLoadableGameList();
+            boolean intentReceivedFromMainActivity = extras != null &&
+                    (extras.containsKey("gameType") || extras.containsKey("loadLevel"));
 
-            if (loadLevel && loadableGames.size() > loadLevelID) {
-                // load level from GameStateManager
-                gameController.loadLevel(loadableGames.get(loadLevelID));
+            if (data != null && !intentReceivedFromMainActivity) {
+                String input = data.toString();
+                input = input.replace("sudoku.de://", "");
+                int sectionSize = (int)Math.sqrt(input.length());
+                int boardSize = sectionSize * sectionSize;
+
+                GameInfoContainer container = new GameInfoContainer(0, null, null, null, new int [boardSize], new boolean [boardSize][sectionSize]);
+                container.parseFixedValues(input);
+                container.parseGameType("Default_" + sectionSize + "x" + sectionSize);
+                container.parseDifficulty("Easy");
+
+                gameController.loadLevel(container);
+
             } else {
-                // load a new level
-                gameController.loadNewLevel(gameType, gameDifficulty);
+                if (extras != null) {
+                    gameType = GameType.valueOf(extras.getString("gameType", GameType.Default_9x9.name()));
+                    gameDifficulty = GameDifficulty.valueOf(extras.getString("gameDifficulty", GameDifficulty.Moderate.name()));
+                    loadLevel = extras.getBoolean("loadLevel", false);
+                    if (loadLevel) {
+                        loadLevelID = extras.getInt("loadLevelID");
+                    }
+                }
+
+                List<GameInfoContainer> loadableGames = GameStateManager.getLoadableGameList();
+
+                if (loadLevel && loadableGames.size() > loadLevelID) {
+                    // load level from GameStateManager
+                    gameController.loadLevel(loadableGames.get(loadLevelID));
+                } else {
+                    // load a new level
+                    gameController.loadNewLevel(gameType, gameDifficulty);
+                }
             }
         } else {
             gameController = savedInstanceState.getParcelable("gameController");
