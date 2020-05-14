@@ -40,6 +40,7 @@ import org.secuso.privacyfriendlysudoku.controller.GameStateManager;
 import org.secuso.privacyfriendlysudoku.controller.SaveLoadStatistics;
 import org.secuso.privacyfriendlysudoku.controller.Symbol;
 import org.secuso.privacyfriendlysudoku.controller.helper.GameInfoContainer;
+import org.secuso.privacyfriendlysudoku.controller.qqwing.QQWing;
 import org.secuso.privacyfriendlysudoku.game.GameDifficulty;
 import org.secuso.privacyfriendlysudoku.game.GameType;
 import org.secuso.privacyfriendlysudoku.game.listener.IGameSolvedListener;
@@ -114,16 +115,25 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
 
             if (data != null && !intentReceivedFromMainActivity) {
                 String input = data.toString();
-                input = input.replace("sudoku.de://", "");
+                input = input.replace("sudoku://", "");
+
                 int sectionSize = (int)Math.sqrt(input.length());
                 int boardSize = sectionSize * sectionSize;
 
                 GameInfoContainer container = new GameInfoContainer(0, null, null, null, new int [boardSize], new boolean [boardSize][sectionSize]);
                 container.parseFixedValues(input);
                 container.parseGameType("Default_" + sectionSize + "x" + sectionSize);
-                container.parseDifficulty("Easy");
 
-                gameController.loadLevel(container);
+                QQWing difficultyCheck = new QQWing(container.getGameType(), GameDifficulty.Unspecified);
+                difficultyCheck.setRecordHistory(true);
+                difficultyCheck.setPuzzle(container.getFixedValues());
+                boolean possibleToSolve = difficultyCheck.solve();
+
+                if (possibleToSolve) {
+                    String difficulty = difficultyCheck.getDifficulty().toString();
+                    container.parseDifficulty(difficulty);
+                    gameController.loadLevel(container);
+                }
 
             } else {
                 if (extras != null) {
