@@ -32,6 +32,7 @@
     <string name="hint_confirmation_confirm">Benutzen</string>
     <string name="loadgame_delete_confirm">Löschen</string>
     <string name="hint_usage">Wähle ein gültiges Feld aus und drücke dann auf den Hinweis Knopf um dann das makierte Feld aufzulösen.</string>
+    <string name="impossible_import_notice">Das Sudoku, das du importieren möchtest, hat keine Lösung.</string>
     <string name="loadgame_delete_confirmation">Bist du sicher, dass du den Spielstand löschen möchtest?</string>
     <string name="menu_continue_game">Spiel Fortsetzen</string>
     <string name="menu_reset">Zurücksetzen</string>

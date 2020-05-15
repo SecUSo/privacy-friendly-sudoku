@@ -129,10 +129,22 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
                 difficultyCheck.setPuzzle(container.getFixedValues());
                 boolean possibleToSolve = difficultyCheck.solve();
 
-                if (possibleToSolve) {
-                    String difficulty = difficultyCheck.getDifficulty().toString();
-                    container.parseDifficulty(difficulty);
-                    gameController.loadLevel(container);
+                String difficulty = difficultyCheck.getDifficulty().toString();
+                container.parseDifficulty(difficulty);
+                gameController.loadLevel(container);
+
+                if (!possibleToSolve) {
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this);
+                    builder.setMessage(R.string.impossible_import_notice)
+                            .setCancelable(false)
+                            .setPositiveButton(R.string.okay, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    finish();
+                                }
+                            });
+                    AlertDialog alert = builder.create();
+                    alert.show();
                 }
 
             } else {

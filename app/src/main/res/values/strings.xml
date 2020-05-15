@@ -20,6 +20,8 @@
 
     <string name="generating">Generating new level in the background&#8230;</string>
 
+    <string name="impossible_import_notice">The sudoku you wish to import has no solution.</string>
+
     <!-- ###SETTINGS### -->
     <string name="title_activity_settings">Settings</string>
     <!-- #Highlight -->
