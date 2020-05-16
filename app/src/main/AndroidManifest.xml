@@ -3,7 +3,8 @@
     package="org.secuso.privacyfriendlysudoku.ui.view">
 
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
-
+    <uses-permission android:name="android.permission.INTERNET" />
+    
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -37,7 +38,15 @@
         <activity
             android:name="org.secuso.privacyfriendlysudoku.ui.GameActivity"
             android:label="@string/title_activity_game_view"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar">
+
+            <intent-filter >
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="sudoku" />
+            </intent-filter>
+        </activity>
         <activity android:name="org.secuso.privacyfriendlysudoku.ui.AboutActivity" />
         <activity android:name="org.secuso.privacyfriendlysudoku.ui.LoadGameActivity" />
         <activity
