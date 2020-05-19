@@ -69,6 +69,7 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
     TextView viewName ;
     RatingBar ratingBar;
     private boolean gameSolved = false;
+    private boolean startGame = true;
     SaveLoadStatistics statistics = new SaveLoadStatistics(this);
     WinDialog dialog = null;
 
@@ -119,22 +120,29 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
 
                 int sectionSize = (int)Math.sqrt(input.length());
                 int boardSize = sectionSize * sectionSize;
+                QQWing difficultyCheck;
+                GameInfoContainer container = new GameInfoContainer(0, GameDifficulty.Unspecified,
+                        GameType.Unspecified, new int [boardSize], new int [boardSize], new boolean [boardSize][sectionSize]);
 
-                GameInfoContainer container = new GameInfoContainer(0, null, null, null, new int [boardSize], new boolean [boardSize][sectionSize]);
-                container.parseFixedValues(input);
-                container.parseGameType("Default_" + sectionSize + "x" + sectionSize);
+                try {
+                    container.parseFixedValues(input);
+                    container.parseGameType("Default_" + sectionSize + "x" + sectionSize);
 
-                QQWing difficultyCheck = new QQWing(container.getGameType(), GameDifficulty.Unspecified);
-                difficultyCheck.setRecordHistory(true);
-                difficultyCheck.setPuzzle(container.getFixedValues());
-                boolean possibleToSolve = difficultyCheck.solve();
+                    difficultyCheck = new QQWing(container.getGameType(), GameDifficulty.Unspecified);
+                    difficultyCheck.setRecordHistory(true);
+                    difficultyCheck.setPuzzle(container.getFixedValues());
+                    startGame = difficultyCheck.solve();
+                    container.parseDifficulty(difficultyCheck.getDifficulty().toString());
 
-                String difficulty = difficultyCheck.getDifficulty().toString();
-                container.parseDifficulty(difficulty);
-                gameController.loadLevel(container);
+                } catch (IllegalArgumentException e) {
+                    startGame = false;
+                    sectionSize = GameType.Default_9x9.getSize();
+                    boardSize = sectionSize * sectionSize;
+                    container = new GameInfoContainer(0, GameDifficulty.Unspecified,
+                            GameType.Default_9x9, new int [boardSize], new int [boardSize], new boolean [boardSize][sectionSize]);
+                }
 
-                if (!possibleToSolve) {
-
+                if (!startGame) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this);
                     builder.setMessage(R.string.impossible_import_notice)
                             .setCancelable(false)
@@ -146,6 +154,8 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
                     AlertDialog alert = builder.create();
                     alert.show();
                 }
+
+                gameController.loadLevel(container);
 
             } else {
                 if (extras != null) {
@@ -268,7 +278,7 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     public void onPause(){
         super.onPause();
-        if(!gameSolved) {
+        if(!gameSolved && startGame) {
             gameController.saveGame(this);
         }
         gameController.deleteTimer();
@@ -493,7 +503,7 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
         // display the time
         timerView.setText(timeToString(time));
 
-        if(gameSolved) return;
+        if(gameSolved || !startGame) return;
         // save time
         gameController.saveGame(this);
     }
