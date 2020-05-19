@@ -199,6 +199,10 @@ public class QQWing {
 		return reset();
 	}
 
+	public void setRandom(int seed) {
+		random = new Random(seed);
+	}
+
 	/**
 	 * Reset the board to its initial state with only the givens. This method
 	 * clears any solution, resets statistics, and clears any history messages.
