@@ -118,6 +118,7 @@
     <string name="help_permissions_summary">A magánszféra-barát Sudoku nem igényel engedélyek.</string>
     <string name="okay">OK</string>
     <string name="difficulty_challenge">Kihívás</string>
+    <string name="pref_highlightInputError">Beviteli hibák</string>
 
     <string name="pref_keep_screen_on">Hagyja bekapcsolva a kijelzőt</string>
     <string name="pref_keep_screen_on_summary">Ne kapcsolja ki a képernyőt játék közben</string>

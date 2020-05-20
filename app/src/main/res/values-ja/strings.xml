@@ -22,6 +22,8 @@
     <string name="pref_group_highlight_value">数のハイライト</string>
     <string name="pref_highlight_vals">同じ数</string>
     <string name="pref_highlight_notes">メモ</string>
+    <string name="pref_highlightInputError">入力ミス</string>
+
     <!-- #Game -->
     <string name="pref_header_game">ゲーム</string>
     <string name="pref_group_game">ゲーム設定</string>

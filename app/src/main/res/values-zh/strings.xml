@@ -45,6 +45,7 @@
     <string name="pref_header_game">游戏</string>
     <string name="pref_highlight_notes">备注ƒ</string>
     <string name="pref_highlight_vals">相同数字</string>
+    <string name="pref_highlightInputError">输入错误</string>
     <string name="pref_symbols">符号</string>
     <string name="reset_stats">全部重置</string>
     <string name="reset_confirmation_confirm">重置</string>

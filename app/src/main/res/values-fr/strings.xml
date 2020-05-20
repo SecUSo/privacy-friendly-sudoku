@@ -53,6 +53,7 @@
     <string name="pref_highlight_connected">Cases connectées</string>
     <string name="pref_highlight_notes">Remarques</string>
     <string name="pref_highlight_vals">Valeurs différentes</string>
+    <string name="pref_highlightInputError">Erreurs de saisie</string>
     <string name="pref_symbols">Symboles</string>
     <string name="privacy_friendly">Cette application appartient à Privacy Friendly Apps.</string>
     <string name="reset_confirmation">Êtes-vous sûr de vouloir refaire le tableau ?</string>

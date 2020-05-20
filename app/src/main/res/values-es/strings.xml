@@ -52,6 +52,7 @@
     <string name="pref_highlight_connected">Celdas conectadas</string>
     <string name="pref_highlight_notes">Notas</string>
     <string name="pref_highlight_vals">Valores iguales</string>
+    <string name="pref_highlightInputError">Errores de entrada</string>
     <string name="pref_symbols">Símbolos</string>
     <string name="privacy_friendly">Esta aplicación pertenece a Privacy Friendly Apps.</string>
     <string name="reset_confirmation">Está seguro que quiere reiniciar el juego actual?</string>

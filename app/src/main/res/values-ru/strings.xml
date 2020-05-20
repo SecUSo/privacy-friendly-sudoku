@@ -50,6 +50,7 @@
     <string name="pref_highlight_vals">Одинаковые значения</string>
     <string name="pref_highlight_notes">Заметки</string>
     <string name="pref_highlight_connected">Связанные поля</string>
+    <string name="pref_highlightInputError">ошибки ввода</string>
     <string name="pref_header_game">Игра</string>
     <string name="pref_group_highlight_value">Выделить поле</string>
     <string name="new_game">Новая игра</string>
