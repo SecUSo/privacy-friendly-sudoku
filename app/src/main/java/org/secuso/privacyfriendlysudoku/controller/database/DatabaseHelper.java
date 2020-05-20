@@ -27,6 +27,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+
+        String createTable =
+                "CREATE TABLE DAILYSUDOKU" +
+                        "(  DATE TEXT PRIMARY KEY " +
+                        " , LEVEL_difficulty TEXT " +
+                        " , LEVEL_gametype TEXT" +
+                        " , LEVEL_time INTEGER " +
+                        " , LEVEL_puzzle TEXT" +
+                        ")"
+                ;
+
         db.execSQL(LevelColumns.SQL_CREATE_ENTRIES);
     }
 
