@@ -7,19 +7,16 @@
     <string name="menu_main">Főmenü</string>
     <string name="menu_settings">Beállítások</string>
     <string name="menu_highscore">Játékadatok</string>
-    <string name="menu_group">Csoport</string>
     <string name="menu_help">Súgó</string>
     <string name="menu_about">Alkalmazásinformációk</string>
     <string name="menu_reset">Tábla visszaállítása</string>
     <string name="menu_continue_game">Játék folytatása</string>
 
-    <string name="title_activity_load_game">Játék betöltése</string>
     <string name="generating">Új tábla készítése a háttérben&#8230;</string>
 
     <!-- ###SETTINGS### -->
     <string name="title_activity_settings">Beállítások</string>
     <!-- #Highlight -->
-    <string name="pref_header_highlight">Kiemelés</string>
     <string name="pref_group_highlight_selection">Kijelölés kiemelése</string>
     <string name="pref_highlight_connected">Kapcsolódó mezőket</string>
     <string name="pref_group_highlight_value">Értékek kiemelése</string>
@@ -48,15 +45,16 @@
     <string name="pref_automatic_note_deletion">Megjegyzések eltávolítása</string>
     <string name="pref_automatic_note_deletion_summary">Megjegyzések automatikus eltávolítása amikor kapcsolódó cellákba érték kerül</string>
     <string name="pref_timer_reset">Időmérő újraindítása</string>
-    <string name="pref_timer_reset_summary">Időmérő újraindítása új játék kezdetén</string>
+    <string name="pref_timer_reset_summary">A játékasztal alaphelyzetbe állításakor állítsa vissza az időzítőt.</string>
 
     <!-- ###ABOUT### -->
 
+    <string name="version_number">Változat:</string>
     <string name="about_author">Fejlesztők:</string>
 
     <string name="about_author_contributors">és további hozzájárulók.</string>
     <string name="about_affiliation">Együttműködők:</string>
-    <string name="privacy_friendly">Ez az alkalmazás a Darmstadt-i Műszaki Egyetemen fejlesztett magánszféra-barát alkalmazások közé tartozik. A forráskód GPLv3 licensz alatt kibocsátott. A képek szerzői jogai a TU Darmstadt-ot és a Google Inc.-et illetik.</string>
+    <string name="privacy_friendly">Ez az alkalmazás egy magánélet-barát alkalmazás, amelyet a SECUSO kutatócsoport fejlesztett ki. A GPLv3 licenc alapján kiadott forráskód. A képek szerzői joga a SECUSO és a Google Inc.</string>
     <string name="more_info">További információk:</string>
 
     <string name="about_qqwing">Ez az alkalmazás a QQWing v1.3.4 egy módosított verzióját használja.</string>
@@ -74,26 +72,20 @@
     <string name="hint_confirmation">Biztosan szeretnél tippet kérni? Így nem tudod megdönteni a rekodidődet.</string>
     <string name="hint_confirmation_confirm">Tipp</string>
     <string name="reset_confirmation">Biztos visszaállítod a táblát az alapállapotba?</string>
-    <string name="reset_confirmation_confirm">Vissza</string>
+    <string name="reset_confirmation_confirm">Újrakezd</string>
 
     <!-- ### Welcome Dialog ### -->
-    <string name="welcome">Köszönt a magánszféra-barát Sudoku!</string>
-    <string name="field_select_description">Csúsztass balra-jobbra, vagy használd a nyilakat a játékmód kiválasztásához.</string>
-    <string name="field_select_description_headline">Játékmód:</string>
-    <string name="difficulty_description">Nyomj rá vagy csúsztass a csillagokon a nehézségi fok beállításához.</string>
-    <string name="difficulty_description_headline">Nehézségi fok:</string>
 
     <!-- ### Continue Game ### -->
     <string name="loadgame_delete_confirmation">Biztosan törölni szeretnéd ezt a mentést?</string>
     <string name="loadgame_delete_confirm">Törlés</string>
 
     <!-- ### Stats ###-->
-    <string name="stats_name">Statisztikák</string>
     <string name="number_of_hints">Használt tippek:</string>
     <string name="number_of_games">Befejezett játékok:</string>
     <string name="total_of_time">Teljes játékidő:</string>
     <string name="average_time">Átlagidő:</string>
-    <string name="min_time">Csúcsidő:</string>
+    <string name="min_time">Legjobb idő:</string>
     <string name="reset_stats">Összes lenullázása</string>
 
     <!--### Win Strings -->
@@ -106,9 +98,7 @@
     <string name="win_best_time">Új rekord!</string>
 
     <!-- ### HELP prefs ###-->
-    <string name="header_help">Súgó</string>
     <string name="help_keyboard">Gombok</string>
-    <string name="help_gamefield">Tábla</string>
     <string name="help_keyhighlighted_summary">Az érték kiválasztottságát jelzi. Ezzel egy mezőbe egyetlen érintéssel helyezhetsz értékeket, a mezők előzetes kiválasztása nélkül.</string>
     <string name="help_keyhighlighted_yellow_summary">Azt jelzi, hogy az adott értékből pont a helyes mennyiség lett elhelyezve a táblán.</string>
 
@@ -123,9 +113,26 @@
     <string name="help_delete_summary">A kiválasztott mező tartalmát törli</string>
     <string name="help_notes">Megjegyzés-választó gomb</string>
     <string name="help_notes_summary">Megadja, hogy megjegyzésként vagy értékként kerüljön az érték a kijelölt mezőbe</string>
-    <string name="help_privacyInfo">Magánszféra-infó</string>
-    <string name="help_permissions">Hozzáférések</string>
-    <string name="help_permissions_summary">A magánszféra-barát Sudoku nem igényel hozzáféréseket.</string>
+    <string name="help_privacyInfo">Adatvédelmi-infó</string>
+    <string name="help_permissions">Engedélyek</string>
+    <string name="help_permissions_summary">A magánszféra-barát Sudoku nem igényel engedélyek.</string>
     <string name="okay">OK</string>
-    <string name="view_help">Súgó megtekintése</string>
+    <string name="difficulty_challenge">Kihívás</string>
+
+    <string name="pref_keep_screen_on">Hagyja bekapcsolva a kijelzőt</string>
+    <string name="pref_keep_screen_on_summary">Ne kapcsolja ki a képernyőt játék közben</string>
+
+    <!-- ### Tutorial ###-->
+    <string name="slide1_heading">Üdvözöljük!</string>
+    <string name="slide1_text">Köszönt a magánszféra-barát Sudoku!</string>
+
+    <string name="slide2_heading">Játékmód</string>
+    <string name="slide2_text">Csúsztass balra-jobbra, vagy használ egy nyilakat a játékmód kiválasztására.</string>
+
+    <string name="slide3_heading">Nehézségi fok</string>
+    <string name="slide3_text">Nyomj rá vagy csúsztass a csillagokon a nehézségi fok beállításához.</string>
+
+    <string name="next">Következő</string>
+    <string name="skip">Átugrani</string>
+    <string name="menu_tutorial">Oktatóanyag</string>
 </resources>
