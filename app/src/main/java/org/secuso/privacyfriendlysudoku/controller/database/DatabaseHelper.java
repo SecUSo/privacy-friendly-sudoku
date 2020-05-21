@@ -6,7 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import org.secuso.privacyfriendlysudoku.controller.database.columns.DailySudokuColumns;
 import org.secuso.privacyfriendlysudoku.controller.database.columns.LevelColumns;
+import org.secuso.privacyfriendlysudoku.controller.database.model.DailySudoku;
 import org.secuso.privacyfriendlysudoku.controller.database.model.Level;
 import org.secuso.privacyfriendlysudoku.game.GameDifficulty;
 import org.secuso.privacyfriendlysudoku.game.GameType;
@@ -27,22 +29,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-
-        String createTable =
-                "CREATE TABLE DAILYSUDOKU" +
-                        "(  DATE TEXT PRIMARY KEY " +
-                        " , LEVEL_difficulty TEXT " +
-                        " , LEVEL_gametype TEXT" +
-                        " , LEVEL_time INTEGER " +
-                        " , LEVEL_puzzle TEXT" +
-                        ")"
-                ;
-
         db.execSQL(LevelColumns.SQL_CREATE_ENTRIES);
+        db.execSQL(DailySudokuColumns.SQL_CREATE_ENTRIES);
     }
 
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL(LevelColumns.SQL_DELETE_ENTRIES);
+        db.execSQL(DailySudokuColumns.SQL_DELETE_ENTRIES);
         onCreate(db);
     }
 
@@ -91,6 +84,33 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return levelList.get(0);
     }
 
+    public synchronized List<DailySudoku> getDailySudokus() {
+        List<DailySudoku> dailySudokuList = new LinkedList<>();
+        SQLiteDatabase database = getWritableDatabase();
+        String order = DailySudokuColumns._ID + " DESC";
+
+        // How you want the results sorted in the resulting Cursor
+        Cursor c = database.query(
+                DailySudokuColumns.TABLE_NAME,         // The table to query
+                DailySudokuColumns.PROJECTION,                // The columns to return
+                null,                                // select all rows
+                null,                            // select all rows
+                null,                                     // don't group the rows
+                null,                                     // don't filter by row groups
+                order                                    // The sort order
+        );
+
+        if (c != null) {
+            while(c.moveToNext()) {
+                dailySudokuList.add(DailySudokuColumns.getLevel(c));
+            }
+        }
+
+        c.close();
+        return dailySudokuList;
+
+    }
+
     public synchronized void deleteLevel(int id) {
         SQLiteDatabase database = getWritableDatabase();
 
@@ -103,6 +123,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public synchronized long addLevel(Level level) {
         SQLiteDatabase database = getWritableDatabase();
         return database.insert(LevelColumns.TABLE_NAME, null, LevelColumns.getValues(level));
+    }
+
+    public synchronized long addDailySudoku(DailySudoku ds) {
+        SQLiteDatabase database = getWritableDatabase();
+        return database.insert(DailySudokuColumns.TABLE_NAME, null, DailySudokuColumns.getValues(ds));
     }
 }
 
