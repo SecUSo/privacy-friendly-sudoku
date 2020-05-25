@@ -5,7 +5,7 @@
         android:checkableBehavior="all">
         <item android:id="@+id/nav_newgame_main" android:icon="@drawable/ic_menu_home"
             android:title="@string/menu_main" />
-        <item android:id="@+id/nav_dailySudoku_main" android:icon="@drawable/ic_menu_home"
+        <item android:id="@+id/nav_dailySudoku_main" android:icon="@drawable/ic_menu_daily_sudoku"
             android:title="Daily Sudoku" /> 
         <item android:id="@+id/nav_highscore_main" android:icon="@android:drawable/ic_menu_myplaces"
             android:title="@string/menu_highscore" />
