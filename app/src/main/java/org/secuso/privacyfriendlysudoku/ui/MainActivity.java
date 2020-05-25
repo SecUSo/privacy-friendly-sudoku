@@ -30,6 +30,7 @@ import org.secuso.privacyfriendlysudoku.controller.NewLevelManager;
 import org.secuso.privacyfriendlysudoku.controller.helper.GameInfoContainer;
 import org.secuso.privacyfriendlysudoku.game.GameDifficulty;
 import org.secuso.privacyfriendlysudoku.game.GameType;
+import org.secuso.privacyfriendlysudoku.ui.view.DailySudokuActivity;
 import org.secuso.privacyfriendlysudoku.ui.view.R;
 
 import java.util.LinkedList;
@@ -328,6 +329,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 intent.setAction(ACTION_SHOW_ANYWAYS);
                 startActivity(intent);
                 overridePendingTransition(0, 0);
+                break;
+
+            case R.id.nav_dailySudoku_main:
+                intent = new Intent(this, DailySudokuActivity.class);
+                startActivity(intent);
                 break;
 
             default:
