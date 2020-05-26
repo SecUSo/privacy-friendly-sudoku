@@ -31,6 +31,11 @@
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
+            android:name="org.secuso.privacyfriendlysudoku.ui.view.DailySudokuActivity"
+            android:label="@string/Sudoku"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
             android:name="org.secuso.privacyfriendlysudoku.ui.SettingsActivity"
             android:label="@string/title_activity_settings"
             android:parentActivityName="org.secuso.privacyfriendlysudoku.ui.MainActivity" />
