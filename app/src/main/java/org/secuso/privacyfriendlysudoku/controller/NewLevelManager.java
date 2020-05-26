@@ -15,6 +15,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -73,6 +76,15 @@ public class NewLevelManager {
             }
         }
         return false;
+    }
+
+    public int[] loadDailySudoku() {
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        Date date = new Date();
+        String toHash = "Sudoku/.PrivacyFriendly/." + dateFormat.format(date);
+
+        QQWingController controller = new QQWingController();
+        return controller.generateFromSeed(toHash.hashCode());
     }
 
     public int[] loadLevel(GameType type, GameDifficulty diff) {

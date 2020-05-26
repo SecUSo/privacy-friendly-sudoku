@@ -53,6 +53,20 @@ public class QQWingController {
         return generated;
     }
 
+    public int[] generateFromSeed(int seed) {
+        generated.clear();
+
+        QQWing generator = new QQWing(GameType.Default_9x9, GameDifficulty.Unspecified);
+        generator.setRandom(seed);
+        generator.setRecordHistory(true);
+        generator.generatePuzzle();
+
+        generated.add(generator.getPuzzle());
+        opts.gameType = GameType.Default_9x9;
+        opts.gameDifficulty = generator.getDifficulty();
+        return generated.poll();
+    }
+
     public int[] solve(GameBoard gameBoard) {
 
         level = new int[gameBoard.getSize()*gameBoard.getSize()];

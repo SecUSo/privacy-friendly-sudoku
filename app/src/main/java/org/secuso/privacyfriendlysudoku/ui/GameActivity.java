@@ -369,6 +369,7 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
                     }
                 });
                 shareDialog.show(getFragmentManager(), "ShareDialogFragment");
+
                 break;
 
             case R.id.nav_newgame:
@@ -435,6 +436,11 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
         gameController.deleteGame(this);
         disableReset();
 
+        //Save solved sudoku, if it happens to be a daily sudoku, to daily sudoku database
+        if(gameController.getGameID() == GameController.DAILY_SUDOKU_ID) {
+            gameController.saveDailySudoku(GameActivity.this);
+        }
+
         //Show time hints new plus old best time
 
         statistics.saveGameStats();
@@ -480,7 +486,7 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
         specialButtonLayout.setButtonsEnabled(false);
     }
 
-    public String timeToString(int time) {
+    public static String timeToString(int time) {
         int seconds = time % 60;
         int minutes = ((time - seconds) / 60) % 60;
         int hours = (time - minutes - seconds) / (3600);

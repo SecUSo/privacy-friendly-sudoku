@@ -6,6 +6,8 @@ import android.os.Handler;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import org.secuso.privacyfriendlysudoku.controller.database.DatabaseHelper;
+import org.secuso.privacyfriendlysudoku.controller.database.model.DailySudoku;
 import org.secuso.privacyfriendlysudoku.controller.helper.GameInfoContainer;
 import org.secuso.privacyfriendlysudoku.game.CellConflict;
 import org.secuso.privacyfriendlysudoku.game.CellConflictList;
@@ -19,7 +21,10 @@ import org.secuso.privacyfriendlysudoku.game.listener.IHighlightChangedListener;
 import org.secuso.privacyfriendlysudoku.game.listener.IHintListener;
 import org.secuso.privacyfriendlysudoku.game.listener.IModelChangedListener;
 import org.secuso.privacyfriendlysudoku.game.listener.ITimerListener;
+import org.secuso.privacyfriendlysudoku.ui.GameActivity;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Timer;
@@ -32,6 +37,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class GameController implements IModelChangedListener, Parcelable {
 
     // General
+    public static final int DAILY_SUDOKU_ID = Integer.MAX_VALUE - 1;
     private SharedPreferences settings;
 
     // View
@@ -305,7 +311,7 @@ public class GameController implements IModelChangedListener, Parcelable {
 
             SharedPreferences.Editor editor = settings.edit();
             // is anyone ever gonna play so many levels? :)
-            if(gameID == Integer.MAX_VALUE-1) {
+            if(gameID == DAILY_SUDOKU_ID - 1) {
                 editor.putInt("lastGameID", 1);
             } else {
                 editor.putInt("lastGameID", gameID);
@@ -316,6 +322,24 @@ public class GameController implements IModelChangedListener, Parcelable {
         //gameID now has a value other than 0 and hopefully unique
         GameStateManager fm = new GameStateManager(context, settings);
         fm.saveGameState(this);
+    }
+
+    public void saveDailySudoku(Context context) {
+        int amountOfCells = size * size;
+        int[] encodedBoard = new int[amountOfCells];
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                encodedBoard[i * size + j] = gameBoard.getCell(i, j).getValue();
+            }
+        }
+
+        Calendar currentDate = Calendar.getInstance();
+        int id = currentDate.get(Calendar.DAY_OF_MONTH) * 1000000
+                + (currentDate.get(Calendar.MONTH) + 1) * 10000 + currentDate.get(Calendar.YEAR);
+
+        DatabaseHelper db = new DatabaseHelper(context);
+        DailySudoku dailySudoku = new DailySudoku(id, difficulty, gameType, encodedBoard, usedHints, GameActivity.timeToString(time));
+        db.addDailySudoku(dailySudoku);
     }
 
     public void deleteGame(Context context) {
