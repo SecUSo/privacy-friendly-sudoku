@@ -21,7 +21,9 @@ import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import org.secuso.privacyfriendlysudoku.controller.GameController;
 import org.secuso.privacyfriendlysudoku.controller.GameStateManager;
+import org.secuso.privacyfriendlysudoku.controller.NewLevelManager;
 import org.secuso.privacyfriendlysudoku.controller.helper.GameInfoContainer;
 import org.secuso.privacyfriendlysudoku.game.GameDifficulty;
 import org.secuso.privacyfriendlysudoku.ui.listener.IDeleteDialogFragmentListener;
@@ -69,6 +71,13 @@ public class LoadGameActivity extends BaseActivity implements IDeleteDialogFragm
 
         GameStateManager gameStateManager = new GameStateManager(this, settings);
         loadableGameList = gameStateManager.loadGameStateInfo();
+
+        for (GameInfoContainer container : loadableGameList) {
+            if (container.getID() == GameController.DAILY_SUDOKU_ID) {
+                loadableGameList.remove(container);
+                break;
+            }
+        }
 
         AdapterView.OnItemClickListener clickListener = new AdapterView.OnItemClickListener() {
             @Override
