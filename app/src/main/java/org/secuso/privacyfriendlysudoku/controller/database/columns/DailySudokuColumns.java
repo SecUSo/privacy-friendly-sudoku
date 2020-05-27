@@ -38,6 +38,9 @@ public class DailySudokuColumns extends LevelColumns {
                     HINTS_USED  + INTEGER_TYPE + COMMA_SEP +
                     TIME_NEEDED + TIME_TYPE + " )";
 
+    public static String SQL_DELETE_ENTRIES =
+            "DROP TABLE IF EXISTS " + TABLE_NAME;
+
 
     public static DailySudoku getLevel(Cursor c) {
         Level level = LevelColumns.getLevel(c);
