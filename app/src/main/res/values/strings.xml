@@ -152,4 +152,8 @@
     <string name="next">Next</string>
     <string name="skip">Skip</string>
     <string name="menu_tutorial">Tutorial</string>
+
+    <!-- ### DailySudokuActivity ###-->
+    <string name="finished_daily_sudoku">You have already solved the sudoku of the day</string>
+
 </resources>

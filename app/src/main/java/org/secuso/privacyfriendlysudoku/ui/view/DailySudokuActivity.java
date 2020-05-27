@@ -17,6 +17,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.view.View;
 import android.widget.RatingBar;
+import android.widget.Toast;
 
 import org.secuso.privacyfriendlysudoku.controller.GameController;
 import org.secuso.privacyfriendlysudoku.controller.database.DatabaseHelper;
@@ -85,19 +86,23 @@ public class DailySudokuActivity<Database> extends AppCompatActivity {
                 + (currentDate.get(Calendar.MONTH) + 1) * 10000 + currentDate.get(Calendar.YEAR);
         final Intent intent = new Intent(this,GameActivity.class);
 
-        if (settings.getInt("lastPlayed", 0) == id) {
-            intent.putExtra("loadLevel", true);
-            intent.putExtra("loadLevelID", GameController.DAILY_SUDOKU_ID);
-        } else {
+        if (settings.getInt("lastPlayed", 0) != id) {
             SharedPreferences.Editor editor = settings.edit();
             editor.putInt("lastPlayed", id);
+            editor.putBoolean("finishedForToday", false);
             editor.apply();
 
             intent.putExtra("gameDifficulty", gameDifficulty.name());
             intent.putExtra("isDailySudoku", true);
-        }
+            startActivity(intent);
 
-        startActivity(intent);
+        } else if (!settings.getBoolean("finishedForToday", true)) {
+            intent.putExtra("loadLevel", true);
+            intent.putExtra("loadLevelID", GameController.DAILY_SUDOKU_ID);
+            startActivity(intent);
+        } else {
+            Toast.makeText(this, R.string.finished_daily_sudoku, Toast.LENGTH_LONG).show();
+        }
     }
     
     public boolean onCreateOptionsMenu(Menu menu) {

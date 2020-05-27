@@ -454,6 +454,10 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
         //Save solved sudoku, if it happens to be a daily sudoku, to daily sudoku database
         if(gameController.getGameID() == GameController.DAILY_SUDOKU_ID) {
             gameController.saveDailySudoku(GameActivity.this);
+            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putBoolean("finishedForToday", true);
+            editor.apply();
         }
 
         //Show time hints new plus old best time
