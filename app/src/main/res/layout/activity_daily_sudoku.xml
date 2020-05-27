@@ -52,7 +52,7 @@
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="0dp"
-                android:layout_weight="4"
+                android:layout_weight="10"
                 android:weightSum="5">
 
                 <LinearLayout
@@ -65,15 +65,15 @@
                         android:id="@+id/statistic_image"
                         android:layout_width="match_parent"
                         android:layout_height="fill_parent"
-                        android:layout_gravity="center|start|center_horizontal|left"
-                        android:layout_weight="2.0"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="1.0"
                         android:adjustViewBounds="true"
                         android:src="@drawable/icon_default_9x9" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="fill_parent"
-                        android:layout_weight="3.0"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2.5"
                         android:gravity="center_horizontal">
 
                         <RatingBar
@@ -82,17 +82,25 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/first_diff_text"
-                            android:layout_gravity="start|right|center_horizontal"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentBottom="true"
+                            android:layout_centerHorizontal="true"
+                            android:layout_gravity="center_horizontal"
+
+                            android:layout_marginTop="30dp"
+                            android:layout_marginBottom="31dp"
                             android:numStars="4"
                             android:rating="2" />
 
                         <TextView
                             android:id="@+id/first_diff_text"
-                            android:layout_width="42dp"
-                            android:layout_height="30dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerHorizontal="true"
                             android:gravity="bottom|center|center_horizontal"
                             android:text="diffi"
-                            android:textSize="22dp" />
+                            android:textSize="32dp" />
                     </RelativeLayout>
 
                 </LinearLayout>
@@ -192,7 +200,6 @@
                 </LinearLayout>
             </LinearLayout>
 
-
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="0dp"
@@ -209,288 +216,11 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="0dp"
-                android:layout_weight="4"
-                android:orientation="vertical"
-                android:weightSum="4">
-                <!-- ### first row -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:weightSum="3">
-
-                    <RelativeLayout
-                        android:layout_width="0dp"
-                        android:layout_height="fill_parent"
-                        android:layout_marginTop="10dp"
-                        android:layout_weight="0.7"
-                        android:gravity="center_vertical">
-
-                        <ImageView
-                            android:id="@+id/statistic_image2"
-                            android:layout_width="180dp"
-                            android:layout_height="fill_parent"
-                            android:layout_gravity="center"
-                            android:adjustViewBounds="true"
-                            android:src="@drawable/icon_default_9x9" />
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_width="0dp"
-                        android:layout_height="fill_parent"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical">
-
-                        <RatingBar
-                            android:id="@+id/first_diff_bar"
-                            style="?android:attr/ratingBarStyleSmall"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/first_diff_text"
-                            android:layout_centerHorizontal="false"
-                            android:numStars="4" />
-
-                        <TextView
-                            android:id="@+id/first_diff_text"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:text="diffi" />
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_width="0dp"
-                        android:layout_height="fill_parent"
-                        android:layout_marginLeft="1dp"
-                        android:layout_weight="1"
-                        android:gravity="right|center_vertical">
-
-                        <TextView
-                            android:id="@+id/first_min_text"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/min_time" />
-
-                        <TextView
-                            android:id="@+id/first_min_time"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/first_min_text"
-                            android:gravity="center_vertical"
-                            android:text="0" />
-                    </RelativeLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:weightSum="3">
-
-                    <RelativeLayout
-                        android:layout_width="0dp"
-                        android:layout_height="fill_parent"
-                        android:layout_marginTop="10dp"
-                        android:layout_weight="0.7"
-                        android:gravity="center_vertical">
-
-                        <ImageView
-                            android:id="@+id/statistic_image2"
-                            android:layout_width="180dp"
-                            android:layout_height="fill_parent"
-                            android:layout_gravity="center"
-                            android:adjustViewBounds="true"
-                            android:src="@drawable/icon_default_9x9" />
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_width="0dp"
-                        android:layout_height="fill_parent"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical">
-
-                        <RatingBar
-                            android:id="@+id/first_diff_bar"
-                            style="?android:attr/ratingBarStyleSmall"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/first_diff_text"
-                            android:layout_gravity="center"
-                            android:numStars="4" />
-
-                        <TextView
-                            android:id="@+id/first_diff_text"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:text="diffi" />
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_width="0dp"
-                        android:layout_height="fill_parent"
-                        android:layout_weight="1"
-                        android:gravity="right|center_vertical">
-
-                        <TextView
-                            android:id="@+id/first_min_text"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/min_time" />
-
-                        <TextView
-                            android:id="@+id/first_min_time"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/first_min_text"
-                            android:gravity="center_vertical"
-                            android:text="0" />
-                    </RelativeLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:weightSum="3">
-
-                    <RelativeLayout
-                        android:layout_width="0dp"
-                        android:layout_height="fill_parent"
-                        android:layout_marginTop="10dp"
-                        android:layout_weight="0.7"
-                        android:gravity="center_vertical">
-
-                        <ImageView
-                            android:id="@+id/statistic_image2"
-                            android:layout_width="180dp"
-                            android:layout_height="fill_parent"
-                            android:layout_gravity="center"
-                            android:adjustViewBounds="true"
-                            android:src="@drawable/icon_default_9x9" />
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_width="0dp"
-                        android:layout_height="fill_parent"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical">
-
-                        <RatingBar
-                            android:id="@+id/first_diff_bar"
-                            style="?android:attr/ratingBarStyleSmall"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/first_diff_text"
-                            android:layout_gravity="center"
-                            android:numStars="4" />
-
-                        <TextView
-                            android:id="@+id/first_diff_text"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:text="diffi" />
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_width="0dp"
-                        android:layout_height="fill_parent"
-                        android:layout_weight="1"
-                        android:gravity="right|center_vertical">
-
-                        <TextView
-                            android:id="@+id/first_min_text"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/min_time" />
-
-                        <TextView
-                            android:id="@+id/first_min_time"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/first_min_text"
-                            android:gravity="center_vertical"
-                            android:text="0" />
-                    </RelativeLayout>
-
-                </LinearLayout>
-                <!-- ### second row -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:weightSum="3">
-
-                    <RelativeLayout
-                        android:layout_width="0dp"
-                        android:layout_height="fill_parent"
-                        android:layout_weight="0.7"
-                        android:gravity="center_vertical">
-
-                        <ImageView
-                            android:id="@+id/statistic_image6"
-                            android:layout_width="180dp"
-                            android:layout_height="fill_parent"
-                            android:layout_gravity="center"
-                            android:layout_marginTop="10dp"
-                            android:layout_weight="0.7"
-                            android:adjustViewBounds="true"
-                            android:src="@drawable/icon_default_9x9" />
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_width="0dp"
-                        android:layout_height="fill_parent"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical">
-
-                        <RatingBar
-                            android:id="@+id/second_diff_bar"
-                            style="?android:attr/ratingBarStyleSmall"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/second_diff_text"
-                            android:layout_gravity="center"
-                            android:numStars="4" />
-
-                        <TextView
-                            android:id="@+id/second_diff_text"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:text="diffi" />
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_width="0dp"
-                        android:layout_height="fill_parent"
-                        android:layout_weight="1"
-                        android:gravity="right|center_vertical">
-
-                        <TextView
-                            android:id="@+id/second_min_text"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/min_time" />
-
-                        <TextView
-                            android:id="@+id/second_min_time"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/second_min_text"
-                            android:gravity="center_vertical"
-                            android:text="0" />
-                    </RelativeLayout>
-                </LinearLayout>
-
-
-            </LinearLayout>
+            <ListView
+                android:id="@+id/sudoku_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
 
 
         </LinearLayout>
@@ -505,6 +235,7 @@
         android:layout_marginRight="30dp"
         android:layout_marginBottom="290dp"
         android:clickable="true"
+        android:onClick="onClick"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@android:drawable/ic_media_play" />
