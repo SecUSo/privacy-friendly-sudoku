@@ -174,9 +174,18 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
 
                     List<GameInfoContainer> loadableGames = GameStateManager.getLoadableGameList();
 
-                    if (loadLevel && loadableGames.size() > loadLevelID) {
-                        // load level from GameStateManager
-                        gameController.loadLevel(loadableGames.get(loadLevelID));
+                    if (loadLevel) {
+                        if (loadableGames.size() > loadLevelID) {
+                            // load level from GameStateManager
+                            gameController.loadLevel(loadableGames.get(loadLevelID));
+                        } else if (loadLevelID == GameController.DAILY_SUDOKU_ID) {
+                            for (GameInfoContainer container : loadableGames) {
+                                if (container.getID() == loadLevelID) {
+                                    gameController.loadLevel(container);
+                                    break;
+                                }
+                            }
+                        }
                     } else {
                         // load a new level
                         gameController.loadNewLevel(gameType, gameDifficulty);

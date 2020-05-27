@@ -17,6 +17,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.view.View;
 import android.widget.RatingBar;
+
+import org.secuso.privacyfriendlysudoku.controller.GameController;
 import org.secuso.privacyfriendlysudoku.controller.database.DatabaseHelper;
 import org.secuso.privacyfriendlysudoku.controller.database.model.DailySudoku;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,6 +27,8 @@ import org.secuso.privacyfriendlysudoku.controller.SaveLoadStatistics;
 import org.secuso.privacyfriendlysudoku.game.GameDifficulty;
 import org.secuso.privacyfriendlysudoku.ui.GameActivity;
 import org.secuso.privacyfriendlysudoku.ui.StatsActivity;
+
+import java.util.Calendar;
 import java.util.List;
 
 
@@ -74,13 +78,26 @@ public class DailySudokuActivity<Database> extends AppCompatActivity {
 
         int index = difficultyBar.getProgress()-1;
         GameDifficulty gameDifficulty = GameDifficulty.getValidDifficultyList().get(index < 0 ? 0 : index);
+
         //send everything to game activity
+        Calendar currentDate = Calendar.getInstance();
+        int id = currentDate.get(Calendar.DAY_OF_MONTH) * 1000000
+                + (currentDate.get(Calendar.MONTH) + 1) * 10000 + currentDate.get(Calendar.YEAR);
         final Intent intent = new Intent(this,GameActivity.class);
-        intent.putExtra("gameDifficulty", gameDifficulty.name());
-        intent.putExtra("isDailySudoku", true);
+
+        if (settings.getInt("lastPlayed", 0) == id) {
+            intent.putExtra("loadLevel", true);
+            intent.putExtra("loadLevelID", GameController.DAILY_SUDOKU_ID);
+        } else {
+            SharedPreferences.Editor editor = settings.edit();
+            editor.putInt("lastPlayed", id);
+            editor.apply();
+
+            intent.putExtra("gameDifficulty", gameDifficulty.name());
+            intent.putExtra("isDailySudoku", true);
+        }
 
         startActivity(intent);
-
     }
     
     public boolean onCreateOptionsMenu(Menu menu) {
