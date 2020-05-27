@@ -55,7 +55,7 @@ import org.secuso.privacyfriendlysudoku.ui.view.SudokuSpecialButtonLayout;
 import org.secuso.privacyfriendlysudoku.ui.view.WinDialog;
 import org.secuso.privacyfriendlysudoku.ui.view.databinding.DialogFragmentShareBoardBinding;
 
-import java.util.Date;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -158,23 +158,29 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
                 gameController.loadLevel(container);
 
             } else {
+                boolean isDailySudoku = false;
                 if (extras != null) {
                     gameType = GameType.valueOf(extras.getString("gameType", GameType.Default_9x9.name()));
                     gameDifficulty = GameDifficulty.valueOf(extras.getString("gameDifficulty", GameDifficulty.Moderate.name()));
+                    isDailySudoku = extras.getBoolean("isDailySudoku", false);
                     loadLevel = extras.getBoolean("loadLevel", false);
                     if (loadLevel) {
                         loadLevelID = extras.getInt("loadLevelID");
                     }
                 }
+                if (isDailySudoku) {
+                    gameController.loadNewDailySudokuLevel(gameDifficulty);
+                } else  {
 
-                List<GameInfoContainer> loadableGames = GameStateManager.getLoadableGameList();
+                    List<GameInfoContainer> loadableGames = GameStateManager.getLoadableGameList();
 
-                if (loadLevel && loadableGames.size() > loadLevelID) {
-                    // load level from GameStateManager
-                    gameController.loadLevel(loadableGames.get(loadLevelID));
-                } else {
-                    // load a new level
-                    gameController.loadNewLevel(gameType, gameDifficulty);
+                    if (loadLevel && loadableGames.size() > loadLevelID) {
+                        // load level from GameStateManager
+                        gameController.loadLevel(loadableGames.get(loadLevelID));
+                    } else {
+                        // load a new level
+                        gameController.loadNewLevel(gameType, gameDifficulty);
+                    }
                 }
             }
         } else {

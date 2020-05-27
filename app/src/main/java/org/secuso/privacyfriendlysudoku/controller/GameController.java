@@ -111,6 +111,17 @@ public class GameController implements IModelChangedListener, Parcelable {
         newLevelManager.checkAndRestock();
     }
 
+    public void loadNewDailySudokuLevel(GameDifficulty gameDifficulty) {
+        NewLevelManager newLevelManager = NewLevelManager.getInstance(context, settings);
+
+        int[] level = newLevelManager.loadDailySudoku();
+
+        loadLevel(new GameInfoContainer(DAILY_SUDOKU_ID, gameDifficulty, GameType.Default_9x9, level, null, null));
+
+        newLevelManager.checkAndRestock();
+
+    }
+
     public int getTime() {
         return time;
     }
