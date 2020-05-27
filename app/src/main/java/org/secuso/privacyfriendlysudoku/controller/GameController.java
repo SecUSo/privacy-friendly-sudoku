@@ -9,6 +9,7 @@ import android.os.Parcelable;
 import org.secuso.privacyfriendlysudoku.controller.database.DatabaseHelper;
 import org.secuso.privacyfriendlysudoku.controller.database.model.DailySudoku;
 import org.secuso.privacyfriendlysudoku.controller.helper.GameInfoContainer;
+import org.secuso.privacyfriendlysudoku.controller.qqwing.QQWing;
 import org.secuso.privacyfriendlysudoku.game.CellConflict;
 import org.secuso.privacyfriendlysudoku.game.CellConflictList;
 import org.secuso.privacyfriendlysudoku.game.GameBoard;
@@ -111,12 +112,18 @@ public class GameController implements IModelChangedListener, Parcelable {
         newLevelManager.checkAndRestock();
     }
 
-    public void loadNewDailySudokuLevel(GameDifficulty gameDifficulty) {
+    public void loadNewDailySudokuLevel() {
         NewLevelManager newLevelManager = NewLevelManager.getInstance(context, settings);
 
         int[] level = newLevelManager.loadDailySudoku();
 
-        loadLevel(new GameInfoContainer(DAILY_SUDOKU_ID, gameDifficulty, GameType.Default_9x9, level, null, null));
+        QQWing difficultyCheck = new QQWing(GameType.Default_9x9, GameDifficulty.Unspecified);
+        difficultyCheck.setRecordHistory(true);
+        difficultyCheck.setPuzzle(level);
+        difficultyCheck.solve();
+
+        loadLevel(new GameInfoContainer(DAILY_SUDOKU_ID, difficultyCheck.getDifficulty(),
+                GameType.Default_9x9, level, null, null));
 
         newLevelManager.checkAndRestock();
 

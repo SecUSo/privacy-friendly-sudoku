@@ -169,7 +169,7 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
                     }
                 }
                 if (isDailySudoku) {
-                    gameController.loadNewDailySudokuLevel(gameDifficulty);
+                    gameController.loadNewDailySudokuLevel();
                 } else  {
 
                     List<GameInfoContainer> loadableGames = GameStateManager.getLoadableGameList();

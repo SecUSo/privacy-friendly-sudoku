@@ -77,22 +77,23 @@ public class DailySudokuActivity<Database> extends AppCompatActivity {
 
     public void onClick(View view) {
 
-        int index = difficultyBar.getProgress()-1;
-        GameDifficulty gameDifficulty = GameDifficulty.getValidDifficultyList().get(index < 0 ? 0 : index);
-
-        //send everything to game activity
+        // Calculate the current date as an int id
         Calendar currentDate = Calendar.getInstance();
         int id = currentDate.get(Calendar.DAY_OF_MONTH) * 1000000
                 + (currentDate.get(Calendar.MONTH) + 1) * 10000 + currentDate.get(Calendar.YEAR);
         final Intent intent = new Intent(this,GameActivity.class);
 
+        /*
+         If the 'lastPlayed' key does not return the calculated id, then the player has not played
+         the sudoku of the day yet, meaning it has yet to be generated
+         */
         if (settings.getInt("lastPlayed", 0) != id) {
             SharedPreferences.Editor editor = settings.edit();
             editor.putInt("lastPlayed", id);
             editor.putBoolean("finishedForToday", false);
             editor.apply();
 
-            intent.putExtra("gameDifficulty", gameDifficulty.name());
+            //send everything to game activity
             intent.putExtra("isDailySudoku", true);
             startActivity(intent);
 
