@@ -25,6 +25,20 @@ public class DailySudoku extends Level {
         return timeNeeded;
     }
 
+    public int getTimeNeededInSeconds() {
+        if (timeNeeded.matches("/d/d:/d/d:/d/d")) {
+            String[] timeInstances = timeNeeded.split(":");
+            int hourIndex = 0;
+            int minuteIndex = 1;
+            int secondIndex = 2;
+
+            int minutes = Integer.parseInt(timeInstances[hourIndex]) * 60 + Integer.parseInt(timeInstances[minuteIndex]);
+            return minutes * 60 + Integer.parseInt(timeInstances[secondIndex]);
+        }
+
+        return 0;
+    }
+
     public void setTimeNeeded(String timeNeeded) {
         this.timeNeeded = timeNeeded;
     }
