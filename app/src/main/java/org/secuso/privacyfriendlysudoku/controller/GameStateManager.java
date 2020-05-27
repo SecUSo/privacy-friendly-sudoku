@@ -20,6 +20,7 @@ public class GameStateManager {
 
     Context context;
     private SharedPreferences settings;
+    private boolean includesDaily;
 
     private static String FILE_EXTENSION = ".txt";
     private static String SAVE_PREFIX = "save_";
@@ -87,6 +88,11 @@ public class GameStateManager {
                     gic.parseSetValues(values[i++]);
                     gic.parseNotes(values[i++]);
                     gic.parseHintsUsed(values[i++]);
+
+                    if (gic.getID() == GameController.DAILY_SUDOKU_ID) {
+                        includesDaily = true;
+                    }
+
                 } catch(IllegalArgumentException e) {
                     file.delete();
                     continue;
@@ -108,7 +114,7 @@ public class GameStateManager {
         LinkedList<GameInfoContainer> removeList = new LinkedList<>();
 
         for(int i = 0; i < list.size(); i++) {
-            if(i >= MAX_NUM_OF_SAVED_GAMES) {
+            if((i >= MAX_NUM_OF_SAVED_GAMES && !includesDaily) || i > MAX_NUM_OF_SAVED_GAMES) {
                 deleteGameStateFile(list.get(i));
                 removeList.add(list.get(i));
             }
