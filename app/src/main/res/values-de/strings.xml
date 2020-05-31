@@ -104,5 +104,6 @@
 
     <!-- ### DailySudokuActivity ###-->
     <string name="finished_daily_sudoku">Du hast das Sudoku des Tages bereits gelöst.</string>
+    <string name="daily_number_of_hints">Benutze Hinweise</string>
 
 </resources>
