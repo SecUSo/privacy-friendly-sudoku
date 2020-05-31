@@ -18,12 +18,15 @@ import android.view.View;
 import android.widget.RatingBar;
 import android.widget.Toast;
 import org.secuso.privacyfriendlysudoku.controller.GameController;
+import org.secuso.privacyfriendlysudoku.controller.NewLevelManager;
 import org.secuso.privacyfriendlysudoku.controller.database.DatabaseHelper;
 import org.secuso.privacyfriendlysudoku.controller.database.model.DailySudoku;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import org.secuso.privacyfriendlysudoku.controller.SaveLoadStatistics;
+import org.secuso.privacyfriendlysudoku.controller.qqwing.QQWing;
 import org.secuso.privacyfriendlysudoku.game.GameDifficulty;
+import org.secuso.privacyfriendlysudoku.game.GameType;
 import org.secuso.privacyfriendlysudoku.ui.GameActivity;
 import org.secuso.privacyfriendlysudoku.ui.StatsActivity;
 import java.text.SimpleDateFormat;
@@ -95,6 +98,23 @@ public class DailySudokuActivity<Database> extends AppCompatActivity {
         ListView listView = (ListView)findViewById(R.id.sudoku_list);
         sudokuListAdapter = new DailySudokuActivity.SudokuListAdapter(this, sudokuList);
         listView.setAdapter(sudokuListAdapter);
+
+        NewLevelManager newLevelManager = NewLevelManager.getInstance(getApplicationContext(), settings);
+
+        int[] level = newLevelManager.loadDailySudoku();
+
+        QQWing difficultyCheck = new QQWing(GameType.Default_9x9, GameDifficulty.Unspecified);
+        difficultyCheck.setRecordHistory(true);
+        difficultyCheck.setPuzzle(level);
+        difficultyCheck.solve();
+        RatingBar ratingbar = findViewById(R.id.first_diff_bar);
+        TextView tz = findViewById(R.id.first_diff_text);
+
+        tz.setText(difficultyCheck.getDifficulty().getStringResID());
+        ratingbar.setNumStars(GameDifficulty.getValidDifficultyList().size());
+        ratingbar.setMax(GameDifficulty.getValidDifficultyList().size());
+        ratingbar.setRating(GameDifficulty.getValidDifficultyList().indexOf(difficultyCheck.getDifficulty())+1);
+
 
     }
 
@@ -206,7 +226,20 @@ public class DailySudokuActivity<Database> extends AppCompatActivity {
             difficultyBar.setNumStars(GameDifficulty.getValidDifficultyList().size());
             difficultyBar.setMax(GameDifficulty.getValidDifficultyList().size());
             difficultyBar.setRating(GameDifficulty.getValidDifficultyList().indexOf(sudoku.getDifficulty())+1);
-            //lastTimePlayed.setText(sudoku.getTimeNeeded());
+
+
+            Calendar currentDate = Calendar.getInstance();
+            //int id = currentDate.get(Calendar.DAY_OF_MONTH) * 1000000
+              //      + (currentDate.get(Calendar.MONTH) + 1) * 10000 + currentDate.get(Calendar.YEAR);
+
+            int id = sudoku.getId();
+            int dayOfMonth = id/1000000;
+            int month = (id/10000) % 100;
+            int year = id%10000;
+
+            String str = String.format("%02d.%02d.%02d", dayOfMonth, month, year);
+
+            lastTimePlayed.setText(str);
             playedTime.setText(sudoku.getTimeNeeded());
             return convertView;
         }
