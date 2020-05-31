@@ -1,6 +1,5 @@
 package org.secuso.privacyfriendlysudoku.ui.view;
 
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -18,7 +17,6 @@ import android.widget.TextView;
 import android.view.View;
 import android.widget.RatingBar;
 import android.widget.Toast;
-
 import org.secuso.privacyfriendlysudoku.controller.GameController;
 import org.secuso.privacyfriendlysudoku.controller.database.DatabaseHelper;
 import org.secuso.privacyfriendlysudoku.controller.database.model.DailySudoku;
@@ -28,7 +26,7 @@ import org.secuso.privacyfriendlysudoku.controller.SaveLoadStatistics;
 import org.secuso.privacyfriendlysudoku.game.GameDifficulty;
 import org.secuso.privacyfriendlysudoku.ui.GameActivity;
 import org.secuso.privacyfriendlysudoku.ui.StatsActivity;
-
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
@@ -55,9 +53,35 @@ public class DailySudokuActivity<Database> extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
 
-        List<DailySudoku> sudokus = dbHelper.getDailySudokus();
-        TextView tw = findViewById(R.id.first_diff_text);
-        tw.setText(String.valueOf(sudokus.size()));
+        //TODO: rename tw/tx/ty
+        sudokuList = dbHelper.getDailySudokus();
+        TextView tw = findViewById(R.id.numb_of_total_games);
+        TextView tx = findViewById(R.id.numb_of_hints);
+        TextView ty = findViewById(R.id.numb_of_total_time);
+        tw.setText(String.valueOf(sudokuList.size()));
+
+
+        int sumHints = 0;
+        int sumTime = 0;
+
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
+
+        for (DailySudoku sudoku : sudokuList){
+            sumHints += sudoku.getHintsUsed();
+            //sumTime += sudoku.getTimeNeededInSeconds();
+
+            String[] split = sudoku.getTimeNeeded().split(":");
+            sumTime += Integer.valueOf(split[0])*3600 + Integer.valueOf(split[1])*60 + Integer.valueOf(split[2]);
+        }
+
+        int hours = sumTime / 3600;
+        int minutes = ( sumTime / 60 ) % 60;
+        int seconds = sumTime % 60;
+        String str = String.format("%02d:%02d:%02d", hours, minutes, seconds);
+
+        tx.setText(String.valueOf(sumHints));
+        ty.setText(str);
 
         androidx.appcompat.app.ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("Daily Sudoku");
@@ -66,8 +90,7 @@ public class DailySudokuActivity<Database> extends AppCompatActivity {
         difficultyBar = findViewById(R.id.first_diff_bar);
         settings = PreferenceManager.getDefaultSharedPreferences(this);
         mHandler = new Handler();
-
-        sudokuList = dbHelper.getDailySudokus();
+        
 
         ListView listView = (ListView)findViewById(R.id.sudoku_list);
         sudokuListAdapter = new DailySudokuActivity.SudokuListAdapter(this, sudokuList);
@@ -183,7 +206,8 @@ public class DailySudokuActivity<Database> extends AppCompatActivity {
             difficultyBar.setNumStars(GameDifficulty.getValidDifficultyList().size());
             difficultyBar.setMax(GameDifficulty.getValidDifficultyList().size());
             difficultyBar.setRating(GameDifficulty.getValidDifficultyList().indexOf(sudoku.getDifficulty())+1);
-
+            //lastTimePlayed.setText(sudoku.getTimeNeeded());
+            playedTime.setText(sudoku.getTimeNeeded());
             return convertView;
         }
     }
