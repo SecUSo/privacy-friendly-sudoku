@@ -155,6 +155,7 @@
 
     <!-- ### DailySudokuActivity ###-->
     <string name="finished_daily_sudoku">You have already solved the sudoku of the day</string>
-    <string name="daily_number_of_hints">used hints</string>
+    <string name="daily_number_of_hints">Used hints</string>
+    <string name="number_of_completed_games">Completed games</string>
 
 </resources>

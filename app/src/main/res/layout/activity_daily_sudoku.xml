@@ -82,42 +82,44 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/first_diff_text"
-                            android:layout_alignParentEnd="true"
                             android:layout_alignParentBottom="true"
                             android:layout_centerHorizontal="true"
                             android:layout_gravity="center_horizontal"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="5dp"
 
-                            android:layout_marginTop="30dp"
-                            android:layout_marginBottom="31dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginBottom="10dp"
                             android:numStars="4"
-                            android:rating="2" />
+                            android:scaleX="1.5"
+                            android:scaleY="1.5" />
 
                         <TextView
                             android:id="@+id/first_diff_text"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_alignParentEnd="true"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
-                            android:gravity="bottom|center|center_horizontal"
+                            android:gravity="center|center_horizontal"
                             android:text="diffi"
-                            android:textSize="32dp" />
+                            android:textSize="22sp" />
                     </RelativeLayout>
 
                 </LinearLayout>
 
                 <RelativeLayout
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:minHeight="5dp">
 
                     <View
-                        android:layout_width="2dp"
+                        android:layout_width="1dp"
                         android:layout_height="match_parent"
+                        android:layout_alignParentBottom="true"
                         android:layout_centerHorizontal="true"
-                        android:layout_centerVertical="true"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginTop="@dimen/activity_horizontal_margin"
-                        android:layout_marginBottom="@dimen/activity_horizontal_margin"
+                        android:layout_marginTop="0dp"
+                        android:layout_marginBottom="50dp"
                         android:background="@color/colorPrimary"
                         android:foregroundGravity="center_vertical" />
 
@@ -125,27 +127,30 @@
 
                 <LinearLayout
                     android:layout_width="2dp"
-                    android:layout_height="fill_parent"
+                    android:layout_height="match_parent"
                     android:layout_weight="2"
                     android:orientation="vertical"
-                    android:paddingTop="@dimen/activity_horizontal_margin"
+                    android:paddingTop="0dp"
                     android:weightSum="6">
 
                     <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1.0"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_gravity="top"
+                        android:layout_marginRight="0dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
                         android:orientation="vertical"
-                        android:paddingTop="@dimen/activity_horizontal_margin"
-                        android:weightSum="6">
+                        android:paddingTop="0dp"
+                        android:weightSum="10">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginBottom="0dp"
-                            android:layout_weight="1"
-                            android:text="@string/number_of_hints" />
+                            android:layout_weight="2"
+                            android:text="@string/daily_number_of_hints" />
 
                         <TextView
                             android:id="@+id/numb_of_hints"
@@ -160,8 +165,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_weight="1"
-                            android:text="@string/number_of_games" />
+                            android:layout_weight="2"
+                            android:text="@string/number_of_completed_games" />
 
                         <TextView
                             android:id="@+id/numb_of_total_games"
@@ -175,7 +180,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_weight="1"
+                            android:layout_weight="2"
                             android:text="@string/total_of_time" />
 
                         <TextView
@@ -201,12 +206,12 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="0dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_weight="1.0">
 
                 <View
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="2dp"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
@@ -218,9 +223,9 @@
 
             <ListView
                 android:id="@+id/sudoku_list"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_width="fill_parent"
+                android:layout_height="270dp"
+                android:layout_weight="6" />
 
 
         </LinearLayout>
@@ -231,8 +236,8 @@
         android:id="@+id/floatingActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="30dp"
-        android:layout_marginRight="30dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="25dp"
         android:layout_marginBottom="290dp"
         android:clickable="true"
         android:onClick="onClick"
