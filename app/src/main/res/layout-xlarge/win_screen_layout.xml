@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent" android:layout_height="370dp"
     android:orientation="vertical"
-    android:background="@color/white"
+    android:background="?attr/lightestBackGround"
     android:layout_gravity="center">
 
     <LinearLayout
@@ -16,7 +16,7 @@
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:background="@color/transparent"
+            android:background="?attr/backgroundSurroundingDialog"
             android:gravity="bottom"
             android:orientation="vertical"
             android:layout_gravity="bottom">
@@ -24,12 +24,12 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_gravity="bottom"
-                android:background="@color/transparent"
+                android:background="?attr/backgroundSurroundingDialog"
                 android:src="@drawable/ic_trophy_award_black_48dp" />
             <View
                 android:layout_width="fill_parent"
                 android:layout_height="10dp"
-                android:background="@color/middleblue"
+                android:background="?attr/winScreenPedestalColor"
                 android:layout_gravity="bottom"
                 android:foregroundGravity="bottom"/>
         </LinearLayout>
@@ -40,7 +40,7 @@
             android:layout_height="fill_parent"
             android:layout_weight="3"
             android:gravity="center"
-            android:background="@color/transparent"
+            android:background="?attr/backgroundSurroundingDialog"
             android:orientation="vertical"
             android:weightSum="5"
             >
@@ -57,32 +57,32 @@
                     android:text="@string/win_text"
                     android:textAlignment="center"
                     android:layout_gravity="center_horizontal"
-                    android:textColor="@color/white"/>
+                    android:textColor="?attr/lightestFontColor"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/win_time"
                     android:layout_gravity="center"
-                    android:textColor="@color/white"/>
+                    android:textColor="?attr/lightestFontColor"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/win_time"
                     android:text=""
-                    android:textColor="@color/white"
+                    android:textColor="?attr/lightestFontColor"
                     android:layout_gravity="center_horizontal"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/win_hint"
-                    android:textColor="@color/white"
+                    android:textColor="?attr/lightestFontColor"
                     android:layout_gravity="center" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/win_hints"
                     android:text=""
-                    android:textColor="@color/white"
+                    android:textColor="?attr/lightestFontColor"
                     android:layout_gravity="center_horizontal"/>
                 <TextView
                     android:layout_width="wrap_content"
@@ -92,7 +92,7 @@
                     android:gravity="center_horizontal"
                     android:visibility="invisible"
                     android:id="@+id/win_new_besttime"
-                    android:textColor="@color/white"/>
+                    android:textColor="?attr/lightestFontColor"/>
             </LinearLayout>
 
             <LinearLayout
@@ -102,7 +102,7 @@
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="20dp"
-                    android:background="@color/middleblue"
+                    android:background="?attr/winScreenPedestalColor"
                     android:layout_gravity="bottom"
                     android:foregroundGravity="bottom"/>
             </LinearLayout>
@@ -111,7 +111,7 @@
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:background="@color/transparent"
+            android:background="?attr/backgroundSurroundingDialog"
             android:orientation="vertical"
             android:gravity="bottom">
             <ImageView
@@ -119,11 +119,11 @@
                 android:layout_height="40dp"
                 android:layout_gravity="bottom"
                 android:src="@drawable/ic_trophy_award_black_48dp"
-                android:background="@color/transparent" />
+                android:background="?attr/backgroundSurroundingDialog" />
             <View
                 android:layout_width="fill_parent"
                 android:layout_height="10dp"
-                android:background="@color/middleblue"
+                android:background="?attr/winScreenPedestalColor"
                 android:layout_gravity="bottom"
                 android:foregroundGravity="bottom"/>
         </LinearLayout>
@@ -142,7 +142,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@drawable/standalone_button"
-            android:textColor="@color/white"
+            android:textColor="?attr/lightestFontColor"
             android:layout_weight="1"
             android:text="@string/win_button_text"
             android:layout_marginRight="5dp"/>
@@ -151,7 +151,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@drawable/standalone_button"
-            android:textColor="@color/white"
+            android:textColor="?attr/lightestFontColor"
             android:layout_weight="1"
             android:text="@string/win_show_game"
             android:layout_marginLeft="5dp"/>
