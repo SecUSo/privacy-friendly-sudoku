@@ -6,6 +6,9 @@
         <item name="colorPrimary">@color/colorPrimaryDark</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="lightestBackGround">@color/white</item>
+        <item name="lightestFontColor">@color/white</item>
+        <item name="standardVectorGraphic">@color/black</item>
         <item name="actionBarTheme">@style/ToolbarStyle</item>
     </style>
 
