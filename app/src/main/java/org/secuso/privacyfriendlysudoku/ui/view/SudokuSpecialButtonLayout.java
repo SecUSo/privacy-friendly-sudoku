@@ -10,6 +10,7 @@ import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.AttributeSet;
 import android.view.View;
@@ -18,8 +19,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import androidx.core.content.ContextCompat;
+
 import org.secuso.privacyfriendlysudoku.controller.GameController;
 import org.secuso.privacyfriendlysudoku.game.listener.IHighlightChangedListener;
+import org.secuso.privacyfriendlysudoku.ui.GameActivity;
 import org.secuso.privacyfriendlysudoku.ui.listener.IHintDialogFragmentListener;
 
 import java.util.LinkedList;
@@ -40,6 +44,7 @@ public class SudokuSpecialButtonLayout extends LinearLayout implements IHighligh
     Bitmap bitMap,bitResult;
     Canvas canvas;
     FragmentManager fragmentManager;
+    Context context;
 
     OnClickListener listener = new OnClickListener() {
         @Override
@@ -101,10 +106,11 @@ public class SudokuSpecialButtonLayout extends LinearLayout implements IHighligh
         }
     }
 
-    public void setButtons(int width, GameController gc, SudokuKeyboardLayout key, FragmentManager fm, int orientation) {
+    public void setButtons(int width, GameController gc, SudokuKeyboardLayout key, FragmentManager fm, int orientation, Context cxt) {
         fragmentManager = fm;
         keyboard=key;
         gameController = gc;
+        context = cxt;
         if(gameController != null) {
             gameController.registerHighlightChangedListener(this);
         }
@@ -160,12 +166,16 @@ public class SudokuSpecialButtonLayout extends LinearLayout implements IHighligh
                             R.drawable.numpad_highlighted_four : R.drawable.inactive_button);
                     break;
                 case NoteToggle:
-                    bitMap = BitmapFactory.decodeResource(getResources(), fixedButtons[i].getType().getResID());
+                    Drawable drawable = ContextCompat.getDrawable(context, fixedButtons[i].getType().getResID());
+                    drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+                    bitMap = Bitmap.createBitmap(drawable.getIntrinsicWidth(),
+                            drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
                     bitResult = Bitmap.createBitmap(bitMap.getWidth(), bitMap.getHeight(), Bitmap.Config.ARGB_8888);
 
                     canvas = new Canvas(bitResult);
                     canvas.rotate(gameController.getNoteStatus() ? 45.0f : 0.0f, bitMap.getWidth()/2, bitMap.getHeight()/2);
                     canvas.drawBitmap(bitMap, 0, 0, null);
+                    drawable.draw(canvas);
 
                     fixedButtons[i].setImageBitmap(bitResult);
                     fixedButtons[i].setBackgroundResource(gameController.getNoteStatus() ? R.drawable.numpad_highlighted_three : R.drawable.numpad_highlighted_four);

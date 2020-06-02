@@ -246,7 +246,7 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
 
         //set Special keys
         specialButtonLayout = (SudokuSpecialButtonLayout) findViewById(R.id.sudokuSpecialLayout);
-        specialButtonLayout.setButtons(p.x, gameController, keyboard, getFragmentManager(), orientation);
+        specialButtonLayout.setButtons(p.x, gameController, keyboard, getFragmentManager(), orientation, GameActivity.this);
 
         //set TimerView
         timerView = (TextView)findViewById(R.id.timerView);
