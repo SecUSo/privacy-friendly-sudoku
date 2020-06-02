@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorAccent">
+    android:background="?attr/colorAccent">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -17,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/slide3_heading"
-            android:textColor="@android:color/white"
+            android:textColor="?attr/lightestFontColor"
             android:textSize="@dimen/slide_title"
             android:textStyle="bold" />
 
@@ -30,7 +30,7 @@
             android:numStars="4"
             android:layout_marginTop="25dp"
             android:rating="1"
-            android:background="@color/white"
+            android:background="?attr/lightestFontColor"
             android:stepSize="1"
             style="@style/RatingBar"/>
 
@@ -43,7 +43,7 @@
             android:textAlignment="center"
             android:gravity="center"
             android:layout_marginTop="25dp"
-            android:textColor="@android:color/white"
+            android:textColor="?attr/lightestFontColor"
             android:textSize="@dimen/slide_desc" />
 
     </LinearLayout>

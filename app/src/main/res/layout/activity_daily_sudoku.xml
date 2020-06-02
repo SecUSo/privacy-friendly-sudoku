@@ -120,7 +120,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_marginTop="0dp"
                         android:layout_marginBottom="50dp"
-                        android:background="@color/colorPrimary"
+                        android:background="?attr/colorPrimary"
                         android:foregroundGravity="center_vertical" />
 
                 </RelativeLayout>
@@ -216,7 +216,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
                     android:layout_gravity="center_vertical"
-                    android:background="@color/colorPrimary"
+                    android:background="?attr/colorPrimary"
                     android:foregroundGravity="center_vertical" />
 
             </LinearLayout>

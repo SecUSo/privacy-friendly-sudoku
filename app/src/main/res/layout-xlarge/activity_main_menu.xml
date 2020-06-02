@@ -122,7 +122,7 @@
                 style="@style/RatingBar"/>
 
             <Button
-                android:textColor="@color/white"
+                android:textColor="?attr/lightestFontColor"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_marginTop="@dimen/activity_vertical_margin"
@@ -141,7 +141,7 @@
                 android:background="@drawable/standalone_button"/>
 
             <Button
-                android:textColor="@color/white"
+                android:textColor="?attr/lightestFontColor"
                 android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -235,7 +235,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        android:background="@color/white"
+        android:background="?attr/lightestBackGround"
         app:menu="@menu/menu_drawer_main"
         app:headerLayout="@layout/nav_header" />
 
