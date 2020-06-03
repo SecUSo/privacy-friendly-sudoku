@@ -6,5 +6,10 @@
         <attr name="standardVectorGraphic" format="color"/>
         <attr name="winScreenPedestalColor" format="color"/>
         <attr name="backgroundSurroundingDialog" format="color"/>
+        <attr name="rankingStarSelected" format="color"/>
+        <attr name="rankingStarNotSelected" format="color"/>
+        <attr name="inactiveButtonColor" format="color"/>
+        <attr name="activeButtonColor" format="color"/>
+        <attr name="highlightedButtonBorder" format="color"/>
     </declare-styleable>
 </resources>

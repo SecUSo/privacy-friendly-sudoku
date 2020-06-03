@@ -18,17 +18,17 @@
     <item android:id="@android:id/background">
         <bitmap
             android:src="@drawable/ic_star_black_48dp"
-            android:tint="@color/middlegrey" />
+            android:tint="?attr/rankingStarNotSelected" />
     </item>
     <item android:id="@android:id/secondaryProgress">
         <bitmap
             android:src="@drawable/ic_star_half_black_48dp"
-            android:tint="@color/middlegrey" />
+            android:tint="?attr/rankingStarNotSelected" />
     </item>
     <item android:id="@android:id/progress">
         <bitmap
             android:src="@drawable/ic_star_black_48dp"
-            android:tint="@color/colorAccent" />
+            android:tint="?attr/colorAccent" />
     </item>
 </layer-list>
 

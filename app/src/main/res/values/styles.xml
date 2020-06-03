@@ -11,6 +11,11 @@
         <item name="standardVectorGraphic">@color/black</item>
         <item name="winScreenPedestalColor">@color/middleblue</item>
         <item name="backgroundSurroundingDialog">@color/transparent</item>
+        <item name="rankingStarSelected">@color/lightblue</item>
+        <item name="rankingStarNotSelected">@color/middlegrey</item>
+        <item name="activeButtonColor">@color/lightblue</item>
+        <item name="inactiveButtonColor">@color/middlegrey</item>
+        <item name="highlightedButtonBorder">@color/yellow</item>
         <item name="actionBarTheme">@style/ToolbarStyle</item>
     </style>
 
