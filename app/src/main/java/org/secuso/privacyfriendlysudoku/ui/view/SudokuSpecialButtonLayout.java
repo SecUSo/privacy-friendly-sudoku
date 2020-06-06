@@ -98,6 +98,7 @@ public class SudokuSpecialButtonLayout extends LinearLayout implements IHighligh
     public SudokuSpecialButtonLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         setWeightSum(fixedButtonsCount);
+        this.context = context;
     }
 
     public void setButtonsEnabled(boolean enabled) {
@@ -148,6 +149,13 @@ public class SudokuSpecialButtonLayout extends LinearLayout implements IHighligh
             fixedButtons[i].setOnClickListener(listener);
             fixedButtons[i].setBackgroundResource(R.drawable.numpad_highlighted_four);
             addView(fixedButtons[i]);
+
+            if(fixedButtons[i].getVisibility() == View.VISIBLE) {
+                Drawable drawable = ContextCompat.getDrawable(context, fixedButtons[i].getType().getResID());
+                setUpVectorDrawable(drawable);
+                drawable.draw(canvas);
+                fixedButtons[i].setImageBitmap(bitResult);
+            }
             i++;
         }
 
@@ -167,12 +175,8 @@ public class SudokuSpecialButtonLayout extends LinearLayout implements IHighligh
                     break;
                 case NoteToggle:
                     Drawable drawable = ContextCompat.getDrawable(context, fixedButtons[i].getType().getResID());
-                    drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
-                    bitMap = Bitmap.createBitmap(drawable.getIntrinsicWidth(),
-                            drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
-                    bitResult = Bitmap.createBitmap(bitMap.getWidth(), bitMap.getHeight(), Bitmap.Config.ARGB_8888);
+                    setUpVectorDrawable(drawable);
 
-                    canvas = new Canvas(bitResult);
                     canvas.rotate(gameController.getNoteStatus() ? 45.0f : 0.0f, bitMap.getWidth()/2, bitMap.getHeight()/2);
                     canvas.drawBitmap(bitMap, 0, 0, null);
                     drawable.draw(canvas);
@@ -187,6 +191,15 @@ public class SudokuSpecialButtonLayout extends LinearLayout implements IHighligh
                     break;
             }
         }
+    }
+
+    private void setUpVectorDrawable(Drawable drawable) {
+        drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+        bitMap = Bitmap.createBitmap(drawable.getIntrinsicWidth(),
+                drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        bitResult = Bitmap.createBitmap(bitMap.getWidth(), bitMap.getHeight(), Bitmap.Config.ARGB_8888);
+
+        canvas = new Canvas(bitResult);
     }
 
     public static class HintConfirmationDialog extends DialogFragment {
