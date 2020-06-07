@@ -233,9 +233,6 @@
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         android:background="?attr/lightestBackGround"
-        app:itemBackground="?attr/menu_background_color"
-        app:itemTextColor="?attr/menu_text_color"
-        app:itemIconTint="?attr/menu_icon_color"
         app:menu="@menu/menu_drawer_main"
         app:headerLayout="@layout/nav_header" />
 

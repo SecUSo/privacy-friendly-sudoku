@@ -21,9 +21,6 @@
         <item name="highlightedButtonBorder">@color/yellow</item>
         <item name="android:itemBackground">@color/cardview_dark_background</item>
         <item name="android:textColor">@color/white</item>
-        <item name="menu_background_color">@color/menu_background_color</item>
-        <item name="menu_icon_color">@color/menu_icon_color</item>
-        <item name="menu_text_color">@color/menu_text_color</item>
     </style>
 
     <style name="ToolbarStyle" parent="Widget.AppCompat.ActionBar">
