@@ -11,5 +11,8 @@
         <attr name="inactiveButtonColor" format="color"/>
         <attr name="activeButtonColor" format="color"/>
         <attr name="highlightedButtonBorder" format="color"/>
+        <attr name="menu_text_color" format="color"/>
+        <attr name="menu_background_color" format="color"/>
+        <attr name="menu_icon_color" format="color"/>
     </declare-styleable>
 </resources>
