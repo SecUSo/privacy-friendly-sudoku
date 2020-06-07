@@ -54,48 +54,54 @@
                 android:orientation="vertical"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
                     android:text="@string/win_text"
                     android:textAlignment="center"
-                    android:layout_gravity="center_horizontal"
-                    android:textColor="?attr/lightestFontColor"/>
+                    android:textColor="?attr/winScreenFontColor" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/win_time"
                     android:layout_gravity="center"
-                    android:textColor="?attr/lightestFontColor"/>
+                    android:text="@string/win_time"
+                    android:textColor="?attr/winScreenFontColor" />
+
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:id="@+id/win_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
                     android:text=""
-                    android:textColor="?attr/lightestFontColor"
-                    android:layout_gravity="center_horizontal"/>
+                    android:textColor="?attr/winScreenFontColor" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:text="@string/win_hint"
-                    android:textColor="?attr/lightestFontColor"
-                    android:layout_gravity="center" />
+                    android:textColor="?attr/winScreenFontColor" />
+
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:id="@+id/win_hints"
-                    android:text=""
-                    android:textColor="?attr/lightestFontColor"
-                    android:layout_gravity="center_horizontal"/>
-                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/win_best_time"
+                    android:layout_gravity="center_horizontal"
+                    android:text=""
+                    android:textColor="?attr/winScreenFontColor" />
+
+                <TextView
+                    android:id="@+id/win_new_besttime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:gravity="center_horizontal"
-                    android:visibility="invisible"
-                    android:id="@+id/win_new_besttime"
-                    android:textColor="?attr/lightestFontColor"/>
+                    android:text="@string/win_best_time"
+                    android:textColor="?attr/winScreenFontColor"
+                    android:visibility="invisible" />
             </LinearLayout>
 
             <LinearLayout
