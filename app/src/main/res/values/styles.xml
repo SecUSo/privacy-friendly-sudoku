@@ -10,6 +10,7 @@
         <item name="lightestFontColor">@color/white</item>
         <item name="standardVectorGraphic">@color/black</item>
         <item name="winScreenPedestalColor">@color/middleblue</item>
+        <item name="winScreenFontColor">@color/white</item>
         <item name="backgroundSurroundingDialog">@color/transparent</item>
         <item name="rankingStarSelected">@color/lightblue</item>
         <item name="rankingStarNotSelected">@color/middlegrey</item>
@@ -27,6 +28,12 @@
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.Dialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">@color/colorPrimaryDark</item>
+        <item name="android:textColorPrimary">@color/black</item>
+        <item name="android:background">@color/white</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />

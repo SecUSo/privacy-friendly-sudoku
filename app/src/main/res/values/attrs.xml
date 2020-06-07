@@ -5,6 +5,7 @@
         <attr name="lightestFontColor" format="color"/>
         <attr name="standardVectorGraphic" format="color"/>
         <attr name="winScreenPedestalColor" format="color"/>
+        <attr name="winScreenFontColor" format="color"/>
         <attr name="backgroundSurroundingDialog" format="color"/>
         <attr name="rankingStarSelected" format="color"/>
         <attr name="rankingStarNotSelected" format="color"/>
