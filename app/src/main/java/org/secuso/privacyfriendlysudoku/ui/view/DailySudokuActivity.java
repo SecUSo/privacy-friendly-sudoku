@@ -18,16 +18,19 @@ import android.view.View;
 import android.widget.RatingBar;
 import android.widget.Toast;
 import org.secuso.privacyfriendlysudoku.controller.GameController;
+import org.secuso.privacyfriendlysudoku.controller.GameStateManager;
 import org.secuso.privacyfriendlysudoku.controller.NewLevelManager;
 import org.secuso.privacyfriendlysudoku.controller.database.DatabaseHelper;
 import org.secuso.privacyfriendlysudoku.controller.database.model.DailySudoku;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import org.secuso.privacyfriendlysudoku.controller.SaveLoadStatistics;
+import org.secuso.privacyfriendlysudoku.controller.helper.GameInfoContainer;
 import org.secuso.privacyfriendlysudoku.controller.qqwing.QQWing;
 import org.secuso.privacyfriendlysudoku.game.GameDifficulty;
 import org.secuso.privacyfriendlysudoku.game.GameType;
 import org.secuso.privacyfriendlysudoku.ui.GameActivity;
+import org.secuso.privacyfriendlysudoku.ui.SettingsActivity;
 import org.secuso.privacyfriendlysudoku.ui.StatsActivity;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -45,6 +48,7 @@ public class DailySudokuActivity<Database> extends AppCompatActivity {
     private Handler mHandler;
     private StatsActivity.SectionsPagerAdapter mSectionsPagerAdapter;
     private SudokuListAdapter sudokuListAdapter;
+    private int dailyId;
 
 
     @Override
@@ -55,6 +59,10 @@ public class DailySudokuActivity<Database> extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        // Calculate the current date as an int id
+        Calendar currentDate = Calendar.getInstance();
+        dailyId = currentDate.get(Calendar.DAY_OF_MONTH) * 1000000
+                + (currentDate.get(Calendar.MONTH) + 1) * 10000 + currentDate.get(Calendar.YEAR);
 
         //TODO: rename tw/tx/ty
         sudokuList = dbHelper.getDailySudokus();
@@ -99,40 +107,52 @@ public class DailySudokuActivity<Database> extends AppCompatActivity {
         sudokuListAdapter = new DailySudokuActivity.SudokuListAdapter(this, sudokuList);
         listView.setAdapter(sudokuListAdapter);
 
-        NewLevelManager newLevelManager = NewLevelManager.getInstance(getApplicationContext(), settings);
+        GameDifficulty dailyDifficulty = GameDifficulty.Unspecified;
 
-        int[] level = newLevelManager.loadDailySudoku();
+        //only calculate the difficulty of the daily sudoku once a day
+        if (settings.getInt("lastCalculated", 0) != dailyId) {
+            NewLevelManager newLevelManager = NewLevelManager.getInstance(getApplicationContext(), settings);
 
-        QQWing difficultyCheck = new QQWing(GameType.Default_9x9, GameDifficulty.Unspecified);
-        difficultyCheck.setRecordHistory(true);
-        difficultyCheck.setPuzzle(level);
-        difficultyCheck.solve();
+            int[] level = newLevelManager.loadDailySudoku();
+
+            QQWing difficultyCheck = new QQWing(GameType.Default_9x9, GameDifficulty.Unspecified);
+            difficultyCheck.setRecordHistory(true);
+            difficultyCheck.setPuzzle(level);
+            difficultyCheck.solve();
+            dailyDifficulty = difficultyCheck.getDifficulty();
+
+            //save the index of the daily difficulty (in the valid difficulty list) and the day it was calculated for
+            SharedPreferences.Editor editor = settings.edit();
+            editor.putInt("lastCalculated", dailyId);
+            editor.putInt("dailyDifficultyIndex", GameDifficulty.getValidDifficultyList().indexOf(dailyDifficulty));
+            editor.apply();
+
+        } else {
+            int index = settings.getInt("dailyDifficultyIndex", GameDifficulty.getValidDifficultyList()
+                    .indexOf(GameDifficulty.Unspecified));
+            dailyDifficulty = GameDifficulty.getValidDifficultyList().get(index);
+        }
         RatingBar ratingbar = findViewById(R.id.first_diff_bar);
         TextView tz = findViewById(R.id.first_diff_text);
 
-        tz.setText(difficultyCheck.getDifficulty().getStringResID());
+        tz.setText(dailyDifficulty.getStringResID());
         ratingbar.setNumStars(GameDifficulty.getValidDifficultyList().size());
         ratingbar.setMax(GameDifficulty.getValidDifficultyList().size());
-        ratingbar.setRating(GameDifficulty.getValidDifficultyList().indexOf(difficultyCheck.getDifficulty())+1);
+        ratingbar.setRating(GameDifficulty.getValidDifficultyList().indexOf(dailyDifficulty)+1);
 
 
     }
 
     public void onClick(View view) {
-
-        // Calculate the current date as an int id
-        Calendar currentDate = Calendar.getInstance();
-        int id = currentDate.get(Calendar.DAY_OF_MONTH) * 1000000
-                + (currentDate.get(Calendar.MONTH) + 1) * 10000 + currentDate.get(Calendar.YEAR);
         final Intent intent = new Intent(this,GameActivity.class);
 
         /*
          If the 'lastPlayed' key does not return the calculated id, then the player has not played
          the sudoku of the day yet, meaning it has yet to be generated
          */
-        if (settings.getInt("lastPlayed", 0) != id) {
+        if (settings.getInt("lastPlayed", 0) != dailyId) {
             SharedPreferences.Editor editor = settings.edit();
-            editor.putInt("lastPlayed", id);
+            editor.putInt("lastPlayed", dailyId);
             editor.putBoolean("finishedForToday", false);
             editor.apply();
 
