@@ -218,7 +218,7 @@ public class SudokuSpecialButtonLayout extends LinearLayout implements IHighligh
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             // Use the Builder class for convenient dialog construction
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.AppTheme_Dialog);
             builder.setMessage(R.string.hint_confirmation)
                     .setPositiveButton(R.string.hint_confirmation_confirm, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {

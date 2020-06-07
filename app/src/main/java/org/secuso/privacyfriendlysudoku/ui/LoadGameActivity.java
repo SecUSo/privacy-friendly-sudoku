@@ -146,7 +146,7 @@ public class LoadGameActivity extends BaseActivity implements IDeleteDialogFragm
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             // Use the Builder class for convenient dialog construction
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.AppTheme_Dialog);
             builder.setMessage(R.string.loadgame_delete_confirmation)
                     .setPositiveButton(R.string.loadgame_delete_confirm, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {

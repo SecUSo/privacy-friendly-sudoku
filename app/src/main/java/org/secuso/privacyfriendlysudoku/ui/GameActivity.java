@@ -143,7 +143,7 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
                 }
 
                 if (!startGame) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this, R.style.AppTheme_Dialog);
                     builder.setMessage(R.string.impossible_import_notice)
                             .setCancelable(false)
                             .setPositiveButton(R.string.okay, new DialogInterface.OnClickListener() {
@@ -593,7 +593,7 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
 
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.AppTheme_Dialog);
 
             LayoutInflater inflater = getActivity().getLayoutInflater();
             DialogFragmentShareBoardBinding binding = DialogFragmentShareBoardBinding.inflate(inflater);
@@ -634,7 +634,7 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             // Use the Builder class for convenient dialog construction
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.AppTheme_Dialog);
             builder.setMessage(R.string.reset_confirmation)
                     .setPositiveButton(R.string.reset_confirmation_confirm, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
