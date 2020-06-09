@@ -12,5 +12,7 @@
         <attr name="inactiveButtonColor" format="color"/>
         <attr name="activeButtonColor" format="color"/>
         <attr name="highlightedButtonBorder" format="color"/>
+        <attr name="backgroundTutorialSlide" format="color"/>
+        <attr name="backgroundTutorialStars" format="color"/>
     </declare-styleable>
 </resources>

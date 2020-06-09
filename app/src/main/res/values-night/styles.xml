@@ -20,6 +20,8 @@
         <item name="inactiveButtonColor">@color/middlegrey</item>
         <item name="highlightedButtonBorder">@color/yellow</item>
         <item name="android:itemBackground">@color/cardview_dark_background</item>
+        <item name="backgroundTutorialSlide">@color/colorPrimaryDark</item>
+        <item name="backgroundTutorialStars">@color/colorPrimaryDark</item>
     </style>
 
     <style name="ToolbarStyle" parent="Widget.AppCompat.ActionBar">
