@@ -48,8 +48,17 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="http"
+                      android:host="sudoku" />
+            </intent-filter>
+
+            <intent-filter >
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
                 <data android:scheme="sudoku" />
             </intent-filter>
+
         </activity>
         <activity android:name="org.secuso.privacyfriendlysudoku.ui.AboutActivity" />
         <activity android:name="org.secuso.privacyfriendlysudoku.ui.LoadGameActivity" />

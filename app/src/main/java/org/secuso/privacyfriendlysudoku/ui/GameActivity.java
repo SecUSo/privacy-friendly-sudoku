@@ -115,8 +115,13 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
                     (extras.containsKey("gameType") || extras.containsKey("loadLevel"));
 
             if (data != null && !intentReceivedFromMainActivity) {
-                String input = data.toString();
-                input = input.replace("sudoku://", "");
+                String input = "";
+                if (data.getScheme().equals("sudoku")){
+                    input = data.getHost();
+                } else if (data.getScheme().equals("http") && data.getHost().equals("sudoku")){
+                    input = data.getPath();
+                    input =input.replace("/", "");
+                }
 
                 int sectionSize = (int)Math.sqrt(input.length());
                 int boardSize = sectionSize * sectionSize;
@@ -364,6 +369,7 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
 
             case R.id.menu_share:
                 String codeForClipboard = "sudoku://" + gameController.getCodeOfField();
+                String codeForClipboard1 = "http://sudoku" + gameController.getCodeOfField();
                 ShareBoardDialog shareDialog = new ShareBoardDialog();
                 shareDialog.setDisplayCode(codeForClipboard);
                 shareDialog.setCopyClickListener(new View.OnClickListener() {
