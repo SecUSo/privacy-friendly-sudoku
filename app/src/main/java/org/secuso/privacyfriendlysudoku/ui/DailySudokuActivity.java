@@ -1,4 +1,4 @@
-package org.secuso.privacyfriendlysudoku.ui.view;
+package org.secuso.privacyfriendlysudoku.ui;
 
 import android.content.Context;
 import android.content.Intent;
@@ -18,20 +18,17 @@ import android.view.View;
 import android.widget.RatingBar;
 import android.widget.Toast;
 import org.secuso.privacyfriendlysudoku.controller.GameController;
-import org.secuso.privacyfriendlysudoku.controller.GameStateManager;
 import org.secuso.privacyfriendlysudoku.controller.NewLevelManager;
 import org.secuso.privacyfriendlysudoku.controller.database.DatabaseHelper;
 import org.secuso.privacyfriendlysudoku.controller.database.model.DailySudoku;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import org.secuso.privacyfriendlysudoku.controller.SaveLoadStatistics;
-import org.secuso.privacyfriendlysudoku.controller.helper.GameInfoContainer;
 import org.secuso.privacyfriendlysudoku.controller.qqwing.QQWing;
 import org.secuso.privacyfriendlysudoku.game.GameDifficulty;
 import org.secuso.privacyfriendlysudoku.game.GameType;
-import org.secuso.privacyfriendlysudoku.ui.GameActivity;
-import org.secuso.privacyfriendlysudoku.ui.SettingsActivity;
-import org.secuso.privacyfriendlysudoku.ui.StatsActivity;
+import org.secuso.privacyfriendlysudoku.ui.view.R;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
