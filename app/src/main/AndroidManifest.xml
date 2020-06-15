@@ -42,6 +42,7 @@
         <activity
             android:name="org.secuso.privacyfriendlysudoku.ui.GameActivity"
             android:label="@string/title_activity_game_view"
+            android:launchMode="singleTask"
             android:theme="@style/AppTheme.NoActionBar">
 
             <intent-filter >

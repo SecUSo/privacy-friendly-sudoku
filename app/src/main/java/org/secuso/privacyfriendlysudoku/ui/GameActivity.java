@@ -298,6 +298,14 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
         }
         gameController.deleteTimer();
     }
+
+    @Override
+    public void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        startActivity(intent);
+        finish();
+    }
+
     @Override
     public void onResume(){
         super.onResume();
