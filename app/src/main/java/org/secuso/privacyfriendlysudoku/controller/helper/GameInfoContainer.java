@@ -104,6 +104,11 @@ public class GameInfoContainer {
         fixedValues = new int[s.length()];
         for(int i = 0; i < s.length(); i++) {
                fixedValues[i] = Symbol.getValue(Symbol.SaveFormat, String.valueOf(s.charAt(i)))+1;
+               if (gameType != GameType.Unspecified && gameType != null) {
+                   if (fixedValues[i] < 0 || fixedValues[i] > gameType.getSize()) {
+                       throw new IllegalArgumentException("Fixed values must each be smaller than " + gameType.getSize() + ".");
+                   }
+               }
         }
     }
 

@@ -130,8 +130,8 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
                         GameType.Unspecified, new int [boardSize], new int [boardSize], new boolean [boardSize][sectionSize]);
 
                 try {
-                    container.parseFixedValues(input);
                     container.parseGameType("Default_" + sectionSize + "x" + sectionSize);
+                    container.parseFixedValues(input);
 
                     difficultyCheck = new QQWing(container.getGameType(), GameDifficulty.Unspecified);
                     difficultyCheck.setRecordHistory(true);
@@ -303,6 +303,14 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
         }
         gameController.deleteTimer();
     }
+
+    @Override
+    public void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        startActivity(intent);
+        finish();
+    }
+
     @Override
     public void onResume(){
         super.onResume();
