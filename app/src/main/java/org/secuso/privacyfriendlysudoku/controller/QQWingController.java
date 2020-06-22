@@ -64,7 +64,8 @@ public class QQWingController {
             generator.setRecordHistory(true);
             generator.generatePuzzle();
 
-            if (difficulty == GameDifficulty.Unspecified || difficulty == generator.getDifficulty()) {
+            if (difficulty == GameDifficulty.Unspecified && generator.getDifficulty() != GameDifficulty.Challenge
+                    || difficulty == generator.getDifficulty()) {
                 havePuzzle = true;
             }
         }
