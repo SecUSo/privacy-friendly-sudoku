@@ -30,6 +30,7 @@
     <string name="pref_group_highlight_value">Value highlight</string>
     <string name="pref_highlight_vals">Same values</string>
     <string name="pref_highlight_notes">Notes</string>
+
     <!-- #Game -->
     <string name="pref_header_game">Game</string>
     <string name="pref_group_game">Game settings</string>
@@ -54,6 +55,10 @@
     <string name="pref_automatic_note_deletion_summary">Automatically remove notes when setting values on connected cells</string>
     <string name="pref_timer_reset">Timer Reset</string>
     <string name="pref_timer_reset_summary">Also reset the timer, when resetting the game board.</string>
+    <string name="pref_dark_mode">Dark Mode</string>
+
+    <string name="pref_dark_mode_setting">Dark Theme</string>
+    <string name="pref_dark_mode_summary">switch between light and dark theme</string>
 
     <!-- ###ABOUT### -->
     <string name="app_name_long" translatable="false">Privacy Friendly Sudoku</string>

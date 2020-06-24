@@ -10,6 +10,9 @@
 
     <!-- Strings related to Settings -->
     <string name="title_activity_settings">Einstellungen</string>
+    <string name="pref_dark_mode">Nachtmodus</string>
+    <string name="pref_dark_mode_setting">Nachtmodus</string>
+    <string name="pref_dark_mode_summary">Wechsel zwischen Tages und Nacht Modus</string>
 
     <!-- About Page -->
     <string name="about_affiliation">In Zusammenarbeit mit:</string>
