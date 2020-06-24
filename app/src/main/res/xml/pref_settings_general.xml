@@ -35,6 +35,19 @@
         android:title="@string/pref_dark_mode"
         android:summary="@string/pref_dark_mode_summary"
         android:defaultValue="true"/>
+
+        <SwitchPreference android:id="@+id/pref_dark_theme_automatically_by_system"
+            android:key="pref_dark_mode_automatically_by_system"
+            android:title="@string/pref_dark_mode_automatically_by_system"
+            android:summary="Dark theme is adapted to settings of the OS"
+            android:defaultValue="true"/>
+
+        <SwitchPreference android:id="@+id/pref_dark_theme_automatically_by_battery"
+            android:key="pref_dark_mode_automatically_by_battery"
+            android:title="@string/pref_dark_mode_automatically_by_battery"
+            android:summary="adjusts Dark theme automatically according to battery status "
+            android:defaultValue="true"/>
+
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/pref_group_highlight_selection">

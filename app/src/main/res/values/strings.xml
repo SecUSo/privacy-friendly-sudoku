@@ -57,6 +57,8 @@
     <string name="pref_timer_reset_summary">Also reset the timer, when resetting the game board.</string>
     <string name="pref_dark_mode">Dark Theme</string>
     <string name="pref_group_dark_theme">Dark Theme settings</string>
+    <string name="pref_dark_mode_automatically_by_system">Automatically by system </string>
+    <string name="pref_dark_mode_automatically_by_battery">Automatically by battery </string>
 
     <string name="pref_dark_mode_setting">Dark Theme</string>
     <string name="pref_dark_mode_summary">switch between light and dark theme</string>
