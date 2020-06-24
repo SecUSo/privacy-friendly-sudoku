@@ -19,12 +19,6 @@
         android:summary="@string/pref_keep_screen_on_summary"
         android:defaultValue="true"/>
 
-        <SwitchPreference android:id="@+id/pref_dark_theme"
-            android:key="pref_dark_mode_setting"
-            android:title="@string/pref_dark_mode"
-            android:summary="@string/pref_dark_mode_summary"
-            android:defaultValue="true"/>
-
         <ListPreference
         android:key="pref_symbols"
         android:title="@string/pref_symbols"
@@ -33,6 +27,14 @@
         android:entryValues="@array/pref_symbols_list_values"
         android:negativeButtonText="@null"
         android:positiveButtonText="@null" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/pref_group_dark_theme">
+    <SwitchPreference android:id="@+id/pref_dark_theme"
+        android:key="pref_dark_mode_setting"
+        android:title="@string/pref_dark_mode"
+        android:summary="@string/pref_dark_mode_summary"
+        android:defaultValue="true"/>
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/pref_group_highlight_selection">
