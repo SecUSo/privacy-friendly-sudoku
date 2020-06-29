@@ -59,31 +59,39 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
        SharedPreferences.OnSharedPreferenceChangeListener x = new SharedPreferences.OnSharedPreferenceChangeListener() {
 
+
+           public void recheckNightModeProperties(SharedPreferences sharedPreferences){
+               if (sharedPreferences.getBoolean("pref_dark_mode_setting", false )) {
+                   AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                   restartActivity();
+
+               } else if (sharedPreferences.getBoolean("pref_dark_mode_automatically_by_system", false)) {
+                   AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+                   restartActivity();
+               } else if(sharedPreferences.getBoolean("pref_dark_mode_automatically_by_battery", false)){
+                   AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY);
+                   restartActivity();
+               } else {
+                   AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                   restartActivity();
+               }
+
+           }
             @Override
             public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-
-                System.out.println(key);
-                if (key.equals("pref_dark_mode_setting")) {
-                    if (sharedPreferences.getBoolean(key, false )) {
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                        restartActivity();
-                    } else {
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                        restartActivity();
-                    }
-
+                if (key.equals("pref_dark_mode_setting")|| key.equals("pref_dark_mode_automatically_by_system")||key.equals("pref_dark_mode_automatically_by_battery")) {
+                    recheckNightModeProperties(sharedPreferences);
                 }
             }
         };
-        // Listener registrieren
         preferenceManager.registerOnSharedPreferenceChangeListener(x);
 
     }
 
     public void restartActivity() {
         Intent i = new Intent(getApplicationContext(), MainActivity.class);
-        startActivity(i);
         finish();
+        startActivity(i);
     }
 
     private void setupActionBar () {
