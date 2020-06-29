@@ -40,43 +40,13 @@
                         android:text="@string/gametype_unspecified"
                         android:id="@+id/gameModeText"
                         android:layout_weight="7"/>
-                    <RelativeLayout
-                        android:layout_width="0dp"
-                        android:layout_weight="5"
-                        android:clipChildren="false"
-                        android:layout_height="wrap_content">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/difficulty_easy"
-                            android:layout_centerHorizontal="true"
-                            android:id="@+id/difficultyText"
-                            />
-                        <RatingBar
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:numStars="4"
-                            android:clickable="false"
-                            android:id="@+id/gameModeStar"
-                            android:layout_centerHorizontal="true"
-                            android:layout_centerVertical="true"
-                            android:layout_below="@+id/difficultyText"
-                            style="?android:attr/ratingBarStyleSmall"/>
-                    </RelativeLayout>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="00:00"
-                        android:layout_weight="2"
-                        android:id="@+id/timerView"
-                        android:gravity="end"/>
                 </LinearLayout>
             </androidx.appcompat.widget.Toolbar>
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <include layout="@layout/content_game_view" />
+        <include layout="@layout/content_game_view_create_sudoku" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
