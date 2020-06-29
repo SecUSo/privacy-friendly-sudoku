@@ -40,6 +40,9 @@ public class NewLevelManager {
     public static int PRE_SAVES_MIN = 3;
     public static int PRE_SAVES_MAX = 10;
 
+    private final double CHALLENGE_GENERATION_PROBABILITY = 0.9;
+
+
     public static NewLevelManager getInstance(Context context, SharedPreferences settings) {
         if(instance == null) {
             instance = new NewLevelManager(context, settings);
@@ -80,11 +83,17 @@ public class NewLevelManager {
 
     public int[] loadDailySudoku() {
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        Date date = new Date();
-        String toHash = "Sudoku/.PrivacyFriendly/." + dateFormat.format(date);
-
+        String toHash = "Sudoku/.PrivacyFriendly/." + dateFormat.format(new Date());
+        boolean generateChallenge = new Random(toHash.hashCode()).nextDouble() >= CHALLENGE_GENERATION_PROBABILITY;
         QQWingController controller = new QQWingController();
-        return controller.generateFromSeed(toHash.hashCode());
+        int[] result;
+
+        if (generateChallenge) {
+            result = controller.generateFromSeed(toHash.hashCode(), GameDifficulty.Challenge);
+        } else {
+            result = controller.generateFromSeed(toHash.hashCode(), GameDifficulty.Unspecified);
+        }
+        return result;
     }
 
     public int[] loadLevel(GameType type, GameDifficulty diff) {

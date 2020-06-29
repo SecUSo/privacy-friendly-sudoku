@@ -53,13 +53,22 @@ public class QQWingController {
         return generated;
     }
 
-    public int[] generateFromSeed(int seed) {
+    public int[] generateFromSeed(int seed, GameDifficulty difficulty) {
         generated.clear();
-
         QQWing generator = new QQWing(GameType.Default_9x9, GameDifficulty.Unspecified);
-        generator.setRandom(seed);
-        generator.setRecordHistory(true);
-        generator.generatePuzzle();
+        boolean havePuzzle = false;
+
+        while(!havePuzzle) {
+            seed++;
+            generator.setRandom(seed);
+            generator.setRecordHistory(true);
+            generator.generatePuzzle();
+
+            if (difficulty == GameDifficulty.Unspecified && generator.getDifficulty() != GameDifficulty.Challenge
+                    || difficulty == generator.getDifficulty()) {
+                havePuzzle = true;
+            }
+        }
 
         generated.add(generator.getPuzzle());
         opts.gameType = GameType.Default_9x9;
