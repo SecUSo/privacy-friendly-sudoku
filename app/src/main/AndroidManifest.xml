@@ -31,6 +31,11 @@
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
+            android:name="org.secuso.privacyfriendlysudoku.ui.CreateGameActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
             android:name="org.secuso.privacyfriendlysudoku.ui.DailySudokuActivity"
             android:label="@string/Sudoku"
             android:theme="@style/AppTheme.NoActionBar">
