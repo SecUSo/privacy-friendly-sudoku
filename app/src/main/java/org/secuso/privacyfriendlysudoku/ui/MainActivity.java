@@ -2,6 +2,7 @@ package org.secuso.privacyfriendlysudoku.ui;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.audiofx.Equalizer;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
@@ -60,11 +61,17 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         settings = PreferenceManager.getDefaultSharedPreferences(this);
 
-        if (settings.getBoolean("pref_dark_mode_setting", false )) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        }
+            if (settings.getBoolean("pref_dark_mode_setting", false )) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+
+            } else if (settings.getBoolean("pref_dark_mode_automatically_by_system", false)) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+
+            } else if(settings.getBoolean("pref_dark_mode_automatically_by_battery", false)){
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY);
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            }
 
         NewLevelManager newLevelManager = NewLevelManager.getInstance(getApplicationContext(), settings);
 
