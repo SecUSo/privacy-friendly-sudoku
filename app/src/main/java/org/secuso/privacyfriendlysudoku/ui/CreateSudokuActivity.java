@@ -25,6 +25,8 @@ import org.secuso.privacyfriendlysudoku.ui.view.SudokuFieldLayout;
 import org.secuso.privacyfriendlysudoku.ui.view.SudokuKeyboardLayout;
 import org.secuso.privacyfriendlysudoku.ui.view.SudokuSpecialButtonLayout;
 
+import java.util.LinkedList;
+
 public class CreateSudokuActivity extends BaseActivity implements IFinalizeDialogFragmentListener {
 
     GameController gameController;
@@ -78,7 +80,7 @@ public class CreateSudokuActivity extends BaseActivity implements IFinalizeDialo
         keyboard.setKeyBoard(gameController.getSize(), p.x,layout.getHeight()-p.y, orientation);
 
         CreateSudokuSpecialButtonLayout createSudokuSpecialButtonLayout = (CreateSudokuSpecialButtonLayout) findViewById(R.id.createSudokuLayout);
-        createSudokuSpecialButtonLayout.setButtons(p.x, gameController, keyboard, getFragmentManager(), orientation, CreateSudokuActivity.this);
+        createSudokuSpecialButtonLayout.setButtons(p.x, gameController, keyboard, getFragmentManager(), orientation, CreateSudokuActivity.this, this);
 
         gameController.notifyHighlightChangedListeners();
 

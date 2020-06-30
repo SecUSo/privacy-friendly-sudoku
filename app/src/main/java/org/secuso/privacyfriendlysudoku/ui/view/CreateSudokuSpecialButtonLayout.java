@@ -24,6 +24,7 @@ import androidx.core.content.ContextCompat;
 import org.secuso.privacyfriendlysudoku.controller.GameController;
 import org.secuso.privacyfriendlysudoku.game.listener.IHighlightChangedListener;
 import org.secuso.privacyfriendlysudoku.ui.GameActivity;
+import org.secuso.privacyfriendlysudoku.ui.listener.IFinalizeDialogFragmentListener;
 import org.secuso.privacyfriendlysudoku.ui.listener.IHintDialogFragmentListener;
 
 import java.util.LinkedList;
@@ -31,12 +32,9 @@ import java.util.LinkedList;
 import static org.secuso.privacyfriendlysudoku.ui.view.CreateSudokuButtonType.Spacer;
 import static org.secuso.privacyfriendlysudoku.ui.view.CreateSudokuButtonType.getSpecialButtons;
 
-/**
- * Created by TMZ_LToP on 17.11.2015.
- */
 public class CreateSudokuSpecialButtonLayout extends LinearLayout implements IHighlightChangedListener {
 
-
+    IFinalizeDialogFragmentListener finalizeDialogFragmentListener;
     CreateSudokuSpecialButton[] fixedButtons;
     public int fixedButtonsCount = getSpecialButtons().size();
     GameController gameController;
@@ -72,6 +70,9 @@ public class CreateSudokuSpecialButtonLayout extends LinearLayout implements IHi
                         gameController.UnDo();
                         break;
                     case Finalize:
+                        FinalizeConfirmationDialog dialog = new FinalizeConfirmationDialog();
+                        dialog.addListener(finalizeDialogFragmentListener);
+                        dialog.show(fragmentManager, "FinalizeDialogFragment");
                     default:
                         break;
                 }
@@ -92,11 +93,13 @@ public class CreateSudokuSpecialButtonLayout extends LinearLayout implements IHi
         }
     }
 
-    public void setButtons(int width, GameController gc, SudokuKeyboardLayout key, FragmentManager fm, int orientation, Context cxt) {
+    public void setButtons(int width, GameController gc, SudokuKeyboardLayout key, FragmentManager fm,
+                           int orientation, Context cxt, IFinalizeDialogFragmentListener finalizeListener) {
         fragmentManager = fm;
         keyboard=key;
         gameController = gc;
         context = cxt;
+        finalizeDialogFragmentListener = finalizeListener;
         if(gameController != null) {
             gameController.registerHighlightChangedListener(this);
         }
@@ -186,29 +189,33 @@ public class CreateSudokuSpecialButtonLayout extends LinearLayout implements IHi
 
         canvas = new Canvas(bitResult);
     }
-    /*
-    public static class HintConfirmationDialog extends DialogFragment {
 
-        LinkedList<IHintDialogFragmentListener> listeners = new LinkedList<>();
+    public static class FinalizeConfirmationDialog extends DialogFragment {
+
+        LinkedList<IFinalizeDialogFragmentListener> listeners = new LinkedList<>();
 
         @Override
         public void onAttach(Activity activity) {
             super.onAttach(activity);
             // Verify that the host activity implements the callback interface
-            if(activity instanceof IHintDialogFragmentListener) {
-                listeners.add((IHintDialogFragmentListener) activity);
+            if(activity instanceof IFinalizeDialogFragmentListener) {
+                listeners.add((IFinalizeDialogFragmentListener) activity);
             }
+        }
+
+        public void addListener(IFinalizeDialogFragmentListener listener) {
+            listeners.add(listener);
         }
 
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             // Use the Builder class for convenient dialog construction
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.AppTheme_Dialog);
-            builder.setMessage(R.string.hint_confirmation)
+            builder.setMessage("Do you wish to finalize this sudoku?")
                     .setPositiveButton(R.string.hint_confirmation_confirm, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
-                            for(IHintDialogFragmentListener l : listeners) {
-                                l.onHintDialogPositiveClick();
+                            for(IFinalizeDialogFragmentListener l : listeners) {
+                                l.onFinalizeDialogPositiveClick();
                             }
                         }
                     })
@@ -220,5 +227,4 @@ public class CreateSudokuSpecialButtonLayout extends LinearLayout implements IHi
             return builder.create();
         }
     }
- */
 }
