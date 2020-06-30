@@ -18,6 +18,7 @@ import org.secuso.privacyfriendlysudoku.controller.helper.GameInfoContainer;
 import org.secuso.privacyfriendlysudoku.controller.qqwing.QQWing;
 import org.secuso.privacyfriendlysudoku.game.GameDifficulty;
 import org.secuso.privacyfriendlysudoku.game.GameType;
+import org.secuso.privacyfriendlysudoku.ui.view.CreateSudokuSpecialButtonLayout;
 import org.secuso.privacyfriendlysudoku.ui.view.R;
 import org.secuso.privacyfriendlysudoku.ui.view.SudokuFieldLayout;
 import org.secuso.privacyfriendlysudoku.ui.view.SudokuKeyboardLayout;
@@ -60,7 +61,7 @@ public class CreateSudokuActivity extends BaseActivity {
                 gameType, new int [boardSize], new int [boardSize], new boolean [boardSize][sectionSize]);
         gameController.loadLevel(container);
 
-        setContentView(R.layout.activity_game_view);
+        setContentView(R.layout.activity_create_sudoku);
         layout = (SudokuFieldLayout)findViewById(R.id.sudokuLayout);
         layout.setSettingsAndGame(sharedPref, gameController);
 
@@ -75,8 +76,8 @@ public class CreateSudokuActivity extends BaseActivity {
 
         keyboard.setKeyBoard(gameController.getSize(), p.x,layout.getHeight()-p.y, orientation);
 
-        specialButtonLayout = (SudokuSpecialButtonLayout) findViewById(R.id.sudokuSpecialLayout);
-        specialButtonLayout.setButtons(p.x, gameController, keyboard, getFragmentManager(), orientation, CreateSudokuActivity.this);
+        CreateSudokuSpecialButtonLayout createSudokuSpecialButtonLayout = (CreateSudokuSpecialButtonLayout) findViewById(R.id.createSudokuLayout);
+        createSudokuSpecialButtonLayout.setButtons(p.x, gameController, keyboard, getFragmentManager(), orientation, CreateSudokuActivity.this);
 
         gameController.notifyHighlightChangedListeners();
 
