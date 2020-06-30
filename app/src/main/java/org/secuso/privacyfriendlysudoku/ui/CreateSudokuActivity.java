@@ -113,7 +113,7 @@ public class CreateSudokuActivity extends BaseActivity implements IFinalizeDialo
     }
 
     public void onFinalizeDialogPositiveClick() {
-        Toast.makeText(CreateSudokuActivity.this, "Verifying...", Toast.LENGTH_SHORT).show();
+        Toast.makeText(CreateSudokuActivity.this, R.string.verify_custom_sudoku_process_toast, Toast.LENGTH_SHORT).show();
         GameType gameType = gameController.getGameType();
         int boardSize = gameType.getSize() * gameType.getSize();
         QQWing verifier = new QQWing(gameType, GameDifficulty.Unspecified);
@@ -127,9 +127,9 @@ public class CreateSudokuActivity extends BaseActivity implements IFinalizeDialo
         boolean solvable = verifier.solve();
 
         if(solvable) {
-            Toast.makeText(CreateSudokuActivity.this, "Done verifying!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(CreateSudokuActivity.this, R.string.finished_verifying_custom_sudoku_toast, Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(CreateSudokuActivity.this, "Your sudoku cannot be solved!", Toast.LENGTH_LONG).show();
+            Toast.makeText(CreateSudokuActivity.this, R.string.failed_to_verify_custom_sudoku_toast, Toast.LENGTH_LONG).show();
         }
 
     }

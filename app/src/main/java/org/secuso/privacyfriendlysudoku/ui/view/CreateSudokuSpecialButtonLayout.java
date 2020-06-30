@@ -211,8 +211,8 @@ public class CreateSudokuSpecialButtonLayout extends LinearLayout implements IHi
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             // Use the Builder class for convenient dialog construction
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.AppTheme_Dialog);
-            builder.setMessage("Do you wish to finalize this sudoku?")
-                    .setPositiveButton(R.string.hint_confirmation_confirm, new DialogInterface.OnClickListener() {
+            builder.setMessage(R.string.finalize_custom_sudoku_dialog)
+                    .setPositiveButton(R.string.okay, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             for(IFinalizeDialogFragmentListener l : listeners) {
                                 l.onFinalizeDialogPositiveClick();

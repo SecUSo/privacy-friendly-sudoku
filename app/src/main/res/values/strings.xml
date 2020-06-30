@@ -166,4 +166,10 @@
     <string name="daily_number_of_hints">Used hints</string>
     <string name="number_of_completed_games">Completed games</string>
 
+    <!-- ### Create custome sudoku ###-->
+    <string name="finalize_custom_sudoku_dialog">Do you wish to finalize this sudoku?</string>
+    <string name="verify_custom_sudoku_process_toast">Verifying&#8230;</string>
+    <string name="finished_verifying_custom_sudoku_toast">Done verifying!</string>
+    <string name="failed_to_verify_custom_sudoku_toast">Verification failed: Your sudoku cannot be solved.</string>
+
 </resources>

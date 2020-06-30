@@ -107,6 +107,12 @@
 
     <!-- ### DailySudokuActivity ###-->
     <string name="finished_daily_sudoku">Du hast das Sudoku des Tages bereits gelöst.</string>
-    <string name="daily_number_of_hints">Benutze Hinweise</string>
+    <string name="daily_number_of_hints">Benutzte Hinweise</string>
+
+    <!-- ### Create custome sudoku ###-->
+    <string name="finalize_custom_sudoku_dialog">Möchtest du dieses Sudoku fertigstellen?</string>
+    <string name="verify_custom_sudoku_process_toast">Verifiziere Level&#8230;</string>
+    <string name="finished_verifying_custom_sudoku_toast">Verifizierung abgeschlossen!</string>
+    <string name="failed_to_verify_custom_sudoku_toast">Verifizierung fehlgeschlagen: Dein Sudoku kann nicht gelöst werden.</string>
 
 </resources>
