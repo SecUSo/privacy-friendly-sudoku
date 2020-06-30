@@ -47,9 +47,16 @@ import org.secuso.privacyfriendlysudoku.game.GameDifficulty;
 import org.secuso.privacyfriendlysudoku.game.GameType;
 import org.secuso.privacyfriendlysudoku.game.listener.IGameSolvedListener;
 import org.secuso.privacyfriendlysudoku.game.listener.ITimerListener;
+import org.secuso.privacyfriendlysudoku.ui.AboutActivity;
+import org.secuso.privacyfriendlysudoku.ui.BaseActivity;
+import org.secuso.privacyfriendlysudoku.ui.HelpActivity;
+import org.secuso.privacyfriendlysudoku.ui.MainActivity;
+import org.secuso.privacyfriendlysudoku.ui.SettingsActivity;
+import org.secuso.privacyfriendlysudoku.ui.StatsActivity;
 import org.secuso.privacyfriendlysudoku.ui.listener.IHintDialogFragmentListener;
 import org.secuso.privacyfriendlysudoku.ui.listener.IResetDialogFragmentListener;
 import org.secuso.privacyfriendlysudoku.ui.listener.IShareDialogFragmentListener;
+import org.secuso.privacyfriendlysudoku.ui.view.CreateSudokuSpecialButtonLayout;
 import org.secuso.privacyfriendlysudoku.ui.view.R;
 import org.secuso.privacyfriendlysudoku.ui.view.SudokuFieldLayout;
 import org.secuso.privacyfriendlysudoku.ui.view.SudokuKeyboardLayout;
@@ -61,13 +68,12 @@ import org.secuso.privacyfriendlysudoku.ui.view.databinding.DialogFragmentShareB
 import java.util.LinkedList;
 import java.util.List;
 
-public class GameActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, IGameSolvedListener ,ITimerListener, IHintDialogFragmentListener, IResetDialogFragmentListener, IShareDialogFragmentListener {
+public class CreateGameActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, IGameSolvedListener ,ITimerListener, IHintDialogFragmentListener, IResetDialogFragmentListener, IShareDialogFragmentListener {
 
     GameController gameController;
     SudokuFieldLayout layout;
     SudokuKeyboardLayout keyboard;
     SudokuSpecialButtonLayout specialButtonLayout;
-    TextView timerView;
     TextView viewName ;
     RatingBar ratingBar;
     private boolean gameSolved = false;
@@ -156,7 +162,7 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
                 }
 
                 if (!startGame) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this, R.style.AppTheme_Dialog);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(org.secuso.privacyfriendlysudoku.ui.CreateGameActivity.this, R.style.AppTheme_Dialog);
                     builder.setMessage(R.string.impossible_import_notice)
                             .setCancelable(false)
                             .setPositiveButton(R.string.okay, new DialogInterface.OnClickListener() {
@@ -224,7 +230,7 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
         }
 
 
-        setContentView(R.layout.activity_game_view);
+        setContentView(R.layout.activity_create_sudoku);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         //toolbar.addView();
@@ -258,11 +264,8 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
 
 
         //set Special keys
-        specialButtonLayout = (SudokuSpecialButtonLayout) findViewById(R.id.sudokuSpecialLayout);
-        specialButtonLayout.setButtons(p.x, gameController, keyboard, getFragmentManager(), orientation, GameActivity.this);
-
-        //set TimerView
-        timerView = (TextView)findViewById(R.id.timerView);
+        CreateSudokuSpecialButtonLayout createSudokuSpecialButtonLayout = (CreateSudokuSpecialButtonLayout) findViewById(R.id.createSudokuLayout);
+        createSudokuSpecialButtonLayout.setButtons(p.x, gameController, keyboard, getFragmentManager(), orientation, org.secuso.privacyfriendlysudoku.ui.CreateGameActivity.this);
 
 
         //set GameName
@@ -273,10 +276,6 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
         List<GameDifficulty> difficutyList = GameDifficulty.getValidDifficultyList();
         int numberOfStarts = difficutyList.size();
         ratingBar = (RatingBar) findViewById(R.id.gameModeStar);
-        ratingBar.setMax(numberOfStarts);
-        ratingBar.setNumStars(numberOfStarts);
-        ratingBar.setRating(difficutyList.indexOf(gameController.getDifficulty()) + 1);
-        ((TextView)findViewById(R.id.difficultyText)).setText(getString(gameController.getDifficulty().getStringResID()));
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -379,14 +378,14 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
 
         switch(id) {
             case R.id.menu_reset:
-                ResetConfirmationDialog resetDialog = new ResetConfirmationDialog();
+                org.secuso.privacyfriendlysudoku.ui.GameActivity.ResetConfirmationDialog resetDialog = new org.secuso.privacyfriendlysudoku.ui.GameActivity.ResetConfirmationDialog();
                 resetDialog.show(getFragmentManager(), "ResetDialogFragment");
                 break;
 
             case R.id.menu_share:
                 String codeForClipboard = "sudoku://" + gameController.getCodeOfField();
                 String codeForClipboard1 = "http://sudoku" + gameController.getCodeOfField();
-                ShareBoardDialog shareDialog = new ShareBoardDialog();
+                org.secuso.privacyfriendlysudoku.ui.GameActivity.ShareBoardDialog shareDialog = new org.secuso.privacyfriendlysudoku.ui.GameActivity.ShareBoardDialog();
                 shareDialog.setDisplayCode(codeForClipboard);
                 shareDialog.setCopyClickListener(new View.OnClickListener() {
                     @Override
@@ -397,10 +396,10 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
                         if (clipboard != null) {
                             ClipData clip = ClipData.newPlainText("BoardCode", codeForClipboard);
                             clipboard.setPrimaryClip(clip);
-                            Toast.makeText(GameActivity.this, R.string.copy_code_confirmation_toast,
+                            Toast.makeText(org.secuso.privacyfriendlysudoku.ui.CreateGameActivity.this, R.string.copy_code_confirmation_toast,
                                     Toast.LENGTH_LONG).show();
                         } else {
-                            Toast.makeText(GameActivity.this, R.string.copy_code_error_toast,
+                            Toast.makeText(org.secuso.privacyfriendlysudoku.ui.CreateGameActivity.this, R.string.copy_code_error_toast,
                                     Toast.LENGTH_LONG).show();
                         }
                     }
@@ -418,7 +417,7 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
 
             case R.id.menu_settings:
                 //open settings
-                intent = new Intent(this,SettingsActivity.class);
+                intent = new Intent(this, SettingsActivity.class);
                 intent.putExtra( PreferenceActivity.EXTRA_SHOW_FRAGMENT, SettingsActivity.GamePreferenceFragment.class.getName() );
                 intent.putExtra( PreferenceActivity.EXTRA_NO_HEADERS, true );
                 break;
@@ -430,12 +429,12 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
 
             case R.id.menu_about:
                 //open about page
-                intent = new Intent(this,AboutActivity.class);
+                intent = new Intent(this, AboutActivity.class);
                 break;
 
             case R.id.menu_help:
                 //open about page
-                intent = new Intent(this,HelpActivity.class);
+                intent = new Intent(this, HelpActivity.class);
                 break;
             default:
         }
@@ -475,7 +474,7 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
 
         //Save solved sudoku, if it happens to be a daily sudoku, to daily sudoku database
         if(gameController.getGameID() == GameController.DAILY_SUDOKU_ID) {
-            gameController.saveDailySudoku(GameActivity.this);
+            gameController.saveDailySudoku(org.secuso.privacyfriendlysudoku.ui.CreateGameActivity.this);
             SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
             SharedPreferences.Editor editor = sharedPref.edit();
             editor.putBoolean("finishedForToday", true);
@@ -548,7 +547,6 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
     public void onTick(int time) {
 
         // display the time
-        timerView.setText(timeToString(time));
 
         if(gameSolved || !startGame) return;
         // save time
@@ -625,12 +623,12 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
             builder.setView(binding.getRoot());
 
             builder.setPositiveButton(R.string.share_confirmation_confirm, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            for(IShareDialogFragmentListener l : listeners) {
-                                l.onShareDialogPositiveClick(binding.ver3DisplaySudokuTextView.getText().toString());
-                            }
-                        }
-                    })
+                public void onClick(DialogInterface dialog, int id) {
+                    for(IShareDialogFragmentListener l : listeners) {
+                        l.onShareDialogPositiveClick(binding.ver3DisplaySudokuTextView.getText().toString());
+                    }
+                }
+            })
                     .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             // User cancelled the dialog

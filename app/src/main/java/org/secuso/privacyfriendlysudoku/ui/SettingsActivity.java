@@ -3,6 +3,8 @@ package org.secuso.privacyfriendlysudoku.ui;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
@@ -10,14 +12,19 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatDelegate;
+
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 
 import org.secuso.privacyfriendlysudoku.ui.view.R;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * A {@link PreferenceActivity} that presents a set of application settings. On
@@ -43,12 +50,51 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             mainContent.setAlpha(0);
             mainContent.animate().alpha(1).setDuration(BaseActivity.MAIN_CONTENT_FADEIN_DURATION);
         }
+        /**
+         * Set up the {@link android.app.ActionBar}, if the API is available.
+         */
+
+        SharedPreferences preferenceManager = PreferenceManager
+                .getDefaultSharedPreferences(this);
+
+       SharedPreferences.OnSharedPreferenceChangeListener x = new SharedPreferences.OnSharedPreferenceChangeListener() {
+
+
+           public void recheckNightModeProperties(SharedPreferences sharedPreferences){
+               if (sharedPreferences.getBoolean("pref_dark_mode_setting", false )) {
+                   AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                   restartActivity();
+
+               } else if (sharedPreferences.getBoolean("pref_dark_mode_automatically_by_system", false)) {
+                   AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+                   restartActivity();
+               } else if(sharedPreferences.getBoolean("pref_dark_mode_automatically_by_battery", false)){
+                   AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY);
+                   restartActivity();
+               } else {
+                   AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                   restartActivity();
+               }
+
+           }
+            @Override
+            public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+                if (key.equals("pref_dark_mode_setting")|| key.equals("pref_dark_mode_automatically_by_system")||key.equals("pref_dark_mode_automatically_by_battery")) {
+                    recheckNightModeProperties(sharedPreferences);
+                }
+            }
+        };
+        preferenceManager.registerOnSharedPreferenceChangeListener(x);
+
     }
 
-    /**
-     * Set up the {@link android.app.ActionBar}, if the API is available.
-     */
-    private void setupActionBar() {
+    public void restartActivity() {
+        Intent i = new Intent(getApplicationContext(), MainActivity.class);
+        finish();
+        startActivity(i);
+    }
+
+    private void setupActionBar () {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             // Show the Up button in the action bar.
@@ -68,7 +114,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         }
         return super.onMenuItemSelected(featureId, item);
     }
-
 
     /**
      * {@inheritDoc}
