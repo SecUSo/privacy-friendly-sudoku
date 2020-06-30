@@ -77,6 +77,7 @@
     <string name="gametype_default_6x6" translatable="false">Sudoku 6x6</string>
     <string name="gametype_unspecified">Unspecified</string>
     <string name="gametype_default_12x12" translatable="false">Sudoku 12x12</string>
+    <string name="gametype_default_16x16" translatable="false">Sudoku 16x16</string>
     <string name="gametype_x_9x9" translatable="false">X Sudoku 9x9</string>
     <string name="gametype_hyper_9x9" translatable="false">Hyper Sudoku 9x9</string>
     <string name="hint_usage">Select a valid field and then press the hint button to reveal the solution.</string>

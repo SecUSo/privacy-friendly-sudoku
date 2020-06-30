@@ -187,6 +187,13 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 int index = difficultyBar.getProgress()-1;
                 GameDifficulty gameDifficulty = GameDifficulty.getValidDifficultyList().get(index < 0 ? 0 : index);
 
+                if(gameType == GameType.Default_16x16){
+                    if(gameDifficulty == GameDifficulty.Easy || gameDifficulty == GameDifficulty.Moderate){
+                        Toast.makeText(getApplicationContext(), "Easy and Normal are not available in 16x16 gamemode...", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                }
+
                 NewLevelManager newLevelManager = NewLevelManager.getInstance(getApplicationContext(), settings);
                 if(newLevelManager.isLevelLoadable(gameType, gameDifficulty)) {
                     // save current setting for later

@@ -63,6 +63,12 @@ public class GeneratorService extends IntentService {
                 int levelCount = dbHelper.getLevels(validDifficulty, validType).size();
                 Log.d(TAG, "\tType: "+ validType.name() + " Difficulty: " + validDifficulty.name() + "\t: " + levelCount);
                 // add the missing levels to the list
+
+                if(validType == GameType.Default_16x16){
+                    if(validDifficulty == GameDifficulty.Easy || validDifficulty == validDifficulty.Moderate){
+                        continue;
+                    }
+                }
                 for(int i = levelCount; i < PRE_SAVES_MIN; i++) {
                     generationList.add(new Pair<>(validType, validDifficulty));
                 }
@@ -132,6 +138,9 @@ public class GeneratorService extends IntentService {
             opts.symmetry = Symmetry.NONE;
         }
         if(gameType == GameType.Default_12x12 && gameDifficulty != GameDifficulty.Challenge) {
+            opts.symmetry = Symmetry.ROTATE90;
+        }
+        if(gameType == GameType.Default_16x16 && gameDifficulty != GameDifficulty.Hard) {
             opts.symmetry = Symmetry.ROTATE90;
         }
 
@@ -206,8 +215,16 @@ public class GeneratorService extends IntentService {
                                     level.setGameType(opts.gameType);
                                     level.setDifficulty(ss.getDifficulty());
                                     level.setPuzzle(ss.getPuzzle());
-                                    dbHelper.addLevel(level);
+
                                     Log.d(TAG, "Generated: " + level.getGameType().name() + ",\t"+level.getDifficulty().name());
+
+                                    int levelCount = dbHelper.getLevels(ss.getDifficulty(), opts.gameType).size();
+                                    if(levelCount < NewLevelManager.PRE_SAVES_MAX){
+                                        Log.d(TAG, "Saved Level");
+                                        dbHelper.addLevel(level);
+                                    } else {
+                                        Log.d(TAG, "Skipped saving level");
+                                    }
 
                                     if (opts.gameDifficulty != GameDifficulty.Unspecified && opts.gameDifficulty != ss.getDifficulty()) {
                                         havePuzzle = false;

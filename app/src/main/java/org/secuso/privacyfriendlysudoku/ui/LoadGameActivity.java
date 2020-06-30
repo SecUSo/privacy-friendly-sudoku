@@ -209,6 +209,9 @@ public class LoadGameActivity extends BaseActivity implements IDeleteDialogFragm
                 case Default_12x12:
                     image.setImageResource(R.drawable.icon_default_12x12);
                     break;
+                case Default_16x16:
+                    image.setImageResource(R.drawable.icon_default_16x16);
+                    break;
                 case Default_9x9:
                     image.setImageResource(R.drawable.icon_default_9x9);
                     break;

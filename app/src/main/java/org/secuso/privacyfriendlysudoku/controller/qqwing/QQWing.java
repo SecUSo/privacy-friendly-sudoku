@@ -249,6 +249,7 @@ public class QQWing {
 					return GameDifficulty.Moderate;
 				break;
 			case Default_12x12:
+			case Default_16x16:
 				Log.d("GeneratorService", "# HiddenSingleCount: "+ getHiddenSingleCount());
 				if (getHiddenSingleCount() > 20)
 					return GameDifficulty.Moderate;
