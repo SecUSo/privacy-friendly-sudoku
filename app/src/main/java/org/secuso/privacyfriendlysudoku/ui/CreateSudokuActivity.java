@@ -8,6 +8,7 @@ import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatDelegate;
@@ -32,7 +33,8 @@ public class CreateSudokuActivity extends BaseActivity implements IFinalizeDialo
     GameController gameController;
     SudokuFieldLayout layout;
     SudokuKeyboardLayout keyboard;
-    SudokuSpecialButtonLayout specialButtonLayout;
+    TextView viewName ;
+    CreateSudokuSpecialButtonLayout specialButtonLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,8 +81,11 @@ public class CreateSudokuActivity extends BaseActivity implements IFinalizeDialo
 
         keyboard.setKeyBoard(gameController.getSize(), p.x,layout.getHeight()-p.y, orientation);
 
-        CreateSudokuSpecialButtonLayout createSudokuSpecialButtonLayout = (CreateSudokuSpecialButtonLayout) findViewById(R.id.createSudokuLayout);
-        createSudokuSpecialButtonLayout.setButtons(p.x, gameController, keyboard, getFragmentManager(), orientation, CreateSudokuActivity.this, this);
+        specialButtonLayout = (CreateSudokuSpecialButtonLayout) findViewById(R.id.createSudokuLayout);
+        specialButtonLayout.setButtons(p.x, gameController, keyboard, getFragmentManager(), orientation, CreateSudokuActivity.this, this);
+
+        viewName = (TextView) findViewById(R.id.gameModeText);
+        viewName.setText(getString(gameController.getGameType().getStringResID()));
 
         gameController.notifyHighlightChangedListeners();
 
