@@ -71,7 +71,6 @@ public class CreateSudokuSpecialButtonLayout extends LinearLayout implements IHi
                         break;
                     case Finalize:
                         FinalizeConfirmationDialog dialog = new FinalizeConfirmationDialog();
-                        dialog.addListener(finalizeDialogFragmentListener);
                         dialog.show(fragmentManager, "FinalizeDialogFragment");
                     default:
                         break;
@@ -201,10 +200,6 @@ public class CreateSudokuSpecialButtonLayout extends LinearLayout implements IHi
             if(activity instanceof IFinalizeDialogFragmentListener) {
                 listeners.add((IFinalizeDialogFragmentListener) activity);
             }
-        }
-
-        public void addListener(IFinalizeDialogFragmentListener listener) {
-            listeners.add(listener);
         }
 
         @Override
