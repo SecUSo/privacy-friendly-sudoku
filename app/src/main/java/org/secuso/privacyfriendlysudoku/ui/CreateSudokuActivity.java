@@ -18,13 +18,14 @@ import org.secuso.privacyfriendlysudoku.controller.helper.GameInfoContainer;
 import org.secuso.privacyfriendlysudoku.controller.qqwing.QQWing;
 import org.secuso.privacyfriendlysudoku.game.GameDifficulty;
 import org.secuso.privacyfriendlysudoku.game.GameType;
+import org.secuso.privacyfriendlysudoku.ui.listener.IFinalizeDialogFragmentListener;
 import org.secuso.privacyfriendlysudoku.ui.view.CreateSudokuSpecialButtonLayout;
 import org.secuso.privacyfriendlysudoku.ui.view.R;
 import org.secuso.privacyfriendlysudoku.ui.view.SudokuFieldLayout;
 import org.secuso.privacyfriendlysudoku.ui.view.SudokuKeyboardLayout;
 import org.secuso.privacyfriendlysudoku.ui.view.SudokuSpecialButtonLayout;
 
-public class CreateSudokuActivity extends BaseActivity {
+public class CreateSudokuActivity extends BaseActivity implements IFinalizeDialogFragmentListener {
 
     GameController gameController;
     SudokuFieldLayout layout;
@@ -109,7 +110,7 @@ public class CreateSudokuActivity extends BaseActivity {
         super.onBackPressed();
     }
 
-    private void verify() {
+    public void onFinalizeDialogPositiveClick() {
         Toast.makeText(CreateSudokuActivity.this, "Verifying...", Toast.LENGTH_SHORT).show();
         GameType gameType = gameController.getGameType();
         int boardSize = gameType.getSize() * gameType.getSize();
@@ -128,6 +129,10 @@ public class CreateSudokuActivity extends BaseActivity {
         } else {
             Toast.makeText(CreateSudokuActivity.this, "Your sudoku cannot be solved!", Toast.LENGTH_LONG).show();
         }
+
+    }
+
+    public void onDialogNegativeClick() {
 
     }
 }
