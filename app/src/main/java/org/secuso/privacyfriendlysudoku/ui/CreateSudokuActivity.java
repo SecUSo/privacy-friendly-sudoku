@@ -138,7 +138,7 @@ public class CreateSudokuActivity extends BaseActivity implements IFinalizeDialo
         if(solvable) {
             Toast.makeText(CreateSudokuActivity.this, R.string.finished_verifying_custom_sudoku_toast, Toast.LENGTH_LONG).show();
             final Intent intent = new Intent(this, GameActivity.class);
-            intent.setData(Uri.parse("sudoku://" + boardContent));
+            intent.setData(Uri.parse(GameActivity.URL_SCHEME_WITHOUT_HOST + "://" + boardContent));
             startActivity(intent);
             finish();
         } else {

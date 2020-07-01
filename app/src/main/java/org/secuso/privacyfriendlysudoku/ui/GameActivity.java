@@ -63,6 +63,10 @@ import java.util.List;
 
 public class GameActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, IGameSolvedListener ,ITimerListener, IHintDialogFragmentListener, IResetDialogFragmentListener, IShareDialogFragmentListener {
 
+    public static final String URL_SCHEME_WITHOUT_HOST = "sudoku";
+    public static final String URL_SCHEME_WITH_HOST = "http";
+    public static final String URL_HOST = "sudoku";
+
     GameController gameController;
     SudokuFieldLayout layout;
     SudokuKeyboardLayout keyboard;
@@ -124,9 +128,9 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
 
             if (data != null && !intentReceivedFromMainActivity) {
                 String input = "";
-                if (data.getScheme().equals("sudoku")){
+                if (data.getScheme().equals(URL_SCHEME_WITHOUT_HOST)){
                     input = data.getHost();
-                } else if (data.getScheme().equals("http") && data.getHost().equals("sudoku")){
+                } else if (data.getScheme().equals(URL_SCHEME_WITH_HOST) && data.getHost().equals(URL_HOST)){
                     input = data.getPath();
                     input =input.replace("/", "");
                 }
@@ -140,7 +144,6 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
                 try {
                     container.parseGameType("Default_" + sectionSize + "x" + sectionSize);
                     container.parseFixedValues(input);
-
                     difficultyCheck = new QQWing(container.getGameType(), GameDifficulty.Unspecified);
                     difficultyCheck.setRecordHistory(true);
                     difficultyCheck.setPuzzle(container.getFixedValues());
@@ -384,8 +387,8 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
                 break;
 
             case R.id.menu_share:
-                String codeForClipboard = "sudoku://" + gameController.getCodeOfField();
-                String codeForClipboard1 = "http://sudoku" + gameController.getCodeOfField();
+                String codeForClipboard = URL_SCHEME_WITHOUT_HOST + "://" + gameController.getCodeOfField();
+                String codeForClipboard1 = URL_SCHEME_WITH_HOST + "://" + URL_HOST + "/" + gameController.getCodeOfField();
                 ShareBoardDialog shareDialog = new ShareBoardDialog();
                 shareDialog.setDisplayCode(codeForClipboard);
                 shareDialog.setCopyClickListener(new View.OnClickListener() {
