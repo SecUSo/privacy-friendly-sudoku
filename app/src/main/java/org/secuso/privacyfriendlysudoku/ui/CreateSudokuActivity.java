@@ -1,8 +1,10 @@
 package org.secuso.privacyfriendlysudoku.ui;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Point;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
@@ -26,6 +28,8 @@ import org.secuso.privacyfriendlysudoku.ui.view.SudokuFieldLayout;
 import org.secuso.privacyfriendlysudoku.ui.view.SudokuKeyboardLayout;
 import org.secuso.privacyfriendlysudoku.ui.view.SudokuSpecialButtonLayout;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.LinkedList;
 
 public class CreateSudokuActivity extends BaseActivity implements IFinalizeDialogFragmentListener {
@@ -121,18 +125,22 @@ public class CreateSudokuActivity extends BaseActivity implements IFinalizeDialo
         Toast.makeText(CreateSudokuActivity.this, R.string.verify_custom_sudoku_process_toast, Toast.LENGTH_SHORT).show();
         GameType gameType = gameController.getGameType();
         int boardSize = gameType.getSize() * gameType.getSize();
-        QQWing verifier = new QQWing(gameType, GameDifficulty.Unspecified);
-
+        String boardContent = gameController.getCodeOfField();
         GameInfoContainer container = new GameInfoContainer(0, GameDifficulty.Unspecified,
                 gameType, new int [boardSize], new int [boardSize], new boolean [boardSize][gameType.getSize()]);
-        container.parseFixedValues(gameController.getCodeOfField());
+        container.parseFixedValues(boardContent);
 
+        QQWing verifier = new QQWing(gameType, GameDifficulty.Unspecified);
         verifier.setRecordHistory(true);
         verifier.setPuzzle(container.getFixedValues());
         boolean solvable = verifier.solve();
 
         if(solvable) {
-            Toast.makeText(CreateSudokuActivity.this, R.string.finished_verifying_custom_sudoku_toast, Toast.LENGTH_SHORT).show();
+            Toast.makeText(CreateSudokuActivity.this, R.string.finished_verifying_custom_sudoku_toast, Toast.LENGTH_LONG).show();
+            final Intent intent = new Intent(this, GameActivity.class);
+            intent.setData(Uri.parse("sudoku://" + boardContent));
+            startActivity(intent);
+            finish();
         } else {
             Toast.makeText(CreateSudokuActivity.this, R.string.failed_to_verify_custom_sudoku_toast, Toast.LENGTH_LONG).show();
         }
