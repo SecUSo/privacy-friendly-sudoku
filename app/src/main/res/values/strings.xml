@@ -162,11 +162,13 @@
     <string name="menu_tutorial">Tutorial</string>
 
     <!-- ### DailySudokuActivity ###-->
+    <string name="menu_daily_sudoku">Daily Sudoku</string>
     <string name="finished_daily_sudoku">You have already solved the sudoku of the day</string>
     <string name="daily_number_of_hints">Used hints</string>
     <string name="number_of_completed_games">Completed games</string>
 
     <!-- ### Create custome sudoku ###-->
+    <string name="menu_import_custom_sudoku">Import Sudoku</string>
     <string name="finalize_custom_sudoku_dialog">Do you wish to finalize this sudoku?</string>
     <string name="verify_custom_sudoku_process_toast">Verifying&#8230;</string>
     <string name="finished_verifying_custom_sudoku_toast">Done verifying!</string>
