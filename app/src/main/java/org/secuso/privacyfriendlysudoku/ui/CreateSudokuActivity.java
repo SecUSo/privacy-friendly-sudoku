@@ -26,11 +26,6 @@ import org.secuso.privacyfriendlysudoku.ui.view.CreateSudokuSpecialButtonLayout;
 import org.secuso.privacyfriendlysudoku.ui.view.R;
 import org.secuso.privacyfriendlysudoku.ui.view.SudokuFieldLayout;
 import org.secuso.privacyfriendlysudoku.ui.view.SudokuKeyboardLayout;
-import org.secuso.privacyfriendlysudoku.ui.view.SudokuSpecialButtonLayout;
-
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.LinkedList;
 
 public class CreateSudokuActivity extends BaseActivity implements IFinalizeDialogFragmentListener {
 
@@ -45,28 +40,18 @@ public class CreateSudokuActivity extends BaseActivity implements IFinalizeDialo
         super.onCreate(savedInstanceState);
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
 
-        if (sharedPref.getBoolean("pref_dark_mode_setting", false )) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        }
-
         if(sharedPref.getBoolean("pref_keep_screen_on", true)) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         }
 
         gameController = new GameController(sharedPref, getApplicationContext());
 
-        if(sharedPref.getBoolean("pref_keep_screen_on", true)) {
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        }
-
         Bundle extras = getIntent().getExtras();
         GameType gameType = GameType.valueOf(extras.getString("gameType", GameType.Default_9x9.name()));
         int sectionSize = gameType.getSize();
         int boardSize = sectionSize * sectionSize;
 
-        GameInfoContainer container = new GameInfoContainer(0, GameDifficulty.Unspecified,
+        GameInfoContainer container = new GameInfoContainer(0, GameDifficulty.Moderate,
                 gameType, new int [boardSize], new int [boardSize], new boolean [boardSize][sectionSize]);
         gameController.loadLevel(container);
 
@@ -126,16 +111,20 @@ public class CreateSudokuActivity extends BaseActivity implements IFinalizeDialo
         GameType gameType = gameController.getGameType();
         int boardSize = gameType.getSize() * gameType.getSize();
         String boardContent = gameController.getCodeOfField();
+
         GameInfoContainer container = new GameInfoContainer(0, GameDifficulty.Unspecified,
                 gameType, new int [boardSize], new int [boardSize], new boolean [boardSize][gameType.getSize()]);
         container.parseFixedValues(boardContent);
+        //gameController.loadLevel(container);
 
         QQWing verifier = new QQWing(gameType, GameDifficulty.Unspecified);
         verifier.setRecordHistory(true);
         verifier.setPuzzle(container.getFixedValues());
-        boolean solvable = verifier.solve();
+        verifier.solve();
 
-        if(solvable) {
+        boolean distinctlySolvable = verifier.hasUniqueSolution();
+
+        if(distinctlySolvable) {
             Toast.makeText(CreateSudokuActivity.this, R.string.finished_verifying_custom_sudoku_toast, Toast.LENGTH_LONG).show();
             final Intent intent = new Intent(this, GameActivity.class);
             intent.setData(Uri.parse(GameActivity.URL_SCHEME_WITHOUT_HOST + "://" + boardContent));
