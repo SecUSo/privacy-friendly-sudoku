@@ -1,5 +1,6 @@
 package org.secuso.privacyfriendlysudoku.ui;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -106,23 +107,25 @@ public class CreateSudokuActivity extends BaseActivity implements IFinalizeDialo
         super.onBackPressed();
     }
 
-    public void onFinalizeDialogPositiveClick() {
-        Toast.makeText(CreateSudokuActivity.this, R.string.verify_custom_sudoku_process_toast, Toast.LENGTH_SHORT).show();
-        GameType gameType = gameController.getGameType();
+    public static boolean verify(Context context, GameType gameType, String boardContent) {
+        Toast.makeText(context, R.string.verify_custom_sudoku_process_toast, Toast.LENGTH_SHORT).show();
         int boardSize = gameType.getSize() * gameType.getSize();
-        String boardContent = gameController.getCodeOfField();
 
         GameInfoContainer container = new GameInfoContainer(0, GameDifficulty.Unspecified,
                 gameType, new int [boardSize], new int [boardSize], new boolean [boardSize][gameType.getSize()]);
         container.parseFixedValues(boardContent);
-        //gameController.loadLevel(container);
 
         QQWing verifier = new QQWing(gameType, GameDifficulty.Unspecified);
         verifier.setRecordHistory(true);
         verifier.setPuzzle(container.getFixedValues());
         verifier.solve();
 
-        boolean distinctlySolvable = verifier.hasUniqueSolution();
+        return verifier.hasUniqueSolution();
+    }
+
+    public void onFinalizeDialogPositiveClick() {
+        String boardContent = gameController.getCodeOfField();
+        boolean distinctlySolvable = verify(CreateSudokuActivity.this, gameController.getGameType(), boardContent);
 
         if(distinctlySolvable) {
             Toast.makeText(CreateSudokuActivity.this, R.string.finished_verifying_custom_sudoku_toast, Toast.LENGTH_LONG).show();

@@ -1,8 +1,14 @@
 package org.secuso.privacyfriendlysudoku.ui;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.audiofx.Equalizer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
@@ -13,6 +19,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.core.view.GravityCompat;
+import androidx.lifecycle.MutableLiveData;
 import androidx.viewpager.widget.ViewPager;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -32,14 +39,18 @@ import org.secuso.privacyfriendlysudoku.controller.NewLevelManager;
 import org.secuso.privacyfriendlysudoku.controller.helper.GameInfoContainer;
 import org.secuso.privacyfriendlysudoku.game.GameDifficulty;
 import org.secuso.privacyfriendlysudoku.game.GameType;
+import org.secuso.privacyfriendlysudoku.ui.listener.IImportDialogFragmentListener;
+import org.secuso.privacyfriendlysudoku.ui.listener.IShareDialogFragmentListener;
 import org.secuso.privacyfriendlysudoku.ui.view.R;
+import org.secuso.privacyfriendlysudoku.ui.view.databinding.DialogFragmentImportBoardBinding;
+import org.secuso.privacyfriendlysudoku.ui.view.databinding.DialogFragmentShareBoardBinding;
 
 import java.util.LinkedList;
 import java.util.List;
 
 import static org.secuso.privacyfriendlysudoku.ui.TutorialActivity.ACTION_SHOW_ANYWAYS;
 
-public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, IImportDialogFragmentListener{
 
     RatingBar difficultyBar;
     TextView difficultyText;
@@ -60,7 +71,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
 
         settings = PreferenceManager.getDefaultSharedPreferences(this);
-
             if (settings.getBoolean("pref_dark_mode_setting", false )) {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
 
@@ -308,6 +318,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         Intent intent;
 
         switch(id) {
+            case R.id.nav_import_sudoku:
+                ImportBoardDialog dialog = new ImportBoardDialog();
+                dialog.show(getFragmentManager(), "ImportDialogFragment");
+                break;
             case R.id.menu_settings_main:
                 //open settings
                 intent = new Intent(this,SettingsActivity.class);
@@ -366,6 +380,56 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         return super.onOptionsItemSelected(item);
     }*/
 
+    public void onImportDialogPositiveClick(String input) {
+        boolean solvable = CreateSudokuActivity.verify(MainActivity.this, GameType.Default_9x9, input);
+        if (solvable) {
+            Toast.makeText(MainActivity.this, R.string.finished_verifying_custom_sudoku_toast, Toast.LENGTH_LONG).show();
+            final Intent intent = new Intent(this, MainActivity.class);
+            intent.setData(Uri.parse(GameActivity.URL_SCHEME_WITHOUT_HOST + "://" + input));
+            startActivity(intent);
+            finish();
+        }
+    }
+
+    public void onDialogNegativeClick() {
+
+    }
+
+    public static class ImportBoardDialog extends DialogFragment {
+        private LinkedList<IImportDialogFragmentListener> listeners = new LinkedList<>();
+
+        @Override
+        public void onAttach(Activity activity) {
+            super.onAttach(activity);
+            // Verify that the host activity implements the callback interface
+            if(activity instanceof IImportDialogFragmentListener) {
+                listeners.add((IImportDialogFragmentListener) activity);
+            }
+        }
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.AppTheme_Dialog);
+
+            LayoutInflater inflater = getActivity().getLayoutInflater();
+            DialogFragmentImportBoardBinding binding = DialogFragmentImportBoardBinding.inflate(inflater);
+            builder.setView(binding.getRoot());
+
+            builder.setPositiveButton(R.string.share_confirmation_confirm, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    for(IImportDialogFragmentListener l : listeners) {
+                        l.onImportDialogPositiveClick(binding.ver3ImportSudokuTextView.getText().toString());
+                    }
+                }
+            })
+                    .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            // User cancelled the dialog
+                        }
+                    });
+            return builder.create();
+        }
+    }
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
