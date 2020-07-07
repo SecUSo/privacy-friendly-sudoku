@@ -217,27 +217,30 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             PreferenceManager preferenceManager = getPreferenceManager();
             SharedPreferences sp = preferenceManager.getSharedPreferences();
 
+            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
 
-            if (sp.getBoolean("pref_dark_mode_setting", false)) {
-                //TwoStatePreference x = (TwoStatePreference) findPreference("pref_dark_mode_automatically_by_system");
-                //x.setEnabled(false);
-                findPreference("pref_dark_mode_automatically_by_system").setEnabled(false);
-                findPreference("pref_dark_mode_automatically_by_battery").setEnabled(false);
-            } else {
+                if (sp.getBoolean("pref_dark_mode_setting", false)) {
+                    //TwoStatePreference x = (TwoStatePreference) findPreference("pref_dark_mode_automatically_by_system");
+                    //x.setEnabled(false);
+                    findPreference("pref_dark_mode_automatically_by_system").setEnabled(false);
+                    findPreference("pref_dark_mode_automatically_by_battery").setEnabled(false);
+                } else {
 
-                findPreference("pref_dark_mode_automatically_by_system").setEnabled(!sp.getBoolean("pref_dark_mode_automatically_by_battery", false));
-                findPreference("pref_dark_mode_automatically_by_battery").setEnabled(!sp.getBoolean("pref_dark_mode_automatically_by_system", false));
+                    findPreference("pref_dark_mode_automatically_by_system").setEnabled(!sp.getBoolean("pref_dark_mode_automatically_by_battery", false));
+                    findPreference("pref_dark_mode_automatically_by_battery").setEnabled(!sp.getBoolean("pref_dark_mode_automatically_by_system", false));
+                }
+
+                // Bind the summaries of EditText/List/Dialog/Ringtone preferences
+                // to their values. When their values change, their summaries are
+                // updated to reflect the new value, per the Android Design
+                // guidelines.
+
+                //bindPreferenceSummaryToValue(findPreference("example_text"));
+                //bindPreferenceSummaryToValue(findPreference("example_list"));
+
+            } 
+
             }
-
-            // Bind the summaries of EditText/List/Dialog/Ringtone preferences
-            // to their values. When their values change, their summaries are
-            // updated to reflect the new value, per the Android Design
-            // guidelines.
-
-            //bindPreferenceSummaryToValue(findPreference("example_text"));
-            //bindPreferenceSummaryToValue(findPreference("example_list"));
-
-        }
         @Override
         public boolean onOptionsItemSelected(MenuItem item) {
             int id = item.getItemId();
