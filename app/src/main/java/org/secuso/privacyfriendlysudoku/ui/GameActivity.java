@@ -147,7 +147,9 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
                     difficultyCheck = new QQWing(container.getGameType(), GameDifficulty.Unspecified);
                     difficultyCheck.setRecordHistory(true);
                     difficultyCheck.setPuzzle(container.getFixedValues());
-                    startGame = difficultyCheck.solve();
+                    difficultyCheck.solve();
+
+                    startGame = difficultyCheck.hasUniqueSolution();
                     container.parseDifficulty(difficultyCheck.getDifficulty().toString());
 
                 } catch (IllegalArgumentException e) {
