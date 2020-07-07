@@ -73,6 +73,8 @@
     <string name="help_permissions">Berechtigungen</string>
     <string name="help_notes_summary">Schaltet zwischen Notizen- und Werteingabe hin und her</string>
     <string name="help_notes">Notizen</string>
+    <string name="finalize">Fertigstellen</string>
+    <string name="finalize_summary">Ist zur Bestätigung der Zahleneingabe im "Create Sudoku" Spielmodus </string>
     <string name="help_keyhighlighted_yellow_summary">Zeigt an, ob die korrekte Anzahl des Wertes im Spielfeld vorkommt.</string>
     <string name="help_keyhighlighted_summary">Zeigt an, dass der Wert ausgewählt ist. Jede Berührung eines Feldes setzt in diesem Modus die Zahl direkt, ohne das Feld vorher auszuwählen.</string>
     <string name="help_keyboard">Tastatur</string>
