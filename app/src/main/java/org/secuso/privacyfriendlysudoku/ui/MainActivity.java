@@ -414,11 +414,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             LayoutInflater inflater = getActivity().getLayoutInflater();
             DialogFragmentImportBoardBinding binding = DialogFragmentImportBoardBinding.inflate(inflater);
             builder.setView(binding.getRoot());
-
+            builder.setMessage(R.string.dialog_import_custom_sudoku);
             builder.setPositiveButton(R.string.share_confirmation_confirm, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     for(IImportDialogFragmentListener l : listeners) {
-                        l.onImportDialogPositiveClick(binding.ver3ImportSudokuTextView.getText().toString());
+                        l.onImportDialogPositiveClick(binding.ver3ImportSudokuEditText.getText().toString());
                     }
                 }
             })
