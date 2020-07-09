@@ -28,6 +28,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -280,7 +281,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
-        final int id = item.getItemId();
+        int id = item.getItemId();
 
         drawer.closeDrawer(GravityCompat.START);
 
@@ -299,7 +300,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         // fade out the active activity
         View mainContent = findViewById(R.id.main_content);
-        if (mainContent != null) {
+        if (mainContent != null && id != R.id.nav_import_sudoku) {
             mainContent.animate().alpha(0).setDuration(MAIN_CONTENT_FADEOUT_DURATION);
         }
 
@@ -410,7 +411,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.AppTheme_Dialog);
-
             LayoutInflater inflater = getActivity().getLayoutInflater();
             DialogFragmentImportBoardBinding binding = DialogFragmentImportBoardBinding.inflate(inflater);
             builder.setView(binding.getRoot());
@@ -429,6 +429,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     });
             return builder.create();
         }
+
     }
 
     /**
