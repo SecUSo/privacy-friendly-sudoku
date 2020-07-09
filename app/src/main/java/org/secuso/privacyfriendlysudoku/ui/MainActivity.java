@@ -415,7 +415,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             DialogFragmentImportBoardBinding binding = DialogFragmentImportBoardBinding.inflate(inflater);
             builder.setView(binding.getRoot());
             builder.setMessage(R.string.dialog_import_custom_sudoku);
-            builder.setPositiveButton(R.string.share_confirmation_confirm, new DialogInterface.OnClickListener() {
+            builder.setPositiveButton(R.string.dialog_import_custom_sudoku_positive_button, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     for(IImportDialogFragmentListener l : listeners) {
                         l.onImportDialogPositiveClick(binding.ver3ImportSudokuEditText.getText().toString());

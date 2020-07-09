@@ -171,6 +171,8 @@
 
     <!-- ### Create custome sudoku ###-->
     <string name="menu_import_custom_sudoku">Import Sudoku</string>
+    <string name="dialog_import_custom_sudoku">Enter the sudoku you wish to import:</string>
+    <string name="dialog_import_custom_sudoku_positive_button">Import</string>
     <string name="finalize_custom_sudoku_dialog">Do you wish to finalize this sudoku?</string>
     <string name="verify_custom_sudoku_process_toast">Verifying&#8230;</string>
     <string name="finished_verifying_custom_sudoku_toast">Done verifying!</string>
