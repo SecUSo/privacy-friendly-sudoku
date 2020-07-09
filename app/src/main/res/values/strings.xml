@@ -138,6 +138,8 @@
     <string name="help_delete_summary">Deletes a selected field</string>
     <string name="help_notes">Note toggle button</string>
     <string name="help_notes_summary">Toggles if numbers should be set as notes or as values in a field</string>
+    <string name="finalize">Finalize button</string>
+    <string name="finalize_summary">Is used to confirm the numeric input in the create sudoku game mode </string>
     <string name="help_privacyInfo">Privacy Info</string>
     <string name="help_permissions">Permissions</string>
     <string name="help_permissions_summary">Privacy Friendly Sudoku does not use any permissions.</string>

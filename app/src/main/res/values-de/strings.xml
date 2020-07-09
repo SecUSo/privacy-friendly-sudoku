@@ -73,6 +73,8 @@
     <string name="help_permissions">Berechtigungen</string>
     <string name="help_notes_summary">Schaltet zwischen Notizen- und Werteingabe hin und her</string>
     <string name="help_notes">Notizen</string>
+    <string name="finalize">Fertigstellen</string>
+    <string name="finalize_summary">Ist zur Bestätigung der Zahleneingabe im "Create Sudoku" Spielmodus </string>
     <string name="help_keyhighlighted_yellow_summary">Zeigt an, ob die korrekte Anzahl des Wertes im Spielfeld vorkommt.</string>
     <string name="help_keyhighlighted_summary">Zeigt an, dass der Wert ausgewählt ist. Jede Berührung eines Feldes setzt in diesem Modus die Zahl direkt, ohne das Feld vorher auszuwählen.</string>
     <string name="help_keyboard">Tastatur</string>
@@ -109,7 +111,7 @@
     <string name="menu_daily_sudoku">Sudoku des Tages</string>
     <string name="finished_daily_sudoku">Du hast das Sudoku des Tages bereits gelöst.</string>
     <string name="daily_number_of_hints">Benutzte Hinweise</string>
-
+    <string name="number_of_completed_games">Abgeschlossene <br>Spiele</br></string>
     <!-- ### Create custome sudoku ###-->
     <string name="menu_import_custom_sudoku">Sudoku importieren</string>
     <string name="finalize_custom_sudoku_dialog">Möchtest du dieses Sudoku fertigstellen?</string>
