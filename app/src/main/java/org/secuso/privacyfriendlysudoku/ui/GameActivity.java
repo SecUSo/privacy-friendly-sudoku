@@ -149,8 +149,9 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
                     difficultyCheck.setPuzzle(container.getFixedValues());
                     difficultyCheck.solve();
 
-                    startGame = difficultyCheck.hasUniqueSolution();
                     container.parseDifficulty(difficultyCheck.getDifficulty().toString());
+                    startGame = difficultyCheck.hasUniqueSolution();
+
 
                 } catch (IllegalArgumentException e) {
                     startGame = false;
