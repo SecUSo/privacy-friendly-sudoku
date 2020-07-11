@@ -385,7 +385,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         boolean solvable = CreateSudokuActivity.verify(MainActivity.this, GameType.Default_9x9, input);
         if (solvable) {
             Toast.makeText(MainActivity.this, R.string.finished_verifying_custom_sudoku_toast, Toast.LENGTH_LONG).show();
-            final Intent intent = new Intent(this, MainActivity.class);
+            final Intent intent = new Intent(this, GameActivity.class);
             intent.setData(Uri.parse(GameActivity.URL_SCHEME_WITHOUT_HOST + "://" + input));
             startActivity(intent);
             finish();
