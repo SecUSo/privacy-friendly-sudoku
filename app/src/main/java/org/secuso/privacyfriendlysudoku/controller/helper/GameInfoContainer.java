@@ -185,6 +185,7 @@ public class GameInfoContainer {
     public static String getGameInfo(GameController controller) {
         StringBuilder sb = new StringBuilder();
         Date today = new Date();
+        boolean custom = controller.gameIsCustom();
 
         sb.append(controller.getGameType().name());
         sb.append("/");
@@ -201,6 +202,11 @@ public class GameInfoContainer {
         sb.append(getNotes(controller));
         sb.append("/");
         sb.append(controller.getUsedHints());
+
+        if (custom) {
+            sb.append("/");
+            sb.append(custom);
+        }
 
         String result = sb.toString();
 

@@ -89,6 +89,10 @@ public class GameStateManager {
                     gic.parseNotes(values[i++]);
                     gic.parseHintsUsed(values[i++]);
 
+                    if (values.length > i) {
+                        gic.setCustom(true);
+                    }
+
                     if (gic.getID() == GameController.DAILY_SUDOKU_ID) {
                         includesDaily = true;
                     }
