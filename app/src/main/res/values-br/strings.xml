@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name" translatable="false">Sudoku</string>
+    <string name="title_activity_game_view" translatable="false">Sudoku</string>
+
+    <string name="cancel">Cancelar</string>
+
+    <!-- ###MAIN MENU### -->
+    <string name="new_game">Novo Jogo</string>
+    <string name="menu_main">Menu Principal</string>
+    <string name="menu_settings">Configurações</string>
+    <string name="menu_highscore">Recordes</string>
+    <string name="menu_help">Ajuda</string>
+    <string name="menu_about">Sobre</string>
+    <string name="menu_reset">Reiniciar tabuleiro</string>
+    <string name="menu_continue_game">Continuar Jogo</string>
+
+    <string name="navigation_drawer_open" translatable="false">Abrir opção de navegação</string>
+    <string name="navigation_drawer_close" translatable="false">Fechar opção de navegação</string>
+
+    <string name="generating">Gerando novo nível em segundo plano&#8230;</string>
+
+    <!-- ###SETTINGS### -->
+    <string name="title_activity_settings">Configurações</string>
+    <!-- #Highlight -->
+    <string name="pref_group_highlight_selection">Destaque selecionado</string>
+    <string name="pref_highlight_connected">Campos conectados</string>
+    <string name="pref_group_highlight_value">Valor destacado</string>
+    <string name="pref_highlight_vals">Valores iguais</string>
+    <string name="pref_highlight_notes">Notas</string>
+    <!-- #Game -->
+    <string name="pref_header_game">Jogo</string>
+    <string name="pref_group_game">Configurações do Jogo</string>
+    <string name="pref_symbols">Símbolos</string>
+    <array name="pref_symbols_list_titles">
+        <item>Padrão 1,2,3,..</item>
+        <item>Romano I,II,III,..</item>
+        <item>Chique ♪,♫,☼,..</item>
+        <item>Chinês 一,二,三,..</item>
+        <item>Grego α,β,γ,..</item>
+        <item>Indiano १,२,३,..</item>
+    </array>
+    <array name="pref_symbols_list_values">
+        <item>Padrão</item>
+        <item>Romano</item>
+        <item>Chique</item>
+        <item>Chinês</item>
+        <item>Grego</item>
+        <item>Indiano</item>
+    </array>
+    <string name="pref_automatic_note_deletion">Remover Nota</string>
+    <string name="pref_automatic_note_deletion_summary">Automaticamente remove notas quando colocar valores nas células conectadas</string>
+    <string name="pref_timer_reset">Reiniciar Tempo</string>
+    <string name="pref_timer_reset_summary">Também reinicia o temporizador, quando reiniciando o tabuleiro do jogo.</string>
+
+    <!-- ###ABOUT### -->
+    <string name="app_name_long" translatable="false">Privacy Friendly Sudoku</string>
+    <string name="version_number">Versão:</string>
+    <string name="about_author">Autores:</string>
+    <string name="about_author_names" translatable="false">Christopher Beckmann, Timm Lippert</string>
+    <string name="about_author_contributors">e contribuidores.</string>
+    <string name="about_affiliation">Em afiliação com:</string>
+    <string name="privacy_friendly">Essa aplicação pertence ao grupo Privacy Friendly Apps desenvolvido pela Technische Universität Darmstadt. Código fonte licenciado sobre GPLv3. Direito autoral das imagens TU Darmstadt e Google Inc.</string>
+    <string name="more_info">Mais informações podem ser encontradas em:</string>
+    <string name="github" translatable="false"><a href="https://github.com/SecUSo/privacy-friendly-sudoku">Github-Repo</a></string>
+    <string name="url" translatable="false"><a href="https://www.secuso.org/pfa">SECUSO-Website</a></string>
+    <string name="about_qqwing">Essa aplicação utiliza uma versão modificada da QQWing v1.3.4</string>
+    <string name="about_qqwingLink" translatable="false"><a href="http://qqwing.com/download.html">http://qqwing.com/</a></string>
+
+    <!-- ###GameDifficulty### -->
+    <string name="difficulty_easy">Fácil</string>
+    <string name="difficulty_moderate">Médio</string>
+    <string name="difficulty_hard">Difícil</string>
+
+    <!--###GameActivity -->
+    <string name="Sudoku" translatable="false">Sudoku</string>
+    <string name="gametype_default_9x9" translatable="false">Sudoku 9x9</string>
+    <string name="gametype_default_6x6" translatable="false">Sudoku 6x6</string>
+    <string name="gametype_unspecified">Não Especificado</string>
+    <string name="gametype_default_12x12" translatable="false">Sudoku 12x12</string>
+    <string name="gametype_x_9x9" translatable="false">X Sudoku 9x9</string>
+    <string name="gametype_hyper_9x9" translatable="false">Hiper Sudoku 9x9</string>
+    <string name="hint_usage">Selecie um campo válido e então pressione o botão da dica para revelar a solução.</string>
+    <string name="hint_confirmation">Você tem certeza que deseja usar esta dica? Quando você usa dicas, não será capaz de obter o melhor tempo pessoal.</string>
+    <string name="hint_confirmation_confirm">Usar</string>
+    <string name="reset_confirmation">Você tem certeza que deseja reiniciar o tabuleiro do jogo?</string>
+    <string name="reset_confirmation_confirm">Reiniciar</string>
+
+    <!-- ### Welcome Dialog ### -->
+
+    <!-- ### Continue Game ### -->
+    <string name="loadgame_delete_confirmation">Você tem certeza que deseja apagar esta gravação?</string>
+    <string name="loadgame_delete_confirm">Apagar</string>
+
+    <!-- ### Stats ###-->
+    <string name="number_of_hints">Dicas utilizadas:</string>
+    <string name="number_of_games">Jogos finalizados:</string>
+    <string name="total_of_time">Tempo total jogado:</string>
+    <string name="average_time">Tempo médio:</string>
+    <string name="min_time">Melhor tempo:</string>
+    <string name="reset_stats">Reiniciar Tudo</string>
+
+    <!--### Win Strings -->
+    <string name="win_text">Parabéns!</string>
+    <string name="win_button_text">Continuar</string>
+    <string name="title_activity_help">Ajuda</string>
+    <string name="win_time">Tempo:</string>
+    <string name="win_hint">Dicas:</string>
+    <string name="win_show_game">Mostrar campo de jogo</string>
+    <string name="win_best_time">Novo recorde!</string>
+
+    <!-- ### HELP prefs ###-->
+    <string name="help_keyboard">Teclado</string>
+    <string name="help_keyhighlighted_summary">Indica que o valor foi selecionado. Valores são marcados diretamente quando tocando nos campos nesse modo, sem selecionar um campo.</string>
+    <string name="help_keyhighlighted_yellow_summary">Indica que o número correto de valor foi colocado.</string>
+
+    <!-- ### Special buttons description ###-->
+    <string name="help_do">Botão refazer</string>
+    <string name="help_do_summary">Refaz a última ação de desfazer</string>
+    <string name="help_undo">Botão desfazer</string>
+    <string name="help_undo_summary">Desfazer última ação</string>
+    <string name="help_hint">Botão de dicas</string>
+    <string name="help_hint_summary">Revelar o campo selecionado\nAtenção: Quando usado, o jogo atual não pode ser contabilizado como novo melhor tempo.</string>
+    <string name="help_delete">Botão Remover</string>
+    <string name="help_delete_summary">Remove um campo selecionado</string>
+    <string name="help_notes">Botão alternar Notas</string>
+    <string name="help_notes_summary">Alterna se números devem ser definidos como notas ou como valores em um campo</string>
+    <string name="help_privacyInfo">Informação de Privacidade</string>
+    <string name="help_permissions">Permissões</string>
+    <string name="help_permissions_summary">Privacy Friendly Sudoku não utiliza nenhuma permissão.</string>
+    <string name="okay">Ok</string>
+    <string name="difficulty_challenge">Desafio</string>
+    <string name="pref_highlightInputError">Destacar erros de entrada</string>
+    <string name="pref_keep_screen_on">Manter a tela ligada</string>
+    <string name="pref_keep_screen_on_summary">Não desligar a tela enquanto joga</string>
+
+    <!-- ### Tutorial ###-->
+    <string name="slide1_heading">Bemvindo!</string>
+    <string name="slide1_text">Bemvindo ao Privacy Friendly Sudoku!</string>
+
+    <string name="slide2_heading">Modo Jogo</string>
+    <string name="slide2_text">Deslize ou pressione os botões das setas na esquerda ou direita para trocar o modo do jogo.</string>
+
+    <string name="slide3_heading">Dificuldade</string>
+    <string name="slide3_text">Pressione ou deslize as estrelas para trocar a dificuldade.</string>
+
+    <string name="next">Próximo</string>
+    <string name="skip">Pular</string>
+    <string name="menu_tutorial">Tutorial</string>
+</resources>
