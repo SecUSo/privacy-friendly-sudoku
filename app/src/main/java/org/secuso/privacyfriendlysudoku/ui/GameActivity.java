@@ -65,7 +65,7 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
 
     public static final String URL_SCHEME_WITHOUT_HOST = "sudoku";
     public static final String URL_SCHEME_WITH_HOST = "http";
-    public static final String URL_HOST = "sudoku";
+    public static final String URL_HOST = "sudoku.secuso.org";
 
     GameController gameController;
     SudokuFieldLayout layout;
