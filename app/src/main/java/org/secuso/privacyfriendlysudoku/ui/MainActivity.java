@@ -364,6 +364,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             case R.id.nav_dailySudoku_main:
                 intent = new Intent(this, DailySudokuActivity.class);
                 startActivity(intent);
+                overridePendingTransition(0, 0);
                 break;
 
             default:
