@@ -1,0 +1,4 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_checked="true" android:drawable="@drawable/ic_circle_blue_36dp"/>
+    <item android:state_checked="false" android:drawable="@drawable/ic_circle_grey_36dp"/>
+</selector>
