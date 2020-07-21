@@ -7,7 +7,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
 <androidx.constraintlayout.widget.ConstraintLayout
     android:id="@+id/linearLayout10"
     android:layout_width="match_parent"
@@ -60,7 +59,8 @@
             app:layout_constraintEnd_toStartOf="@id/view"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.25" />
 
 
         <RatingBar
@@ -69,7 +69,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:numStars="4"
@@ -79,12 +78,13 @@
             app:layout_constraintEnd_toEndOf="@+id/statistic_image"
             app:layout_constraintStart_toStartOf="@+id/statistic_image"
             app:layout_constraintTop_toBottomOf="@+id/statistic_image"
-            app:layout_constraintVertical_bias="0.50" />
+            app:layout_constraintVertical_bias="0.75" />
 
         <TextView
             android:id="@+id/first_diff_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:gravity="center|center_horizontal"
             android:text="diffi"
             android:textSize="22sp"
@@ -220,9 +220,6 @@
         android:id="@+id/floatingActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="16dp"
         android:clickable="true"
         android:onClick="onClick"
         app:layout_constraintBottom_toTopOf="@+id/view3"
@@ -230,7 +227,7 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appbar"
-        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintVertical_bias="0.95"
         app:srcCompat="@android:drawable/ic_media_play" />
 
 
