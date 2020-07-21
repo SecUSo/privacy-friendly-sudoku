@@ -4,6 +4,7 @@ import android.os.Parcelable;
 import android.util.Log;
 
 import java.util.LinkedList;
+import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.Date;
@@ -53,20 +54,27 @@ public class QQWingController {
         return generated;
     }
 
-    public int[] generateFromSeed(int seed, GameDifficulty difficulty) {
+    public int[] generateFromSeed(int seed) {
+        return generateFromSeed(seed, 1, 1);
+    }
+
+    public int[] generateFromSeed(int seed, double challengePermission, int challengeIterations) {
         generated.clear();
         QQWing generator = new QQWing(GameType.Default_9x9, GameDifficulty.Unspecified);
-        boolean havePuzzle = false;
+        boolean continueSearch = true;
+        Random random = new Random(seed);
+        int seedFactor = 2;
 
-        while(!havePuzzle) {
-            seed++;
+        while(continueSearch && challengeIterations > 0) {
+            seed *= seedFactor;
             generator.setRandom(seed);
             generator.setRecordHistory(true);
             generator.generatePuzzle();
 
-            if (difficulty == GameDifficulty.Unspecified && generator.getDifficulty() != GameDifficulty.Challenge
-                    || difficulty == generator.getDifficulty()) {
-                havePuzzle = true;
+            if (generator.getDifficulty() != GameDifficulty.Challenge || random.nextDouble() < challengePermission) {
+                continueSearch = false;
+            } else {
+                challengeIterations--;
             }
         }
 
@@ -221,6 +229,10 @@ public class QQWingController {
                 }
             }
         }
+    }
+
+    public boolean isImpossible() {
+        return solveImpossible;
     }
 
     private static class QQWingOptions {
