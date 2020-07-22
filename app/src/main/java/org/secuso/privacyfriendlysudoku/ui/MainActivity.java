@@ -30,6 +30,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -72,17 +74,17 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
 
         settings = PreferenceManager.getDefaultSharedPreferences(this);
-            if (settings.getBoolean("pref_dark_mode_setting", false )) {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        if (settings.getBoolean("pref_dark_mode_setting", false )) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
 
-            } else if (settings.getBoolean("pref_dark_mode_automatically_by_system", false)) {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+        } else if (settings.getBoolean("pref_dark_mode_automatically_by_system", false)) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
 
-            } else if(settings.getBoolean("pref_dark_mode_automatically_by_battery", false)){
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY);
-            } else {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-            }
+        } else if(settings.getBoolean("pref_dark_mode_automatically_by_battery", false)){
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
 
         NewLevelManager newLevelManager = NewLevelManager.getInstance(getApplicationContext(), settings);
 
@@ -148,17 +150,34 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         final LinkedList<GameDifficulty> difficultyList = GameDifficulty.getValidDifficultyList();
         difficultyBar.setNumStars(difficultyList.size());
         difficultyBar.setMax(difficultyList.size());
+        CheckBox createGameBar = (CheckBox) findViewById(R.id.circleButton);
         difficultyBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-                if (rating < 1) {
-                    ratingBar.setRating(1);
+                createGameBar.setChecked(false);
+                ((Button) findViewById(R.id.playButton)).setText("New Game");
+
+                if (rating >= 1) {
+                    difficultyText.setText(getString(difficultyList.get((int) ratingBar.getRating() - 1).getStringResID()));
+                } else {
+                    difficultyText.setText("Custom Sudoku");
                 }
-                difficultyText.setText(getString(difficultyList.get((int) ratingBar.getRating() - 1).getStringResID()));
             }
         });
+
+        createGameBar.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+
+                    difficultyBar.setRating(0);
+                    ((Button)findViewById(R.id.playButton)).setText("Create");
+                }
+                createGameBar.setChecked(isChecked);
+            }});
+
         GameDifficulty lastChosenDifficulty = GameDifficulty.valueOf(settings.getString("lastChosenDifficulty", "Moderate"));
-        difficultyBar.setRating(GameDifficulty.getValidDifficultyList().indexOf(lastChosenDifficulty) + 1);
+        //difficultyBar.setRating(GameDifficulty.getValidDifficultyList().indexOf(lastChosenDifficulty) + 1);
         /*LayerDrawable stars = (LayerDrawable)difficultyBar.getProgressDrawable();
         stars.getDrawable(2).setColorFilter(getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_ATOP);//Color for Stars fully selected
         stars.getDrawable(1).setColorFilter(getResources().getColor(R.color.middleblue), PorterDuff.Mode.SRC_ATOP);//Color for Stars partially selected
@@ -193,8 +212,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         winScreen.show(fm,"win_screen_layout");*/
 
     }
-
-
     public void onClick(View view) {
 
         Intent i = null;
@@ -211,6 +228,13 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 break;
             case R.id.playButton:
                 GameType gameType = GameType.getValidGameTypes().get(mViewPager.getCurrentItem());
+                if (((CheckBox)findViewById(R.id.circleButton)).isChecked()) {
+                    // send everything to game activity
+                    i = new Intent(this, CreateSudokuActivity.class);
+                    i.putExtra("gameType", gameType.name());
+                    //i.putExtra("gameDifficulty", GameDifficulty.Easy);
+                    break;
+                }
                 int index = difficultyBar.getProgress()-1;
                 GameDifficulty gameDifficulty = GameDifficulty.getValidDifficultyList().get(index < 0 ? 0 : index);
 
