@@ -140,6 +140,7 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
                 QQWing difficultyCheck;
                 GameInfoContainer container = new GameInfoContainer(0, GameDifficulty.Unspecified,
                         GameType.Unspecified, new int [boardSize], new int [boardSize], new boolean [boardSize][sectionSize]);
+                container.setCustom(extras.getBoolean("isCustom", false));
 
                 try {
                     container.parseGameType("Default_" + sectionSize + "x" + sectionSize);
@@ -149,8 +150,9 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
                     difficultyCheck.setPuzzle(container.getFixedValues());
                     difficultyCheck.solve();
 
-                    startGame = difficultyCheck.hasUniqueSolution();
                     container.parseDifficulty(difficultyCheck.getDifficulty().toString());
+                    startGame = difficultyCheck.hasUniqueSolution();
+
 
                 } catch (IllegalArgumentException e) {
                     startGame = false;
@@ -487,12 +489,19 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
             editor.apply();
         }
 
-        //Show time hints new plus old best time
+        //Don't save statistics if game is custom
+        boolean isNewBestTime;
 
-        statistics.saveGameStats();
+        if (!gameController.gameIsCustom()) {
+            //Show time hints new plus old best time
+            statistics.saveGameStats();
+            isNewBestTime = gameController.getUsedHints() == 0
+                    && statistics.loadStats(gameController.getGameType(),gameController.getDifficulty()).getMinTime() >= gameController.getTime();
 
-        boolean isNewBestTime = gameController.getUsedHints() == 0
-                && statistics.loadStats(gameController.getGameType(),gameController.getDifficulty()).getMinTime() >= gameController.getTime();
+        } else {
+            isNewBestTime = false;
+        }
+
 
         dialog = new WinDialog(this, R.style.WinDialog , timeToString(gameController.getTime()), String.valueOf(gameController.getUsedHints()), isNewBestTime);
 

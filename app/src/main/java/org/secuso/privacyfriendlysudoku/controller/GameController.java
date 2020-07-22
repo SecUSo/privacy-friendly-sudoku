@@ -64,6 +64,7 @@ public class GameController implements IModelChangedListener, Parcelable {
     private GameType gameType;
     private GameDifficulty difficulty;
     private CellConflictList errorList = new CellConflictList();
+    private boolean gameIsCustom;
 
     // Undo Redo
     private UndoRedoManager undoRedoManager;
@@ -91,6 +92,7 @@ public class GameController implements IModelChangedListener, Parcelable {
     public GameController(GameType type, SharedPreferences pref, Context context) {
         this.context = context;
         this.gameBoard = new GameBoard(type);
+        this.gameIsCustom = false;
 
         setGameType(type);
         setSettings(pref);
@@ -101,6 +103,8 @@ public class GameController implements IModelChangedListener, Parcelable {
     public int getGameID() {
         return gameID;
     }
+
+    public boolean gameIsCustom() { return gameIsCustom; }
 
     public void loadNewLevel(GameType type, GameDifficulty difficulty) {
         NewLevelManager newLevelManager = NewLevelManager.getInstance(context, settings);
@@ -141,6 +145,7 @@ public class GameController implements IModelChangedListener, Parcelable {
         this.difficulty = gic.getDifficulty();
         this.time = gic.getTimePlayed();
         this.usedHints = gic.getHintsUsed();
+        this.gameIsCustom = gic.isCustom();
 
         setGameType(gic.getGameType());
         this.gameBoard = new GameBoard(gic.getGameType());

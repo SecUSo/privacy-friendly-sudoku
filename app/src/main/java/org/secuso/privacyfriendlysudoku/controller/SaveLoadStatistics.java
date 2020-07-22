@@ -204,12 +204,12 @@ public class SaveLoadStatistics implements ITimerListener, IHintListener {
 
     @Override
     public void onTick(int time) {
-        incTime(gc.getDifficulty(), gc.getGameType());
+        if (!gc.gameIsCustom()) incTime(gc.getDifficulty(), gc.getGameType());
         //gc.getUsedHints();
     }
 
     @Override
     public void onHintUsed() {
-        incHints(gc.getDifficulty(),gc.getGameType());
+        if (!gc.gameIsCustom()) incHints(gc.getDifficulty(),gc.getGameType());
     }
 }

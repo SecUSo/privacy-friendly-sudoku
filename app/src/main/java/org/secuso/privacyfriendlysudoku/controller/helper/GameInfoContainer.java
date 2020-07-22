@@ -25,6 +25,7 @@ public class GameInfoContainer {
     int[] setValues;
     boolean[][] setNotes;
     int hintsUsed;
+    boolean isCustom;
 
     public GameInfoContainer() {}
     public GameInfoContainer(int ID, GameDifficulty difficulty, GameType gameType, int[] fixedValues, int[] setValues, boolean[][] setNotes) {
@@ -40,11 +41,16 @@ public class GameInfoContainer {
         this.setValues = setValues;
         this.setNotes = setNotes;
         this.hintsUsed = hintsUsed;
+        isCustom = false;
     }
 
     public void setID(int ID) {
         this.ID = ID;
     }
+
+    public void setCustom (boolean isCustom) { this.isCustom = isCustom; }
+
+    public boolean isCustom () { return  isCustom; }
 
     public void parseGameType(String s) {
         gameType = Enum.valueOf(GameType.class, s);
@@ -179,6 +185,7 @@ public class GameInfoContainer {
     public static String getGameInfo(GameController controller) {
         StringBuilder sb = new StringBuilder();
         Date today = new Date();
+        boolean custom = controller.gameIsCustom();
 
         sb.append(controller.getGameType().name());
         sb.append("/");
@@ -195,6 +202,11 @@ public class GameInfoContainer {
         sb.append(getNotes(controller));
         sb.append("/");
         sb.append(controller.getUsedHints());
+
+        if (custom) {
+            sb.append("/");
+            sb.append(custom);
+        }
 
         String result = sb.toString();
 
