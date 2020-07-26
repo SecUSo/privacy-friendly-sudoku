@@ -140,7 +140,7 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
                 QQWing difficultyCheck;
                 GameInfoContainer container = new GameInfoContainer(0, GameDifficulty.Unspecified,
                         GameType.Unspecified, new int [boardSize], new int [boardSize], new boolean [boardSize][sectionSize]);
-                container.setCustom(extras.getBoolean("isCustom", false));
+                container.setCustom(extras != null && extras.getBoolean("isCustom", false));
 
                 try {
                     container.parseGameType("Default_" + sectionSize + "x" + sectionSize);
