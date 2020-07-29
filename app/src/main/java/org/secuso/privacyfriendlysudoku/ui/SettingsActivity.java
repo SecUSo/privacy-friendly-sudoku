@@ -90,6 +90,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
     public void restartActivity() {
         Intent i = new Intent(getApplicationContext(), MainActivity.class);
+        recreate();
         finish();
         startActivity(i);
     }
@@ -225,6 +226,9 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                     findPreference("pref_dark_mode_automatically_by_system").setEnabled(false);
                     findPreference("pref_dark_mode_automatically_by_battery").setEnabled(false);
                 } else {
+                    if (sp.getBoolean("pref_dark_mode_automatically_by_battery", false) && sp.getBoolean("pref_dark_mode_automatically_by_system", false) ) {
+                        sp.edit().putBoolean("pref_dark_mode_automatically_by_battery", false).commit();
+                    }
 
                     findPreference("pref_dark_mode_automatically_by_system").setEnabled(!sp.getBoolean("pref_dark_mode_automatically_by_battery", false));
                     findPreference("pref_dark_mode_automatically_by_battery").setEnabled(!sp.getBoolean("pref_dark_mode_automatically_by_system", false));
