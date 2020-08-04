@@ -407,13 +407,46 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }*/
 
     public void onImportDialogPositiveClick(String input) {
-        boolean solvable = CreateSudokuActivity.verify(MainActivity.this, GameType.Default_9x9, input);
+        String inputSudoku;
+        String prefix1 = GameActivity.URL_SCHEME_WITHOUT_HOST + "://";
+        String prefix2 = GameActivity.URL_SCHEME_WITH_HOST + "://" + GameActivity.URL_HOST + "/";
+
+        if (input.contains(prefix1)) {
+            inputSudoku = input.replace(prefix1, "");
+        } else if (input.contains(prefix2)) {
+            inputSudoku = input.replace(prefix2, "");
+        } else {
+            Toast.makeText(MainActivity.this,
+                    this.getString(R.string.menu_import_wrong_format_custom_sudoku) + " " + prefix1 + ", " + prefix2, Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        int size = (int)Math.sqrt(inputSudoku.length());
+        boolean validSize = false;
+
+        for (GameType type : GameType.getValidGameTypes()) {
+            if (type.getSize() == size) {
+                validSize = true;
+                break;
+            }
+        }
+
+        if (!validSize) {
+            Toast.makeText(MainActivity.this, R.string.failed_to_verify_custom_sudoku_toast, Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        GameType gameType = Enum.valueOf(GameType.class, "Default_" + size + "x" + size);
+        boolean solvable = CreateSudokuActivity.verify(MainActivity.this, gameType, inputSudoku);
+
         if (solvable) {
             Toast.makeText(MainActivity.this, R.string.finished_verifying_custom_sudoku_toast, Toast.LENGTH_LONG).show();
             final Intent intent = new Intent(this, GameActivity.class);
-            intent.setData(Uri.parse(GameActivity.URL_SCHEME_WITHOUT_HOST + "://" + input));
+            intent.setData(Uri.parse(prefix1 + inputSudoku));
             startActivity(intent);
             finish();
+        } else {
+            Toast.makeText(MainActivity.this, R.string.failed_to_verify_custom_sudoku_toast, Toast.LENGTH_LONG).show();
         }
     }
 
