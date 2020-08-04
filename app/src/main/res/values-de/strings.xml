@@ -114,7 +114,8 @@
     <string name="number_of_completed_games">Abgeschlossene <br>Spiele</br></string>
     <!-- ### Create custome sudoku ###-->
     <string name="menu_import_custom_sudoku">Sudoku importieren</string>
-    <string name="dialog_import_custom_sudoku">Gib das Sudoku, das du importieren möchtest, ein:</string>
+    <string name="menu_import_wrong_format_custom_sudoku">Dein Link muss mit einem dieser Präfixe beginnen: </string>
+    <string name="dialog_import_custom_sudoku">Gib den Link des Sudokus, das du importieren möchtest, ein: </string>
     <string name="dialog_import_custom_sudoku_positive_button">Importieren</string>
     <string name="finalize_custom_sudoku_dialog">Möchtest du dieses Sudoku fertigstellen?</string>
     <string name="verify_custom_sudoku_process_toast">Verifiziere Level&#8230;</string>
