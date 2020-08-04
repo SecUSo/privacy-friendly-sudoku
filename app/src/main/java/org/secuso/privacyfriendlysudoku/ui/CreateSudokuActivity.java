@@ -28,6 +28,11 @@ import org.secuso.privacyfriendlysudoku.ui.view.R;
 import org.secuso.privacyfriendlysudoku.ui.view.SudokuFieldLayout;
 import org.secuso.privacyfriendlysudoku.ui.view.SudokuKeyboardLayout;
 
+/**
+ * The CreateSudokuActivity is an activity which extends the BaseActivity and implements the
+ * IFinalizeDialogFragementListener. It is used to create custom sudokus, which are passed to the
+ * GameActivity afterwards.
+ */
 public class CreateSudokuActivity extends BaseActivity implements IFinalizeDialogFragmentListener {
 
     GameController gameController;
@@ -107,6 +112,12 @@ public class CreateSudokuActivity extends BaseActivity implements IFinalizeDialo
         super.onBackPressed();
     }
 
+    /**
+     * Verifies an encoded sudoku board by testing whether or not it is uniquely solvable
+     * @param gameType the type of the encoded sudoku
+     * @param boardContent the encoded sudoku
+     * @return whether or not the sudoku is uniquely solvable
+     */
     public static boolean verify(GameType gameType, String boardContent) {
         int boardSize = gameType.getSize() * gameType.getSize();
 
@@ -127,6 +138,13 @@ public class CreateSudokuActivity extends BaseActivity implements IFinalizeDialo
         return verifier.hasUniqueSolution();
     }
 
+    /**
+     * If the positive button of the FinalizeDialog is clicked, verify the sudoku. Immediately pass
+     * it to the GameActivity, if the verification process is successful, and do nothing apart from
+     * notifying the user if not.
+     * Implements the onFinalizeDialogPositiveClick() method of the IFinalizeDialogFragmentListener
+     * interface.
+     */
     public void onFinalizeDialogPositiveClick() {
         Toast.makeText(CreateSudokuActivity.this, R.string.verify_custom_sudoku_process_toast, Toast.LENGTH_SHORT).show();
         String boardContent = gameController.getCodeOfField();
@@ -150,6 +168,10 @@ public class CreateSudokuActivity extends BaseActivity implements IFinalizeDialo
 
     }
 
+    /**
+     * Implements the onDialogNegativeClick() method of the IFinalizeDialogFragmentListener
+     * interface.
+     */
     public void onDialogNegativeClick() {
 
     }
