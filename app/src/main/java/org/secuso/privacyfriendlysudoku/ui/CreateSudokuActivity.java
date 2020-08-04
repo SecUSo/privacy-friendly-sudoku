@@ -107,13 +107,17 @@ public class CreateSudokuActivity extends BaseActivity implements IFinalizeDialo
         super.onBackPressed();
     }
 
-    public static boolean verify(Context context, GameType gameType, String boardContent) {
-        Toast.makeText(context, R.string.verify_custom_sudoku_process_toast, Toast.LENGTH_SHORT).show();
+    public static boolean verify(GameType gameType, String boardContent) {
         int boardSize = gameType.getSize() * gameType.getSize();
 
         GameInfoContainer container = new GameInfoContainer(0, GameDifficulty.Unspecified,
                 gameType, new int [boardSize], new int [boardSize], new boolean [boardSize][gameType.getSize()]);
-        container.parseFixedValues(boardContent);
+
+        try {
+            container.parseFixedValues(boardContent);
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
 
         QQWing verifier = new QQWing(gameType, GameDifficulty.Unspecified);
         verifier.setRecordHistory(true);
@@ -124,12 +128,18 @@ public class CreateSudokuActivity extends BaseActivity implements IFinalizeDialo
     }
 
     public void onFinalizeDialogPositiveClick() {
+        Toast.makeText(CreateSudokuActivity.this, R.string.verify_custom_sudoku_process_toast, Toast.LENGTH_SHORT).show();
         String boardContent = gameController.getCodeOfField();
-        boolean distinctlySolvable = verify(CreateSudokuActivity.this, gameController.getGameType(), boardContent);
+        boolean distinctlySolvable = verify(gameController.getGameType(), boardContent);
 
         if(distinctlySolvable) {
             Toast.makeText(CreateSudokuActivity.this, R.string.finished_verifying_custom_sudoku_toast, Toast.LENGTH_LONG).show();
             final Intent intent = new Intent(this, GameActivity.class);
+
+            /*
+            Since the GameActivity expects the links of imported sudokus to start with an url scheme,
+            add one to the start of the encoded board
+             */
             intent.setData(Uri.parse(GameActivity.URL_SCHEME_WITHOUT_HOST + "://" + boardContent));
             intent.putExtra("isCustom", true);
             startActivity(intent);

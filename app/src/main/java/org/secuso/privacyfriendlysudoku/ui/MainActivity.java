@@ -437,7 +437,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         }
 
         GameType gameType = Enum.valueOf(GameType.class, "Default_" + size + "x" + size);
-        boolean solvable = CreateSudokuActivity.verify(MainActivity.this, gameType, inputSudoku);
+        boolean solvable = CreateSudokuActivity.verify(gameType, inputSudoku);
 
         if (solvable) {
             Toast.makeText(MainActivity.this, R.string.finished_verifying_custom_sudoku_toast, Toast.LENGTH_LONG).show();
