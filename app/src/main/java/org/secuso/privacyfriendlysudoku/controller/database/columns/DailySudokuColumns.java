@@ -8,7 +8,9 @@ import org.secuso.privacyfriendlysudoku.controller.database.model.DailySudoku;
 import org.secuso.privacyfriendlysudoku.controller.database.model.Level;
 
 
-
+/**
+ * Defines a database schema for saving daily sudokus
+ */
 public class DailySudokuColumns extends LevelColumns {
 
     public static final String TABLE_NAME = "ds_levels";
@@ -42,6 +44,11 @@ public class DailySudokuColumns extends LevelColumns {
             "DROP TABLE IF EXISTS " + TABLE_NAME;
 
 
+    /**
+     * Create a new DailySudoku object using the data stored in a specific database row
+     * @param c the cursor pointing to the row whose data should be used
+     * @return the DailySudoku object created using the data from the database row
+     */
     public static DailySudoku getLevel(Cursor c) {
         Level level = LevelColumns.getLevel(c);
         int hintsUsed = c.getInt(c.getColumnIndexOrThrow(HINTS_USED));
@@ -49,6 +56,11 @@ public class DailySudokuColumns extends LevelColumns {
         return new DailySudoku(level.getId(), level.getDifficulty(), level.getGameType(), level.getPuzzle(), hintsUsed, timeNeeded);
     }
 
+    /**
+     * Given a specific DailySudoku instance, extracts all relevant parameters and saves them to a ContentValues object
+     * @param record the DailySudoku instance whose parameters should be extracted
+     * @return the ContentValues instance containing the extracted parameters
+     */
     public static ContentValues getValues(DailySudoku record) {
         ContentValues result = LevelColumns.getValues(record);
         result.put(HINTS_USED, record.getHintsUsed());
