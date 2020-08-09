@@ -322,7 +322,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             }
         }, NAVDRAWER_LAUNCH_DELAY);
 
-        // fade out the active activity
+        // fade out the active activity (but not if the user chose to open the ImportBoardDialog)
         View mainContent = findViewById(R.id.main_content);
         if (mainContent != null && id != R.id.nav_import_sudoku) {
             mainContent.animate().alpha(0).setDuration(MAIN_CONTENT_FADEOUT_DURATION);
@@ -408,9 +408,15 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     public void onImportDialogPositiveClick(String input) {
         String inputSudoku;
+
+        // a valid input needs to contain exactly one of these prefixes
         String prefix1 = GameActivity.URL_SCHEME_WITHOUT_HOST + "://";
         String prefix2 = GameActivity.URL_SCHEME_WITH_HOST + "://" + GameActivity.URL_HOST + "/";
 
+        /*
+         remove the present prefix, or, if the input contains neither of the prefixes, notify the user
+         that their input is not valid
+         */
         if (input.contains(prefix1)) {
             inputSudoku = input.replace(prefix1, "");
         } else if (input.contains(prefix2)) {
@@ -424,6 +430,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         int size = (int)Math.sqrt(inputSudoku.length());
         boolean validSize = false;
 
+        // check whether or not the size of the encoded sudoku is valid; if not, notify the user
         for (GameType type : GameType.getValidGameTypes()) {
             if (type.getSize() == size) {
                 validSize = true;
@@ -437,8 +444,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         }
 
         GameType gameType = Enum.valueOf(GameType.class, "Default_" + size + "x" + size);
+
+        //check whether or not the sudoku is valid and has a unique solution
         boolean solvable = CreateSudokuActivity.verify(gameType, inputSudoku);
 
+        // if the encoded sudoku is solvable, sent the code directly to the GameActivity; if not, notify the user
         if (solvable) {
             Toast.makeText(MainActivity.this, R.string.finished_verifying_custom_sudoku_toast, Toast.LENGTH_LONG).show();
             final Intent intent = new Intent(this, GameActivity.class);

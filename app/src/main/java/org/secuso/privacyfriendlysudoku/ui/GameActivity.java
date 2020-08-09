@@ -102,6 +102,10 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
 
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
 
+        /*
+        If the app is started via a deeplink, the GameActivity is the first activity the user accesses,
+        so we need to set the dark mode settings in this activity as well
+         */
         if (sharedPref.getBoolean("pref_dark_mode_setting", false )) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         } else {
@@ -120,13 +124,24 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
         if(savedInstanceState == null) {
 
             Bundle extras = getIntent().getExtras();
+
+            /*
+            If a (deep) link is used to access the activity, the content of the link cannot be accessed
+            as a part of the getExtras() bundle. Instead, it needs to be saved as an URI object
+             */
             Uri data = getIntent().getData();
             gameController = new GameController(sharedPref, getApplicationContext());
 
+            // Intents coming from the LoadGameActivity and MainActivity can be identified based on the keys the getExtras() bundle contains
             boolean intentReceivedFromMainActivity = extras != null &&
                     (extras.containsKey("gameType") || extras.containsKey("loadLevel"));
 
+            /*
+            If data is not null and the intent was not received from the MainActivity/ LoadGameActivity, the source of the intent must be the
+            CreateSudokuActivity, the ImportBoardDialog or a deep link, meaning data carries an URI containing an encoded sudoku
+             */
             if (data != null && !intentReceivedFromMainActivity) {
+                // extract encoded sudoku board from the URI
                 String input = "";
                 if (data.getScheme().equals(URL_SCHEME_WITHOUT_HOST)){
                     input = data.getHost();
@@ -135,6 +150,7 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
                     input =input.replace("/", "");
                 }
 
+                // Save all of the information that can be extracted from the encoded board in a GameInfoContainer object
                 int sectionSize = (int)Math.sqrt(input.length());
                 int boardSize = sectionSize * sectionSize;
                 QQWing difficultyCheck;
@@ -146,22 +162,33 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
                     container.parseGameType("Default_" + sectionSize + "x" + sectionSize);
                     container.parseFixedValues(input);
                     difficultyCheck = new QQWing(container.getGameType(), GameDifficulty.Unspecified);
+
+                    // calculate difficulty of the imported sudoku
                     difficultyCheck.setRecordHistory(true);
                     difficultyCheck.setPuzzle(container.getFixedValues());
                     difficultyCheck.solve();
 
                     container.parseDifficulty(difficultyCheck.getDifficulty().toString());
+
+                    // A sudoku is that does not have a unique solution is deemed 'unplayable' and may not be started
                     startGame = difficultyCheck.hasUniqueSolution();
 
 
                 } catch (IllegalArgumentException e) {
+                    // If the imported code does not actually encode a valid sudoku, it needs to be rejected
                     startGame = false;
+
+                    /*
+                     set up a blank sudoku field that can be displayed in the activity while the player is notified that
+                     the link they imported does not encode a valid sudoku
+                     */
                     sectionSize = GameType.Default_9x9.getSize();
                     boardSize = sectionSize * sectionSize;
                     container = new GameInfoContainer(0, GameDifficulty.Unspecified,
                             GameType.Default_9x9, new int [boardSize], new int [boardSize], new boolean [boardSize][sectionSize]);
                 }
 
+                // Notify the user if the sudoku they tried to import cannot be played and finish the activity
                 if (!startGame) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this, R.style.AppTheme_Dialog);
                     builder.setMessage(R.string.impossible_import_notice)
@@ -188,6 +215,12 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
                         loadLevelID = extras.getInt("loadLevelID");
                     }
                 }
+
+                /*
+                The 'isDailySudoku' key is only set by the DailySudokuActivity if a new daily sudoku needs to be calculated;
+                otherwise, the extras simply contain the id of the daily sudoku. Therefore, calculate the new daily sudoko if
+                'isDailySudoku' is true
+                 */
                 if (isDailySudoku) {
                     gameController.loadNewDailySudokuLevel();
                 } else  {
@@ -313,6 +346,8 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     public void onPause(){
         super.onPause();
+
+        // Do not save solved or unplayable sudokus
         if(!gameSolved && startGame) {
             gameController.saveGame(this);
         }
@@ -391,14 +426,19 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
                 break;
 
             case R.id.menu_share:
+                // Create import link from current sudoku board
                 String codeForClipboard = URL_SCHEME_WITHOUT_HOST + "://" + gameController.getCodeOfField();
                 String codeForClipboard1 = URL_SCHEME_WITH_HOST + "://" + URL_HOST + "/" + gameController.getCodeOfField();
+
+                // Create new ShareBoardDialog using the previously created links
                 ShareBoardDialog shareDialog = new ShareBoardDialog();
                 shareDialog.setDisplayCode(codeForClipboard);
                 shareDialog.setCopyClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         // remember to include alternate code for older android versions
+
+                        //save link to clipboard
                         ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
 
                         if (clipboard != null) {
@@ -485,6 +525,10 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
             gameController.saveDailySudoku(GameActivity.this);
             SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
             SharedPreferences.Editor editor = sharedPref.edit();
+            /*
+             set 'finishedForToday' setting to 'true', signifying that the player has solved the daily
+             sudoku and can no longer play it today
+             */
             editor.putBoolean("finishedForToday", true);
             editor.apply();
         }
@@ -499,6 +543,7 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
                     && statistics.loadStats(gameController.getGameType(),gameController.getDifficulty()).getMinTime() >= gameController.getTime();
 
         } else {
+            // cannot be best time if sudoku is custom
             isNewBestTime = false;
         }
 
