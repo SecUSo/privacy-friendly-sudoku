@@ -203,6 +203,7 @@ public class GameInfoContainer {
         sb.append("/");
         sb.append(controller.getUsedHints());
 
+        // add additional information to custom sudokus to ensure they can be distinguished from 'regular' sudokus
         if (custom) {
             sb.append("/");
             sb.append(custom);

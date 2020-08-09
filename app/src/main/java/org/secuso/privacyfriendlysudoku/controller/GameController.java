@@ -119,8 +119,10 @@ public class GameController implements IModelChangedListener, Parcelable {
     public void loadNewDailySudokuLevel() {
         NewLevelManager newLevelManager = NewLevelManager.getInstance(context, settings);
 
+        // generate the daily sudoku
         int[] level = newLevelManager.loadDailySudoku();
 
+        // calculate the difficulty of the daily sudoku
         QQWing difficultyCheck = new QQWing(GameType.Default_9x9, GameDifficulty.Unspecified);
         difficultyCheck.setRecordHistory(true);
         difficultyCheck.setPuzzle(level);
@@ -128,8 +130,6 @@ public class GameController implements IModelChangedListener, Parcelable {
 
         loadLevel(new GameInfoContainer(DAILY_SUDOKU_ID, difficultyCheck.getDifficulty(),
                 GameType.Default_9x9, level, null, null));
-
-        newLevelManager.checkAndRestock();
 
     }
 
@@ -347,19 +347,26 @@ public class GameController implements IModelChangedListener, Parcelable {
         fm.saveGameState(this);
     }
 
+    /**
+     * Save progress on the current daily sudoku
+     * @param context the context in which this method is called
+     */
     public void saveDailySudoku(Context context) {
         int amountOfCells = size * size;
         int[] encodedBoard = new int[amountOfCells];
+
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
                 encodedBoard[i * size + j] = gameBoard.getCell(i, j).getValue();
             }
         }
 
+        // turn the current date into an id
         Calendar currentDate = Calendar.getInstance();
         int id = currentDate.get(Calendar.DAY_OF_MONTH) * 1000000
                 + (currentDate.get(Calendar.MONTH) + 1) * 10000 + currentDate.get(Calendar.YEAR);
 
+        // save the sudoku to the database using the previously calculated id
         DatabaseHelper db = new DatabaseHelper(context);
         DailySudoku dailySudoku = new DailySudoku(id, difficulty, gameType, encodedBoard, usedHints, GameActivity.timeToString(time));
         db.addDailySudoku(dailySudoku);

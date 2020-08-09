@@ -83,9 +83,12 @@ public class NewLevelManager {
     }
 
     public int[] loadDailySudoku() {
+        // create a seed from the current date
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         String toHash = "Sudoku/.PrivacyFriendly/." + dateFormat.format(new Date());
         QQWingController controller = new QQWingController();
+
+        // generate new sudoku using the previously computed seed
         return controller.generateFromSeed(toHash.hashCode(), CHALLENGE_GENERATION_PROBABILITY, CHALLENGE_ITERATIONS);
     }
 

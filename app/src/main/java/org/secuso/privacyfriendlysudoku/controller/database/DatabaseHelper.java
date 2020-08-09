@@ -84,9 +84,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return levelList.get(0);
     }
 
+    /**
+     * Returns a list of all the daily sudokus that have been solved and thus saved to the database
+     * @return a list of all the daily sudokus that have been solved so far
+     */
     public synchronized List<DailySudoku> getDailySudokus() {
         List<DailySudoku> dailySudokuList = new LinkedList<>();
         SQLiteDatabase database = getWritableDatabase();
+
+        // order results from most to least recent
         String order = DailySudokuColumns._ID + " DESC";
 
         // How you want the results sorted in the resulting Cursor
@@ -125,6 +131,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return database.insert(LevelColumns.TABLE_NAME, null, LevelColumns.getValues(level));
     }
 
+    /**
+     * Adds a new daily sudoku to the database
+     * @param ds the daily sudoku which is to be added to the database
+     * @return the row id of the newly inserted sudoku (or -1 if an error occurred)
+     */
     public synchronized long addDailySudoku(DailySudoku ds) {
         SQLiteDatabase database = getWritableDatabase();
         return database.insert(DailySudokuColumns.TABLE_NAME, null, DailySudokuColumns.getValues(ds));

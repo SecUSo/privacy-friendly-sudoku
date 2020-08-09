@@ -54,10 +54,23 @@ public class QQWingController {
         return generated;
     }
 
+    /**
+     * Generate a new sudoku based on a given seed regardless of outcome difficulty
+     * @param seed the seed based on which the sudoku should be calculated
+     * @return the generated sudoku
+     */
     public int[] generateFromSeed(int seed) {
         return generateFromSeed(seed, 1, 1);
     }
 
+    /**
+     * Generate a new sudoku based on a given seed, but only accept challenge sudokus with a certain probability
+     * @param seed the seed based on which the sudoku should be calculated
+     * @param challengePermission the probability with which a challenge sudoku is accepted upon calculation
+     * @param challengeIterations the amount of times a challenge sudoku can be rejected in a row before being
+     *                            accepted with a probability of 100%
+     * @return the generated sudoku
+     */
     public int[] generateFromSeed(int seed, double challengePermission, int challengeIterations) {
         generated.clear();
         QQWing generator = new QQWing(GameType.Default_9x9, GameDifficulty.Unspecified);
