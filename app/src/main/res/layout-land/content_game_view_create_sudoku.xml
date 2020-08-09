@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layoutDirection="ltr"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/main_content"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <org.secuso.privacyfriendlysudoku.ui.view.SudokuFieldLayout
+        android:id="@+id/sudokuLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_toRightOf="@+id/createSudokuLayout"
+        android:layout_toEndOf="@+id/createSudokuLayout"
+        android:minWidth="100dp"
+        android:clickable="true"
+        android:gravity="center" />
+
+        <org.secuso.privacyfriendlysudoku.ui.view.SudokuKeyboardLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="30dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_toRightOf="@+id/sudokuLayout"
+            android:layout_toEndOf="@+id/sudokuLayout"
+            android:id="@+id/sudokuKeyboardLayout"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+        </org.secuso.privacyfriendlysudoku.ui.view.SudokuKeyboardLayout>
+
+        <org.secuso.privacyfriendlysudoku.ui.view.CreateSudokuSpecialButtonLayout
+            android:id="@+id/createSudokuLayout"
+            android:layout_width="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginEnd="30dp"
+            android:orientation="vertical"
+            android:layoutDirection="ltr"
+            android:layout_height="match_parent"
+            android:gravity="center">
+        </org.secuso.privacyfriendlysudoku.ui.view.CreateSudokuSpecialButtonLayout>
+
+</RelativeLayout>
