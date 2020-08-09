@@ -104,6 +104,18 @@
                 android:text="@string/difficulty_easy"
                 android:textSize="@dimen/main_text_difficulty"/>
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/circleButton"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:button="@drawable/create_game_src" />
+
             <RatingBar
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -116,6 +128,7 @@
                 android:scaleX="0.75"
                 android:scaleY="0.75"
                 style="@style/RatingBar"/>
+            </LinearLayout>
 
             <Button
                 android:textColor="?attr/lightestFontColor"
