@@ -55,7 +55,11 @@ import java.util.Map;
  * Android Design: Settings</a> for design guidelines and the <a
  * href="http://developer.android.com/guide/topics/ui/settings.html">Settings
  * API Guide</a> for more information on developing a Settings UI.
+ *
+ * The SettingsActivity is extended by AppCompatPreferenceActivity
+ * The activity is responsible for the different app settings.
  */
+
 public class SettingsActivity extends AppCompatPreferenceActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +82,10 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
        SharedPreferences.OnSharedPreferenceChangeListener x = new SharedPreferences.OnSharedPreferenceChangeListener() {
 
+           /**
+            * Case differentiation for the different Night Mode options
+            * @param sharedPreferences
+            */
 
            public void recheckNightModeProperties(SharedPreferences sharedPreferences){
                if (sharedPreferences.getBoolean("pref_dark_mode_setting", false )) {
@@ -107,6 +115,9 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
     }
 
+    /**
+     * is responsible for closing and opening the activity
+     */
     public void restartActivity() {
         Intent i = new Intent(getApplicationContext(), MainActivity.class);
         recreate();
