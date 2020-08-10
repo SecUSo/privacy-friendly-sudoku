@@ -30,6 +30,10 @@ import android.widget.TextView;
 import org.secuso.privacyfriendlysudoku.ui.view.BuildConfig;
 import org.secuso.privacyfriendlysudoku.ui.view.R;
 
+/**
+ * The AboutActivity is extended by the BaseActivity and is responsible for the content of the AboutActivity.
+ */
+
 public class AboutActivity extends BaseActivity {
 
     @Override
