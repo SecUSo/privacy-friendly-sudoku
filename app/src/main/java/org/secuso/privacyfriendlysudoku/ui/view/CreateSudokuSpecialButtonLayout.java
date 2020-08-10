@@ -181,6 +181,7 @@ public class CreateSudokuSpecialButtonLayout extends LinearLayout implements IHi
                     break;
                 case NoteToggle:
                     Drawable drawable = ContextCompat.getDrawable(context, fixedButtons[i].getType().getResID());
+                    // prepare canvas for the rotation of the note drawable
                     setUpVectorDrawable(drawable);
 
                     canvas.rotate(gameController.getNoteStatus() ? 45.0f : 0.0f, bitMap.getWidth()/2, bitMap.getHeight()/2);
@@ -199,6 +200,9 @@ public class CreateSudokuSpecialButtonLayout extends LinearLayout implements IHi
         }
     }
 
+    /*
+    Set up the vector drawables so that they can be properly displayed despite using theme attributes for their fill color
+     */
     private void setUpVectorDrawable(Drawable drawable) {
         drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
         bitMap = Bitmap.createBitmap(drawable.getIntrinsicWidth(),
