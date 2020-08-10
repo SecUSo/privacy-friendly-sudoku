@@ -52,6 +52,12 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ *The DailySudokuActivity is an activity that extends the AppCompatActivity.
+ *The activity is responsible for the logic of the DailySudoku.
+ *DailySudoku is a game mode where every day a different Sudoku is created for the user
+ */
+
 
 public class DailySudokuActivity<Database> extends AppCompatActivity {
 
