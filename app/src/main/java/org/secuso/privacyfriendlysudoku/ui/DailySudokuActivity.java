@@ -29,9 +29,9 @@ import org.secuso.privacyfriendlysudoku.game.GameDifficulty;
 import org.secuso.privacyfriendlysudoku.game.GameType;
 import org.secuso.privacyfriendlysudoku.ui.view.R;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 
 public class DailySudokuActivity<Database> extends AppCompatActivity {
@@ -56,66 +56,60 @@ public class DailySudokuActivity<Database> extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // Calculate the current date as an int id
-        Calendar currentDate = Calendar.getInstance();
-        dailyId = currentDate.get(Calendar.DAY_OF_MONTH) * 1000000
-                + (currentDate.get(Calendar.MONTH) + 1) * 10000 + currentDate.get(Calendar.YEAR);
-
-        //TODO: rename tw/tx/ty
         sudokuList = dbHelper.getDailySudokus();
-        TextView tw = findViewById(R.id.numb_of_total_games);
-        TextView tx = findViewById(R.id.numb_of_hints);
-        TextView ty = findViewById(R.id.numb_of_total_time);
-        tw.setText(String.valueOf(sudokuList.size()));
+        TextView totalGamesTextView = findViewById(R.id.numb_of_total_games);
+        TextView hintsTextView = findViewById(R.id.numb_of_hints);
+        TextView totalTimeTextView = findViewById(R.id.numb_of_total_time);
+        totalGamesTextView.setText(String.valueOf(sudokuList.size()));
 
 
         int sumHints = 0;
         int sumTime = 0;
 
-
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
-
         for (DailySudoku sudoku : sudokuList){
             sumHints += sudoku.getHintsUsed();
-            //sumTime += sudoku.getTimeNeededInSeconds();
-
-            String[] split = sudoku.getTimeNeeded().split(":");
-            sumTime += Integer.valueOf(split[0])*3600 + Integer.valueOf(split[1])*60 + Integer.valueOf(split[2]);
+            sumTime += sudoku.getTimeNeededInSeconds();
         }
 
         int hours = sumTime / 3600;
         int minutes = ( sumTime / 60 ) % 60;
         int seconds = sumTime % 60;
-        String str = String.format("%02d:%02d:%02d", hours, minutes, seconds);
+        String str = String.format(Locale.getDefault(), "%02d:%02d:%02d", hours, minutes, seconds);
 
-        tx.setText(String.valueOf(sumHints));
-        ty.setText(str);
+        hintsTextView.setText(String.valueOf(sumHints));
+        totalTimeTextView.setText(str);
 
         androidx.appcompat.app.ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("Daily Sudoku");
+        actionBar.setTitle(R.string.menu_daily_sudoku);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         difficultyBar = findViewById(R.id.first_diff_bar);
         settings = PreferenceManager.getDefaultSharedPreferences(this);
         mHandler = new Handler();
-        
+
 
         ListView listView = (ListView)findViewById(R.id.sudoku_list);
         sudokuListAdapter = new DailySudokuActivity.SudokuListAdapter(this, sudokuList);
         listView.setAdapter(sudokuListAdapter);
 
-        GameDifficulty dailyDifficulty = GameDifficulty.Unspecified;
+        // Calculate the current date as an int id
+        Calendar currentDate = Calendar.getInstance();
+        dailyId = currentDate.get(Calendar.DAY_OF_MONTH) * 1000000
+                + (currentDate.get(Calendar.MONTH) + 1) * 10000 + currentDate.get(Calendar.YEAR);
+
+        GameDifficulty dailyDifficulty;
 
         //only calculate the difficulty of the daily sudoku once a day
         if (settings.getInt("lastCalculated", 0) != dailyId) {
+            // generate the daily sudoku
             NewLevelManager newLevelManager = NewLevelManager.getInstance(getApplicationContext(), settings);
-
             int[] level = newLevelManager.loadDailySudoku();
-
             QQWing difficultyCheck = new QQWing(GameType.Default_9x9, GameDifficulty.Unspecified);
+
             difficultyCheck.setRecordHistory(true);
             difficultyCheck.setPuzzle(level);
             difficultyCheck.solve();
+
             dailyDifficulty = difficultyCheck.getDifficulty();
 
             //save the index of the daily difficulty (in the valid difficulty list) and the day it was calculated for
@@ -125,17 +119,18 @@ public class DailySudokuActivity<Database> extends AppCompatActivity {
             editor.apply();
 
         } else {
+            // if the daily sudoku has been calculated already, the difficulty can be read from the settings attribute
             int index = settings.getInt("dailyDifficultyIndex", GameDifficulty.getValidDifficultyList()
                     .indexOf(GameDifficulty.Unspecified));
             dailyDifficulty = GameDifficulty.getValidDifficultyList().get(index);
         }
-        RatingBar ratingbar = findViewById(R.id.first_diff_bar);
-        TextView tz = findViewById(R.id.first_diff_text);
 
-        tz.setText(dailyDifficulty.getStringResID());
-        ratingbar.setNumStars(GameDifficulty.getValidDifficultyList().size());
-        ratingbar.setMax(GameDifficulty.getValidDifficultyList().size());
-        ratingbar.setRating(GameDifficulty.getValidDifficultyList().indexOf(dailyDifficulty)+1);
+        TextView diffTextView = findViewById(R.id.first_diff_text);
+
+        diffTextView.setText(dailyDifficulty.getStringResID());
+        difficultyBar.setNumStars(GameDifficulty.getValidDifficultyList().size());
+        difficultyBar.setMax(GameDifficulty.getValidDifficultyList().size());
+        difficultyBar.setRating(GameDifficulty.getValidDifficultyList().indexOf(dailyDifficulty)+1);
 
 
     }
@@ -145,19 +140,25 @@ public class DailySudokuActivity<Database> extends AppCompatActivity {
 
         /*
          If the 'lastPlayed' key does not return the calculated id, then the player has not played
-         the sudoku of the day yet, meaning it has yet to be generated
+         the sudoku of the day yet, meaning it has yet to be saved on their phone and needs to be generated again
          */
         if (settings.getInt("lastPlayed", 0) != dailyId) {
             SharedPreferences.Editor editor = settings.edit();
             editor.putInt("lastPlayed", dailyId);
+
+            //as the player just started a new daily sudoku, set the 'finishedForToday' setting to 'false'
             editor.putBoolean("finishedForToday", false);
             editor.apply();
 
-            //send everything to game activity
+            //send everything to game activity, which calculates the daily sudoku
             intent.putExtra("isDailySudoku", true);
             startActivity(intent);
 
         } else if (!settings.getBoolean("finishedForToday", true)) {
+            /*
+            if the 'finished for today' setting is 'false', the player has already started the sudoku
+            but has yet to finish it -> send the designated daily sudoku ID to the GameActivity
+             */
             intent.putExtra("loadLevel", true);
             intent.putExtra("loadLevelID", GameController.DAILY_SUDOKU_ID);
             startActivity(intent);
