@@ -56,6 +56,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.secuso.privacyfriendlysudoku.controller.GameController;
 import org.secuso.privacyfriendlysudoku.controller.GameStateManager;
 import org.secuso.privacyfriendlysudoku.controller.NewLevelManager;
 import org.secuso.privacyfriendlysudoku.controller.helper.GameInfoContainer;
@@ -312,7 +313,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         Button continueButton = (Button)findViewById(R.id.continueButton);
         GameStateManager fm = new GameStateManager(getBaseContext(), settings);
         List<GameInfoContainer> gic = fm.loadGameStateInfo();
-        if(gic.size() > 0) {
+        if(gic.size() > 0 && !(gic.size() == 1 && gic.get(0).getID() == GameController.DAILY_SUDOKU_ID)) {
             continueButton.setEnabled(true);
             continueButton.setBackgroundResource(R.drawable.standalone_button);
         } else {
