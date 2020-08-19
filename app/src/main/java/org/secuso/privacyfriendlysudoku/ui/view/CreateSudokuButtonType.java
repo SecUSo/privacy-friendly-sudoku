@@ -29,7 +29,7 @@ public enum CreateSudokuButtonType {
     Value(R.drawable.ic_accessibility_black_48dp), // should be non picture
     Do(R.drawable.ic_redo_black_48dp),
     Undo(R.drawable.ic_undo_black_48dp),
-    NoteToggle(R.drawable.ic_create_black_48dp),
+    Import(R.drawable.ic_import),
     Spacer(R.drawable.ic_accessibility_black_48dp),//placeholder
     Delete(R.drawable.ic_delete_black_48dp),
     Finalize(R.drawable.ic_finalize),
@@ -53,7 +53,7 @@ public enum CreateSudokuButtonType {
         result.add(Finalize);
         //result.add(Spacer);
         result.add(Delete);
-        result.add(NoteToggle);
+        result.add(Import);
         return result;
     }
     public static String getName(CreateSudokuButtonType type) {
@@ -61,7 +61,7 @@ public enum CreateSudokuButtonType {
             case Do: return "Do";
             case Undo: return "Un";
             case Finalize: return "Fi";
-            case NoteToggle: return "On";
+            case Import: return "Im";
             case Spacer: return "";
             case Delete: return "Del";
             default:return "NotSet";

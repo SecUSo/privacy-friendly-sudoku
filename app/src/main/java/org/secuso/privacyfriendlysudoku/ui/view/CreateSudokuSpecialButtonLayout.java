@@ -76,12 +76,8 @@ public class CreateSudokuSpecialButtonLayout extends LinearLayout implements IHi
                     case Delete:
                         gameController.deleteSelectedCellsValue();
                         break;
-                    case NoteToggle:
-                        // rotates the Drawable
-                        gameController.setNoteStatus(!gameController.getNoteStatus());
-                        keyboard.updateNotesEnabled();
-                        onHighlightChanged();
-                        break;
+                    case Import:
+                         break;
                     case Do:
                         gameController.ReDo();
                         break;
@@ -178,21 +174,6 @@ public class CreateSudokuSpecialButtonLayout extends LinearLayout implements IHi
                 case Do:
                     fixedButtons[i].setBackgroundResource(gameController.isRedoAvailable() ?
                             R.drawable.numpad_highlighted_four : R.drawable.inactive_button);
-                    break;
-                case NoteToggle:
-                    Drawable drawable = ContextCompat.getDrawable(context, fixedButtons[i].getType().getResID());
-                    // prepare canvas for the rotation of the note drawable
-                    setUpVectorDrawable(drawable);
-
-                    canvas.rotate(gameController.getNoteStatus() ? 45.0f : 0.0f, bitMap.getWidth()/2, bitMap.getHeight()/2);
-                    canvas.drawBitmap(bitMap, 0, 0, null);
-                    drawable.draw(canvas);
-
-                    fixedButtons[i].setImageBitmap(bitResult);
-                    fixedButtons[i].setBackgroundResource(gameController.getNoteStatus() ? R.drawable.numpad_highlighted_three : R.drawable.numpad_highlighted_four);
-
-                    keyboard.updateNotesEnabled();
-
                     break;
                 default:
                     break;
