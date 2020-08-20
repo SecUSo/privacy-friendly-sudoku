@@ -33,6 +33,7 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'androidx.preference:preference:1.1.0-rc01'
     testImplementation 'junit:junit:4.12'
     implementation 'androidx.core:core:1.2.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
