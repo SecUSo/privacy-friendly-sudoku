@@ -26,10 +26,8 @@ import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.media.audiofx.Equalizer;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import com.google.android.material.navigation.NavigationView;
 
@@ -38,7 +36,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.core.view.GravityCompat;
-import androidx.lifecycle.MutableLiveData;
 import androidx.viewpager.widget.ViewPager;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -47,7 +44,6 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -63,10 +59,9 @@ import org.secuso.privacyfriendlysudoku.controller.helper.GameInfoContainer;
 import org.secuso.privacyfriendlysudoku.game.GameDifficulty;
 import org.secuso.privacyfriendlysudoku.game.GameType;
 import org.secuso.privacyfriendlysudoku.ui.listener.IImportDialogFragmentListener;
-import org.secuso.privacyfriendlysudoku.ui.listener.IShareDialogFragmentListener;
 import org.secuso.privacyfriendlysudoku.ui.view.R;
+import org.secuso.privacyfriendlysudoku.ui.SettingsActivity;
 import org.secuso.privacyfriendlysudoku.ui.view.databinding.DialogFragmentImportBoardBinding;
-import org.secuso.privacyfriendlysudoku.ui.view.databinding.DialogFragmentShareBoardBinding;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -369,9 +364,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 break;
             case R.id.menu_settings_main:
                 //open settings
-                intent = new Intent(this,SettingsActivity.class);
-                intent.putExtra( PreferenceActivity.EXTRA_SHOW_FRAGMENT, SettingsActivity.GamePreferenceFragment.class.getName() );
-                intent.putExtra( PreferenceActivity.EXTRA_NO_HEADERS, true );
+                intent = new Intent(this, SettingsActivity.class);
                 startActivity(intent);
                 overridePendingTransition(0, 0);
                 break;
