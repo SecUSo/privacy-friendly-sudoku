@@ -485,8 +485,6 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
             case R.id.menu_settings:
                 //open settings
                 intent = new Intent(this,SettingsActivity.class);
-                intent.putExtra( PreferenceActivity.EXTRA_SHOW_FRAGMENT, SettingsActivity.GamePreferenceFragment.class.getName() );
-                intent.putExtra( PreferenceActivity.EXTRA_NO_HEADERS, true );
                 break;
 
             case R.id.nav_highscore:
