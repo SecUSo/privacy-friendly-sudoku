@@ -24,25 +24,7 @@
                 android:layout_height="?attr/actionBarSize"
                 android:background="?attr/colorPrimary"
                 android:clipChildren="false"
-                app:popupTheme="@style/AppTheme.PopupOverlay" >
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:weightSum="14"
-                    android:clipChildren="false"
-                    android:orientation="horizontal"
-                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                    android:layout_marginRight="@dimen/activity_horizontal_margin"
-                    android:gravity="center_vertical">
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:text="@string/gametype_unspecified"
-                        android:id="@+id/gameModeText"
-                        android:layout_weight="7"/>
-
-                </LinearLayout>
-            </androidx.appcompat.widget.Toolbar>
+                app:popupTheme="@style/AppTheme.PopupOverlay" />
 
         </com.google.android.material.appbar.AppBarLayout>
 

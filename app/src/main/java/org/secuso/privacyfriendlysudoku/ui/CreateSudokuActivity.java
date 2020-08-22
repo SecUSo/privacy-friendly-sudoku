@@ -34,6 +34,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.Toolbar;
 
 import org.secuso.privacyfriendlysudoku.controller.GameController;
 import org.secuso.privacyfriendlysudoku.controller.Symbol;
@@ -42,6 +43,7 @@ import org.secuso.privacyfriendlysudoku.controller.qqwing.QQWing;
 import org.secuso.privacyfriendlysudoku.game.GameDifficulty;
 import org.secuso.privacyfriendlysudoku.game.GameType;
 import org.secuso.privacyfriendlysudoku.ui.listener.IFinalizeDialogFragmentListener;
+import org.secuso.privacyfriendlysudoku.ui.listener.IImportDialogFragmentListener;
 import org.secuso.privacyfriendlysudoku.ui.view.CreateSudokuSpecialButtonLayout;
 import org.secuso.privacyfriendlysudoku.ui.view.R;
 import org.secuso.privacyfriendlysudoku.ui.view.SudokuFieldLayout;
@@ -52,9 +54,10 @@ import org.secuso.privacyfriendlysudoku.ui.view.SudokuKeyboardLayout;
  * IFinalizeDialogFragementListener. It is used to create custom sudokus, which are passed to the
  * GameActivity afterwards.
  */
-public class CreateSudokuActivity extends BaseActivity implements IFinalizeDialogFragmentListener {
+public class CreateSudokuActivity extends BaseActivity implements IFinalizeDialogFragmentListener, IImportDialogFragmentListener {
 
     GameController gameController;
+    SharedPreferences sharedPref;
     SudokuFieldLayout layout;
     SudokuKeyboardLayout keyboard;
     TextView viewName ;
@@ -63,7 +66,7 @@ public class CreateSudokuActivity extends BaseActivity implements IFinalizeDialo
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
 
         if(sharedPref.getBoolean("pref_keep_screen_on", true)) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -80,7 +83,19 @@ public class CreateSudokuActivity extends BaseActivity implements IFinalizeDialo
                 gameType, new int [boardSize], new int [boardSize], new boolean [boardSize][sectionSize]);
         gameController.loadLevel(container);
 
+        setUpLayout();
+
+    }
+
+    private void setUpLayout() {
+
         setContentView(R.layout.activity_create_sudoku);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(getString(gameController.getGameType().getStringResID()));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         layout = (SudokuFieldLayout)findViewById(R.id.sudokuLayout);
         layout.setSettingsAndGame(sharedPref, gameController);
 
@@ -96,13 +111,16 @@ public class CreateSudokuActivity extends BaseActivity implements IFinalizeDialo
         keyboard.setKeyBoard(gameController.getSize(), p.x,layout.getHeight()-p.y, orientation);
 
         specialButtonLayout = (CreateSudokuSpecialButtonLayout) findViewById(R.id.createSudokuLayout);
-        specialButtonLayout.setButtons(p.x, gameController, keyboard, getFragmentManager(), orientation, CreateSudokuActivity.this, this);
-
-        viewName = (TextView) findViewById(R.id.gameModeText);
-        viewName.setText(getString(gameController.getGameType().getStringResID()));
+        specialButtonLayout.setButtons(p.x, gameController, keyboard, getFragmentManager(), orientation,
+                CreateSudokuActivity.this, this, this);
 
         gameController.notifyHighlightChangedListeners();
+    }
 
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
     @Override
@@ -185,6 +203,53 @@ public class CreateSudokuActivity extends BaseActivity implements IFinalizeDialo
             Toast.makeText(CreateSudokuActivity.this, R.string.failed_to_verify_custom_sudoku_toast, Toast.LENGTH_LONG).show();
         }
 
+    }
+    public void onImportDialogPositiveClick(String input) {
+        String inputSudoku;
+
+        // a valid input needs to contain exactly one of these prefixes
+        String prefix1 = GameActivity.URL_SCHEME_WITHOUT_HOST + "://";
+        String prefix2 = GameActivity.URL_SCHEME_WITH_HOST + "://" + GameActivity.URL_HOST + "/";
+
+        /*
+         remove the present prefix, or, if the input contains neither of the prefixes, notify the user
+         that their input is not valid
+         */
+        if (input.contains(prefix1)) {
+            inputSudoku = input.replace(prefix1, "");
+        } else if (input.contains(prefix2)) {
+            inputSudoku = input.replace(prefix2, "");
+        } else {
+            Toast.makeText(CreateSudokuActivity.this,
+                    this.getString(R.string.menu_import_wrong_format_custom_sudoku) + " " + prefix1 + ", " + prefix2, Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        boolean validSize = Math.sqrt(inputSudoku.length()) == gameController.getSize();
+
+        if (!validSize) {
+            Toast.makeText(CreateSudokuActivity.this, R.string.failed_to_verify_custom_sudoku_toast, Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        //check whether or not the sudoku is valid and has a unique solution
+        boolean solvable = verify(gameController.getGameType(), inputSudoku);
+
+        // if the encoded sudoku is solvable, sent the code directly to the GameActivity; if not, notify the user
+        if (solvable) {
+            Toast.makeText(CreateSudokuActivity.this, R.string.finished_verifying_custom_sudoku_toast, Toast.LENGTH_LONG).show();
+            int boardSize = gameController.getGameType().getSize() * gameController.getGameType().getSize();
+            GameInfoContainer container = new GameInfoContainer(0, GameDifficulty.Unspecified,
+                    gameController.getGameType(), new int [boardSize], new int [boardSize],
+                    new boolean [boardSize][gameController.getGameType().getSize()]);
+            container.parseSetValues(inputSudoku);
+
+            gameController.loadLevel(container);
+            setUpLayout();
+
+        } else {
+            Toast.makeText(CreateSudokuActivity.this, R.string.failed_to_verify_custom_sudoku_toast, Toast.LENGTH_LONG).show();
+        }
     }
 
     /**
