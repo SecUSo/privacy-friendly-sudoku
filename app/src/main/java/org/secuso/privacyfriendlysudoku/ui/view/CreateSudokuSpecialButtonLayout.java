@@ -43,8 +43,10 @@ import androidx.core.content.ContextCompat;
 import org.secuso.privacyfriendlysudoku.controller.GameController;
 import org.secuso.privacyfriendlysudoku.game.listener.IHighlightChangedListener;
 import org.secuso.privacyfriendlysudoku.ui.GameActivity;
+import org.secuso.privacyfriendlysudoku.ui.MainActivity;
 import org.secuso.privacyfriendlysudoku.ui.listener.IFinalizeDialogFragmentListener;
 import org.secuso.privacyfriendlysudoku.ui.listener.IHintDialogFragmentListener;
+import org.secuso.privacyfriendlysudoku.ui.listener.IImportDialogFragmentListener;
 
 import java.util.LinkedList;
 
@@ -54,6 +56,7 @@ import static org.secuso.privacyfriendlysudoku.ui.view.CreateSudokuButtonType.ge
 public class CreateSudokuSpecialButtonLayout extends LinearLayout implements IHighlightChangedListener {
 
     IFinalizeDialogFragmentListener finalizeDialogFragmentListener;
+    IImportDialogFragmentListener importDialogFragmentListener;
     CreateSudokuSpecialButton[] fixedButtons;
     public int fixedButtonsCount = getSpecialButtons().size();
     GameController gameController;
@@ -77,7 +80,9 @@ public class CreateSudokuSpecialButtonLayout extends LinearLayout implements IHi
                         gameController.deleteSelectedCellsValue();
                         break;
                     case Import:
-                         break;
+                        MainActivity.ImportBoardDialog impDialog = new MainActivity.ImportBoardDialog();
+                        impDialog.show(fragmentManager, "ImportDialogFragment");
+                        break;
                     case Do:
                         gameController.ReDo();
                         break;
@@ -108,12 +113,14 @@ public class CreateSudokuSpecialButtonLayout extends LinearLayout implements IHi
     }
 
     public void setButtons(int width, GameController gc, SudokuKeyboardLayout key, FragmentManager fm,
-                           int orientation, Context cxt, IFinalizeDialogFragmentListener finalizeListener) {
+                           int orientation, Context cxt, IFinalizeDialogFragmentListener finalizeListener,
+                           IImportDialogFragmentListener importListener) {
         fragmentManager = fm;
         keyboard=key;
         gameController = gc;
         context = cxt;
         finalizeDialogFragmentListener = finalizeListener;
+        importDialogFragmentListener = importListener;
         if(gameController != null) {
             gameController.registerHighlightChangedListener(this);
         }
