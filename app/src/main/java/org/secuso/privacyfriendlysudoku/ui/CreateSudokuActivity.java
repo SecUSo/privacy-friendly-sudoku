@@ -34,6 +34,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.Toolbar;
 
 import org.secuso.privacyfriendlysudoku.controller.GameController;
 import org.secuso.privacyfriendlysudoku.controller.Symbol;
@@ -89,6 +90,11 @@ public class CreateSudokuActivity extends BaseActivity implements IFinalizeDialo
     private void setUpLayout() {
 
         setContentView(R.layout.activity_create_sudoku);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         layout = (SudokuFieldLayout)findViewById(R.id.sudokuLayout);
         layout.setSettingsAndGame(sharedPref, gameController);
 
@@ -111,6 +117,12 @@ public class CreateSudokuActivity extends BaseActivity implements IFinalizeDialo
         viewName.setText(getString(gameController.getGameType().getStringResID()));
 
         gameController.notifyHighlightChangedListeners();
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
     @Override
