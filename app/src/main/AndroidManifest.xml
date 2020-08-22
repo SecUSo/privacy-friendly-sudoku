@@ -57,14 +57,11 @@
                 <data
                     android:host="sudoku.secuso.org"
                     android:scheme="http" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data android:scheme="sudoku.secuso.org" />
+                <data
+                    android:host="sudoku.secuso.org"
+                    android:scheme="https" />
+                <data
+                    android:scheme="sudoku.secuso.org" />
             </intent-filter>
         </activity>
         <activity android:name="org.secuso.privacyfriendlysudoku.ui.AboutActivity" />
