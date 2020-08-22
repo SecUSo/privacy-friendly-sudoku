@@ -93,6 +93,7 @@ public class CreateSudokuActivity extends BaseActivity implements IFinalizeDialo
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(getString(gameController.getGameType().getStringResID()));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         layout = (SudokuFieldLayout)findViewById(R.id.sudokuLayout);
@@ -112,9 +113,6 @@ public class CreateSudokuActivity extends BaseActivity implements IFinalizeDialo
         specialButtonLayout = (CreateSudokuSpecialButtonLayout) findViewById(R.id.createSudokuLayout);
         specialButtonLayout.setButtons(p.x, gameController, keyboard, getFragmentManager(), orientation,
                 CreateSudokuActivity.this, this, this);
-
-        viewName = (TextView) findViewById(R.id.gameModeText);
-        viewName.setText(getString(gameController.getGameType().getStringResID()));
 
         gameController.notifyHighlightChangedListeners();
     }
