@@ -65,7 +65,7 @@ public class DailySudoku extends Level {
      * does not have the right format)
      */
     public int getTimeNeededInSeconds() {
-        if (timeNeeded.matches("/d/d:/d/d:/d/d")) {
+        if (timeNeeded.matches("[0-9]{2}:[0-5][0-9]:[0-5][0-9]")) {
             String[] timeInstances = timeNeeded.split(":");
             int hourIndex = 0;
             int minuteIndex = 1;
@@ -73,7 +73,7 @@ public class DailySudoku extends Level {
 
             int minutes = Integer.parseInt(timeInstances[hourIndex]) * 60 + Integer.parseInt(timeInstances[minuteIndex]);
             return minutes * 60 + Integer.parseInt(timeInstances[secondIndex]);
-        }
+           }
 
         return 0;
     }
