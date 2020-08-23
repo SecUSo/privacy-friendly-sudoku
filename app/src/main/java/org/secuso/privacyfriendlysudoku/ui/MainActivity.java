@@ -474,7 +474,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     public void onDialogNegativeClick() {
-
+        mNavigationView.setCheckedItem(R.id.nav_newgame_main);
     }
 
     public static class ImportBoardDialog extends DialogFragment {
@@ -505,7 +505,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             })
                     .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
-                            // User cancelled the dialog
+                            for(IImportDialogFragmentListener l : listeners) {
+                                l.onDialogNegativeClick();
+                            }
                         }
                     });
             return builder.create();
