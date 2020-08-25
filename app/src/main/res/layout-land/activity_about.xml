@@ -88,6 +88,13 @@
             android:text="@string/about_author_names"/>
 
         <TextView
+            android:id="@+id/co_authorname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/about_co_author_names"/>
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
