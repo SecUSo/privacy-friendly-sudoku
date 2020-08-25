@@ -67,7 +67,8 @@
     <string name="app_name_long" translatable="false">Privacy Friendly Sudoku</string>
     <string name="version_number">Version:</string>
     <string name="about_author">Authors:</string>
-    <string name="about_author_names" translatable="false">Christopher Beckmann, Timm Lippert</string>
+    <string name="about_author_names" translatable="false">Christopher Beckmann, Timm Lippert,</string>
+    <string name="about_co_author_names" translatable="false">Katharina Kaus, Erik Waegerle</string>
     <string name="about_author_contributors">and contributors.</string>
     <string name="about_affiliation">In affiliation with</string>
     <string name="privacy_friendly">This application belongs to the group of Privacy Friendly Apps developed by Karlsruher Institute for Technology (KIT). Sourcecode licensed under GPLv3. Images copyright KIT and Google Inc.</string>
