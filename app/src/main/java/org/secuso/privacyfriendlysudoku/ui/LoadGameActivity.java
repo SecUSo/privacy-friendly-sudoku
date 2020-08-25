@@ -229,6 +229,7 @@ public class LoadGameActivity extends BaseActivity implements IDeleteDialogFragm
             TextView playedTime = (TextView)convertView.findViewById(R.id.loadgame_listentry_timeplayed);
             TextView lastTimePlayed = (TextView)convertView.findViewById(R.id.loadgame_listentry_lasttimeplayed);
             ImageView image = (ImageView)convertView.findViewById(R.id.loadgame_listentry_gametypeimage);
+            ImageView customImage = (ImageView)convertView.findViewById(R.id.loadgame_listentry_custom_label);
 
             switch(gic.getGameType()) {
                 case Default_6x6:
@@ -248,6 +249,10 @@ public class LoadGameActivity extends BaseActivity implements IDeleteDialogFragm
             difficultyBar.setNumStars(GameDifficulty.getValidDifficultyList().size());
             difficultyBar.setMax(GameDifficulty.getValidDifficultyList().size());
             difficultyBar.setRating(GameDifficulty.getValidDifficultyList().indexOf(gic.getDifficulty())+1);
+
+            if(!gic.isCustom()) {
+               customImage.setVisibility(View.INVISIBLE);
+            }
 
             int time = gic.getTimePlayed();
             int seconds = time % 60;

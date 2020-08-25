@@ -260,6 +260,7 @@ public class DailySudokuActivity<Database> extends AppCompatActivity {
             TextView playedTime = (TextView)convertView.findViewById(R.id.loadgame_listentry_timeplayed);
             TextView lastTimePlayed = (TextView)convertView.findViewById(R.id.loadgame_listentry_lasttimeplayed);
             ImageView image = (ImageView)convertView.findViewById(R.id.loadgame_listentry_gametypeimage);
+            ImageView customImage = (ImageView)convertView.findViewById(R.id.loadgame_listentry_custom_label);
 
 
             image.setImageResource(R.drawable.icon_default_9x9);
@@ -269,6 +270,7 @@ public class DailySudokuActivity<Database> extends AppCompatActivity {
             difficultyBar.setNumStars(GameDifficulty.getValidDifficultyList().size());
             difficultyBar.setMax(GameDifficulty.getValidDifficultyList().size());
             difficultyBar.setRating(GameDifficulty.getValidDifficultyList().indexOf(sudoku.getDifficulty())+1);
+            customImage.setVisibility(View.INVISIBLE);
 
 
             Calendar currentDate = Calendar.getInstance();
