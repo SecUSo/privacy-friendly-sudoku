@@ -12,9 +12,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".SettingsActivity"
-            android:label="@string/title_activity_settings_new"></activity>
-        <activity
             android:name="org.secuso.privacyfriendlysudoku.ui.SplashActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
