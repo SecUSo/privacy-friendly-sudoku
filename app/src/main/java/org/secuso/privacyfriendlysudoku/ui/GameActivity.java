@@ -84,6 +84,7 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
 
     public static final String URL_SCHEME_WITHOUT_HOST = "sudoku";
     public static final String URL_SCHEME_WITH_HOST = "http";
+    public static final String URL_SCHEME_WITH_HOST2 = "https";
     public static final String URL_HOST = "sudoku.secuso.org";
 
     GameController gameController;
@@ -93,10 +94,21 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
     TextView timerView;
     TextView viewName ;
     RatingBar ratingBar;
-    private boolean gameSolved = false;
-    private boolean startGame = true;
     SaveLoadStatistics statistics = new SaveLoadStatistics(this);
     WinDialog dialog = null;
+    private boolean gameSolved = false;
+    private boolean startGame = true;
+
+    public static String timeToString(int time) {
+        int seconds = time % 60;
+        int minutes = ((time - seconds) / 60) % 60;
+        int hours = (time - minutes - seconds) / (3600);
+        String h, m, s;
+        s = (seconds < 10) ? "0" + String.valueOf(seconds) : String.valueOf(seconds);
+        m = (minutes < 10) ? "0" + String.valueOf(minutes) : String.valueOf(minutes);
+        h = (hours < 10) ? "0" + String.valueOf(hours) : String.valueOf(hours);
+        return h + ":" + m + ":" + s;
+    }
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
@@ -164,7 +176,8 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
                 String input = "";
                 if (data.getScheme().equals(URL_SCHEME_WITHOUT_HOST)){
                     input = data.getHost();
-                } else if (data.getScheme().equals(URL_SCHEME_WITH_HOST) && data.getHost().equals(URL_HOST)){
+                } else if ((data.getScheme().equals(URL_SCHEME_WITH_HOST) || data.getScheme().equals(URL_SCHEME_WITH_HOST2))
+                        && data.getHost().equals(URL_HOST)){
                     input = data.getPath();
                     input =input.replace("/", "");
                 }
@@ -411,6 +424,12 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
         keyboard.setSymbols(s);
     }
 
+    /*@Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.game_view, menu);
+        return true;
+    }*/
 
     @Override
     public void onBackPressed() {
@@ -422,13 +441,6 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
             super.onBackPressed();
         }
     }
-
-    /*@Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.game_view, menu);
-        return true;
-    }*/
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -528,7 +540,6 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
         return true;
     }
 
-
     @Override
     public void onSolved() {
         gameSolved = true;
@@ -603,18 +614,6 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
         specialButtonLayout.setButtonsEnabled(false);
     }
 
-    public static String timeToString(int time) {
-        int seconds = time % 60;
-        int minutes = ((time - seconds) / 60) % 60;
-        int hours = (time - minutes - seconds) / (3600);
-        String h, m, s;
-        s = (seconds < 10) ? "0" + String.valueOf(seconds) : String.valueOf(seconds);
-        m = (minutes < 10) ? "0" + String.valueOf(minutes) : String.valueOf(minutes);
-        h = (hours < 10) ? "0" + String.valueOf(hours) : String.valueOf(hours);
-        return h + ":" + m + ":" + s;
-    }
-
-
     private void disableReset(){
         NavigationView navView = (NavigationView)findViewById(R.id.nav_view);
         Menu navMenu = navView.getMenu();
@@ -655,6 +654,22 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     public void onDialogNegativeClick() {
         // do nothing
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        // Save the user's current game state
+
+        savedInstanceState.putParcelable("gameController", gameController);
+        savedInstanceState.putInt("gameSolved", gameSolved ? 1 : 0);
+
+        // Always call the superclass so it can save the view hierarchy state
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        //super.onRestoreInstanceState(savedInstanceState);
     }
 
     public static class ShareBoardDialog extends DialogFragment {
@@ -748,22 +763,6 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
                     });
             return builder.create();
         }
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        // Save the user's current game state
-
-        savedInstanceState.putParcelable("gameController", gameController);
-        savedInstanceState.putInt("gameSolved", gameSolved ? 1 : 0);
-
-        // Always call the superclass so it can save the view hierarchy state
-        super.onSaveInstanceState(savedInstanceState);
-    }
-
-    @Override
-    public void onRestoreInstanceState(Bundle savedInstanceState) {
-        //super.onRestoreInstanceState(savedInstanceState);
     }
 
 }
