@@ -60,7 +60,6 @@ import org.secuso.privacyfriendlysudoku.game.GameDifficulty;
 import org.secuso.privacyfriendlysudoku.game.GameType;
 import org.secuso.privacyfriendlysudoku.ui.listener.IImportDialogFragmentListener;
 import org.secuso.privacyfriendlysudoku.ui.view.R;
-import org.secuso.privacyfriendlysudoku.ui.SettingsActivity;
 import org.secuso.privacyfriendlysudoku.ui.view.databinding.DialogFragmentImportBoardBinding;
 
 import java.util.LinkedList;
