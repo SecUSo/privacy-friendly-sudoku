@@ -13,6 +13,7 @@
         <attr name="rankingStarNotSelected" format="color"/>
         <attr name="inactiveButtonColor" format="color"/>
         <attr name="activeButtonColor" format="color"/>
+        <attr name="menuTextColor" format="color"/>
         <attr name="highlightedButtonBorder" format="color"/>
         <attr name="backgroundTutorialSlide" format="color"/>
         <attr name="backgroundTutorialStars" format="color"/>

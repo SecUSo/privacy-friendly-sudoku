@@ -22,6 +22,7 @@
         <item name="actionBarTheme">@style/ToolbarStyle</item>
         <item name="backgroundTutorialSlide">@color/colorAccent</item>
         <item name="backgroundTutorialStars">@color/white</item>
+        <item name="menuTextColor">@null</item>
     </style>
 
     <style name="ToolbarStyle" parent="Widget.AppCompat.ActionBar">
