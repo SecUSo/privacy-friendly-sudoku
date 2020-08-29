@@ -84,10 +84,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-
-
         settings = PreferenceManager.getDefaultSharedPreferences(this);
         if (settings.getBoolean("pref_dark_mode_setting", false )) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
@@ -100,6 +96,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
+
+        super.onCreate(savedInstanceState);
 
         NewLevelManager newLevelManager = NewLevelManager.getInstance(getApplicationContext(), settings);
 
@@ -170,12 +168,14 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
                 createGameBar.setChecked(false);
-                ((Button) findViewById(R.id.playButton)).setText("New Game");
+                ((Button) findViewById(R.id.playButton)).setText(R.string.new_game);
 
                 if (rating >= 1) {
                     difficultyText.setText(getString(difficultyList.get((int) ratingBar.getRating() - 1).getStringResID()));
                 } else {
-                    difficultyText.setText("Custom Sudoku");
+                    difficultyText.setText(R.string.difficulty_custom);
+                    createGameBar.setChecked(true);
+                    ((Button)findViewById(R.id.playButton)).setText(R.string.create_game);
                 }
             }
         });
@@ -186,7 +186,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 if (isChecked) {
 
                     difficultyBar.setRating(0);
-                    ((Button)findViewById(R.id.playButton)).setText("Create");
+                    ((Button)findViewById(R.id.playButton)).setText(R.string.create_game);
                 }
                 createGameBar.setChecked(isChecked);
             }});
