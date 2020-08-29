@@ -14,6 +14,7 @@
     <string name="menu_reset">Reset Board</string>
     <string name="menu_share">Share Board</string>
     <string name="menu_continue_game">Continue Game</string>
+    <string name="create_game">Create Game</string>
 
     <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
     <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
@@ -82,6 +83,7 @@
     <string name="difficulty_easy">Easy</string>
     <string name="difficulty_moderate">Moderate</string>
     <string name="difficulty_hard">Hard</string>
+    <string name="difficulty_custom">Custom</string>
 
     <!--###GameActivity -->
     <string name="Sudoku" translatable="false">Sudoku</string>
@@ -140,7 +142,9 @@
     <string name="help_notes">Note toggle button</string>
     <string name="help_notes_summary">Toggles if numbers should be set as notes or as values in a field</string>
     <string name="finalize">Finalize button</string>
-    <string name="finalize_summary">Is used to confirm the numeric input in the create sudoku game mode </string>
+    <string name="finalize_summary">Confirms the numeric input in the create sudoku game mode </string>
+    <string name="help_import">Import button</string>
+    <string name="help_import_summary">Imports a new, customizable sudoku field into the create sudoku game mode.\nWarning: this will override the entire field and its old values cannot be recovered.</string>
     <string name="help_privacyInfo">Privacy Info</string>
     <string name="help_permissions">Permissions</string>
     <string name="help_permissions_summary">Privacy Friendly Sudoku does not use any permissions.</string>

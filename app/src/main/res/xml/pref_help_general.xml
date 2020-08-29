@@ -38,6 +38,10 @@
             android:selectable="false"
             android:icon="@drawable/ic_finalize"
             android:summary="@string/finalize_summary"/>
+        <Preference android:title="@string/help_import"
+            android:selectable="false"
+            android:icon="@drawable/ic_import"
+            android:summary="@string/help_import_summary"/>
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/help_privacyInfo">

@@ -83,10 +83,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-
-
         settings = PreferenceManager.getDefaultSharedPreferences(this);
         if (settings.getBoolean("pref_dark_mode_setting", false )) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
@@ -99,6 +95,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
+
+        super.onCreate(savedInstanceState);
 
         NewLevelManager newLevelManager = NewLevelManager.getInstance(getApplicationContext(), settings);
 
@@ -169,12 +167,14 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
                 createGameBar.setChecked(false);
-                ((Button) findViewById(R.id.playButton)).setText("New Game");
+                ((Button) findViewById(R.id.playButton)).setText(R.string.new_game);
 
                 if (rating >= 1) {
                     difficultyText.setText(getString(difficultyList.get((int) ratingBar.getRating() - 1).getStringResID()));
                 } else {
-                    difficultyText.setText("Custom Sudoku");
+                    difficultyText.setText(R.string.difficulty_custom);
+                    createGameBar.setChecked(true);
+                    ((Button)findViewById(R.id.playButton)).setText(R.string.create_game);
                 }
             }
         });
@@ -185,13 +185,21 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 if (isChecked) {
 
                     difficultyBar.setRating(0);
-                    ((Button)findViewById(R.id.playButton)).setText("Create");
+                    ((Button)findViewById(R.id.playButton)).setText(R.string.create_game);
                 }
                 createGameBar.setChecked(isChecked);
             }});
 
-        GameDifficulty lastChosenDifficulty = GameDifficulty.valueOf(settings.getString("lastChosenDifficulty", "Moderate"));
-        //difficultyBar.setRating(GameDifficulty.getValidDifficultyList().indexOf(lastChosenDifficulty) + 1);
+        String retrievedDifficulty = settings.getString("lastChosenDifficulty", "Moderate");
+        GameDifficulty lastChosenDifficulty = GameDifficulty.valueOf(
+                retrievedDifficulty.equals("Custom")? GameDifficulty.Unspecified.toString() : retrievedDifficulty);
+
+        if (lastChosenDifficulty == GameDifficulty.Unspecified) {
+            difficultyBar.setRating(0);
+            createGameBar.setChecked(true);
+        } else {
+            difficultyBar.setRating(GameDifficulty.getValidDifficultyList().indexOf(lastChosenDifficulty) + 1);
+        }
         /*LayerDrawable stars = (LayerDrawable)difficultyBar.getProgressDrawable();
         stars.getDrawable(2).setColorFilter(getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_ATOP);//Color for Stars fully selected
         stars.getDrawable(1).setColorFilter(getResources().getColor(R.color.middleblue), PorterDuff.Mode.SRC_ATOP);//Color for Stars partially selected
@@ -243,9 +251,14 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             case R.id.playButton:
                 GameType gameType = GameType.getValidGameTypes().get(mViewPager.getCurrentItem());
                 if (((CheckBox)findViewById(R.id.circleButton)).isChecked()) {
-                    // send everything to game activity
+                    // start CreateSudokuActivity
                     i = new Intent(this, CreateSudokuActivity.class);
                     i.putExtra("gameType", gameType.name());
+
+                    SharedPreferences.Editor editor = settings.edit();
+                    editor.putString("lastChosenGameType", gameType.name());
+                    editor.putString("lastChosenDifficulty", "Custom");
+                    editor.apply();
                     //i.putExtra("gameDifficulty", GameDifficulty.Easy);
                     break;
                 }
