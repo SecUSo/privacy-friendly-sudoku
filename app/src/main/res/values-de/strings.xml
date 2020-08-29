@@ -7,12 +7,13 @@
     <string name="menu_main">Hauptmenü</string>
     <string name="menu_help">Hilfe</string>
     <string name="menu_about">Über</string>
+    <string name="create_game">Spiel erstellen</string>
 
     <!-- Strings related to Settings -->
     <string name="title_activity_settings">Einstellungen</string>
     <string name="pref_dark_mode">Nachtmodus</string>
     <string name="pref_dark_mode_setting">Nachtmodus</string>
-    <string name="pref_dark_mode_summary">Wechsel zwischen Tages und Nacht Modus</string>
+    <string name="pref_dark_mode_summary">Wechsel zwischen Tages- und Nacht-Modus</string>
 
     <!-- About Page -->
     <string name="about_affiliation">In Zusammenarbeit mit:</string>
@@ -26,6 +27,7 @@
     <string name="difficulty_easy">Leicht</string>
     <string name="difficulty_moderate">Normal</string>
     <string name="difficulty_hard">Schwer</string>
+    <string name="difficulty_custom">Benutzerdefiniert</string>
     <string name="about_qqwing">Diese App benutzt eine modifizierte Version des QQWing v1.3.4.</string>
     <string name="average_time">Ø-Zeit:</string>
     <string name="cancel">Abbrechen</string>
@@ -74,7 +76,9 @@
     <string name="help_notes_summary">Schaltet zwischen Notizen- und Werteingabe hin und her</string>
     <string name="help_notes">Notizen</string>
     <string name="finalize">Fertigstellen</string>
-    <string name="finalize_summary">Ist zur Bestätigung der Zahleneingabe im "Create Sudoku" Spielmodus </string>
+    <string name="finalize_summary">Bestätigt die Zahleneingabe beim Erstellen eines benutzerdefinierten Sudokus </string>
+    <string name="help_import">Importieren</string>
+    <string name="help_import_summary">Importiert beim Erstellen eines benutzerdefinierten Sudokus ein neues, editierbares Sudoku-Feld.\nWarnung: Durch den Import werden alle zuvor eingetragenen Felder unwiderruflich überschrieben. </string>
     <string name="help_keyhighlighted_yellow_summary">Zeigt an, ob die korrekte Anzahl des Wertes im Spielfeld vorkommt.</string>
     <string name="help_keyhighlighted_summary">Zeigt an, dass der Wert ausgewählt ist. Jede Berührung eines Feldes setzt in diesem Modus die Zahl direkt, ohne das Feld vorher auszuwählen.</string>
     <string name="help_keyboard">Tastatur</string>
