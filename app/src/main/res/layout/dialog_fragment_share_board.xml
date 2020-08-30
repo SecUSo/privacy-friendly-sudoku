@@ -33,6 +33,7 @@
         android:layout_marginRight="8dp"
         android:ems="10"
         android:inputType="textPersonName"
+        android:textColor="?attr/standardVectorGraphic"
         app:layout_constraintBottom_toBottomOf="@+id/ver3_copy_sudoku_to_clipboard_button"
         app:layout_constraintEnd_toStartOf="@+id/ver3_copy_sudoku_to_clipboard_button"
         app:layout_constraintStart_toStartOf="parent"

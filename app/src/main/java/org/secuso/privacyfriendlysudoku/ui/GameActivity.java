@@ -129,8 +129,6 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
 
         /*
@@ -146,6 +144,8 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
         if(sharedPref.getBoolean("pref_keep_screen_on", true)) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         }
+
+        super.onCreate(savedInstanceState);
 
         GameType gameType = GameType.Unspecified;
         GameDifficulty gameDifficulty = GameDifficulty.Unspecified;
@@ -712,6 +712,7 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
             DialogFragmentShareBoardBinding binding = DialogFragmentShareBoardBinding.inflate(inflater);
 
             binding.ver3DisplaySudokuTextView.setText(displayCode);
+            binding.ver3DisplaySudokuTextView.setEnabled(false);
             binding.ver3CopySudokuToClipboardButton.setOnClickListener(copyClickListener);
             builder.setView(binding.getRoot());
 
