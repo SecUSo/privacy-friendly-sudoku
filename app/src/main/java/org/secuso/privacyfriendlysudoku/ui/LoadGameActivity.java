@@ -252,6 +252,8 @@ public class LoadGameActivity extends BaseActivity implements IDeleteDialogFragm
 
             if(!gic.isCustom()) {
                customImage.setVisibility(View.INVISIBLE);
+            } else {
+                customImage.setVisibility(View.VISIBLE);
             }
 
             int time = gic.getTimePlayed();
