@@ -66,9 +66,13 @@
     </style>
 
     <style name="RatingBar" parent="RatingBarStyle">
-        <item name="android:minHeight">50dp</item>
-        <item name="android:maxHeight">50dp</item>
-        <item name="android:layout_height">50dp</item>
+        <item name="android:paddingBottom">0dp</item>
+    </style>
+
+    <style name="CheckBoxStyle" parent="@style/Widget.AppCompat.CompoundButton.CheckBox"/>
+
+    <style name="CheckBox" parent="CheckBoxStyle">
+        <item name="android:layout_marginBottom">0dp</item>
     </style>
 
     <style name="SplashTheme" parent="@android:style/Theme.NoTitleBar.Fullscreen">

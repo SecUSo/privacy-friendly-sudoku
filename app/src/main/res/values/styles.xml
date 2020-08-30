@@ -69,6 +69,12 @@
         <item name="android:layout_height">50dp</item>
     </style>
 
+    <style name="CheckBoxStyle" parent="@style/Widget.AppCompat.CompoundButton.CheckBox"/>
+
+    <style name="CheckBox" parent="CheckBoxStyle">
+        <item name="android:layout_marginBottom">0dp</item>
+    </style>
+
     <style name="SplashTheme" parent="@android:style/Theme.NoTitleBar.Fullscreen">
         <item name="android:windowBackground">@drawable/splash_screen</item>
         <item name="android:windowNoTitle">true</item>
