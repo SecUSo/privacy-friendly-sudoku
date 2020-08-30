@@ -1,3 +1,22 @@
+/*
+ * qqwing - Sudoku solver and generator
+ * Copyright (C) 2014 Stephen Ostermiller
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
+
 package org.secuso.privacyfriendlysudoku.ui;
 
 import android.content.SharedPreferences;
@@ -21,22 +40,23 @@ import org.secuso.privacyfriendlysudoku.ui.view.R;
 public class SettingsActivity extends AppCompatActivity {
 
 
-    private static PreferenceScreen prefScreen;
+    private static SettingsFragment settingsFragment;
 
     private static void recheckNightModeProperties(SharedPreferences sharedPreferences) {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
 
             if (sharedPreferences.getBoolean("pref_dark_mode_setting", false)) {
-                prefScreen.findPreference("pref_dark_mode_automatically_by_system").setEnabled(false);
-                prefScreen.findPreference("pref_dark_mode_automatically_by_battery").setEnabled(false);
+
+                settingsFragment.findPreference("pref_dark_mode_automatically_by_system").setEnabled(false);
+                settingsFragment.findPreference("pref_dark_mode_automatically_by_battery").setEnabled(false);
             } else {
                 if (sharedPreferences.getBoolean("pref_dark_mode_automatically_by_battery", false) && sharedPreferences.getBoolean("pref_dark_mode_automatically_by_system", false) ) {
                     sharedPreferences.edit().putBoolean("pref_dark_mode_automatically_by_battery", false).commit();
                 }
 
-                prefScreen.findPreference("pref_dark_mode_automatically_by_system").setEnabled(!sharedPreferences.getBoolean("pref_dark_mode_automatically_by_battery", false));
-                prefScreen.findPreference("pref_dark_mode_automatically_by_battery").setEnabled(!sharedPreferences.getBoolean("pref_dark_mode_automatically_by_system", false));
+                settingsFragment.findPreference("pref_dark_mode_automatically_by_system").setEnabled(!sharedPreferences.getBoolean("pref_dark_mode_automatically_by_battery", false));
+                settingsFragment.findPreference("pref_dark_mode_automatically_by_battery").setEnabled(!sharedPreferences.getBoolean("pref_dark_mode_automatically_by_system", false));
             }}
 
         if (sharedPreferences.getBoolean("pref_dark_mode_setting", false )) {
@@ -51,7 +71,7 @@ public class SettingsActivity extends AppCompatActivity {
         }
     }
 
-    static SharedPreferences.OnSharedPreferenceChangeListener x = new SharedPreferences.OnSharedPreferenceChangeListener() {
+    static SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
 
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
@@ -65,19 +85,17 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings_activity);
+        settingsFragment = new SettingsFragment();
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.settings, new SettingsFragment())
+                .replace(R.id.settings, settingsFragment)
                 .commit();
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        SharedPreferences preferenceManager = PreferenceManager
-                .getDefaultSharedPreferences(this);
 
-        preferenceManager.registerOnSharedPreferenceChangeListener(x);
 
     }
     @Override
@@ -92,14 +110,14 @@ public class SettingsActivity extends AppCompatActivity {
 
 
     public static class SettingsFragment extends PreferenceFragmentCompat {
+
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.pref_settings_general, rootKey);
-            prefScreen = getPreferenceScreen();
             SharedPreferences preferenceManager = PreferenceManager
                     .getDefaultSharedPreferences(getActivity());
+            preferenceManager.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
             recheckNightModeProperties(preferenceManager);
-
         }
     }
 }
