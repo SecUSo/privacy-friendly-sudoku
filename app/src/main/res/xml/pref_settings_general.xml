@@ -34,7 +34,7 @@
         android:key="pref_dark_mode_setting"
         android:title="@string/pref_dark_mode"
         android:summary="@string/pref_dark_mode_summary"
-        android:defaultValue="true"/>
+        android:defaultValue="false"/>
 
     </PreferenceCategory>
 
