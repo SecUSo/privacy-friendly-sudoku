@@ -9,7 +9,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:fitsSystemWindows="true"
         tools:context="tu_darmstadt.sudoku.ui.MainActivity"
         android:layout_height="match_parent"
@@ -80,8 +79,7 @@
                     android:layout_centerVertical="true"
                     android:onClick="onClick"/>
             </RelativeLayout>
-            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0px"
                 android:layout_weight="6"
@@ -103,28 +101,43 @@
                     android:text="@string/difficulty_easy"
                     android:textSize="@dimen/main_text_difficulty"/>
 
-                <LinearLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:id="@+id/linearLayout4">
 
                     <CheckBox
                         android:id="@+id/circleButton"
-                        android:layout_width="35dp"
-                        android:layout_height="35dp"
-                        android:button="@drawable/create_game_src" />
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="4dp"
+                        android:layout_marginRight="4dp"
+                        android:layout_marginBottom="7dp"
+                        android:button="@drawable/create_game_src"
+                        app:layout_constraintBottom_toBottomOf="@+id/difficultyBar"
+                        app:layout_constraintEnd_toStartOf="@+id/difficultyBar"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/difficultyBar"
+                        app:layout_constraintVertical_bias="0.65" />
 
                     <RatingBar
                         android:id="@+id/difficultyBar"
                         style="@style/RatingBar"
                         android:layout_width="wrap_content"
-                        android:layout_gravity="center_horizontal"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="41dp"
+                        android:layout_marginLeft="41dp"
                         android:clickable="true"
                         android:numStars="3"
                         android:rating="0.5"
-                        android:stepSize="1" />
-                </LinearLayout>
+                        android:stepSize="1"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <Button
                     android:textColor="?attr/lightestFontColor"
