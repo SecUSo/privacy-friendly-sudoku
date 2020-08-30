@@ -40,6 +40,8 @@ import androidx.viewpager.widget.ViewPager;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -442,9 +444,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
          remove the present prefix, or, if the input contains neither of the prefixes, notify the user
          that their input is not valid
          */
-        if (input.contains(prefix1)) {
+        if (input.startsWith(prefix1)) {
             inputSudoku = input.replace(prefix1, "");
-        } else if (input.contains(prefix2)) {
+        } else if (input.startsWith(prefix2)) {
             inputSudoku = input.replace(prefix2, "");
         } else {
             Toast.makeText(MainActivity.this,
@@ -452,7 +454,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             return;
         }
 
-        int size = (int)Math.sqrt(inputSudoku.length());
+        double size = Math.sqrt(inputSudoku.length());
         boolean validSize = false;
 
         // check whether or not the size of the encoded sudoku is valid; if not, notify the user
@@ -468,7 +470,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             return;
         }
 
-        GameType gameType = Enum.valueOf(GameType.class, "Default_" + size + "x" + size);
+        Log.i("Default_" + size + "x" + size, "SudokuTag");
+
+        GameType gameType = Enum.valueOf(GameType.class, "Default_" + (int)size + "x" + (int)size);
 
         //check whether or not the sudoku is valid and has a unique solution
         boolean solvable = CreateSudokuActivity.verify(gameType, inputSudoku);

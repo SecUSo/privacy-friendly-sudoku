@@ -215,9 +215,9 @@ public class CreateSudokuActivity extends BaseActivity implements IFinalizeDialo
          remove the present prefix, or, if the input contains neither of the prefixes, notify the user
          that their input is not valid
          */
-        if (input.contains(prefix1)) {
+        if (input.startsWith(prefix1)) {
             inputSudoku = input.replace(prefix1, "");
-        } else if (input.contains(prefix2)) {
+        } else if (input.startsWith(prefix2)) {
             inputSudoku = input.replace(prefix2, "");
         } else {
             Toast.makeText(CreateSudokuActivity.this,
