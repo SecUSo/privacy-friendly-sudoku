@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?attr/backgroundTutorialSlide">
@@ -27,32 +29,48 @@
             android:textColor="?attr/lightestFontColor"
             android:textSize="@dimen/slide_title"
             android:textStyle="bold" />
-        <LinearLayout
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/linearLayout5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:background="?attr/backgroundTutorialStars">
 
             <CheckBox
                 android:id="@+id/circleButton"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="?attr/backgroundTutorialStars"
+                style="@style/CheckBox"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginEnd="4dp"
+                android:layout_marginRight="4dp"
                 android:button="@drawable/create_game_src"
-                android:clickable="false" />
+                android:clickable="false"
+                app:layout_constraintBottom_toBottomOf="@+id/difficultyBar"
+                app:layout_constraintEnd_toStartOf="@+id/difficultyBar"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/difficultyBar"
+                app:layout_constraintVertical_bias="0.65" />
 
             <RatingBar
                 android:id="@+id/difficultyBar"
                 style="@style/RatingBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="45dp"
+                android:layout_marginLeft="45dp"
                 android:isIndicator="true"
-                android:layout_gravity="center_horizontal"
                 android:numStars="4"
                 android:rating="1"
-                android:background="?attr/backgroundTutorialStars"
-                android:stepSize="1" />
-        </LinearLayout>
+                android:stepSize="1"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/circleButton"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
             android:layout_width="wrap_content"
