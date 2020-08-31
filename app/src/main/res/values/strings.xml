@@ -161,10 +161,10 @@
     <string name="slide2_heading">Game mode</string>
     <string name="slide2_text">Swipe or press the arrow buttons on the left and right to change the game mode.</string>
 
-    <string name="slide3_heading">Custom Sudoku </string>
-    <string name="slide3_heading2">and difficulty</string>
+    <string name="slide3_heading">Difficulty /</string>
+    <string name="slide3_heading2">custom sudoku</string>
     <string name="slide3_text">Press or swipe the stars to change the difficulty.
-        For the Custom Sudoku game mode press the circle.</string>
+        Press the circle to activate the Custom Sudoku game mode and create your own sudoku.</string>
 
     <string name="next">Next</string>
     <string name="skip">Skip</string>

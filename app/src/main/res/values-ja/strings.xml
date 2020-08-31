@@ -124,7 +124,7 @@
     <string name="slide2_heading">ゲームモード</string>
     <string name="slide2_text">スワイプまたは左右の矢印ボタンを押して、ゲームモードを変更します。</string>
 
-    <string name="slide3_heading">難易度</string>
+    <string name="slide3_heading">難易度 /</string>
     <string name="slide3_text">星を押すかスワイプして難易度を変えます。</string>
 
     <string name="next">次</string>

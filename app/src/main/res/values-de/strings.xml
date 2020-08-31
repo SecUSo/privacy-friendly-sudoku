@@ -104,9 +104,10 @@
     <string name="slide2_heading">Spielmodus</string>
     <string name="slide2_text">Wischen oder drücken Sie auf die Pfeile auf der linken und rechten Seite um den Spielmodus zu ändern.</string>
 
-    <string name="slide3_heading">Schwierigkeit</string>
-    <string name="slide3_text">Drücken oder wischen Sie über die Sterne um den Schwierigkeitsgrad zu ändern.</string>
-
+    <string name="slide3_heading">Schwierigkeit /</string>
+    <string name="slide3_heading2">eigene Sudokus</string>
+    <string name="slide3_text">Drücken oder wischen Sie über die Sterne um den Schwierigkeitsgrad zu ändern.
+        Durch Auswahl des Kreises können Sie den Modus zum Erstellen benutzerdefinierter Sudokus aktivieren.</string>
     <string name="next">Weiter</string>
     <string name="skip">Skip</string>
     <string name="menu_tutorial">Tutorial</string>
