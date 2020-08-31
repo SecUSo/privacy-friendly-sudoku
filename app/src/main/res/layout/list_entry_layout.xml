@@ -24,7 +24,7 @@
 
         <ImageView
             android:id="@+id/loadgame_listentry_custom_label"
-            android:layout_width="0dp"
+            android:layout_width="10dp"
             android:layout_height="0dp"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
