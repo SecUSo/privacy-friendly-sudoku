@@ -41,7 +41,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -434,23 +433,28 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }*/
 
     public void onImportDialogPositiveClick(String input) {
-        String inputSudoku;
+        String inputSudoku = null;
+        String prefix = "";
+        StringBuilder errorMessage = new StringBuilder();
 
-        // a valid input needs to contain exactly one of these prefixes
-        String prefix1 = GameActivity.URL_SCHEME_WITHOUT_HOST + "://";
-        String prefix2 = GameActivity.URL_SCHEME_WITH_HOST + "://" + GameActivity.URL_HOST + "/";
+        // a valid input needs to contain exactly one of the valid prefixes
+        for (int i = 0; i < GameActivity.validUris.size(); i++) {
+            prefix = GameActivity.validUris.get(i).getHost().equals("") ?
+                    GameActivity.validUris.get(i).getScheme() + "://" :
+                    GameActivity.validUris.get(i).getScheme() + "://" + GameActivity.validUris.get(i).getHost() + "/";
+            if (input.startsWith(prefix)) {
+                inputSudoku = input.replace(prefix, "");
+                break;
+            }
 
-        /*
-         remove the present prefix, or, if the input contains neither of the prefixes, notify the user
-         that their input is not valid
-         */
-        if (input.startsWith(prefix1)) {
-            inputSudoku = input.replace(prefix1, "");
-        } else if (input.startsWith(prefix2)) {
-            inputSudoku = input.replace(prefix2, "");
-        } else {
+            String endOfRecord = i == GameActivity.validUris.size() - 1 ? "" : ", ";
+            errorMessage.append(prefix);
+            errorMessage.append(endOfRecord);
+        }
+
+        if (inputSudoku == null) {
             Toast.makeText(MainActivity.this,
-                    this.getString(R.string.menu_import_wrong_format_custom_sudoku) + " " + prefix1 + ", " + prefix2, Toast.LENGTH_LONG).show();
+                    this.getString(R.string.menu_import_wrong_format_custom_sudoku) + " " + errorMessage.toString(), Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -470,8 +474,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             return;
         }
 
-        Log.i("Default_" + size + "x" + size, "SudokuTag");
-
         GameType gameType = Enum.valueOf(GameType.class, "Default_" + (int)size + "x" + (int)size);
 
         //check whether or not the sudoku is valid and has a unique solution
@@ -481,7 +483,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         if (solvable) {
             Toast.makeText(MainActivity.this, R.string.finished_verifying_custom_sudoku_toast, Toast.LENGTH_LONG).show();
             final Intent intent = new Intent(this, GameActivity.class);
-            intent.setData(Uri.parse(prefix1 + inputSudoku));
+            intent.setData(Uri.parse(prefix + inputSudoku));
             startActivity(intent);
             finish();
         } else {

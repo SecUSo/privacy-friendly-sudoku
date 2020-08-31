@@ -44,6 +44,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -77,15 +78,15 @@ import org.secuso.privacyfriendlysudoku.ui.view.WinDialog;
 import org.secuso.privacyfriendlysudoku.ui.view.databinding.DialogFragmentShareBoardBinding;
 
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
 public class GameActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, IGameSolvedListener ,ITimerListener, IHintDialogFragmentListener, IResetDialogFragmentListener, IShareDialogFragmentListener {
 
-    public static final String URL_SCHEME_WITHOUT_HOST = "sudoku";
-    public static final String URL_SCHEME_WITH_HOST = "http";
-    public static final String URL_SCHEME_WITH_HOST2 = "https";
-    public static final String URL_HOST = "sudoku.secuso.org";
+     public static final List<Uri> validUris = Arrays.asList(Uri.parse("sudoku://"),
+             Uri.parse("https://sudoku.secuso.org"),
+             Uri.parse("http://sudoku.secuso.org"));
 
     GameController gameController;
     SudokuFieldLayout layout;
@@ -152,7 +153,7 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
         int loadLevelID = 0;
         boolean loadLevel = false;
 
-        if(savedInstanceState == null) {
+         if(savedInstanceState == null) {
 
             Bundle extras = getIntent().getExtras();
 
@@ -174,12 +175,19 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
             if (data != null && !intentReceivedFromMainActivity) {
                 // extract encoded sudoku board from the URI
                 String input = "";
-                if (data.getScheme().equals(URL_SCHEME_WITHOUT_HOST)){
-                    input = data.getHost();
-                } else if ((data.getScheme().equals(URL_SCHEME_WITH_HOST) || data.getScheme().equals(URL_SCHEME_WITH_HOST2))
-                        && data.getHost().equals(URL_HOST)){
-                    input = data.getPath();
-                    input =input.replace("/", "");
+
+                for (int i = 0; i < validUris.size(); i++) {
+                    if (data.getScheme().equals(validUris.get(i).getScheme())) {
+                        if (validUris.get(i).getHost().equals("")) {
+                            input = data.getHost();
+                            break;
+                        }
+                        else if (data.getHost().equals(validUris.get(i).getHost())) {
+                            input = data.getPath();
+                            input =input.replace("/", "");
+                            break;
+                        }
+                    }
                 }
 
                 // Save all of the information that can be extracted from the encoded board in a GameInfoContainer object
@@ -458,8 +466,10 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
 
             case R.id.menu_share:
                 // Create import link from current sudoku board
-                String codeForClipboard = URL_SCHEME_WITHOUT_HOST + "://" + gameController.getCodeOfField();
-                String codeForClipboard1 = URL_SCHEME_WITH_HOST + "://" + URL_HOST + "/" + gameController.getCodeOfField();
+                String scheme = GameActivity.validUris.size() > 0 ? GameActivity.validUris.get(0).getScheme()
+                        + "://" + GameActivity.validUris.get(0).getHost() : "";
+                if (!scheme.equals("") && !scheme.endsWith("/")) scheme = scheme + "/";
+                String codeForClipboard = scheme + gameController.getCodeOfField();
 
                 // Create new ShareBoardDialog using the previously created links
                 ShareBoardDialog shareDialog = new ShareBoardDialog();

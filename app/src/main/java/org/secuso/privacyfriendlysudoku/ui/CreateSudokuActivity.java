@@ -195,7 +195,11 @@ public class CreateSudokuActivity extends BaseActivity implements IFinalizeDialo
             Since the GameActivity expects the links of imported sudokus to start with an url scheme,
             add one to the start of the encoded board
              */
-            intent.setData(Uri.parse(GameActivity.URL_SCHEME_WITHOUT_HOST + "://" + boardContent));
+            String scheme = GameActivity.validUris.size() > 0 ? GameActivity.validUris.get(0).getScheme()
+                    + "://" + GameActivity.validUris.get(0).getHost() : "";
+            if (!scheme.equals("") && !scheme.endsWith("/")) scheme = scheme + "/";
+
+            intent.setData(Uri.parse(scheme + boardContent));
             intent.putExtra("isCustom", true);
             startActivity(intent);
             finish();
@@ -205,23 +209,30 @@ public class CreateSudokuActivity extends BaseActivity implements IFinalizeDialo
 
     }
     public void onImportDialogPositiveClick(String input) {
-        String inputSudoku;
+        String inputSudoku = null;
+        String prefix;
+        StringBuilder errorMessage = new StringBuilder();
 
-        // a valid input needs to contain exactly one of these prefixes
-        String prefix1 = GameActivity.URL_SCHEME_WITHOUT_HOST + "://";
-        String prefix2 = GameActivity.URL_SCHEME_WITH_HOST + "://" + GameActivity.URL_HOST + "/";
+        /*  remove the present prefix, or, if the input contains none of the valid prefixes, notify the user
+         that their input is not valid */
+        for (int i = 0; i < GameActivity.validUris.size(); i++) {
+            prefix = GameActivity.validUris.get(i).getHost().equals("") ?
+                    GameActivity.validUris.get(i).getScheme() + "://" :
+                    GameActivity.validUris.get(i).getScheme() + "://" + GameActivity.validUris.get(i).getHost() + "/";
+            if (input.startsWith(prefix)) {
+                inputSudoku = input.replace(prefix, "");
+                break;
+            }
 
-        /*
-         remove the present prefix, or, if the input contains neither of the prefixes, notify the user
-         that their input is not valid
-         */
-        if (input.startsWith(prefix1)) {
-            inputSudoku = input.replace(prefix1, "");
-        } else if (input.startsWith(prefix2)) {
-            inputSudoku = input.replace(prefix2, "");
-        } else {
+            String endOfRecord = (i == GameActivity.validUris.size() - 1) ? "" : ", ";
+            errorMessage.append(prefix);
+            errorMessage.append(endOfRecord);
+        }
+
+        // the inputSudoku variable being null means the input did not match any of the valid prefixes
+        if (inputSudoku == null) {
             Toast.makeText(CreateSudokuActivity.this,
-                    this.getString(R.string.menu_import_wrong_format_custom_sudoku) + " " + prefix1 + ", " + prefix2, Toast.LENGTH_LONG).show();
+                    this.getString(R.string.menu_import_wrong_format_custom_sudoku) + " " + errorMessage.toString(), Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -237,8 +248,7 @@ public class CreateSudokuActivity extends BaseActivity implements IFinalizeDialo
 
         // if the encoded sudoku is solvable, sent the code directly to the GameActivity; if not, notify the user
         if (solvable) {
-            Toast.makeText(CreateSudokuActivity.this, R.string.finished_verifying_custom_sudoku_toast, Toast.LENGTH_LONG).show();
-            int boardSize = gameController.getGameType().getSize() * gameController.getGameType().getSize();
+           int boardSize = gameController.getGameType().getSize() * gameController.getGameType().getSize();
             GameInfoContainer container = new GameInfoContainer(0, GameDifficulty.Unspecified,
                     gameController.getGameType(), new int [boardSize], new int [boardSize],
                     new boolean [boardSize][gameController.getGameType().getSize()]);
