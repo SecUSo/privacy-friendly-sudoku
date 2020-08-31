@@ -17,5 +17,6 @@
         <attr name="highlightedButtonBorder" format="color"/>
         <attr name="backgroundTutorialSlide" format="color"/>
         <attr name="backgroundTutorialStars" format="color"/>
+        <attr name="blueHighlight" format="color"/>
     </declare-styleable>
 </resources>
