@@ -37,6 +37,7 @@ import android.view.View;
 import android.widget.RatingBar;
 import android.widget.Toast;
 import org.secuso.privacyfriendlysudoku.controller.GameController;
+import org.secuso.privacyfriendlysudoku.controller.GameStateManager;
 import org.secuso.privacyfriendlysudoku.controller.NewLevelManager;
 import org.secuso.privacyfriendlysudoku.controller.database.DatabaseHelper;
 import org.secuso.privacyfriendlysudoku.controller.database.model.DailySudoku;
@@ -184,6 +185,8 @@ public class DailySudokuActivity<Database> extends AppCompatActivity {
             if the 'finished for today' setting is 'false', the player has already started the sudoku
             but has yet to finish it -> send the designated daily sudoku ID to the GameActivity
              */
+            GameStateManager fm = new GameStateManager(getBaseContext(), settings);
+            fm.loadGameStateInfo();
             intent.putExtra("loadLevel", true);
             intent.putExtra("loadLevelID", GameController.DAILY_SUDOKU_ID);
             startActivity(intent);
