@@ -115,7 +115,7 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
 
-        if(gameSolved) {
+        if(gameSolved || !startGame) {
             gameController.pauseTimer();
         } else {
             // start the game
@@ -412,7 +412,7 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
 
         gameController.initTimer();
 
-        if(!gameSolved) {
+        if(!gameSolved && startGame) {
             mHandler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
