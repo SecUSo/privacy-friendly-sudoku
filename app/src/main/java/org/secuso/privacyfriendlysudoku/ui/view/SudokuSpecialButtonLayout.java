@@ -92,7 +92,7 @@ public class SudokuSpecialButtonLayout extends LinearLayout implements IHighligh
                         break;
                     case Hint:
                         if(gameController.isValidCellSelected()) {
-                            if(gameController.getUsedHints() == 0) {
+                            if(gameController.getUsedHints() == 0 && !gameController.gameIsCustom()) {
                                 // are you sure you want to use a hint?
                                 HintConfirmationDialog hintDialog = new HintConfirmationDialog();
                                 hintDialog.show(fragmentManager, "HintDialogFragment");
