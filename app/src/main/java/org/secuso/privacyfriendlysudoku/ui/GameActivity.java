@@ -138,6 +138,11 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
          */
         if (sharedPref.getBoolean("pref_dark_mode_setting", false )) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else if (sharedPref.getBoolean("pref_dark_mode_automatically_by_system", false)) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+
+        } else if(sharedPref.getBoolean("pref_dark_mode_automatically_by_battery", false)){
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY);
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
