@@ -15,7 +15,7 @@
         android:layout_height="match_parent"
         android:layout_marginRight="10dp"
         android:adjustViewBounds="true"
-        android:src="@drawable/icon_default_9x9" />
+        app:srcCompat="@drawable/icon_default_9x9" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/relativeLayout2"
@@ -23,16 +23,13 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/loadgame_listentry_custom_label"
-            android:layout_width="10dp"
+            android:id="@+id/loadgame_listentry_custom_icon"
+            android:layout_width="12dp"
             android:layout_height="0dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            app:layout_constraintBottom_toBottomOf="@+id/loadgame_listentry_gametype"
-            app:layout_constraintEnd_toEndOf="@+id/loadgame_listentry_difficultytext"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/loadgame_listentry_gametype"
-            app:layout_constraintTop_toTopOf="@+id/loadgame_listentry_gametype"
+            app:layout_constraintStart_toStartOf="@id/loadgame_listentry_gametype"
+            app:layout_constraintEnd_toStartOf="@+id/loadgame_listentry_difficultybar"
+            app:layout_constraintTop_toTopOf="@id/loadgame_listentry_difficultybar"
+            app:layout_constraintBottom_toBottomOf="@id/loadgame_listentry_difficultybar"
             app:srcCompat="@drawable/create_game_src" />
 
         <TextView
@@ -47,6 +44,17 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="1.0" />
 
+        <TextView
+            android:id="@+id/loadgame_listentry_custom_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@string/difficulty_custom"
+            android:visibility="gone"
+            app:layout_constraintStart_toEndOf="@id/loadgame_listentry_gametype"
+            app:layout_constraintTop_toTopOf="@id/loadgame_listentry_gametype"
+            app:layout_constraintBottom_toBottomOf="@id/loadgame_listentry_gametype"
+            android:layout_marginLeft="16dp" />
 
         <RatingBar
             android:id="@+id/loadgame_listentry_difficultybar"
@@ -54,12 +62,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="false"
-            android:numStars="3"
+            android:numStars="4"
             android:rating="3"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@id/loadgame_listentry_custom_icon"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0" />
 
@@ -67,11 +75,12 @@
             android:id="@+id/loadgame_listentry_difficultytext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:text="Difficulty"
             app:layout_constraintBottom_toBottomOf="@+id/loadgame_listentry_difficultybar"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/loadgame_listentry_difficultybar"
-            app:layout_constraintTop_toTopOf="@+id/loadgame_listentry_difficultybar" />
+            app:layout_constraintTop_toTopOf="@+id/loadgame_listentry_difficultybar"
+            android:layout_marginLeft="8dp" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -24,6 +24,21 @@
         <item name="backgroundTutorialStars">@color/white</item>
         <item name="menuTextColor">@null</item>
         <item name="blueHighlight">@color/colorPrimaryDark</item>
+
+        <!-- SudokuFieldLayout -->
+        <item name="sudokuFieldGridColor">@color/vlightgrey</item>
+        <item name="sudokuFieldErrorColor">@color/red</item>
+        <item name="sudokuFieldSectionLineColor">@color/black</item>
+
+        <!-- SudokuCellView -->
+        <item name="sudokuCellBackgroundColor">@color/white</item>
+        <item name="sudokuCellBackgroundErrorColor">@color/vlightgrey</item>
+        <item name="sudokuCellBackgroundSelectedColor">@color/lightgreen</item>
+        <item name="sudokuCellBackgroundConnectedOuterColor">@color/white</item>
+        <item name="sudokuCellBackgroundConnectedInnerColor">@color/yellow</item>
+        <item name="sudokuCellBackgroundValueHighlightedColor">@color/yellow</item>
+        <item name="sudokuCellBackgroundValueHighlightedSelectedColor">@color/cyan</item>
+        <item name="sudokuCellTextColor">@color/black</item>
     </style>
 
     <style name="ToolbarStyle" parent="Widget.AppCompat.ActionBar">
@@ -81,7 +96,6 @@
         <item name="android:windowBackground">@drawable/splash_screen</item>
         <item name="android:windowNoTitle">true</item>
     </style>
-
 
     <!-- <style name="FontStyle">
         <item name="android:fontFamily"></item>

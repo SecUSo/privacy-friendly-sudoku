@@ -20,6 +20,8 @@
 package org.secuso.privacyfriendlysudoku.ui.view;
 
 import android.content.Context;
+import android.content.res.Configuration;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -50,14 +52,31 @@ public class SudokuCellView extends View {
     Symbol symbolsToUse = Symbol.Default;
     RelativeLayout.LayoutParams params;
 
-
-    public SudokuCellView(Context context) {
-        super(context);
-    }
+    int backgroundColor;
+    int backgroundErrorColor;
+    int backgroundSelectedColor;
+    int backgroundConnectedOuterColor;
+    int backgroundConnectedInnerColor;
+    int backgroundValueHighlightedColor;
+    int backgroundValueHighlightedSelectedColor;
+    int textColor;
 
     public SudokuCellView(Context context, AttributeSet attrs){
         super(context, attrs);
+
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.SudokuCellView);
+        backgroundColor = a.getColor(R.styleable.SudokuCellView_sudokuCellBackgroundColor, Color.argb(255, 200, 200, 200));
+        backgroundErrorColor = a.getColor(R.styleable.SudokuCellView_sudokuCellBackgroundErrorColor, Color.argb(255, 200, 200, 200));
+        backgroundSelectedColor = a.getColor(R.styleable.SudokuCellView_sudokuCellBackgroundSelectedColor, Color.argb(255, 200, 200, 200));
+        backgroundConnectedOuterColor = a.getColor(R.styleable.SudokuCellView_sudokuCellBackgroundConnectedOuterColor, Color.argb(255, 200, 200, 200));
+        backgroundConnectedInnerColor = a.getColor(R.styleable.SudokuCellView_sudokuCellBackgroundConnectedInnerColor, Color.argb(255, 200, 200, 200));
+        backgroundValueHighlightedColor = a.getColor(R.styleable.SudokuCellView_sudokuCellBackgroundValueHighlightedColor, Color.argb(255, 200, 200, 200));
+        backgroundValueHighlightedSelectedColor = a.getColor(R.styleable.SudokuCellView_sudokuCellBackgroundValueHighlightedSelectedColor, Color.argb(255, 200, 200, 200));
+        textColor = a.getColor(R.styleable.SudokuCellView_sudokuCellTextColor, Color.argb(255, 200, 200, 200));
+        a.recycle();
     }
+
+
 
     public void setSelected(boolean b) {
         this.selected = b;
@@ -109,13 +128,6 @@ public class SudokuCellView extends View {
     }*/
 
     @Override
-    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
-        super.onLayout(changed, left, top, right, bottom);
-
-
-    }
-
-    @Override
     public void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
@@ -127,27 +139,28 @@ public class SudokuCellView extends View {
         Paint p = new Paint();
         switch(highlightType) {
             case Default:
-                p.setColor(Color.WHITE);
+                p.setColor(backgroundColor);
                 break;
             case Error:
-                p.setColor(Color.LTGRAY);
+                p.setColor(backgroundErrorColor);
                 break;
             case Selected:
-                p.setColor(Color.GREEN);
+                p.setColor(backgroundSelectedColor);
                 break;
             case Connected:
-                p.setColor(Color.WHITE);
+                p.setColor(backgroundConnectedOuterColor);
                 drawBackground(canvas, 3, 3, mWidth - 3, mHeight - 3, p);
-                p.setColor(Color.YELLOW);
+                p.setColor(backgroundConnectedInnerColor);
                 p.setAlpha(100);
                 break;
             case Value_Highlighted:
-                p.setColor(Color.YELLOW);
+                p.setColor(backgroundValueHighlightedColor);
                 break;
             case Value_Highlighted_Selected:
-                p.setColor(Color.CYAN);
+                p.setColor(backgroundValueHighlightedSelectedColor);
+                break;
             default:
-                p.setColor(Color.WHITE);
+                p.setColor(backgroundColor);
         }
 
 
@@ -166,6 +179,7 @@ public class SudokuCellView extends View {
 
     public void drawValue(Canvas canvas) {
         Paint p = new Paint();
+        p.setColor(textColor);
         int root = (int) Math.sqrt(size);
         int j= root+1;
         int k = root;

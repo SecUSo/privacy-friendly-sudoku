@@ -11,6 +11,16 @@
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
     <color name="darkgrey">#121212</color>
+    <color name="red">#ffff0000</color>
+    <color name="vlightgrey">#CCCCCC</color>
+    <color name="vdarkgrey">#333333</color>
+    <color name="darkgreen">#FF004400</color>
+    <color name="darkyellow">#FF444400</color>
+    <color name="darkcyan">#FF004444</color>
+
+    <color name="lightgreen">#FF00FF00</color>
+    <color name="green">#388E3C</color>
+    <color name="cyan">#FF00FFFF</color>
 
     <!-- dots inactive colors -->
     <color name="dot_dark_screen">#026499</color>

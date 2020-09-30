@@ -21,6 +21,8 @@ package org.secuso.privacyfriendlysudoku.ui.view;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -50,6 +52,9 @@ public class SudokuFieldLayout extends RelativeLayout implements IHighlightChang
     private int gameCellHeight;
     private SharedPreferences settings;
     private Paint p = new Paint();
+    int backgroundColor;
+    int errorColor;
+    int sectionLineColor;
 
     private OnTouchListener listener = new OnTouchListener() {
         @Override
@@ -74,8 +79,15 @@ public class SudokuFieldLayout extends RelativeLayout implements IHighlightChang
     public SudokuFieldLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.attrs=attrs;
+
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.SudokuFieldLayout);
+        backgroundColor = a.getColor(R.styleable.SudokuFieldLayout_sudokuFieldGridColor, Color.argb(255, 200, 200, 200));
+        errorColor = a.getColor(R.styleable.SudokuFieldLayout_sudokuFieldErrorColor, Color.RED);
+        sectionLineColor = a.getColor(R.styleable.SudokuFieldLayout_sudokuFieldSectionLineColor, Color.BLACK);
+        a.recycle();
+
         setWillNotDraw(false);
-        setBackgroundColor(Color.argb(255, 200, 200, 200));
+        setBackgroundColor(backgroundColor);
     }
 
     public void setSettingsAndGame(SharedPreferences sharedPref, GameController gc) {
@@ -117,7 +129,7 @@ public class SudokuFieldLayout extends RelativeLayout implements IHighlightChang
 
         if(gameController == null) return;
 
-        p.setColor(Color.BLACK);
+        p.setColor(sectionLineColor);
         p.setStrokeWidth(5);
 
         int horizontalSections = gameController.getSize() / sectionWidth;
@@ -241,7 +253,7 @@ public class SudokuFieldLayout extends RelativeLayout implements IHighlightChang
         p = new Paint(Paint.ANTI_ALIAS_FLAG);
         p.setStyle(Paint.Style.STROKE);
         p.setStrokeWidth(4);
-        p.setColor(Color.RED);
+        p.setColor(errorColor);
 
         float offsetX = 0;
         float offsetY = 0;

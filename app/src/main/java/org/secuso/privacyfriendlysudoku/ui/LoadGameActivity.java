@@ -42,7 +42,6 @@ import android.widget.TextView;
 
 import org.secuso.privacyfriendlysudoku.controller.GameController;
 import org.secuso.privacyfriendlysudoku.controller.GameStateManager;
-import org.secuso.privacyfriendlysudoku.controller.NewLevelManager;
 import org.secuso.privacyfriendlysudoku.controller.helper.GameInfoContainer;
 import org.secuso.privacyfriendlysudoku.game.GameDifficulty;
 import org.secuso.privacyfriendlysudoku.ui.listener.IDeleteDialogFragmentListener;
@@ -229,7 +228,8 @@ public class LoadGameActivity extends BaseActivity implements IDeleteDialogFragm
             TextView playedTime = (TextView)convertView.findViewById(R.id.loadgame_listentry_timeplayed);
             TextView lastTimePlayed = (TextView)convertView.findViewById(R.id.loadgame_listentry_lasttimeplayed);
             ImageView image = (ImageView)convertView.findViewById(R.id.loadgame_listentry_gametypeimage);
-            ImageView customImage = (ImageView)convertView.findViewById(R.id.loadgame_listentry_custom_label);
+            ImageView customImage = (ImageView)convertView.findViewById(R.id.loadgame_listentry_custom_icon);
+            TextView customLabel = (TextView) convertView.findViewById(R.id.loadgame_listentry_custom_label);
 
             switch(gic.getGameType()) {
                 case Default_6x6:
@@ -250,11 +250,8 @@ public class LoadGameActivity extends BaseActivity implements IDeleteDialogFragm
             difficultyBar.setMax(GameDifficulty.getValidDifficultyList().size());
             difficultyBar.setRating(GameDifficulty.getValidDifficultyList().indexOf(gic.getDifficulty())+1);
 
-            if(!gic.isCustom()) {
-               customImage.setVisibility(View.INVISIBLE);
-            } else {
-                customImage.setVisibility(View.VISIBLE);
-            }
+            customImage.setImageResource(gic.isCustom() ? R.drawable.ic_circle_blue_36dp : R.drawable.ic_circle_grey_36dp);
+            customLabel.setVisibility(gic.isCustom() ? View.VISIBLE : View.GONE);
 
             int time = gic.getTimePlayed();
             int seconds = time % 60;

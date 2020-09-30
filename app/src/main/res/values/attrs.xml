@@ -19,4 +19,21 @@
         <attr name="backgroundTutorialStars" format="color"/>
         <attr name="blueHighlight" format="color"/>
     </declare-styleable>
+
+    <declare-styleable name="SudokuCellView">
+        <attr name="sudokuCellBackgroundColor" format="color" />
+        <attr name="sudokuCellBackgroundErrorColor" format="color" />
+        <attr name="sudokuCellBackgroundSelectedColor" format="color" />
+        <attr name="sudokuCellBackgroundConnectedOuterColor" format="color" />
+        <attr name="sudokuCellBackgroundConnectedInnerColor" format="color" />
+        <attr name="sudokuCellBackgroundValueHighlightedColor" format="color" />
+        <attr name="sudokuCellBackgroundValueHighlightedSelectedColor" format="color" />
+        <attr name="sudokuCellTextColor" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="SudokuFieldLayout">
+        <attr name="sudokuFieldGridColor" format="color" />
+        <attr name="sudokuFieldSectionLineColor" format="color" />
+        <attr name="sudokuFieldErrorColor" format="color" />
+    </declare-styleable>
 </resources>

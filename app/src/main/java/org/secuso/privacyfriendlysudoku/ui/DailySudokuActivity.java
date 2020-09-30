@@ -23,7 +23,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -43,15 +42,17 @@ import org.secuso.privacyfriendlysudoku.controller.database.DatabaseHelper;
 import org.secuso.privacyfriendlysudoku.controller.database.model.DailySudoku;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import org.secuso.privacyfriendlysudoku.controller.SaveLoadStatistics;
+
 import org.secuso.privacyfriendlysudoku.controller.qqwing.QQWing;
 import org.secuso.privacyfriendlysudoku.game.GameDifficulty;
 import org.secuso.privacyfriendlysudoku.game.GameType;
 import org.secuso.privacyfriendlysudoku.ui.view.R;
 
+import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  *The DailySudokuActivity is an activity that extends the AppCompatActivity.
@@ -60,16 +61,12 @@ import java.util.Locale;
  */
 
 
-public class DailySudokuActivity<Database> extends AppCompatActivity {
+public class DailySudokuActivity extends AppCompatActivity {
 
     List<DailySudoku> sudokuList;
     SharedPreferences settings;
     private final DatabaseHelper dbHelper = new DatabaseHelper(this);
     RatingBar difficultyBar;
-    static final int MAIN_CONTENT_FADEOUT_DURATION = 150;
-    static final int MAIN_CONTENT_FADEIN_DURATION = 250;
-    private Handler mHandler;
-    private StatsActivity.SectionsPagerAdapter mSectionsPagerAdapter;
     private SudokuListAdapter sudokuListAdapter;
     private int dailyId;
 
@@ -111,11 +108,9 @@ public class DailySudokuActivity<Database> extends AppCompatActivity {
 
         difficultyBar = findViewById(R.id.first_diff_bar);
         settings = PreferenceManager.getDefaultSharedPreferences(this);
-        mHandler = new Handler();
-
 
         ListView listView = (ListView)findViewById(R.id.sudoku_list);
-        sudokuListAdapter = new DailySudokuActivity.SudokuListAdapter(this, sudokuList);
+        sudokuListAdapter = new SudokuListAdapter(this, sudokuList);
         listView.setAdapter(sudokuListAdapter);
 
         // Calculate the current date as an int id
@@ -157,8 +152,6 @@ public class DailySudokuActivity<Database> extends AppCompatActivity {
         difficultyBar.setNumStars(GameDifficulty.getValidDifficultyList().size());
         difficultyBar.setMax(GameDifficulty.getValidDifficultyList().size());
         difficultyBar.setRating(GameDifficulty.getValidDifficultyList().indexOf(dailyDifficulty)+1);
-
-
     }
 
     public void onClick(View view) {
@@ -196,11 +189,7 @@ public class DailySudokuActivity<Database> extends AppCompatActivity {
     }
     
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_stats, menu);
-        //getMenuInflater().inflate(R.menu.menu_stats, menu);
-        return true;
-        //return false;
+        return false;
     }
 
     @Override
@@ -210,20 +199,15 @@ public class DailySudokuActivity<Database> extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
 
         //noinspection SimplifiableIfStatement
-        switch(item.getItemId()) {
-            case R.id.action_reset:
-                SaveLoadStatistics.resetStats(this);
-                mSectionsPagerAdapter.refresh(this);
-                return true;
-            case android.R.id.home:
-                finish();
-                return true;
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    private class SudokuListAdapter extends BaseAdapter {
+    private static class SudokuListAdapter extends BaseAdapter {
 
         private Context context;
         private List<DailySudoku> sudokuList;
@@ -263,7 +247,7 @@ public class DailySudokuActivity<Database> extends AppCompatActivity {
             TextView playedTime = (TextView)convertView.findViewById(R.id.loadgame_listentry_timeplayed);
             TextView lastTimePlayed = (TextView)convertView.findViewById(R.id.loadgame_listentry_lasttimeplayed);
             ImageView image = (ImageView)convertView.findViewById(R.id.loadgame_listentry_gametypeimage);
-            ImageView customImage = (ImageView)convertView.findViewById(R.id.loadgame_listentry_custom_label);
+            ImageView customImage = (ImageView)convertView.findViewById(R.id.loadgame_listentry_custom_icon);
 
 
             image.setImageResource(R.drawable.icon_default_9x9);
@@ -276,18 +260,16 @@ public class DailySudokuActivity<Database> extends AppCompatActivity {
             customImage.setVisibility(View.INVISIBLE);
 
 
-            Calendar currentDate = Calendar.getInstance();
-            //int id = currentDate.get(Calendar.DAY_OF_MONTH) * 1000000
-              //      + (currentDate.get(Calendar.MONTH) + 1) * 10000 + currentDate.get(Calendar.YEAR);
-
             int id = sudoku.getId();
-            int dayOfMonth = id/1000000;
-            int month = (id/10000) % 100;
-            int year = id%10000;
+            Calendar cal = Calendar.getInstance();
+            cal.set(id%10000, (id/10000) % 100, id/1000000, 0, 0, 0 );
 
-            String str = String.format("%02d.%02d.%02d", dayOfMonth, month, year);
 
-            lastTimePlayed.setText(str);
+            DateFormat format = DateFormat.getDateInstance();
+            format.setTimeZone(TimeZone.getDefault());
+
+            lastTimePlayed.setText(format.format(cal.getTime()));
+
             playedTime.setText(sudoku.getTimeNeeded());
             return convertView;
         }
