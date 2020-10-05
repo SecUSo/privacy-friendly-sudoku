@@ -1,22 +1,19 @@
 /*
- * qqwing - Sudoku solver and generator
- * Copyright (C) 2014 Stephen Ostermiller
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- */
+ This file is part of Privacy Friendly Sudoku.
 
+ Privacy Friendly Sudoku is free software:
+ you can redistribute it and/or modify it under the terms of the
+ GNU General Public License as published by the Free Software Foundation,
+ either version 3 of the License, or any later version.
+
+ Privacy Friendly Sudoku is distributed in the hope
+ that it will be useful, but WITHOUT ANY WARRANTY; without even
+ the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ See the GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with Privacy Friendly Sudoku. If not, see <http://www.gnu.org/licenses/>.
+ */
 package org.secuso.privacyfriendlysudoku.ui;
 
 import android.content.Context;
@@ -60,31 +57,39 @@ public class CreateSudokuActivity extends BaseActivity implements IFinalizeDialo
     SharedPreferences sharedPref;
     SudokuFieldLayout layout;
     SudokuKeyboardLayout keyboard;
-    TextView viewName ;
     CreateSudokuSpecialButtonLayout specialButtonLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
 
-        if(sharedPref.getBoolean("pref_keep_screen_on", true)) {
+        if (sharedPref.getBoolean("pref_keep_screen_on", true)) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         }
 
-        gameController = new GameController(sharedPref, getApplicationContext());
+        if(savedInstanceState == null) {
 
-        Bundle extras = getIntent().getExtras();
-        GameType gameType = GameType.valueOf(extras.getString("gameType", GameType.Default_9x9.name()));
-        int sectionSize = gameType.getSize();
-        int boardSize = sectionSize * sectionSize;
+            gameController = new GameController(sharedPref, getApplicationContext());
 
-        GameInfoContainer container = new GameInfoContainer(0, GameDifficulty.Moderate,
-                gameType, new int [boardSize], new int [boardSize], new boolean [boardSize][sectionSize]);
-        gameController.loadLevel(container);
+            Bundle extras = getIntent().getExtras();
+            GameType gameType = GameType.valueOf(extras.getString("gameType", GameType.Default_9x9.name()));
+            int sectionSize = gameType.getSize();
+            int boardSize = sectionSize * sectionSize;
+
+            GameInfoContainer container = new GameInfoContainer(0, GameDifficulty.Moderate,
+                    gameType, new int[boardSize], new int[boardSize], new boolean[boardSize][sectionSize]);
+            gameController.loadLevel(container);
+        } else {
+            gameController = savedInstanceState.getParcelable("gameController");
+            if(gameController != null) {
+                gameController.removeAllListeners();
+                gameController.setContextAndSettings(getApplicationContext(), sharedPref);
+            }
+        }
 
         setUpLayout();
-
     }
 
     private void setUpLayout() {
@@ -268,5 +273,22 @@ public class CreateSudokuActivity extends BaseActivity implements IFinalizeDialo
      */
     public void onDialogNegativeClick() {
 
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        // Always call the superclass so it can save the view hierarchy state
+        super.onSaveInstanceState(savedInstanceState);
+
+        // Save the user's current game state
+        savedInstanceState.putParcelable("gameController", gameController);
+
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        gameController = savedInstanceState.getParcelable("gameController");
     }
 }

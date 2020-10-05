@@ -14,12 +14,22 @@
  You should have received a copy of the GNU General Public License
  along with Privacy Friendly Sudoku. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.secuso.privacyfriendlysudoku.ui.listener;
+package org.secuso.privacyfriendlysudoku.controller.database.migration;
+
+import android.database.sqlite.SQLiteDatabase;
 
 /**
- * Created by Chris on 17.01.2016.
+ * Similar idea to room migration class.
+ * @author Christopher Beckmann
  */
-public interface IHintDialogFragmentListener {
-    public void onHintDialogPositiveClick();
-    public void onDialogNegativeClick();
+public abstract class Migration {
+    int from = 0;
+    int to = 0;
+
+    public Migration(int from, int to) {
+        this.from = from;
+        this.to = to;
+    }
+
+    public abstract void migrate(SQLiteDatabase db);
 }

@@ -1,20 +1,18 @@
 /*
- * qqwing - Sudoku solver and generator
- * Copyright (C) 2014 Stephen Ostermiller
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ This file is part of Privacy Friendly Sudoku.
+
+ Privacy Friendly Sudoku is free software:
+ you can redistribute it and/or modify it under the terms of the
+ GNU General Public License as published by the Free Software Foundation,
+ either version 3 of the License, or any later version.
+
+ Privacy Friendly Sudoku is distributed in the hope
+ that it will be useful, but WITHOUT ANY WARRANTY; without even
+ the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ See the GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with Privacy Friendly Sudoku. If not, see <http://www.gnu.org/licenses/>.
  */
 package org.secuso.privacyfriendlysudoku.controller.database;
 
@@ -26,6 +24,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import org.secuso.privacyfriendlysudoku.controller.database.columns.DailySudokuColumns;
 import org.secuso.privacyfriendlysudoku.controller.database.columns.LevelColumns;
+import org.secuso.privacyfriendlysudoku.controller.database.migration.MigrationUtil;
 import org.secuso.privacyfriendlysudoku.controller.database.model.DailySudoku;
 import org.secuso.privacyfriendlysudoku.controller.database.model.Level;
 import org.secuso.privacyfriendlysudoku.game.GameDifficulty;
@@ -52,9 +51,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL(LevelColumns.SQL_DELETE_ENTRIES);
-        db.execSQL(DailySudokuColumns.SQL_DELETE_ENTRIES);
-        onCreate(db);
+        // fallback to destructive migration if no migration could be executed
+        if(!MigrationUtil.executeMigration(db, oldVersion, newVersion)) {
+            db.execSQL(LevelColumns.SQL_DELETE_ENTRIES);
+            db.execSQL(DailySudokuColumns.SQL_DELETE_ENTRIES);
+            onCreate(db);
+        }
     }
 
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {

@@ -1,22 +1,19 @@
 /*
- * qqwing - Sudoku solver and generator
- * Copyright (C) 2014 Stephen Ostermiller
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- */
+ This file is part of Privacy Friendly Sudoku.
 
+ Privacy Friendly Sudoku is free software:
+ you can redistribute it and/or modify it under the terms of the
+ GNU General Public License as published by the Free Software Foundation,
+ either version 3 of the License, or any later version.
+
+ Privacy Friendly Sudoku is distributed in the hope
+ that it will be useful, but WITHOUT ANY WARRANTY; without even
+ the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ See the GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with Privacy Friendly Sudoku. If not, see <http://www.gnu.org/licenses/>.
+ */
 package org.secuso.privacyfriendlysudoku.controller.helper;
 
 import android.util.Log;
@@ -73,9 +70,6 @@ public class GameInfoContainer {
 
     public void parseGameType(String s) {
         gameType = Enum.valueOf(GameType.class, s);
-        if(gameType == null) {
-            throw new IllegalArgumentException("GameInfoContainer: gameType could not be set.");
-        }
     }
 
     public int getTimePlayed() {
@@ -88,7 +82,7 @@ public class GameInfoContainer {
 
     public void parseTime(String s) {
         try {
-            this.timePlayed = Integer.valueOf(s);
+            this.timePlayed = Integer.parseInt(s);
         } catch(NumberFormatException e) {
             throw new IllegalArgumentException("GameInfoContainer: Can not parse time.", e);
         }
@@ -96,7 +90,7 @@ public class GameInfoContainer {
 
     public void parseHintsUsed(String s) {
         try {
-            this.hintsUsed = Integer.valueOf(s);
+            this.hintsUsed = Integer.parseInt(s);
         } catch(NumberFormatException e) {
             throw new IllegalArgumentException("GameInfoContainer: Can not parse hints used.", e);
         }
@@ -104,7 +98,7 @@ public class GameInfoContainer {
 
     public void parseDate(String s) {
         try {
-            this.lastTimePlayed = new Date(Long.valueOf(s));
+            this.lastTimePlayed = new Date(Long.parseLong(s));
         } catch(NumberFormatException e) {
             throw new IllegalArgumentException("GameInfoContainer: LastTimePlayed Date can not be extracted.", e);
         }
@@ -112,9 +106,6 @@ public class GameInfoContainer {
 
     public void parseDifficulty(String s) {
         difficulty = Enum.valueOf(GameDifficulty.class, s);
-        if(difficulty == null) {
-            throw new IllegalArgumentException("GameInfoContainer: difficulty could not be set.");
-        }
     }
 
     public void parseFixedValues(String s){
@@ -158,7 +149,7 @@ public class GameInfoContainer {
         int size = gameType.getSize();
         int sq = size*size;
 
-        if(gameType != GameType.Unspecified && gameType != null) {
+        if(gameType != GameType.Unspecified) {
             if(strings.length != sq) {
                 throw new IllegalArgumentException("The string array must have "+sq+" entries.");
             }
