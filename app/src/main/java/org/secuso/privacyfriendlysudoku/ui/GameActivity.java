@@ -81,9 +81,11 @@ import java.util.List;
 
 public class GameActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, IGameSolvedListener ,ITimerListener, IHintDialogFragmentListener, IResetDialogFragmentListener, IShareDialogFragmentListener {
 
-     public static final List<Uri> validUris = Arrays.asList(Uri.parse("sudoku://"),
+     public static final List<Uri> validUris = Arrays.asList(
              Uri.parse("https://sudoku.secuso.org"),
-             Uri.parse("http://sudoku.secuso.org"));
+             Uri.parse("http://sudoku.secuso.org"),
+             Uri.parse("sudoku://")
+     );
 
     GameController gameController;
     SudokuFieldLayout layout;
