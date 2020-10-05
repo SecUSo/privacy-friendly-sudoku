@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="AppTheme">
+        <attr name="lightestBackGround" format="color"/>
+        <attr name="lightestFontColor" format="color"/>
+        <attr name="standardVectorGraphic" format="color"/>
+        <attr name="winScreenPedestalColor" format="color"/>
+        <attr name="winScreenFontColor" format="color"/>
+        <attr name="backgroundSurroundingDialog" format="color"/>
+        <attr name="rankingStarSelected" format="color"/>
+        <attr name="rankingCircleSelected" format="color"/>
+        <attr name="rankingCircleNotSelected" format="color"/>
+        <attr name="rankingStarNotSelected" format="color"/>
+        <attr name="inactiveButtonColor" format="color"/>
+        <attr name="activeButtonColor" format="color"/>
+        <attr name="menuTextColor" format="color"/>
+        <attr name="highlightedButtonBorder" format="color"/>
+        <attr name="backgroundTutorialSlide" format="color"/>
+        <attr name="backgroundTutorialStars" format="color"/>
+        <attr name="blueHighlight" format="color"/>
+    </declare-styleable>
+
+    <declare-styleable name="SudokuCellView">
+        <attr name="sudokuCellBackgroundColor" format="color" />
+        <attr name="sudokuCellBackgroundErrorColor" format="color" />
+        <attr name="sudokuCellBackgroundSelectedColor" format="color" />
+        <attr name="sudokuCellBackgroundConnectedOuterColor" format="color" />
+        <attr name="sudokuCellBackgroundConnectedInnerColor" format="color" />
+        <attr name="sudokuCellBackgroundValueHighlightedColor" format="color" />
+        <attr name="sudokuCellBackgroundValueHighlightedSelectedColor" format="color" />
+        <attr name="sudokuCellTextColor" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="SudokuFieldLayout">
+        <attr name="sudokuFieldGridColor" format="color" />
+        <attr name="sudokuFieldSectionLineColor" format="color" />
+        <attr name="sudokuFieldErrorColor" format="color" />
+    </declare-styleable>
+</resources>

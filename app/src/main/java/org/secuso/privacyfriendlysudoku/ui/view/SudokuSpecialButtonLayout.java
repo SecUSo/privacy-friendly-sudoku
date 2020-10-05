@@ -1,3 +1,19 @@
+/*
+ This file is part of Privacy Friendly Sudoku.
+
+ Privacy Friendly Sudoku is free software:
+ you can redistribute it and/or modify it under the terms of the
+ GNU General Public License as published by the Free Software Foundation,
+ either version 3 of the License, or any later version.
+
+ Privacy Friendly Sudoku is distributed in the hope
+ that it will be useful, but WITHOUT ANY WARRANTY; without even
+ the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ See the GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with Privacy Friendly Sudoku. If not, see <http://www.gnu.org/licenses/>.
+ */
 package org.secuso.privacyfriendlysudoku.ui.view;
 
 import android.app.Activity;
@@ -10,6 +26,7 @@ import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.AttributeSet;
 import android.view.View;
@@ -18,8 +35,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import androidx.core.content.ContextCompat;
+
 import org.secuso.privacyfriendlysudoku.controller.GameController;
 import org.secuso.privacyfriendlysudoku.game.listener.IHighlightChangedListener;
+import org.secuso.privacyfriendlysudoku.ui.GameActivity;
 import org.secuso.privacyfriendlysudoku.ui.listener.IHintDialogFragmentListener;
 
 import java.util.LinkedList;
@@ -40,6 +60,7 @@ public class SudokuSpecialButtonLayout extends LinearLayout implements IHighligh
     Bitmap bitMap,bitResult;
     Canvas canvas;
     FragmentManager fragmentManager;
+    Context context;
 
     OnClickListener listener = new OnClickListener() {
         @Override
@@ -68,7 +89,7 @@ public class SudokuSpecialButtonLayout extends LinearLayout implements IHighligh
                         break;
                     case Hint:
                         if(gameController.isValidCellSelected()) {
-                            if(gameController.getUsedHints() == 0) {
+                            if(gameController.getUsedHints() == 0 && !gameController.gameIsCustom()) {
                                 // are you sure you want to use a hint?
                                 HintConfirmationDialog hintDialog = new HintConfirmationDialog();
                                 hintDialog.show(fragmentManager, "HintDialogFragment");
@@ -93,6 +114,7 @@ public class SudokuSpecialButtonLayout extends LinearLayout implements IHighligh
     public SudokuSpecialButtonLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         setWeightSum(fixedButtonsCount);
+        this.context = context;
     }
 
     public void setButtonsEnabled(boolean enabled) {
@@ -101,10 +123,11 @@ public class SudokuSpecialButtonLayout extends LinearLayout implements IHighligh
         }
     }
 
-    public void setButtons(int width, GameController gc, SudokuKeyboardLayout key, FragmentManager fm, int orientation) {
+    public void setButtons(int width, GameController gc, SudokuKeyboardLayout key, FragmentManager fm, int orientation, Context cxt) {
         fragmentManager = fm;
         keyboard=key;
         gameController = gc;
+        context = cxt;
         if(gameController != null) {
             gameController.registerHighlightChangedListener(this);
         }
@@ -142,6 +165,13 @@ public class SudokuSpecialButtonLayout extends LinearLayout implements IHighligh
             fixedButtons[i].setOnClickListener(listener);
             fixedButtons[i].setBackgroundResource(R.drawable.numpad_highlighted_four);
             addView(fixedButtons[i]);
+
+            if(fixedButtons[i].getVisibility() == View.VISIBLE) {
+                Drawable drawable = ContextCompat.getDrawable(context, fixedButtons[i].getType().getResID());
+                setUpVectorDrawable(drawable);
+                drawable.draw(canvas);
+                fixedButtons[i].setImageBitmap(bitResult);
+            }
             i++;
         }
 
@@ -160,12 +190,13 @@ public class SudokuSpecialButtonLayout extends LinearLayout implements IHighligh
                             R.drawable.numpad_highlighted_four : R.drawable.inactive_button);
                     break;
                 case NoteToggle:
-                    bitMap = BitmapFactory.decodeResource(getResources(), fixedButtons[i].getType().getResID());
-                    bitResult = Bitmap.createBitmap(bitMap.getWidth(), bitMap.getHeight(), Bitmap.Config.ARGB_8888);
+                    Drawable drawable = ContextCompat.getDrawable(context, fixedButtons[i].getType().getResID());
+                    // prepare canvas for the rotation of the note drawable
+                    setUpVectorDrawable(drawable);
 
-                    canvas = new Canvas(bitResult);
                     canvas.rotate(gameController.getNoteStatus() ? 45.0f : 0.0f, bitMap.getWidth()/2, bitMap.getHeight()/2);
                     canvas.drawBitmap(bitMap, 0, 0, null);
+                    drawable.draw(canvas);
 
                     fixedButtons[i].setImageBitmap(bitResult);
                     fixedButtons[i].setBackgroundResource(gameController.getNoteStatus() ? R.drawable.numpad_highlighted_three : R.drawable.numpad_highlighted_four);
@@ -177,6 +208,18 @@ public class SudokuSpecialButtonLayout extends LinearLayout implements IHighligh
                     break;
             }
         }
+    }
+
+    /*
+    Set up the vector drawables so that they can be properly displayed despite using theme attributes for their fill color
+     */
+    private void setUpVectorDrawable(Drawable drawable) {
+        drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+        bitMap = Bitmap.createBitmap(drawable.getIntrinsicWidth(),
+                drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        bitResult = Bitmap.createBitmap(bitMap.getWidth(), bitMap.getHeight(), Bitmap.Config.ARGB_8888);
+
+        canvas = new Canvas(bitResult);
     }
 
     public static class HintConfirmationDialog extends DialogFragment {
@@ -195,7 +238,7 @@ public class SudokuSpecialButtonLayout extends LinearLayout implements IHighligh
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             // Use the Builder class for convenient dialog construction
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.AppTheme_Dialog);
             builder.setMessage(R.string.hint_confirmation)
                     .setPositiveButton(R.string.hint_confirmation_confirm, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {

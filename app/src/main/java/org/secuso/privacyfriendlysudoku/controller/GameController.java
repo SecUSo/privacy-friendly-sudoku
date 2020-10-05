@@ -1,3 +1,19 @@
+/*
+ This file is part of Privacy Friendly Sudoku.
+
+ Privacy Friendly Sudoku is free software:
+ you can redistribute it and/or modify it under the terms of the
+ GNU General Public License as published by the Free Software Foundation,
+ either version 3 of the License, or any later version.
+
+ Privacy Friendly Sudoku is distributed in the hope
+ that it will be useful, but WITHOUT ANY WARRANTY; without even
+ the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ See the GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with Privacy Friendly Sudoku. If not, see <http://www.gnu.org/licenses/>.
+ */
 package org.secuso.privacyfriendlysudoku.controller;
 
 import android.content.Context;
@@ -6,7 +22,10 @@ import android.os.Handler;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import org.secuso.privacyfriendlysudoku.controller.database.DatabaseHelper;
+import org.secuso.privacyfriendlysudoku.controller.database.model.DailySudoku;
 import org.secuso.privacyfriendlysudoku.controller.helper.GameInfoContainer;
+import org.secuso.privacyfriendlysudoku.controller.qqwing.QQWing;
 import org.secuso.privacyfriendlysudoku.game.CellConflict;
 import org.secuso.privacyfriendlysudoku.game.CellConflictList;
 import org.secuso.privacyfriendlysudoku.game.GameBoard;
@@ -19,7 +38,10 @@ import org.secuso.privacyfriendlysudoku.game.listener.IHighlightChangedListener;
 import org.secuso.privacyfriendlysudoku.game.listener.IHintListener;
 import org.secuso.privacyfriendlysudoku.game.listener.IModelChangedListener;
 import org.secuso.privacyfriendlysudoku.game.listener.ITimerListener;
+import org.secuso.privacyfriendlysudoku.ui.GameActivity;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Timer;
@@ -32,6 +54,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class GameController implements IModelChangedListener, Parcelable {
 
     // General
+    public static final int DAILY_SUDOKU_ID = Integer.MAX_VALUE - 1;
     private SharedPreferences settings;
 
     // View
@@ -57,6 +80,7 @@ public class GameController implements IModelChangedListener, Parcelable {
     private GameType gameType;
     private GameDifficulty difficulty;
     private CellConflictList errorList = new CellConflictList();
+    private boolean gameIsCustom;
 
     // Undo Redo
     private UndoRedoManager undoRedoManager;
@@ -84,6 +108,7 @@ public class GameController implements IModelChangedListener, Parcelable {
     public GameController(GameType type, SharedPreferences pref, Context context) {
         this.context = context;
         this.gameBoard = new GameBoard(type);
+        this.gameIsCustom = false;
 
         setGameType(type);
         setSettings(pref);
@@ -95,6 +120,8 @@ public class GameController implements IModelChangedListener, Parcelable {
         return gameID;
     }
 
+    public boolean gameIsCustom() { return gameIsCustom; }
+
     public void loadNewLevel(GameType type, GameDifficulty difficulty) {
         NewLevelManager newLevelManager = NewLevelManager.getInstance(context, settings);
 
@@ -103,6 +130,23 @@ public class GameController implements IModelChangedListener, Parcelable {
         loadLevel(new GameInfoContainer(0, difficulty, type, level, null, null));
 
         newLevelManager.checkAndRestock();
+    }
+
+    public void loadNewDailySudokuLevel() {
+        NewLevelManager newLevelManager = NewLevelManager.getInstance(context, settings);
+
+        // generate the daily sudoku
+        int[] level = newLevelManager.loadDailySudoku();
+
+        // calculate the difficulty of the daily sudoku
+        QQWing difficultyCheck = new QQWing(GameType.Default_9x9, GameDifficulty.Unspecified);
+        difficultyCheck.setRecordHistory(true);
+        difficultyCheck.setPuzzle(level);
+        difficultyCheck.solve();
+
+        loadLevel(new GameInfoContainer(DAILY_SUDOKU_ID, difficultyCheck.getDifficulty(),
+                GameType.Default_9x9, level, null, null));
+
     }
 
     public int getTime() {
@@ -117,6 +161,7 @@ public class GameController implements IModelChangedListener, Parcelable {
         this.difficulty = gic.getDifficulty();
         this.time = gic.getTimePlayed();
         this.usedHints = gic.getHintsUsed();
+        this.gameIsCustom = gic.isCustom();
 
         setGameType(gic.getGameType());
         this.gameBoard = new GameBoard(gic.getGameType());
@@ -305,7 +350,7 @@ public class GameController implements IModelChangedListener, Parcelable {
 
             SharedPreferences.Editor editor = settings.edit();
             // is anyone ever gonna play so many levels? :)
-            if(gameID == Integer.MAX_VALUE-1) {
+            if(gameID == DAILY_SUDOKU_ID - 1) {
                 editor.putInt("lastGameID", 1);
             } else {
                 editor.putInt("lastGameID", gameID);
@@ -316,6 +361,31 @@ public class GameController implements IModelChangedListener, Parcelable {
         //gameID now has a value other than 0 and hopefully unique
         GameStateManager fm = new GameStateManager(context, settings);
         fm.saveGameState(this);
+    }
+
+    /**
+     * Save progress on the current daily sudoku
+     * @param context the context in which this method is called
+     */
+    public void saveDailySudoku(Context context) {
+        int amountOfCells = size * size;
+        int[] encodedBoard = new int[amountOfCells];
+
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                encodedBoard[i * size + j] = gameBoard.getCell(i, j).getValue();
+            }
+        }
+
+        // turn the current date into an id
+        Calendar currentDate = Calendar.getInstance();
+        int id = currentDate.get(Calendar.DAY_OF_MONTH) * 1000000
+                + (currentDate.get(Calendar.MONTH) + 1) * 10000 + currentDate.get(Calendar.YEAR);
+
+        // save the sudoku to the database using the previously calculated id
+        DatabaseHelper db = new DatabaseHelper(context);
+        DailySudoku dailySudoku = new DailySudoku(id, difficulty, gameType, encodedBoard, usedHints, GameActivity.timeToString(time));
+        db.addDailySudoku(dailySudoku);
     }
 
     public void deleteGame(Context context) {
@@ -414,6 +484,7 @@ public class GameController implements IModelChangedListener, Parcelable {
         return gameBoard.toString();
     }
 
+    public String getCodeOfField() { return gameBoard.transformToCode(); }
 
 
 

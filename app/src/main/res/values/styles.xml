@@ -1,16 +1,60 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.DayNight">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimaryDark</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="lightestBackGround">@color/white</item>
+        <item name="lightestFontColor">@color/white</item>
+        <item name="standardVectorGraphic">@color/black</item>
+        <item name="winScreenPedestalColor">@color/middleblue</item>
+        <item name="winScreenFontColor">@color/white</item>
+        <item name="backgroundSurroundingDialog">@color/transparent</item>
+        <item name="rankingStarSelected">@color/lightblue</item>
+        <item name="rankingCircleSelected">@color/lightblue</item>
+        <item name="rankingCircleNotSelected">@color/middlegrey</item>
+        <item name="rankingStarNotSelected">@color/middlegrey</item>
+        <item name="activeButtonColor">@color/lightblue</item>
+        <item name="inactiveButtonColor">@color/middlegrey</item>
+        <item name="highlightedButtonBorder">@color/yellow</item>
+        <item name="actionBarTheme">@style/ToolbarStyle</item>
+        <item name="backgroundTutorialSlide">@color/colorAccent</item>
+        <item name="backgroundTutorialStars">@color/white</item>
+        <item name="menuTextColor">@null</item>
+        <item name="blueHighlight">@color/colorPrimaryDark</item>
+
+        <!-- SudokuFieldLayout -->
+        <item name="sudokuFieldGridColor">@color/vlightgrey</item>
+        <item name="sudokuFieldErrorColor">@color/red</item>
+        <item name="sudokuFieldSectionLineColor">@color/black</item>
+
+        <!-- SudokuCellView -->
+        <item name="sudokuCellBackgroundColor">@color/white</item>
+        <item name="sudokuCellBackgroundErrorColor">@color/vlightgrey</item>
+        <item name="sudokuCellBackgroundSelectedColor">@color/lightgreen</item>
+        <item name="sudokuCellBackgroundConnectedOuterColor">@color/white</item>
+        <item name="sudokuCellBackgroundConnectedInnerColor">@color/yellow</item>
+        <item name="sudokuCellBackgroundValueHighlightedColor">@color/yellow</item>
+        <item name="sudokuCellBackgroundValueHighlightedSelectedColor">@color/cyan</item>
+        <item name="sudokuCellTextColor">@color/black</item>
+    </style>
+
+    <style name="ToolbarStyle" parent="Widget.AppCompat.ActionBar">
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="colorControlNormal">@color/white</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.Dialog" parent="Theme.AppCompat.DayNight.Dialog.Alert">
+        <item name="colorAccent">@color/colorPrimaryDark</item>
+        <item name="android:textColorPrimary">@color/black</item>
+        <item name="android:windowBackground">@color/white</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
@@ -42,11 +86,16 @@
         <item name="android:layout_height">50dp</item>
     </style>
 
+    <style name="CheckBoxStyle" parent="@style/Widget.AppCompat.CompoundButton.CheckBox"/>
+
+    <style name="CheckBox" parent="CheckBoxStyle">
+        <item name="android:layout_marginBottom">0dp</item>
+    </style>
+
     <style name="SplashTheme" parent="@android:style/Theme.NoTitleBar.Fullscreen">
         <item name="android:windowBackground">@drawable/splash_screen</item>
         <item name="android:windowNoTitle">true</item>
     </style>
-
 
     <!-- <style name="FontStyle">
         <item name="android:fontFamily"></item>

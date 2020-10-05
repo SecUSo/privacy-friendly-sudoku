@@ -54,7 +54,7 @@
     <string name="about_author_contributors">と貢献者。</string>
     <string name="version_number">バージョン</string>
     <string name="about_affiliation">提携</string>
-    <string name="privacy_friendly">このアプリケーションは、ダルムシュタット工科大学 (Technische Universität Darmstadt, Germany) が開発したプライバシーフレンドリーアプリのグループに属しています。 ソースコードは GPLv3 の下でライセンスされます。画像の著作権は TU Darmstadt および Google Inc.</string>
+    <string name="privacy_friendly">このアプリケーションは、カールスルーエ工科大学 (Karlsruher Institut für Technologie(KIT), Germany) が開発したプライバシーフレンドリーアプリのグループに属しています。 ソースコードは GPLv3 の下でライセンスされます。画像の著作権は KIT および Google Inc.</string>
     <string name="more_info">さらに詳しい情報は以下でご覧ください:</string>
     <string name="about_qqwing">このアプリケーションは QQWing v1.3.4 の修正版を使用しています</string>
 
@@ -126,7 +126,7 @@
     <string name="slide2_heading">ゲームモード</string>
     <string name="slide2_text">スワイプまたは左右の矢印ボタンを押して、ゲームモードを変更します。</string>
 
-    <string name="slide3_heading">難易度</string>
+    <string name="slide3_heading">難易度 /</string>
     <string name="slide3_text">星を押すかスワイプして難易度を変えます。</string>
 
     <string name="next">次</string>

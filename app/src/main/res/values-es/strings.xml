@@ -83,7 +83,7 @@
     <string name="slide2_heading">Modo de juego</string>
     <string name="slide2_text">Deslice o aprete el boton de la flecha a la izquierda o a la derecha para cambiar el modo de juego.</string>
 
-    <string name="slide3_heading">Dificultad</string>
+    <string name="slide3_heading">Dificultad /</string>
     <string name="slide3_text">Presione o deslice para comenzar a cambiar la dificultad.</string>
 
     <string name="next">Próximo</string>

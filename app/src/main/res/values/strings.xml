@@ -12,12 +12,16 @@
     <string name="menu_help">Help</string>
     <string name="menu_about">About</string>
     <string name="menu_reset">Reset Board</string>
+    <string name="menu_share">Share Board</string>
     <string name="menu_continue_game">Continue Game</string>
+    <string name="create_game">Create Game</string>
 
     <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
     <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
 
     <string name="generating">Generating new level in the background&#8230;</string>
+
+    <string name="impossible_import_notice">The sudoku you wish to import has no solution.</string>
 
     <!-- ###SETTINGS### -->
     <string name="title_activity_settings">Settings</string>
@@ -27,6 +31,7 @@
     <string name="pref_group_highlight_value">Value highlight</string>
     <string name="pref_highlight_vals">Same values</string>
     <string name="pref_highlight_notes">Notes</string>
+
     <!-- #Game -->
     <string name="pref_header_game">Game</string>
     <string name="pref_group_game">Game settings</string>
@@ -51,15 +56,23 @@
     <string name="pref_automatic_note_deletion_summary">Automatically remove notes when setting values on connected cells</string>
     <string name="pref_timer_reset">Timer Reset</string>
     <string name="pref_timer_reset_summary">Also reset the timer, when resetting the game board.</string>
+    <string name="pref_dark_mode">Dark Theme</string>
+    <string name="pref_group_dark_theme">Dark Theme settings</string>
+    <string name="pref_dark_mode_automatically_by_system">Automatically by system </string>
+    <string name="pref_dark_mode_automatically_by_battery">Automatically by battery </string>
+
+    <string name="pref_dark_mode_setting">Dark Theme</string>
+    <string name="pref_dark_mode_summary">switch between light and dark theme</string>
 
     <!-- ###ABOUT### -->
     <string name="app_name_long" translatable="false">Privacy Friendly Sudoku</string>
     <string name="version_number">Version:</string>
     <string name="about_author">Authors:</string>
-    <string name="about_author_names" translatable="false">Christopher Beckmann, Timm Lippert</string>
+    <string name="about_author_names" translatable="false">Christopher Beckmann, Timm Lippert,</string>
+    <string name="about_co_author_names" translatable="false">Katharina Kaus, Erik Waegerle</string>
     <string name="about_author_contributors">and contributors.</string>
     <string name="about_affiliation">In affiliation with</string>
-    <string name="privacy_friendly">This application belongs to the group of Privacy Friendly Apps developed by Technische Universität Darmstadt. Sourcecode licensed under GPLv3. Images copyright TU Darmstadt and Google Inc.</string>
+    <string name="privacy_friendly">This application belongs to the group of Privacy Friendly Apps developed by Karlsruher Institute for Technology (KIT). Sourcecode licensed under GPLv3. Images copyright KIT and Google Inc.</string>
     <string name="more_info">More information can be found on:</string>
     <string name="github" translatable="false"><a href="https://github.com/SecUSo/privacy-friendly-sudoku">Github-Repo</a></string>
     <string name="url" translatable="false"><a href="https://www.secuso.org/pfa">SECUSO-Website</a></string>
@@ -70,6 +83,7 @@
     <string name="difficulty_easy">Easy</string>
     <string name="difficulty_moderate">Moderate</string>
     <string name="difficulty_hard">Hard</string>
+    <string name="difficulty_custom">Custom</string>
 
     <!--###GameActivity -->
     <string name="Sudoku" translatable="false">Sudoku</string>
@@ -84,6 +98,9 @@
     <string name="hint_confirmation_confirm">Use</string>
     <string name="reset_confirmation">Are you sure you want to reset the game board?</string>
     <string name="reset_confirmation_confirm">Reset</string>
+    <string name="share_confirmation_confirm">Share</string>
+    <string name="copy_code_confirmation_toast">Copied to clipboard</string>
+    <string name="copy_code_error_toast">Cannot access clipboard</string>
 
     <!-- ### Welcome Dialog ### -->
 
@@ -124,6 +141,10 @@
     <string name="help_delete_summary">Deletes a selected field</string>
     <string name="help_notes">Note toggle button</string>
     <string name="help_notes_summary">Toggles if numbers should be set as notes or as values in a field</string>
+    <string name="finalize">Finalize button</string>
+    <string name="finalize_summary">Confirms the numeric input in the create sudoku game mode </string>
+    <string name="help_import">Import button</string>
+    <string name="help_import_summary">Imports a new, customizable sudoku field into the create sudoku game mode.\nWarning: this will override the entire field and its old values cannot be recovered.</string>
     <string name="help_privacyInfo">Privacy Info</string>
     <string name="help_permissions">Permissions</string>
     <string name="help_permissions_summary">Privacy Friendly Sudoku does not use any permissions.</string>
@@ -140,10 +161,45 @@
     <string name="slide2_heading">Game mode</string>
     <string name="slide2_text">Swipe or press the arrow buttons on the left and right to change the game mode.</string>
 
-    <string name="slide3_heading">Difficulty</string>
-    <string name="slide3_text">Press or swipe the stars to change the difficulty.</string>
+    <string name="slide3_heading">Difficulty /</string>
+    <string name="slide3_heading2">custom sudoku</string>
+    <string name="slide3_text">Press or swipe the stars to change the difficulty.
+        Press the circle to activate the Custom Sudoku game mode and create your own sudoku.</string>
 
     <string name="next">Next</string>
     <string name="skip">Skip</string>
     <string name="menu_tutorial">Tutorial</string>
+
+    <!-- ### DailySudokuActivity ###-->
+    <string name="menu_daily_sudoku">Daily Sudoku</string>
+    <string name="finished_daily_sudoku">You have already solved the sudoku of the day</string>
+    <string name="daily_number_of_hints">Used hints</string>
+    <string name="number_of_completed_games">Completed games</string>
+
+    <!-- ### Create custome sudoku ###-->
+    <string name="menu_import_custom_sudoku">Import Sudoku</string>
+    <string name="menu_import_wrong_format_custom_sudoku">Your link needs to have one of the following prefixes:</string>
+    <string name="dialog_import_custom_sudoku">Enter the link of the sudoku you wish to import:</string>
+    <string name="dialog_import_custom_sudoku_positive_button">Import</string>
+    <string name="finalize_custom_sudoku_dialog">Do you wish to finalize this sudoku?</string>
+    <string name="verify_custom_sudoku_process_toast">Verifying&#8230;</string>
+    <string name="finished_verifying_custom_sudoku_toast">Done verifying!</string>
+    <string name="failed_to_verify_custom_sudoku_toast">Verification failed: Your sudoku cannot be solved.</string>
+    <string name="title_activity_settings_new">Settings</string>
+
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+
 </resources>

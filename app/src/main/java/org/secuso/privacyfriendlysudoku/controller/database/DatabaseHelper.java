@@ -1,3 +1,19 @@
+/*
+ This file is part of Privacy Friendly Sudoku.
+
+ Privacy Friendly Sudoku is free software:
+ you can redistribute it and/or modify it under the terms of the
+ GNU General Public License as published by the Free Software Foundation,
+ either version 3 of the License, or any later version.
+
+ Privacy Friendly Sudoku is distributed in the hope
+ that it will be useful, but WITHOUT ANY WARRANTY; without even
+ the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ See the GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with Privacy Friendly Sudoku. If not, see <http://www.gnu.org/licenses/>.
+ */
 package org.secuso.privacyfriendlysudoku.controller.database;
 
 import android.content.ContentValues;
@@ -6,7 +22,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import org.secuso.privacyfriendlysudoku.controller.database.columns.DailySudokuColumns;
 import org.secuso.privacyfriendlysudoku.controller.database.columns.LevelColumns;
+import org.secuso.privacyfriendlysudoku.controller.database.migration.MigrationUtil;
+import org.secuso.privacyfriendlysudoku.controller.database.model.DailySudoku;
 import org.secuso.privacyfriendlysudoku.controller.database.model.Level;
 import org.secuso.privacyfriendlysudoku.game.GameDifficulty;
 import org.secuso.privacyfriendlysudoku.game.GameType;
@@ -18,7 +37,7 @@ import java.util.List;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 2;
     public static final String DATABASE_NAME = "Database.db";
 
     public DatabaseHelper(Context context) {
@@ -28,11 +47,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(LevelColumns.SQL_CREATE_ENTRIES);
+        db.execSQL(DailySudokuColumns.SQL_CREATE_ENTRIES);
     }
 
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL(LevelColumns.SQL_DELETE_ENTRIES);
-        onCreate(db);
+        // fallback to destructive migration if no migration could be executed
+        if(!MigrationUtil.executeMigration(db, oldVersion, newVersion)) {
+            db.execSQL(LevelColumns.SQL_DELETE_ENTRIES);
+            db.execSQL(DailySudokuColumns.SQL_DELETE_ENTRIES);
+            onCreate(db);
+        }
     }
 
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -80,6 +104,39 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return levelList.get(0);
     }
 
+    /**
+     * Returns a list of all the daily sudokus that have been solved and thus saved to the database
+     * @return a list of all the daily sudokus that have been solved so far
+     */
+    public synchronized List<DailySudoku> getDailySudokus() {
+        List<DailySudoku> dailySudokuList = new LinkedList<>();
+        SQLiteDatabase database = getWritableDatabase();
+
+        // order results from most to least recent
+        String order = DailySudokuColumns._ID + " DESC";
+
+        // How you want the results sorted in the resulting Cursor
+        Cursor c = database.query(
+                DailySudokuColumns.TABLE_NAME,         // The table to query
+                DailySudokuColumns.PROJECTION,                // The columns to return
+                null,                                // select all rows
+                null,                            // select all rows
+                null,                                     // don't group the rows
+                null,                                     // don't filter by row groups
+                order                                    // The sort order
+        );
+
+        if (c != null) {
+            while(c.moveToNext()) {
+                dailySudokuList.add(DailySudokuColumns.getLevel(c));
+            }
+        }
+
+        c.close();
+        return dailySudokuList;
+
+    }
+
     public synchronized void deleteLevel(int id) {
         SQLiteDatabase database = getWritableDatabase();
 
@@ -92,6 +149,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public synchronized long addLevel(Level level) {
         SQLiteDatabase database = getWritableDatabase();
         return database.insert(LevelColumns.TABLE_NAME, null, LevelColumns.getValues(level));
+    }
+
+    /**
+     * Adds a new daily sudoku to the database
+     * @param ds the daily sudoku which is to be added to the database
+     * @return the row id of the newly inserted sudoku (or -1 if an error occurred)
+     */
+    public synchronized long addDailySudoku(DailySudoku ds) {
+        SQLiteDatabase database = getWritableDatabase();
+        return database.insert(DailySudokuColumns.TABLE_NAME, null, DailySudokuColumns.getValues(ds));
     }
 }
 

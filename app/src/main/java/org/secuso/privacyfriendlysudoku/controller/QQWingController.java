@@ -1,9 +1,26 @@
+/*
+ This file is part of Privacy Friendly Sudoku.
+
+ Privacy Friendly Sudoku is free software:
+ you can redistribute it and/or modify it under the terms of the
+ GNU General Public License as published by the Free Software Foundation,
+ either version 3 of the License, or any later version.
+
+ Privacy Friendly Sudoku is distributed in the hope
+ that it will be useful, but WITHOUT ANY WARRANTY; without even
+ the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ See the GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with Privacy Friendly Sudoku. If not, see <http://www.gnu.org/licenses/>.
+ */
 package org.secuso.privacyfriendlysudoku.controller;
 
 import android.os.Parcelable;
 import android.util.Log;
 
 import java.util.LinkedList;
+import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.Date;
@@ -51,6 +68,49 @@ public class QQWingController {
         opts.gameType = type;
         doAction();
         return generated;
+    }
+
+    /**
+     * Generate a new sudoku based on a given seed regardless of outcome difficulty
+     * @param seed the seed based on which the sudoku should be calculated
+     * @return the generated sudoku
+     */
+    public int[] generateFromSeed(int seed) {
+        return generateFromSeed(seed, 1, 1);
+    }
+
+    /**
+     * Generate a new sudoku based on a given seed, but only accept challenge sudokus with a certain probability
+     * @param seed the seed based on which the sudoku should be calculated
+     * @param challengePermission the probability with which a challenge sudoku is accepted upon calculation
+     * @param challengeIterations the amount of times a challenge sudoku can be rejected in a row before being
+     *                            accepted with a probability of 100%
+     * @return the generated sudoku
+     */
+    public int[] generateFromSeed(int seed, double challengePermission, int challengeIterations) {
+        generated.clear();
+        QQWing generator = new QQWing(GameType.Default_9x9, GameDifficulty.Unspecified);
+        boolean continueSearch = true;
+        Random random = new Random(seed);
+        int seedFactor = 2;
+
+        while(continueSearch && challengeIterations > 0) {
+            seed *= seedFactor;
+            generator.setRandom(seed);
+            generator.setRecordHistory(true);
+            generator.generatePuzzle();
+
+            if (generator.getDifficulty() != GameDifficulty.Challenge || random.nextDouble() < challengePermission) {
+                continueSearch = false;
+            } else {
+                challengeIterations--;
+            }
+        }
+
+        generated.add(generator.getPuzzle());
+        opts.gameType = GameType.Default_9x9;
+        opts.gameDifficulty = generator.getDifficulty();
+        return generated.poll();
     }
 
     public int[] solve(GameBoard gameBoard) {
@@ -198,6 +258,10 @@ public class QQWingController {
                 }
             }
         }
+    }
+
+    public boolean isImpossible() {
+        return solveImpossible;
     }
 
     private static class QQWingOptions {

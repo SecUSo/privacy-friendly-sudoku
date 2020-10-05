@@ -1,3 +1,19 @@
+/*
+ This file is part of Privacy Friendly Sudoku.
+
+ Privacy Friendly Sudoku is free software:
+ you can redistribute it and/or modify it under the terms of the
+ GNU General Public License as published by the Free Software Foundation,
+ either version 3 of the License, or any later version.
+
+ Privacy Friendly Sudoku is distributed in the hope
+ that it will be useful, but WITHOUT ANY WARRANTY; without even
+ the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ See the GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with Privacy Friendly Sudoku. If not, see <http://www.gnu.org/licenses/>.
+ */
 package org.secuso.privacyfriendlysudoku.controller.helper;
 
 import android.util.Log;
@@ -25,6 +41,7 @@ public class GameInfoContainer {
     int[] setValues;
     boolean[][] setNotes;
     int hintsUsed;
+    boolean isCustom;
 
     public GameInfoContainer() {}
     public GameInfoContainer(int ID, GameDifficulty difficulty, GameType gameType, int[] fixedValues, int[] setValues, boolean[][] setNotes) {
@@ -40,17 +57,19 @@ public class GameInfoContainer {
         this.setValues = setValues;
         this.setNotes = setNotes;
         this.hintsUsed = hintsUsed;
+        isCustom = false;
     }
 
     public void setID(int ID) {
         this.ID = ID;
     }
 
+    public void setCustom (boolean isCustom) { this.isCustom = isCustom; }
+
+    public boolean isCustom () { return  isCustom; }
+
     public void parseGameType(String s) {
         gameType = Enum.valueOf(GameType.class, s);
-        if(gameType == null) {
-            throw new IllegalArgumentException("GameInfoContainer: gameType could not be set.");
-        }
     }
 
     public int getTimePlayed() {
@@ -63,7 +82,7 @@ public class GameInfoContainer {
 
     public void parseTime(String s) {
         try {
-            this.timePlayed = Integer.valueOf(s);
+            this.timePlayed = Integer.parseInt(s);
         } catch(NumberFormatException e) {
             throw new IllegalArgumentException("GameInfoContainer: Can not parse time.", e);
         }
@@ -71,7 +90,7 @@ public class GameInfoContainer {
 
     public void parseHintsUsed(String s) {
         try {
-            this.hintsUsed = Integer.valueOf(s);
+            this.hintsUsed = Integer.parseInt(s);
         } catch(NumberFormatException e) {
             throw new IllegalArgumentException("GameInfoContainer: Can not parse hints used.", e);
         }
@@ -79,7 +98,7 @@ public class GameInfoContainer {
 
     public void parseDate(String s) {
         try {
-            this.lastTimePlayed = new Date(Long.valueOf(s));
+            this.lastTimePlayed = new Date(Long.parseLong(s));
         } catch(NumberFormatException e) {
             throw new IllegalArgumentException("GameInfoContainer: LastTimePlayed Date can not be extracted.", e);
         }
@@ -87,9 +106,6 @@ public class GameInfoContainer {
 
     public void parseDifficulty(String s) {
         difficulty = Enum.valueOf(GameDifficulty.class, s);
-        if(difficulty == null) {
-            throw new IllegalArgumentException("GameInfoContainer: difficulty could not be set.");
-        }
     }
 
     public void parseFixedValues(String s){
@@ -104,6 +120,11 @@ public class GameInfoContainer {
         fixedValues = new int[s.length()];
         for(int i = 0; i < s.length(); i++) {
                fixedValues[i] = Symbol.getValue(Symbol.SaveFormat, String.valueOf(s.charAt(i)))+1;
+               if (gameType != GameType.Unspecified && gameType != null) {
+                   if (fixedValues[i] < 0 || fixedValues[i] > gameType.getSize()) {
+                       throw new IllegalArgumentException("Fixed values must each be smaller than " + gameType.getSize() + ".");
+                   }
+               }
         }
     }
 
@@ -128,7 +149,7 @@ public class GameInfoContainer {
         int size = gameType.getSize();
         int sq = size*size;
 
-        if(gameType != GameType.Unspecified && gameType != null) {
+        if(gameType != GameType.Unspecified) {
             if(strings.length != sq) {
                 throw new IllegalArgumentException("The string array must have "+sq+" entries.");
             }
@@ -174,6 +195,7 @@ public class GameInfoContainer {
     public static String getGameInfo(GameController controller) {
         StringBuilder sb = new StringBuilder();
         Date today = new Date();
+        boolean custom = controller.gameIsCustom();
 
         sb.append(controller.getGameType().name());
         sb.append("/");
@@ -190,6 +212,12 @@ public class GameInfoContainer {
         sb.append(getNotes(controller));
         sb.append("/");
         sb.append(controller.getUsedHints());
+
+        // add additional information to custom sudokus to ensure they can be distinguished from 'regular' sudokus
+        if (custom) {
+            sb.append("/");
+            sb.append(custom);
+        }
 
         String result = sb.toString();
 
