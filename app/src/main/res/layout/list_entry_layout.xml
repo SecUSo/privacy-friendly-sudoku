@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_content"
@@ -13,100 +13,99 @@
         android:id="@+id/loadgame_listentry_gametypeimage"
         android:layout_width="40dp"
         android:layout_height="match_parent"
-        android:layout_marginRight="10dp"
         android:adjustViewBounds="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/icon_default_9x9" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/relativeLayout2"
+
+    <ImageView
+        android:id="@+id/loadgame_listentry_custom_icon"
+        android:layout_width="12dp"
+        android:layout_height="15dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/loadgame_listentry_difficultybar"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/loadgame_listentry_gametypeimage"
+        app:layout_constraintTop_toBottomOf="@+id/loadgame_listentry_gametype"
+        app:srcCompat="@drawable/create_game_src" />
+
+    <TextView
+        android:id="@+id/loadgame_listentry_gametype"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="4dp"
+        android:text="GameType"
+        app:layout_constraintEnd_toEndOf="@+id/loadgame_listentry_difficultytext"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/loadgame_listentry_gametypeimage"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/loadgame_listentry_custom_icon"
-            android:layout_width="12dp"
-            android:layout_height="0dp"
-            app:layout_constraintStart_toStartOf="@id/loadgame_listentry_gametype"
-            app:layout_constraintEnd_toStartOf="@+id/loadgame_listentry_difficultybar"
-            app:layout_constraintTop_toTopOf="@id/loadgame_listentry_difficultybar"
-            app:layout_constraintBottom_toBottomOf="@id/loadgame_listentry_difficultybar"
-            app:srcCompat="@drawable/create_game_src" />
-
-        <TextView
-            android:id="@+id/loadgame_listentry_gametype"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="GameType"
-            app:layout_constraintBottom_toTopOf="@+id/loadgame_listentry_difficultybar"
-            app:layout_constraintEnd_toEndOf="@+id/loadgame_listentry_difficultytext"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/loadgame_listentry_difficultybar"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0" />
-
-        <TextView
-            android:id="@+id/loadgame_listentry_custom_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="@string/difficulty_custom"
-            android:visibility="gone"
-            app:layout_constraintStart_toEndOf="@id/loadgame_listentry_gametype"
-            app:layout_constraintTop_toTopOf="@id/loadgame_listentry_gametype"
-            app:layout_constraintBottom_toBottomOf="@id/loadgame_listentry_gametype"
-            android:layout_marginLeft="16dp" />
-
-        <RatingBar
-            android:id="@+id/loadgame_listentry_difficultybar"
-            style="?android:attr/ratingBarStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:clickable="false"
-            android:numStars="4"
-            android:rating="3"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@id/loadgame_listentry_custom_icon"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <TextView
-            android:id="@+id/loadgame_listentry_difficultytext"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="Difficulty"
-            app:layout_constraintBottom_toBottomOf="@+id/loadgame_listentry_difficultybar"
-            app:layout_constraintStart_toEndOf="@+id/loadgame_listentry_difficultybar"
-            app:layout_constraintTop_toTopOf="@+id/loadgame_listentry_difficultybar"
-            android:layout_marginLeft="8dp" />
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <RelativeLayout
+    <TextView
+        android:id="@+id/loadgame_listentry_custom_label"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="right"
-        android:gravity="right">
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:text="@string/difficulty_custom"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/loadgame_listentry_gametype"
+        app:layout_constraintStart_toEndOf="@id/loadgame_listentry_gametype"
+        app:layout_constraintTop_toTopOf="@id/loadgame_listentry_gametype" />
 
-        <TextView
-            android:id="@+id/loadgame_listentry_timeplayed"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="end"
-            android:text="00:00"
-            android:textStyle="bold" />
+    <RatingBar
+        android:id="@+id/loadgame_listentry_difficultybar"
+        style="?android:attr/ratingBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:layout_marginLeft="2dp"
+        android:clickable="false"
+        android:numStars="4"
+        android:rating="3"
+        app:layout_constraintBottom_toBottomOf="@+id/loadgame_listentry_custom_icon"
+        app:layout_constraintStart_toEndOf="@+id/loadgame_listentry_custom_icon"
+        app:layout_constraintTop_toTopOf="@+id/loadgame_listentry_custom_icon" />
 
-        <TextView
-            android:id="@+id/loadgame_listentry_lasttimeplayed"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/loadgame_listentry_timeplayed"
-            android:gravity="end"
-            android:text="1 second ago" />
+    <TextView
+        android:id="@+id/loadgame_listentry_difficultytext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:text="Difficulty"
+        app:layout_constraintBottom_toBottomOf="@+id/loadgame_listentry_difficultybar"
+        app:layout_constraintStart_toEndOf="@+id/loadgame_listentry_difficultybar"
+        app:layout_constraintTop_toTopOf="@+id/loadgame_listentry_difficultybar" />
 
-    </RelativeLayout>
+    <TextView
+        android:id="@+id/loadgame_listentry_timeplayed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:text="00:00"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/loadgame_listentry_lasttimeplayed"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/loadgame_listentry_lasttimeplayed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/loadgame_listentry_timeplayed"
+        android:gravity="end"
+        android:text="1 second ago"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/loadgame_listentry_timeplayed" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

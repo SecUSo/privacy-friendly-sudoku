@@ -188,7 +188,7 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
                         }
                         else if (data.getHost().equals(validUris.get(i).getHost())) {
                             input = data.getPath();
-                            input =input.replace("/", "");
+                            input = input.replace("/", "");
                             break;
                         }
                     }
@@ -200,7 +200,9 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
                 QQWing difficultyCheck;
                 GameInfoContainer container = new GameInfoContainer(0, GameDifficulty.Unspecified,
                         GameType.Unspecified, new int [boardSize], new int [boardSize], new boolean [boardSize][sectionSize]);
-                container.setCustom(extras != null && extras.getBoolean("isCustom", false));
+                // always set custom sudokus as custom
+                // TODO: maybe introduce a setting in the settings page to let the user decide
+                container.setCustom(true);
 
                 try {
                     container.parseGameType("Default_" + sectionSize + "x" + sectionSize);
