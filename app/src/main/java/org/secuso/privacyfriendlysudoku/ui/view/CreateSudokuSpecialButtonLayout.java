@@ -24,7 +24,6 @@ import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -33,16 +32,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 
 import org.secuso.privacyfriendlysudoku.controller.GameController;
 import org.secuso.privacyfriendlysudoku.game.listener.IHighlightChangedListener;
-import org.secuso.privacyfriendlysudoku.ui.GameActivity;
 import org.secuso.privacyfriendlysudoku.ui.MainActivity;
 import org.secuso.privacyfriendlysudoku.ui.listener.IFinalizeDialogFragmentListener;
-import org.secuso.privacyfriendlysudoku.ui.listener.IHintDialogFragmentListener;
 import org.secuso.privacyfriendlysudoku.ui.listener.IImportDialogFragmentListener;
 
 import java.util.LinkedList;
@@ -173,11 +169,11 @@ public class CreateSudokuSpecialButtonLayout extends LinearLayout implements IHi
             switch(fixedButtons[i].getType()) {
                 case Undo:
                     fixedButtons[i].setBackgroundResource(gameController.isUndoAvailable() ?
-                            R.drawable.numpad_highlighted_four : R.drawable.inactive_button);
+                            R.drawable.numpad_highlighted_four : R.drawable.button_inactive);
                     break;
                 case Do:
                     fixedButtons[i].setBackgroundResource(gameController.isRedoAvailable() ?
-                            R.drawable.numpad_highlighted_four : R.drawable.inactive_button);
+                            R.drawable.numpad_highlighted_four : R.drawable.button_inactive);
                     break;
                 default:
                     break;

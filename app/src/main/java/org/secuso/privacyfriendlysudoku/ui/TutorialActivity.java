@@ -31,6 +31,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -211,6 +212,11 @@ public class TutorialActivity extends AppCompatActivity {
 
             View view = layoutInflater.inflate(layouts[position], container, false);
             container.addView(view);
+
+            CheckBox createGameBar = (CheckBox) findViewById(R.id.circleButton);
+            if(createGameBar != null) {
+                createGameBar.setButtonDrawable(R.drawable.create_game_src);
+            }
 
             return view;
         }

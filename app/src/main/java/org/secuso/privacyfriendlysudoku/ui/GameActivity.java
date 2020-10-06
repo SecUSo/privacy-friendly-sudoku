@@ -362,7 +362,8 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
         ratingBar.setMax(numberOfStarts);
         ratingBar.setNumStars(numberOfStarts);
         ratingBar.setRating(difficutyList.indexOf(gameController.getDifficulty()) + 1);
-        ((TextView)findViewById(R.id.difficultyText)).setText(getString(gameController.getDifficulty().getStringResID()));
+        TextView diffText = ((TextView)findViewById(R.id.difficultyText));
+        diffText.setText(getString(gameController.getDifficulty().getStringResID()));
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

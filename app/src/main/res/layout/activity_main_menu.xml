@@ -108,7 +108,7 @@
                     android:orientation="horizontal"
                     android:id="@+id/linearLayout4">
 
-                    <CheckBox
+                    <androidx.appcompat.widget.AppCompatCheckBox
                         android:id="@+id/circleButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -130,8 +130,8 @@
                         android:layout_marginStart="41dp"
                         android:layout_marginLeft="41dp"
                         android:clickable="true"
-                        android:numStars="3"
-                        android:rating="0.5"
+                        android:numStars="4"
+                        android:rating="2"
                         android:stepSize="1"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -154,7 +154,7 @@
                     android:onClick="onClick"
                     android:clickable="false"
                     android:elevation="10dp"
-                    android:background="@drawable/standalone_button"/>
+                    android:background="@drawable/button_standalone"/>
 
                 <Button
                     android:textColor="?attr/lightestFontColor"
@@ -172,7 +172,7 @@
                     android:onClick="onClick"
                     android:capitalize="none"
                     android:clickable="false"
-                    android:background="@drawable/standalone_button"/>
+                    android:background="@drawable/button_standalone"/>
 
                 <!--  <Button
                       android:layout_width="wrap_content"
@@ -257,11 +257,12 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:fitsSystemWindows="true"
         android:background="?attr/lightestBackGround"
-        app:itemTextColor="?attr/menuTextColor"
+        android:fitsSystemWindows="true"
+        app:headerLayout="@layout/nav_header"
         app:itemIconTint="?attr/menuTextColor"
+        app:itemTextColor="?attr/menuTextColor"
         app:menu="@menu/menu_drawer_main"
-        app:headerLayout="@layout/nav_header" />
+        tools:visibility="gone" />
 
 </androidx.drawerlayout.widget.DrawerLayout>

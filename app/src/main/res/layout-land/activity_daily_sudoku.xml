@@ -108,7 +108,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginLeft="16dp"
                 android:adjustViewBounds="true"
-                android:src="@drawable/icon_default_9x9"
+                app:srcCompat="@drawable/icon_default_9x9"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/view"
                 app:layout_constraintHorizontal_bias="0.0"

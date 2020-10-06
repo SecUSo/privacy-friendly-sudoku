@@ -161,6 +161,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         difficultyBar.setNumStars(difficultyList.size());
         difficultyBar.setMax(difficultyList.size());
         CheckBox createGameBar = (CheckBox) findViewById(R.id.circleButton);
+        createGameBar.setButtonDrawable(R.drawable.create_game_src);
         difficultyBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
@@ -177,16 +178,14 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             }
         });
 
-        createGameBar.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        createGameBar.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-
-                    difficultyBar.setRating(0);
-                    ((Button)findViewById(R.id.playButton)).setText(R.string.create_game);
-                }
-                createGameBar.setChecked(isChecked);
-            }});
+            public void onClick(View v) {
+                difficultyBar.setRating(0);
+                ((Button)findViewById(R.id.playButton)).setText(R.string.create_game);
+                createGameBar.setChecked(true);
+            }
+        });
 
         String retrievedDifficulty = settings.getString("lastChosenDifficulty", "Moderate");
         GameDifficulty lastChosenDifficulty = GameDifficulty.valueOf(
@@ -320,10 +319,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         List<GameInfoContainer> gic = fm.loadGameStateInfo();
         if(gic.size() > 0 && !(gic.size() == 1 && gic.get(0).getID() == GameController.DAILY_SUDOKU_ID)) {
             continueButton.setEnabled(true);
-            continueButton.setBackgroundResource(R.drawable.standalone_button);
+            continueButton.setBackgroundResource(R.drawable.button_standalone);
         } else {
             continueButton.setEnabled(false);
-            continueButton.setBackgroundResource(R.drawable.inactive_button);
+            continueButton.setBackgroundResource(R.drawable.button_inactive);
         }
     }
 

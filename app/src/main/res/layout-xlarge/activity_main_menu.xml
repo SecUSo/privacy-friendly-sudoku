@@ -109,7 +109,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical">
 
-                <CheckBox
+                <androidx.appcompat.widget.AppCompatCheckBox
                     android:id="@+id/circleButton"
                     style="@style/CheckBox"
                     android:layout_width="wrap_content"
@@ -160,7 +160,7 @@
                 android:capitalize="none"
                 android:clickable="false"
                 android:elevation="10dp"
-                android:background="@drawable/standalone_button"/>
+                android:background="@drawable/button_standalone"/>
 
             <Button
                 android:textColor="?attr/lightestFontColor"
@@ -178,7 +178,7 @@
                 android:onClick="onClick"
                 android:capitalize="none"
                 android:clickable="false"
-                android:background="@drawable/standalone_button"/>
+                android:background="@drawable/button_standalone"/>
 <!--
             <LinearLayout
                 android:layout_width="match_parent"
