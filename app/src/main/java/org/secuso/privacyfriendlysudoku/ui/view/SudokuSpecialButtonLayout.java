@@ -136,11 +136,11 @@ public class SudokuSpecialButtonLayout extends LinearLayout implements IHighligh
         for (SudokuButtonType t : getSpecialButtons()){
             fixedButtons[i] = new SudokuSpecialButton(getContext(),null);
             if(orientation == LinearLayout.HORIZONTAL) {
-                p = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1);
+                p = new LayoutParams(0, LayoutParams.MATCH_PARENT, 1);
             } else {
-                p = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1);
-                fixedButtons[i].setPadding(25, 0, 25, 0);
+                p = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, 0, 1);
             }
+            fixedButtons[i].setPadding(25, 0, 25, 0);
             p.setMargins(5, 5, 5, 5);
 
             //int width2 =width/(fixedButtonsCount);
@@ -148,28 +148,16 @@ public class SudokuSpecialButtonLayout extends LinearLayout implements IHighligh
             if(t == Spacer) {
                 fixedButtons[i].setVisibility(View.INVISIBLE);
             }
-            /*if(t == SudokuButtonType.Do && !gameController.isRedoAvailable()) {
-                fixedButtons[i].setEnabled(false);
-            }
-            if(t == SudokuButtonType.Undo && !gameController.isUndoAvailable()) {
-                fixedButtons[i].setEnabled(false);
-            }*/
+
             fixedButtons[i].setLayoutParams(p);
             fixedButtons[i].setType(t);
-            fixedButtons[i].setImageDrawable(getResources().getDrawable(t.getResID()));
-            // fixedButtons[i].setText(SudokuButtonType.getName(t));
-            fixedButtons[i].setScaleType(ImageView.ScaleType.CENTER);
+            fixedButtons[i].setImageDrawable(ContextCompat.getDrawable(context, fixedButtons[i].getType().getResID()));
+            fixedButtons[i].setScaleType(ImageView.ScaleType.FIT_XY);
             fixedButtons[i].setAdjustViewBounds(true);
             fixedButtons[i].setOnClickListener(listener);
             fixedButtons[i].setBackgroundResource(R.drawable.numpad_highlighted_four);
             addView(fixedButtons[i]);
 
-            if(fixedButtons[i].getVisibility() == View.VISIBLE) {
-                Drawable drawable = ContextCompat.getDrawable(context, fixedButtons[i].getType().getResID());
-                setUpVectorDrawable(drawable);
-                drawable.draw(canvas);
-                fixedButtons[i].setImageBitmap(bitResult);
-            }
             i++;
         }
 

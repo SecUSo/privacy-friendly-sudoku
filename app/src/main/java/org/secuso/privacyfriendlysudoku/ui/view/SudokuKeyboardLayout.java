@@ -22,6 +22,7 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import org.secuso.privacyfriendlysudoku.controller.GameController;
@@ -81,7 +82,7 @@ public class SudokuKeyboardLayout extends LinearLayout implements IHighlightChan
             if(orientation == LinearLayout.HORIZONTAL) {
                 p = new LayoutParams(LayoutParams.MATCH_PARENT, 0, 1);
             } else {
-                p = new LayoutParams(0, LayoutParams.MATCH_PARENT, 1);
+                p = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT, 1);
             }
             //if (i == 0) p.bottomMargin=10; else p.topMargin=10;
             p.setMargins(0, 5, 0, 5);
@@ -128,6 +129,7 @@ public class SudokuKeyboardLayout extends LinearLayout implements IHighlightChan
                 buttons[buttonIndex].setBackgroundResource(R.drawable.mnenomic_numpad_button);
                 buttons[buttonIndex].setPadding(0, 0, 0, 0);
                 buttons[buttonIndex].setGravity(Gravity.CENTER);
+                buttons[buttonIndex].setMinHeight((int) (normalTextSize * 2));
                 buttons[buttonIndex].setText(Symbol.getSymbol(symbolsToUse, buttonIndex));
                 buttons[buttonIndex].setTextSize(TypedValue.COMPLEX_UNIT_SP, normalTextSize);
                 buttons[buttonIndex].setValue(buttonIndex + 1);
