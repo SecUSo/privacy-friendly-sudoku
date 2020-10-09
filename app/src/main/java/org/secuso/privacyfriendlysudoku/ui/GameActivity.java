@@ -95,7 +95,7 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
     TextView viewName ;
     RatingBar ratingBar;
     SaveLoadStatistics statistics = new SaveLoadStatistics(this);
-    WinDialog dialog = null;
+    WinDialog dialog;
     private boolean gameSolved = false;
     private boolean startGame = true;
 

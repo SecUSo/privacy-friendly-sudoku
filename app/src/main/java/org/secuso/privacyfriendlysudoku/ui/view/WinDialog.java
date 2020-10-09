@@ -53,7 +53,6 @@ public class WinDialog extends Dialog {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
 
         ((TextView)findViewById(R.id.win_hints)).setText(hintString);
