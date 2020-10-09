@@ -29,7 +29,6 @@
 
         </androidx.appcompat.widget.Toolbar>
 
-
     </com.google.android.material.appbar.AppBarLayout>
 
         <LinearLayout
@@ -112,16 +111,18 @@
                         android:id="@+id/circleButton"
                         style="@style/CheckBox"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_marginTop="1dp"
                         android:layout_marginEnd="4dp"
                         android:layout_marginRight="4dp"
+                        android:layout_marginBottom="1dp"
                         android:button="@drawable/create_game_src"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintBottom_toBottomOf="@+id/difficultyBar"
                         app:layout_constraintEnd_toStartOf="@+id/difficultyBar"
                         app:layout_constraintHorizontal_bias="1.0"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.65" />
+                        app:layout_constraintTop_toTopOf="@+id/difficultyBar"
+                        app:layout_constraintVertical_bias="0.5" />
 
                     <RatingBar
                         android:id="@+id/difficultyBar"
@@ -131,7 +132,7 @@
                         android:layout_marginStart="41dp"
                         android:layout_marginLeft="41dp"
                         android:clickable="true"
-                        android:numStars="3"
+                        android:numStars="4"
                         android:rating="1"
                         android:stepSize="1"
                         app:layout_constraintBottom_toBottomOf="parent"
