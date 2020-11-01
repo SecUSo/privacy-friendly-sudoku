@@ -15,6 +15,8 @@
         <attr name="activeButtonColor" format="color"/>
         <attr name="menuTextColor" format="color"/>
         <attr name="highlightedButtonBorder" format="color"/>
+        <attr name="completedButtonColor" format="color"/>
+        <attr name="completedButtonBorder" format="color"/>
         <attr name="backgroundTutorialSlide" format="color"/>
         <attr name="backgroundTutorialStars" format="color"/>
         <attr name="blueHighlight" format="color"/>
