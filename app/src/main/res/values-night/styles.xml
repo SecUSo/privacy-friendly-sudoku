@@ -21,7 +21,7 @@
         <item name="activeButtonColor">@color/lightblue</item>
         <item name="inactiveButtonColor">@color/middlegrey</item>
         <item name="highlightedButtonBorder">@color/yellow</item>
-        <item name="completedButtonColor">@color/darkyellow</item>
+        <item name="completedButtonColor">@color/green</item>
         <item name="completedButtonBorder">@color/yellow</item>
         <item name="android:itemBackground">@color/cardview_dark_background</item>
         <item name="backgroundTutorialSlide">@color/colorPrimaryDark</item>
