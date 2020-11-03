@@ -135,7 +135,7 @@
                         android:layout_marginBottom="16dp"
                         android:clickable="true"
                         android:numStars="4"
-                        android:rating="2"
+                        android:rating="1"
                         android:stepSize="1"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
