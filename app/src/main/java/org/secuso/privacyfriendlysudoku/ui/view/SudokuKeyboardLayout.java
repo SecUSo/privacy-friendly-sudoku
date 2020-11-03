@@ -185,17 +185,29 @@ public class SudokuKeyboardLayout extends LinearLayout implements IHighlightChan
     @Override
     public void onHighlightChanged() {
         for(SudokuButton i_btn : buttons) {
-            i_btn.setBackgroundResource(R.drawable.mnenomic_numpad_button);
+            int backgroundResId = R.drawable.mnenomic_numpad_button;
 
-            // Highlight Yellow if we are done with that number
-            if(gameController.getValueCount(i_btn.getValue()) == gameController.getSize()) {
-                i_btn.setBackgroundResource(R.drawable.numpad_highlighted_three);
+            boolean numCompleted = (gameController.getValueCount(i_btn.getValue()) == gameController.getSize());
+            boolean numSelected = (gameController.getSelectedValue() == i_btn.getValue());
+
+            if(numCompleted) {
+                // Fill color           : darkyellow
+                // Border (if selected) : yellow
+                if(numSelected) {
+                    backgroundResId = R.drawable.numpad_selected_complete;
+                } else {
+                    backgroundResId = R.drawable.numpad_unselected_complete;
+                }
+            } else {
+                // Fill color           : lightblue
+                // Border (if selected) : colorPrimaryDark
+                if(numSelected) {
+                    backgroundResId = R.drawable.numpad_highlighted;
+                } // The else scenario is taken care of by the default initialized value
             }
 
-            if(gameController.getSelectedValue() == i_btn.getValue()) {
-                // highlight button to indicate that the value is selected
-                i_btn.setBackgroundResource(R.drawable.numpad_highlighted);
-            }
+            i_btn.setBackgroundResource(backgroundResId);
+
         }
     }
 
