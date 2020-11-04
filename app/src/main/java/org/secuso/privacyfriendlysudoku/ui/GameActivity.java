@@ -306,7 +306,7 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
                 finish();
                 overridePendingTransition(0, 0);
             }
-            gameSolved = savedInstanceState.getInt("gameSolved") == 1;
+            gameSolved = savedInstanceState.getBoolean("gameSolved");
         }
 
 
