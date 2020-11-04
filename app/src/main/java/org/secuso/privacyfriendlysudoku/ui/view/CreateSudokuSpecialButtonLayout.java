@@ -23,6 +23,7 @@ import android.app.DialogFragment;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
@@ -58,6 +59,7 @@ public class CreateSudokuSpecialButtonLayout extends LinearLayout implements IHi
     Canvas canvas;
     FragmentManager fragmentManager;
     Context context;
+    float buttonMargin;
 
     OnClickListener listener = new OnClickListener() {
         @Override
@@ -95,6 +97,11 @@ public class CreateSudokuSpecialButtonLayout extends LinearLayout implements IHi
 
     public CreateSudokuSpecialButtonLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
+
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CreateSudokuSpecialButtonLayout);
+        buttonMargin = a.getDimension(R.styleable.CreateSudokuSpecialButtonLayout_createSudokuSpecialKeyboardMargin, 5f);
+        a.recycle();
+
         setWeightSum(fixedButtonsCount);
         this.context = context;
     }
@@ -117,7 +124,7 @@ public class CreateSudokuSpecialButtonLayout extends LinearLayout implements IHi
         if(gameController != null) {
             gameController.registerHighlightChangedListener(this);
         }
-         fixedButtons = new CreateSudokuSpecialButton[fixedButtonsCount];
+        fixedButtons = new CreateSudokuSpecialButton[fixedButtonsCount];
         LayoutParams p;
         int i = 0;
         //ArrayList<SudokuButtonType> type = (ArrayList<SudokuButtonType>) SudokuButtonType.getSpecialButtons();
@@ -127,9 +134,9 @@ public class CreateSudokuSpecialButtonLayout extends LinearLayout implements IHi
                 p = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1);
             } else {
                 p = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1);
-                fixedButtons[i].setPadding(25, 0, 25, 0);
+                fixedButtons[i].setPadding((int)buttonMargin*5, 0, (int)buttonMargin*5, 0);
             }
-            p.setMargins(5, 5, 5, 5);
+            p.setMargins((int)buttonMargin, (int)buttonMargin, (int)buttonMargin, (int)buttonMargin);
 
             //int width2 =width/(fixedButtonsCount);
             //p.width= width2-15;

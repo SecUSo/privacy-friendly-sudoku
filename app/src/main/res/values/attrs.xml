@@ -20,6 +20,7 @@
         <attr name="backgroundTutorialSlide" format="color"/>
         <attr name="backgroundTutorialStars" format="color"/>
         <attr name="blueHighlight" format="color"/>
+        <attr name="sudokuButtonBorderWidth" format="dimension"/>
     </declare-styleable>
 
     <declare-styleable name="SudokuCellView">
@@ -37,5 +38,18 @@
         <attr name="sudokuFieldGridColor" format="color" />
         <attr name="sudokuFieldSectionLineColor" format="color" />
         <attr name="sudokuFieldErrorColor" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="SudokuKeyboardLayout">
+        <attr name="sudokuKeyboardMargin" format="dimension" />
+        <attr name="sudokuKeyboardTextSize" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="SudokuSpecialButtonLayout">
+        <attr name="sudokuSpecialKeyboardMargin" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="CreateSudokuSpecialButtonLayout">
+        <attr name="createSudokuSpecialKeyboardMargin" format="dimension" />
     </declare-styleable>
 </resources>

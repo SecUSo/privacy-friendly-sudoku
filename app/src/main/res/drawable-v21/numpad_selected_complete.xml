@@ -6,6 +6,6 @@
         android:startColor="?attr/completedButtonColor" />
     <corners android:radius="6dp" />
     <stroke
-        android:width="10px"
+        android:width="?attr/sudokuButtonBorderWidth"
         android:color="?attr/completedButtonBorder" />
 </shape>

@@ -23,6 +23,7 @@ import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -196,6 +197,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             createGameBar.setChecked(true);
         } else {
             difficultyBar.setRating(GameDifficulty.getValidDifficultyList().indexOf(lastChosenDifficulty) + 1);
+        }
+
+        if(Configuration.SCREENLAYOUT_SIZE_SMALL == (getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK)) {
+            difficultyBar.setScaleX(0.75f);
+            difficultyBar.setScaleY(0.75f);
         }
 
         // on first create always check for loadable levels!

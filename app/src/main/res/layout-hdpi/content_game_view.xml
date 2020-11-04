@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="?actionBarSize"
+    android:id="@+id/main_content"
+    android:layout_marginTop="?android:actionBarSize"
     android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="org.secuso.privacyfriendlysudoku.ui.GameActivity"
-    tools:layout_editor_absoluteY="56dp">
+    tools:context="org.secuso.privacyfriendlysudoku.ui.GameActivity">
 
     <org.secuso.privacyfriendlysudoku.ui.view.SudokuFieldLayout
         android:id="@+id/sudokuLayout"
@@ -21,7 +21,6 @@
         android:clickable="true"
         android:focusable="true"
         android:gravity="center"
-        app:layout_constraintVertical_weight="2"
         app:layout_constraintBottom_toTopOf="@+id/sudokuButtonLayout"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
@@ -31,14 +30,14 @@
     <LinearLayout
         android:id="@+id/sudokuButtonLayout"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
+        android:minHeight="200dp"
         android:orientation="vertical"
         android:weightSum="3"
-        app:layout_constraintVertical_weight="1"
+        app:layout_constraintTop_toBottomOf="@id/sudokuLayout"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/sudokuLayout">
+        app:layout_constraintStart_toStartOf="parent">
 
         <org.secuso.privacyfriendlysudoku.ui.view.SudokuKeyboardLayout
             android:id="@+id/sudokuKeyboardLayout"
@@ -48,8 +47,8 @@
             android:orientation="vertical"
             android:weightSum="2" />
 
-        <org.secuso.privacyfriendlysudoku.ui.view.CreateSudokuSpecialButtonLayout
-            android:id="@+id/createSudokuLayout"
+        <org.secuso.privacyfriendlysudoku.ui.view.SudokuSpecialButtonLayout
+            android:id="@+id/sudokuSpecialLayout"
             android:layout_width="fill_parent"
             android:layout_height="0dp"
             android:layout_weight="1"

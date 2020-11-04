@@ -6,6 +6,6 @@
         android:startColor="@color/green" />
     <corners android:radius="6dp" />
     <stroke
-        android:width="2px"
+        android:width="10px"
         android:color="@color/yellow" />
 </shape>

@@ -23,6 +23,7 @@ import android.app.DialogFragment;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
@@ -59,6 +60,7 @@ public class SudokuSpecialButtonLayout extends LinearLayout implements IHighligh
     Canvas canvas;
     FragmentManager fragmentManager;
     Context context;
+    float buttonMargin;
 
     OnClickListener listener = new OnClickListener() {
         @Override
@@ -111,6 +113,11 @@ public class SudokuSpecialButtonLayout extends LinearLayout implements IHighligh
 
     public SudokuSpecialButtonLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
+
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.SudokuSpecialButtonLayout);
+        buttonMargin = a.getDimension(R.styleable.SudokuSpecialButtonLayout_sudokuSpecialKeyboardMargin, 5f);
+        a.recycle();
+
         setWeightSum(fixedButtonsCount);
         this.context = context;
     }
@@ -140,8 +147,8 @@ public class SudokuSpecialButtonLayout extends LinearLayout implements IHighligh
             } else {
                 p = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, 0, 1);
             }
-            fixedButtons[i].setPadding(25, 0, 25, 0);
-            p.setMargins(5, 5, 5, 5);
+            fixedButtons[i].setPadding((int)buttonMargin*5, 0, (int)buttonMargin*5, 0);
+            p.setMargins((int)buttonMargin, (int)buttonMargin, (int)buttonMargin, (int)buttonMargin);
 
             //int width2 =width/(fixedButtonsCount);
             //p.width= width2-15;

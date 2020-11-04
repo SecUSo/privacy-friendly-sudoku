@@ -17,7 +17,9 @@
 package org.secuso.privacyfriendlysudoku.ui.view;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -42,6 +44,7 @@ public class SudokuKeyboardLayout extends LinearLayout implements IHighlightChan
     Symbol symbolsToUse = Symbol.Default;
     float normalTextSize = 20; // in sp
     LinearLayout [] layouts = new LinearLayout[2];
+    float buttonMargin;
 
     OnClickListener listener = new OnClickListener() {
         @Override
@@ -58,6 +61,11 @@ public class SudokuKeyboardLayout extends LinearLayout implements IHighlightChan
     public SudokuKeyboardLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.attrs = attrs;
+
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.SudokuKeyboardLayout);
+        buttonMargin = a.getDimension(R.styleable.SudokuKeyboardLayout_sudokuKeyboardMargin, 5f);
+        normalTextSize = a.getDimension(R.styleable.SudokuKeyboardLayout_sudokuKeyboardTextSize, 20f);
+        a.recycle();
     }
 
     public void setSymbols(Symbol s) {
@@ -85,7 +93,7 @@ public class SudokuKeyboardLayout extends LinearLayout implements IHighlightChan
                 p = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT, 1);
             }
             //if (i == 0) p.bottomMargin=10; else p.topMargin=10;
-            p.setMargins(0, 5, 0, 5);
+            p.setMargins(0, (int) buttonMargin, 0, (int) buttonMargin);
             layouts[i] = new LinearLayout(getContext(),null);
             layouts[i].setLayoutParams(p);
             layouts[i].setWeightSum(numberOfButtonsPerRow);
@@ -106,7 +114,7 @@ public class SudokuKeyboardLayout extends LinearLayout implements IHighlightChan
                 } else {
                     p = new LayoutParams(LayoutParams.MATCH_PARENT, 0, 1);
                 }
-                p.setMargins(5,5,5,5);
+                p.setMargins((int) buttonMargin, (int) buttonMargin, (int) buttonMargin, (int) buttonMargin);
                 buttons[buttonIndex].setLayoutParams(p);
                 /* removed GridLayout because of bad scaling will use now a Linearlayout
                 Spec rowSpec = spec(k,1);

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppTheme" parent="BaseAppTheme">
+        <item name="sudokuKeyboardMargin">2dp</item>
+        <item name="sudokuKeyboardTextSize">20sp</item>
+        <item name="sudokuSpecialKeyboardMargin">2dp</item>
+        <item name="createSudokuSpecialKeyboardMargin">2dp</item>
+        <item name="sudokuButtonBorderWidth">10px</item>
+    </style>
+
+</resources>
+
+
+

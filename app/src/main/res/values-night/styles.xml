@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.DayNight">
+    <style name="BaseAppTheme" parent="Theme.AppCompat.DayNight">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimaryDark</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -41,6 +41,10 @@
         <item name="sudokuCellBackgroundValueHighlightedColor">@color/darkyellow</item>
         <item name="sudokuCellBackgroundValueHighlightedSelectedColor">@color/darkcyan</item>
         <item name="sudokuCellTextColor">@color/white</item>
+    </style>
+
+    <style name="AppTheme" parent="BaseAppTheme">
+
     </style>
 
     <style name="ToolbarStyle" parent="Widget.AppCompat.ActionBar">
