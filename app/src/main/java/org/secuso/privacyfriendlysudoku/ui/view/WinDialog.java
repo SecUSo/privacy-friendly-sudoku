@@ -20,30 +20,41 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
-import org.secuso.privacyfriendlysudoku.ui.listener.IResetDialogFragmentListener;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.DialogFragment;
+
+import org.secuso.privacyfriendlysudoku.ui.MainActivity;
 
 /**
  * Created by TMZ_LToP on 30.01.2016.
  */
-public class WinDialog extends Dialog {
+public class WinDialog extends DialogFragment {
+
+    public static final String ARG_TIME = "WinDialog.ARG_TIME";
+    public static final String ARG_HINT = "WinDialog.ARG_HINT";
+    public static final String ARG_BEST = "WinDialog.ARG_BEST";
 
     private String timeString = "";
     private String hintString = "";
     private boolean isNewBestTime = false;
 
-    public WinDialog(Context context, int themeResId) {
-        super(context, themeResId);
+    public WinDialog() {
+        super();
     }
 
-    public WinDialog(Context context, int themeResId, String timeString, String hintString, boolean isNewBestTime) {
-        super(context,themeResId);
-        setParam(timeString, hintString, isNewBestTime);
-    }
+    @Override
+    public void setArguments(Bundle args) {
+        super.setArguments(args);
 
+        setParam(args.getString(ARG_TIME), args.getString(ARG_HINT), args.getBoolean(ARG_BEST));
+    }
 
     public void setParam(String timeString, String hintString, boolean isNewBestTime){
         this.timeString = timeString;
@@ -51,34 +62,58 @@ public class WinDialog extends Dialog {
         this.isNewBestTime = isNewBestTime;
     }
 
+    @NonNull
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public Dialog onCreateDialog(Bundle saved) {
+        Dialog dialog = new Dialog(getActivity(), R.style.WinDialog);
 
-        ((TextView)findViewById(R.id.win_hints)).setText(hintString);
-        ((TextView)findViewById(R.id.win_time)).setText(timeString);
+        dialog.getWindow().setContentView(R.layout.win_screen_layout);
+        dialog.getWindow().setGravity(Gravity.CENTER_HORIZONTAL);
+        dialog.getWindow().setBackgroundDrawableResource(R.color.transparent);
+
+        ((TextView)dialog.findViewById(R.id.win_hints)).setText(hintString);
+        ((TextView)dialog.findViewById(R.id.win_time)).setText(timeString);
         if(isNewBestTime){
-            ((TextView)findViewById(R.id.win_new_besttime)).setVisibility(View.VISIBLE);
+            ((TextView)dialog.findViewById(R.id.win_new_besttime)).setVisibility(View.VISIBLE);
         }
+
+        ((Button)dialog.findViewById(R.id.win_continue_button)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                if(getActivity() != null) {
+                    getActivity().overridePendingTransition(0, 0);
+                    getActivity().finish();
+                }
+            }
+        });
+        ((Button)dialog.findViewById(R.id.win_showGame_button)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        if (saved != null) {
+            setParam(
+                    saved.getString(ARG_TIME),
+                    saved.getString(ARG_HINT),
+                    saved.getBoolean(ARG_BEST)
+            );
+        }
+
+        return dialog;
     }
 
-    @Override
-    public Bundle onSaveInstanceState() {
-        Bundle bundle = super.onSaveInstanceState();
-        bundle.putString("hintString", hintString);
-        bundle.putString("timeString", timeString);
-        bundle.putBoolean("isNewBestTime", isNewBestTime);
-        return bundle;
-    }
 
     @Override
-    public void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-
-        if(savedInstanceState == null) return;
-
-        hintString = savedInstanceState.getString("hintString");
-        timeString = savedInstanceState.getString("timeString");
-        isNewBestTime = savedInstanceState.getBoolean("isNewBestTime");
+    public void onSaveInstanceState(@NonNull Bundle out) {
+        super.onSaveInstanceState(out);
+        out.putString(ARG_TIME, timeString);
+        out.putString(ARG_HINT, hintString);
+        out.putBoolean(ARG_BEST, isNewBestTime);
     }
 }

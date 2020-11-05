@@ -592,43 +592,26 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
             isNewBestTime = false;
         }
 
-
-        dialog = new WinDialog(this, R.style.WinDialog , timeToString(gameController.getTime()), String.valueOf(gameController.getUsedHints()), isNewBestTime);
-
-        dialog.getWindow().setContentView(R.layout.win_screen_layout);
-        //dialog.setContentView(getLayoutInflater().inflate(R.layout.win_screen_layout,null));
-        //dialog.setContentView(R.layout.win_screen_layout);
-        dialog.getWindow().setGravity(Gravity.CENTER_HORIZONTAL);
-        dialog.getWindow().setBackgroundDrawableResource(R.color.transparent);
-
-        //((TextView)dialog.findViewById(R.id.win_hints)).setText(gameController.getUsedHints());
-        //((TextView)dialog.findViewById(R.id.win_time)).setText(timeToString(gameController.getTime()));
-
-        dialog.show();
-
-        final Activity activity = this;
-        ((Button)dialog.findViewById(R.id.win_continue_button)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-                Intent intent = new Intent(activity, MainActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-                overridePendingTransition(0, 0);
-                activity.finish();
-            }
-        });
-        ((Button)dialog.findViewById(R.id.win_showGame_button)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-
+        buildWinDialog(
+                timeToString(gameController.getTime()),
+                String.valueOf(gameController.getUsedHints()),
+                isNewBestTime
+        ).show(getSupportFragmentManager(), "WIN_DIALOG");;
 
         layout.setEnabled(false);
         keyboard.setButtonsEnabled(false);
         specialButtonLayout.setButtonsEnabled(false);
+    }
+
+    private WinDialog buildWinDialog(String usedTime, String usedHints, boolean isNewBestTime) {
+        Bundle dialogArguments = new Bundle();
+        dialogArguments.putString(WinDialog.ARG_TIME, usedTime);
+        dialogArguments.putString(WinDialog.ARG_HINT, usedHints);
+        dialogArguments.putBoolean(WinDialog.ARG_BEST, isNewBestTime);
+
+        dialog = new WinDialog();
+        dialog.setArguments(dialogArguments);
+        return dialog;
     }
 
     private void disableReset(){
