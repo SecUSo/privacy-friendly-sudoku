@@ -26,6 +26,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -260,12 +261,11 @@ public class LoadGameActivity extends BaseActivity implements IDeleteDialogFragm
             h = (hours< 10)? "0"+String.valueOf(hours):String.valueOf(hours);
             playedTime.setText(h + ":" + m + ":" + s);
 
-            Date lastTimePlayedDate = gic.getLastTimePlayed();
-
-            DateFormat format = DateFormat.getDateTimeInstance();
-            format.setTimeZone(TimeZone.getDefault());
-
-            lastTimePlayed.setText(format.format(lastTimePlayedDate));
+            long now = System.currentTimeMillis();
+            long lastTimePlayedTimestamp = gic.getLastTimePlayed().getTime();
+            CharSequence humanReadableRelativeTime = DateUtils.getRelativeTimeSpanString(
+                    lastTimePlayedTimestamp, now, DateUtils.MINUTE_IN_MILLIS);
+            lastTimePlayed.setText(humanReadableRelativeTime);
 
             return convertView;
         }
