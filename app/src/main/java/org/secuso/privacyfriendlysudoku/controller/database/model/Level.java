@@ -21,7 +21,7 @@ import org.secuso.privacyfriendlysudoku.game.GameDifficulty;
 import org.secuso.privacyfriendlysudoku.game.GameType;
 
 public class Level {
-    private int id = -1;
+    protected int id = -1;
     private GameDifficulty difficulty = GameDifficulty.Unspecified;
     private GameType gameType = GameType.Unspecified;
     private int[] puzzle;

@@ -76,6 +76,19 @@ public class DailySudoku extends Level {
         return 0;
     }
 
+    public int getOrderingDateID(){
+        int year = id%10000;
+        int month = ((id/10000) -1) % 100;
+        int day = id/1000000;
+        StringBuffer sb = new StringBuffer();
+        sb.append(year);
+        if(month<10) sb.append(0);
+        sb.append(month);
+        if(day<10) sb.append(0);
+        sb.append(day);
+        return Integer.valueOf(sb.toString());
+    }
+
     /**
      * Set a new value for the timeNeeded attribute of this daily sudoku
      * @param timeNeeded the new value for the timeNeeded attribute

@@ -47,6 +47,7 @@ import org.secuso.privacyfriendlysudoku.ui.view.R;
 
 import java.text.DateFormat;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -75,6 +76,8 @@ public class DailySudokuActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         sudokuList = dbHelper.getDailySudokus();
+        Collections.sort(sudokuList, (o1, o2) -> o2.getOrderingDateID() - o1.getOrderingDateID());
+
         TextView totalGamesTextView = findViewById(R.id.numb_of_total_games);
         TextView hintsTextView = findViewById(R.id.numb_of_hints);
         TextView totalTimeTextView = findViewById(R.id.numb_of_total_time);
@@ -257,7 +260,8 @@ public class DailySudokuActivity extends AppCompatActivity {
 
             int id = sudoku.getId();
             Calendar cal = Calendar.getInstance();
-            cal.set(id%10000, (id/10000) % 100, id/1000000, 0, 0, 0 );
+            //-1 at month because for some reason, it is added by 1 when saving the dailySudoku
+            cal.set(id%10000, ((id/10000) -1) % 100, id/1000000, 0, 0, 0 );
 
 
             DateFormat format = DateFormat.getDateInstance();
