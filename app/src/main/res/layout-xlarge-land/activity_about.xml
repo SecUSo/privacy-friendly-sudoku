@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF">
+    android:background="?attr/lightestBackGround">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#FFFFFF"
+        android:background="?attr/lightestBackGround"
         android:id="@+id/main_content"
         android:fitsSystemWindows="true"
         android:orientation="vertical"
@@ -88,6 +89,13 @@
             android:text="@string/about_author_names"/>
 
         <TextView
+            android:id="@+id/co_authorname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/about_co_author_names"/>
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -109,7 +117,7 @@
             android:adjustViewBounds="true"
             android:paddingEnd="200dp"
             android:paddingStart="200dp"
-            android:src="@drawable/secuso_logo_blau_blau" />
+            app:srcCompat="@drawable/secuso_logo_blau_blau" />
 
         <TextView
             android:layout_width="wrap_content"

@@ -7,11 +7,14 @@
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
-
     <style name="RatingBar" parent="RatingBarStyle">
         <item name="android:minHeight">57dp</item>
         <item name="android:maxHeight">57dp</item>
         <item name="android:layout_height">57dp</item>
+    </style>
+
+    <style name="CheckBox" parent="CheckBoxStyle">
+        <item name="android:layout_marginBottom">7dp</item>
     </style>
 
 </resources>

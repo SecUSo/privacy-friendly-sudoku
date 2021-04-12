@@ -1,3 +1,19 @@
+/*
+ This file is part of Privacy Friendly Sudoku.
+
+ Privacy Friendly Sudoku is free software:
+ you can redistribute it and/or modify it under the terms of the
+ GNU General Public License as published by the Free Software Foundation,
+ either version 3 of the License, or any later version.
+
+ Privacy Friendly Sudoku is distributed in the hope
+ that it will be useful, but WITHOUT ANY WARRANTY; without even
+ the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ See the GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with Privacy Friendly Sudoku. If not, see <http://www.gnu.org/licenses/>.
+ */
 package org.secuso.privacyfriendlysudoku.controller;
 
 import android.content.Context;
@@ -15,6 +31,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -36,6 +55,10 @@ public class NewLevelManager {
     private static File DIR;
     public static int PRE_SAVES_MIN = 3;
     public static int PRE_SAVES_MAX = 10;
+
+    private final double CHALLENGE_GENERATION_PROBABILITY = 0.25;
+    private final int CHALLENGE_ITERATIONS = 4;
+
 
     public static NewLevelManager getInstance(Context context, SharedPreferences settings) {
         if(instance == null) {
@@ -73,6 +96,16 @@ public class NewLevelManager {
             }
         }
         return false;
+    }
+
+    public int[] loadDailySudoku() {
+        // create a seed from the current date
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        String toHash = "Sudoku/.PrivacyFriendly/." + dateFormat.format(new Date());
+        QQWingController controller = new QQWingController();
+
+        // generate new sudoku using the previously computed seed
+        return controller.generateFromSeed(toHash.hashCode(), CHALLENGE_GENERATION_PROBABILITY, CHALLENGE_ITERATIONS);
     }
 
     public int[] loadLevel(GameType type, GameDifficulty diff) {

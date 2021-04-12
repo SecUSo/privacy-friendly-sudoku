@@ -1,3 +1,19 @@
+/*
+ This file is part of Privacy Friendly Sudoku.
+
+ Privacy Friendly Sudoku is free software:
+ you can redistribute it and/or modify it under the terms of the
+ GNU General Public License as published by the Free Software Foundation,
+ either version 3 of the License, or any later version.
+
+ Privacy Friendly Sudoku is distributed in the hope
+ that it will be useful, but WITHOUT ANY WARRANTY; without even
+ the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ See the GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with Privacy Friendly Sudoku. If not, see <http://www.gnu.org/licenses/>.
+ */
 package org.secuso.privacyfriendlysudoku.controller;
 
 import android.content.Context;
@@ -20,6 +36,7 @@ public class GameStateManager {
 
     Context context;
     private SharedPreferences settings;
+    private boolean includesDaily;
 
     private static String FILE_EXTENSION = ".txt";
     private static String SAVE_PREFIX = "save_";
@@ -87,6 +104,15 @@ public class GameStateManager {
                     gic.parseSetValues(values[i++]);
                     gic.parseNotes(values[i++]);
                     gic.parseHintsUsed(values[i++]);
+
+                    if (values.length > i) {
+                        gic.setCustom(true);
+                    }
+
+                    if (gic.getID() == GameController.DAILY_SUDOKU_ID) {
+                        includesDaily = true;
+                    }
+
                 } catch(IllegalArgumentException e) {
                     file.delete();
                     continue;
@@ -108,7 +134,7 @@ public class GameStateManager {
         LinkedList<GameInfoContainer> removeList = new LinkedList<>();
 
         for(int i = 0; i < list.size(); i++) {
-            if(i >= MAX_NUM_OF_SAVED_GAMES) {
+            if((i >= MAX_NUM_OF_SAVED_GAMES && !includesDaily) || i > MAX_NUM_OF_SAVED_GAMES) {
                 deleteGameStateFile(list.get(i));
                 removeList.add(list.get(i));
             }

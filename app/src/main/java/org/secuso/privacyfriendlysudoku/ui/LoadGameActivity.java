@@ -1,3 +1,19 @@
+/*
+ This file is part of Privacy Friendly Sudoku.
+
+ Privacy Friendly Sudoku is free software:
+ you can redistribute it and/or modify it under the terms of the
+ GNU General Public License as published by the Free Software Foundation,
+ either version 3 of the License, or any later version.
+
+ Privacy Friendly Sudoku is distributed in the hope
+ that it will be useful, but WITHOUT ANY WARRANTY; without even
+ the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ See the GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with Privacy Friendly Sudoku. If not, see <http://www.gnu.org/licenses/>.
+ */
 package org.secuso.privacyfriendlysudoku.ui;
 
 import android.app.Activity;
@@ -10,6 +26,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,6 +38,7 @@ import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import org.secuso.privacyfriendlysudoku.controller.GameController;
 import org.secuso.privacyfriendlysudoku.controller.GameStateManager;
 import org.secuso.privacyfriendlysudoku.controller.helper.GameInfoContainer;
 import org.secuso.privacyfriendlysudoku.game.GameDifficulty;
@@ -69,6 +87,13 @@ public class LoadGameActivity extends BaseActivity implements IDeleteDialogFragm
 
         GameStateManager gameStateManager = new GameStateManager(this, settings);
         loadableGameList = gameStateManager.loadGameStateInfo();
+
+        for (GameInfoContainer container : loadableGameList) {
+            if (container.getID() == GameController.DAILY_SUDOKU_ID) {
+                loadableGameList.remove(container);
+                break;
+            }
+        }
 
         AdapterView.OnItemClickListener clickListener = new AdapterView.OnItemClickListener() {
             @Override
@@ -137,7 +162,7 @@ public class LoadGameActivity extends BaseActivity implements IDeleteDialogFragm
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             // Use the Builder class for convenient dialog construction
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.AppTheme_Dialog);
             builder.setMessage(R.string.loadgame_delete_confirmation)
                     .setPositiveButton(R.string.loadgame_delete_confirm, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
@@ -201,6 +226,8 @@ public class LoadGameActivity extends BaseActivity implements IDeleteDialogFragm
             TextView playedTime = (TextView)convertView.findViewById(R.id.loadgame_listentry_timeplayed);
             TextView lastTimePlayed = (TextView)convertView.findViewById(R.id.loadgame_listentry_lasttimeplayed);
             ImageView image = (ImageView)convertView.findViewById(R.id.loadgame_listentry_gametypeimage);
+            ImageView customImage = (ImageView)convertView.findViewById(R.id.loadgame_listentry_custom_icon);
+            TextView customLabel = (TextView) convertView.findViewById(R.id.loadgame_listentry_custom_label);
 
             switch(gic.getGameType()) {
                 case Default_6x6:
@@ -221,6 +248,9 @@ public class LoadGameActivity extends BaseActivity implements IDeleteDialogFragm
             difficultyBar.setMax(GameDifficulty.getValidDifficultyList().size());
             difficultyBar.setRating(GameDifficulty.getValidDifficultyList().indexOf(gic.getDifficulty())+1);
 
+            customImage.setImageResource(gic.isCustom() ? R.drawable.ic_circle_blue_36dp : R.drawable.ic_circle_grey_36dp);
+            customLabel.setVisibility(gic.isCustom() ? View.VISIBLE : View.GONE);
+
             int time = gic.getTimePlayed();
             int seconds = time % 60;
             int minutes = ((time -seconds)/60)%60 ;
@@ -231,12 +261,11 @@ public class LoadGameActivity extends BaseActivity implements IDeleteDialogFragm
             h = (hours< 10)? "0"+String.valueOf(hours):String.valueOf(hours);
             playedTime.setText(h + ":" + m + ":" + s);
 
-            Date lastTimePlayedDate = gic.getLastTimePlayed();
-
-            DateFormat format = DateFormat.getDateTimeInstance();
-            format.setTimeZone(TimeZone.getDefault());
-
-            lastTimePlayed.setText(format.format(lastTimePlayedDate));
+            long now = System.currentTimeMillis();
+            long lastTimePlayedTimestamp = gic.getLastTimePlayed().getTime();
+            CharSequence humanReadableRelativeTime = DateUtils.getRelativeTimeSpanString(
+                    lastTimePlayedTimestamp, now, DateUtils.MINUTE_IN_MILLIS);
+            lastTimePlayed.setText(humanReadableRelativeTime);
 
             return convertView;
         }

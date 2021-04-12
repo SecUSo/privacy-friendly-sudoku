@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorAccent">
+    android:background="?attr/backgroundTutorialSlide">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -16,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/slide2_heading"
-            android:textColor="@android:color/white"
+            android:textColor="?attr/lightestFontColor"
             android:textSize="@dimen/slide_title"
             android:textStyle="bold" />
 
@@ -30,18 +31,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:src="@drawable/ic_keyboard_arrow_left_black_24dp"/>
+                app:srcCompat="@drawable/ic_keyboard_arrow_left_black_24dp"/>
             <ImageView
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:adjustViewBounds="true"
                 android:layout_gravity="center"
-                android:src="@drawable/icon_default_9x9"/>
+                app:srcCompat="@drawable/icon_default_9x9"/>
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:src="@drawable/ic_keyboard_arrow_right_black_24dp"/>
+                app:srcCompat="@drawable/ic_keyboard_arrow_right_black_24dp"/>
         </LinearLayout>
 
         <TextView
@@ -53,7 +54,7 @@
             android:paddingRight="@dimen/desc_padding"
             android:text="@string/slide2_text"
             android:textAlignment="center"
-            android:textColor="@android:color/white"
+            android:textColor="?attr/lightestFontColor"
             android:textSize="@dimen/slide_desc" />
 
     </LinearLayout>

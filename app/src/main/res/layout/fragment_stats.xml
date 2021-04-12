@@ -1,4 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -19,7 +20,7 @@
             android:layout_height="fill_parent"
             android:layout_gravity="center"
             android:id="@+id/statistic_image"
-            android:src="@drawable/icon_default_9x9"
+            app:srcCompat="@drawable/icon_default_9x9"
             android:adjustViewBounds="true"/>
         <RelativeLayout
             android:layout_width="0dp"
@@ -32,7 +33,7 @@
                 android:foregroundGravity="center_vertical"
                 android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true"
-                android:background="@color/colorPrimary"
+                android:background="?attr/colorPrimary"
                 android:layout_marginTop="@dimen/activity_horizontal_margin"
                 android:layout_marginBottom="@dimen/activity_horizontal_margin"/>
 
@@ -98,7 +99,7 @@
             android:foregroundGravity="center_vertical"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
-            android:background="@color/colorPrimary" />
+            android:background="?attr/colorPrimary" />
 
     </LinearLayout>
 

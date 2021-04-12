@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorAccent">
+    android:background="?attr/backgroundTutorialSlide">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -12,27 +14,63 @@
         android:layout_centerVertical="true"
         android:orientation="vertical">
 
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/slide3_heading"
-            android:textColor="@android:color/white"
+            android:textColor="?attr/lightestFontColor"
             android:textSize="@dimen/slide_title"
             android:textStyle="bold" />
 
-        <RatingBar
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/difficultyBar"
-            android:layout_gravity="center_horizontal"
-            android:isIndicator="true"
-            android:numStars="4"
-            android:layout_marginTop="25dp"
-            android:rating="1"
-            android:background="@color/white"
-            android:stepSize="1"
-            style="@style/RatingBar"/>
+            android:text="@string/slide3_heading2"
+            android:textColor="?attr/lightestFontColor"
+            android:textSize="@dimen/slide_title"
+            android:textStyle="bold" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/linearLayout5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:background="?attr/backgroundTutorialStars">
+
+            <CheckBox
+                android:id="@+id/circleButton"
+                style="@style/CheckBox"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginEnd="4dp"
+                android:layout_marginRight="4dp"
+                android:button="@drawable/create_game_src"
+                android:clickable="false"
+                app:layout_constraintBottom_toBottomOf="@+id/difficultyBar"
+                app:layout_constraintEnd_toStartOf="@+id/difficultyBar"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/difficultyBar"
+                app:layout_constraintVertical_bias="0.65" />
+
+            <RatingBar
+                android:id="@+id/difficultyBar"
+                style="@style/RatingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="45dp"
+                android:layout_marginLeft="45dp"
+                android:isIndicator="true"
+                android:numStars="4"
+                android:rating="1"
+                android:stepSize="1"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/circleButton"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
             android:layout_width="wrap_content"
@@ -43,7 +81,7 @@
             android:textAlignment="center"
             android:gravity="center"
             android:layout_marginTop="25dp"
-            android:textColor="@android:color/white"
+            android:textColor="?attr/lightestFontColor"
             android:textSize="@dimen/slide_desc" />
 
     </LinearLayout>

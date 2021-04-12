@@ -7,4 +7,8 @@
         <item name="android:layout_height">80dp</item>
     </style>
 
+    <style name="CheckBox" parent="CheckBoxStyle">
+        <item name="android:layout_marginBottom">30dp</item>
+    </style>
+
 </resources>

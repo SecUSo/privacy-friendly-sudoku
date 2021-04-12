@@ -1,11 +1,30 @@
+/*
+ This file is part of Privacy Friendly Sudoku.
+
+ Privacy Friendly Sudoku is free software:
+ you can redistribute it and/or modify it under the terms of the
+ GNU General Public License as published by the Free Software Foundation,
+ either version 3 of the License, or any later version.
+
+ Privacy Friendly Sudoku is distributed in the hope
+ that it will be useful, but WITHOUT ANY WARRANTY; without even
+ the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ See the GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with Privacy Friendly Sudoku. If not, see <http://www.gnu.org/licenses/>.
+ */
 package org.secuso.privacyfriendlysudoku.ui.view;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import org.secuso.privacyfriendlysudoku.controller.GameController;
@@ -25,6 +44,7 @@ public class SudokuKeyboardLayout extends LinearLayout implements IHighlightChan
     Symbol symbolsToUse = Symbol.Default;
     float normalTextSize = 20; // in sp
     LinearLayout [] layouts = new LinearLayout[2];
+    float buttonMargin;
 
     OnClickListener listener = new OnClickListener() {
         @Override
@@ -41,6 +61,11 @@ public class SudokuKeyboardLayout extends LinearLayout implements IHighlightChan
     public SudokuKeyboardLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.attrs = attrs;
+
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.SudokuKeyboardLayout);
+        buttonMargin = a.getDimension(R.styleable.SudokuKeyboardLayout_sudokuKeyboardMargin, 5f);
+        normalTextSize = a.getDimension(R.styleable.SudokuKeyboardLayout_sudokuKeyboardTextSize, 20f);
+        a.recycle();
     }
 
     public void setSymbols(Symbol s) {
@@ -65,10 +90,10 @@ public class SudokuKeyboardLayout extends LinearLayout implements IHighlightChan
             if(orientation == LinearLayout.HORIZONTAL) {
                 p = new LayoutParams(LayoutParams.MATCH_PARENT, 0, 1);
             } else {
-                p = new LayoutParams(0, LayoutParams.MATCH_PARENT, 1);
+                p = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT, 1);
             }
             //if (i == 0) p.bottomMargin=10; else p.topMargin=10;
-            p.setMargins(0, 5, 0, 5);
+            p.setMargins(0, (int) buttonMargin, 0, (int) buttonMargin);
             layouts[i] = new LinearLayout(getContext(),null);
             layouts[i].setLayoutParams(p);
             layouts[i].setWeightSum(numberOfButtonsPerRow);
@@ -89,7 +114,7 @@ public class SudokuKeyboardLayout extends LinearLayout implements IHighlightChan
                 } else {
                     p = new LayoutParams(LayoutParams.MATCH_PARENT, 0, 1);
                 }
-                p.setMargins(5,5,5,5);
+                p.setMargins((int) buttonMargin, (int) buttonMargin, (int) buttonMargin, (int) buttonMargin);
                 buttons[buttonIndex].setLayoutParams(p);
                 /* removed GridLayout because of bad scaling will use now a Linearlayout
                 Spec rowSpec = spec(k,1);
@@ -112,6 +137,7 @@ public class SudokuKeyboardLayout extends LinearLayout implements IHighlightChan
                 buttons[buttonIndex].setBackgroundResource(R.drawable.mnenomic_numpad_button);
                 buttons[buttonIndex].setPadding(0, 0, 0, 0);
                 buttons[buttonIndex].setGravity(Gravity.CENTER);
+                buttons[buttonIndex].setMinHeight((int) (normalTextSize * 2));
                 buttons[buttonIndex].setText(Symbol.getSymbol(symbolsToUse, buttonIndex));
                 buttons[buttonIndex].setTextSize(TypedValue.COMPLEX_UNIT_SP, normalTextSize);
                 buttons[buttonIndex].setValue(buttonIndex + 1);
@@ -167,17 +193,29 @@ public class SudokuKeyboardLayout extends LinearLayout implements IHighlightChan
     @Override
     public void onHighlightChanged() {
         for(SudokuButton i_btn : buttons) {
-            i_btn.setBackgroundResource(R.drawable.mnenomic_numpad_button);
+            int backgroundResId = R.drawable.mnenomic_numpad_button;
 
-            // Highlight Yellow if we are done with that number
-            if(gameController.getValueCount(i_btn.getValue()) == gameController.getSize()) {
-                i_btn.setBackgroundResource(R.drawable.numpad_highlighted_three);
+            boolean numCompleted = (gameController.getValueCount(i_btn.getValue()) == gameController.getSize());
+            boolean numSelected = (gameController.getSelectedValue() == i_btn.getValue());
+
+            if(numCompleted) {
+                // Fill color           : darkyellow
+                // Border (if selected) : yellow
+                if(numSelected) {
+                    backgroundResId = R.drawable.numpad_selected_complete;
+                } else {
+                    backgroundResId = R.drawable.numpad_unselected_complete;
+                }
+            } else {
+                // Fill color           : lightblue
+                // Border (if selected) : colorPrimaryDark
+                if(numSelected) {
+                    backgroundResId = R.drawable.numpad_highlighted;
+                } // The else scenario is taken care of by the default initialized value
             }
 
-            if(gameController.getSelectedValue() == i_btn.getValue()) {
-                // highlight button to indicate that the value is selected
-                i_btn.setBackgroundResource(R.drawable.numpad_highlighted);
-            }
+            i_btn.setBackgroundResource(backgroundResId);
+
         }
     }
 

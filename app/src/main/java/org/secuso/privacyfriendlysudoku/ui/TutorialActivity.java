@@ -1,3 +1,19 @@
+/*
+ This file is part of Privacy Friendly Sudoku.
+
+ Privacy Friendly Sudoku is free software:
+ you can redistribute it and/or modify it under the terms of the
+ GNU General Public License as published by the Free Software Foundation,
+ either version 3 of the License, or any later version.
+
+ Privacy Friendly Sudoku is distributed in the hope
+ that it will be useful, but WITHOUT ANY WARRANTY; without even
+ the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ See the GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with Privacy Friendly Sudoku. If not, see <http://www.gnu.org/licenses/>.
+ */
 package org.secuso.privacyfriendlysudoku.ui;
 
 import android.content.Context;
@@ -15,11 +31,11 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.secuso.privacyfriendlysudoku.ui.view.R;
-
 
 /**
  * Class structure taken from tutorial at http://www.androidhive.info/2016/05/android-build-intro-slider-app/
@@ -196,6 +212,11 @@ public class TutorialActivity extends AppCompatActivity {
 
             View view = layoutInflater.inflate(layouts[position], container, false);
             container.addView(view);
+
+            CheckBox createGameBar = (CheckBox) findViewById(R.id.circleButton);
+            if(createGameBar != null) {
+                createGameBar.setButtonDrawable(R.drawable.create_game_src);
+            }
 
             return view;
         }

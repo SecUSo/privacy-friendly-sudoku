@@ -1,11 +1,35 @@
+/*
+ This file is part of Privacy Friendly Sudoku.
+
+ Privacy Friendly Sudoku is free software:
+ you can redistribute it and/or modify it under the terms of the
+ GNU General Public License as published by the Free Software Foundation,
+ either version 3 of the License, or any later version.
+
+ Privacy Friendly Sudoku is distributed in the hope
+ that it will be useful, but WITHOUT ANY WARRANTY; without even
+ the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ See the GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with Privacy Friendly Sudoku. If not, see <http://www.gnu.org/licenses/>.
+ */
 package org.secuso.privacyfriendlysudoku.ui;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import com.google.android.material.navigation.NavigationView;
+
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -13,31 +37,36 @@ import androidx.core.view.GravityCompat;
 import androidx.viewpager.widget.ViewPager;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.secuso.privacyfriendlysudoku.controller.GameController;
 import org.secuso.privacyfriendlysudoku.controller.GameStateManager;
 import org.secuso.privacyfriendlysudoku.controller.NewLevelManager;
 import org.secuso.privacyfriendlysudoku.controller.helper.GameInfoContainer;
 import org.secuso.privacyfriendlysudoku.game.GameDifficulty;
 import org.secuso.privacyfriendlysudoku.game.GameType;
+import org.secuso.privacyfriendlysudoku.ui.listener.IImportDialogFragmentListener;
 import org.secuso.privacyfriendlysudoku.ui.view.R;
+import org.secuso.privacyfriendlysudoku.ui.view.databinding.DialogFragmentImportBoardBinding;
 
 import java.util.LinkedList;
 import java.util.List;
 
 import static org.secuso.privacyfriendlysudoku.ui.TutorialActivity.ACTION_SHOW_ANYWAYS;
 
-public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, IImportDialogFragmentListener{
 
     RatingBar difficultyBar;
     TextView difficultyText;
@@ -53,9 +82,20 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
         settings = PreferenceManager.getDefaultSharedPreferences(this);
+        if (settings.getBoolean("pref_dark_mode_setting", false )) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+
+        } else if (settings.getBoolean("pref_dark_mode_automatically_by_system", false)) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+
+        } else if(settings.getBoolean("pref_dark_mode_automatically_by_battery", false)){
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
+
+        super.onCreate(savedInstanceState);
 
         NewLevelManager newLevelManager = NewLevelManager.getInstance(getApplicationContext(), settings);
 
@@ -121,22 +161,49 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         final LinkedList<GameDifficulty> difficultyList = GameDifficulty.getValidDifficultyList();
         difficultyBar.setNumStars(difficultyList.size());
         difficultyBar.setMax(difficultyList.size());
+        CheckBox createGameBar = (CheckBox) findViewById(R.id.circleButton);
+        createGameBar.setButtonDrawable(R.drawable.create_game_src);
         difficultyBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-                if (rating < 1) {
-                    ratingBar.setRating(1);
+                createGameBar.setChecked(false);
+                ((Button) findViewById(R.id.playButton)).setText(R.string.new_game);
+
+                if (rating >= 1) {
+                    difficultyText.setText(getString(difficultyList.get((int) ratingBar.getRating() - 1).getStringResID()));
+                } else {
+                    difficultyText.setText(R.string.difficulty_custom);
+                    createGameBar.setChecked(true);
+                    ((Button)findViewById(R.id.playButton)).setText(R.string.create_game);
                 }
-                difficultyText.setText(getString(difficultyList.get((int) ratingBar.getRating() - 1).getStringResID()));
             }
         });
-        GameDifficulty lastChosenDifficulty = GameDifficulty.valueOf(settings.getString("lastChosenDifficulty", "Moderate"));
-        difficultyBar.setRating(GameDifficulty.getValidDifficultyList().indexOf(lastChosenDifficulty) + 1);
-        /*LayerDrawable stars = (LayerDrawable)difficultyBar.getProgressDrawable();
-        stars.getDrawable(2).setColorFilter(getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_ATOP);//Color for Stars fully selected
-        stars.getDrawable(1).setColorFilter(getResources().getColor(R.color.middleblue), PorterDuff.Mode.SRC_ATOP);//Color for Stars partially selected
-        stars.getDrawable(0).setColorFilter(getResources().getColor(R.color.lightblue), PorterDuff.Mode.SRC_ATOP);//color for stars not selected
-        */
+
+        createGameBar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                difficultyBar.setRating(0);
+                ((Button)findViewById(R.id.playButton)).setText(R.string.create_game);
+                createGameBar.setChecked(true);
+            }
+        });
+
+        String retrievedDifficulty = settings.getString("lastChosenDifficulty", "Moderate");
+        GameDifficulty lastChosenDifficulty = GameDifficulty.valueOf(
+                retrievedDifficulty.equals("Custom")? GameDifficulty.Unspecified.toString() : retrievedDifficulty);
+
+        if (lastChosenDifficulty == GameDifficulty.Unspecified) {
+            difficultyBar.setRating(0);
+            createGameBar.setChecked(true);
+        } else {
+            difficultyBar.setRating(GameDifficulty.getValidDifficultyList().indexOf(lastChosenDifficulty) + 1);
+        }
+
+        if(Configuration.SCREENLAYOUT_SIZE_SMALL == (getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK)) {
+            difficultyBar.setScaleX(0.75f);
+            difficultyBar.setScaleY(0.75f);
+        }
+
         // on first create always check for loadable levels!
         SharedPreferences.Editor editor = settings.edit();
         editor.putBoolean("savesChanged", true);
@@ -166,8 +233,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         winScreen.show(fm,"win_screen_layout");*/
 
     }
-
-
     public void onClick(View view) {
 
         Intent i = null;
@@ -184,6 +249,18 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 break;
             case R.id.playButton:
                 GameType gameType = GameType.getValidGameTypes().get(mViewPager.getCurrentItem());
+                if (((CheckBox)findViewById(R.id.circleButton)).isChecked()) {
+                    // start CreateSudokuActivity
+                    i = new Intent(this, CreateSudokuActivity.class);
+                    i.putExtra("gameType", gameType.name());
+
+                    SharedPreferences.Editor editor = settings.edit();
+                    editor.putString("lastChosenGameType", gameType.name());
+                    editor.putString("lastChosenDifficulty", "Custom");
+                    editor.apply();
+                    //i.putExtra("gameDifficulty", GameDifficulty.Easy);
+                    break;
+                }
                 int index = difficultyBar.getProgress()-1;
                 GameDifficulty gameDifficulty = GameDifficulty.getValidDifficultyList().get(index < 0 ? 0 : index);
 
@@ -242,19 +319,19 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         Button continueButton = (Button)findViewById(R.id.continueButton);
         GameStateManager fm = new GameStateManager(getBaseContext(), settings);
         List<GameInfoContainer> gic = fm.loadGameStateInfo();
-        if(gic.size() > 0) {
+        if(gic.size() > 0 && !(gic.size() == 1 && gic.get(0).getID() == GameController.DAILY_SUDOKU_ID)) {
             continueButton.setEnabled(true);
-            continueButton.setBackgroundResource(R.drawable.standalone_button);
+            continueButton.setBackgroundResource(R.drawable.button_standalone);
         } else {
             continueButton.setEnabled(false);
-            continueButton.setBackgroundResource(R.drawable.inactive_button);
+            continueButton.setBackgroundResource(R.drawable.button_inactive);
         }
     }
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
-        final int id = item.getItemId();
+        int id = item.getItemId();
 
         drawer.closeDrawer(GravityCompat.START);
 
@@ -271,9 +348,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             }
         }, NAVDRAWER_LAUNCH_DELAY);
 
-        // fade out the active activity
+        // fade out the active activity (but not if the user chose to open the ImportBoardDialog)
         View mainContent = findViewById(R.id.main_content);
-        if (mainContent != null) {
+        if (mainContent != null && id != R.id.nav_import_sudoku) {
             mainContent.animate().alpha(0).setDuration(MAIN_CONTENT_FADEOUT_DURATION);
         }
 
@@ -292,11 +369,13 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         Intent intent;
 
         switch(id) {
+            case R.id.nav_import_sudoku:
+                ImportBoardDialog dialog = new ImportBoardDialog();
+                dialog.show(getFragmentManager(), "ImportDialogFragment");
+                break;
             case R.id.menu_settings_main:
                 //open settings
-                intent = new Intent(this,SettingsActivity.class);
-                intent.putExtra( PreferenceActivity.EXTRA_SHOW_FRAGMENT, SettingsActivity.GamePreferenceFragment.class.getName() );
-                intent.putExtra( PreferenceActivity.EXTRA_NO_HEADERS, true );
+                intent = new Intent(this, SettingsActivity.class);
                 startActivity(intent);
                 overridePendingTransition(0, 0);
                 break;
@@ -330,6 +409,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 overridePendingTransition(0, 0);
                 break;
 
+            case R.id.nav_dailySudoku_main:
+                intent = new Intent(this, DailySudokuActivity.class);
+                startActivity(intent);
+                overridePendingTransition(0, 0);
+                break;
+
             default:
         }
         return true;
@@ -345,6 +430,106 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         return super.onOptionsItemSelected(item);
     }*/
 
+    public void onImportDialogPositiveClick(String input) {
+        String inputSudoku = null;
+        String prefix = "";
+        StringBuilder errorMessage = new StringBuilder();
+
+        // a valid input needs to contain exactly one of the valid prefixes
+        for (int i = 0; i < GameActivity.validUris.size(); i++) {
+            prefix = GameActivity.validUris.get(i).getHost().equals("") ?
+                    GameActivity.validUris.get(i).getScheme() + "://" :
+                    GameActivity.validUris.get(i).getScheme() + "://" + GameActivity.validUris.get(i).getHost() + "/";
+            if (input.startsWith(prefix)) {
+                inputSudoku = input.replace(prefix, "");
+                break;
+            }
+
+            String endOfRecord = i == GameActivity.validUris.size() - 1 ? "" : ", ";
+            errorMessage.append(prefix);
+            errorMessage.append(endOfRecord);
+        }
+
+        if (inputSudoku == null) {
+            Toast.makeText(MainActivity.this,
+                    this.getString(R.string.menu_import_wrong_format_custom_sudoku) + " " + errorMessage.toString(), Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        double size = Math.sqrt(inputSudoku.length());
+        boolean validSize = false;
+
+        // check whether or not the size of the encoded sudoku is valid; if not, notify the user
+        for (GameType type : GameType.getValidGameTypes()) {
+            if (type.getSize() == size) {
+                validSize = true;
+                break;
+            }
+        }
+
+        if (!validSize) {
+            Toast.makeText(MainActivity.this, R.string.failed_to_verify_custom_sudoku_toast, Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        GameType gameType = Enum.valueOf(GameType.class, "Default_" + (int)size + "x" + (int)size);
+
+        //check whether or not the sudoku is valid and has a unique solution
+        boolean solvable = CreateSudokuActivity.verify(gameType, inputSudoku);
+
+        // if the encoded sudoku is solvable, sent the code directly to the GameActivity; if not, notify the user
+        if (solvable) {
+            Toast.makeText(MainActivity.this, R.string.finished_verifying_custom_sudoku_toast, Toast.LENGTH_LONG).show();
+            final Intent intent = new Intent(this, GameActivity.class);
+            intent.setData(Uri.parse(prefix + inputSudoku));
+            startActivity(intent);
+            finish();
+        } else {
+            Toast.makeText(MainActivity.this, R.string.failed_to_verify_custom_sudoku_toast, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void onDialogNegativeClick() {
+        mNavigationView.setCheckedItem(R.id.nav_newgame_main);
+    }
+
+    public static class ImportBoardDialog extends DialogFragment {
+        private LinkedList<IImportDialogFragmentListener> listeners = new LinkedList<>();
+
+        @Override
+        public void onAttach(Activity activity) {
+            super.onAttach(activity);
+            // Verify that the host activity implements the callback interface
+            if(activity instanceof IImportDialogFragmentListener) {
+                listeners.add((IImportDialogFragmentListener) activity);
+            }
+        }
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.AppTheme_Dialog);
+            LayoutInflater inflater = getActivity().getLayoutInflater();
+            DialogFragmentImportBoardBinding binding = DialogFragmentImportBoardBinding.inflate(inflater);
+            builder.setView(binding.getRoot());
+            builder.setMessage(R.string.dialog_import_custom_sudoku);
+            builder.setPositiveButton(R.string.dialog_import_custom_sudoku_positive_button, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    for(IImportDialogFragmentListener l : listeners) {
+                        l.onImportDialogPositiveClick(binding.ver3ImportSudokuEditText.getText().toString());
+                    }
+                }
+            })
+                    .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            for(IImportDialogFragmentListener l : listeners) {
+                                l.onDialogNegativeClick();
+                            }
+                        }
+                    });
+            return builder.create();
+        }
+
+    }
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to

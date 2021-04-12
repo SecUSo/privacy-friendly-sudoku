@@ -2,34 +2,39 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.secuso.privacyfriendlysudoku.ui.view">
 
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <application
+        android:name="org.secuso.privacyfriendlysudoku.SudokuApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:name="org.secuso.privacyfriendlysudoku.SudokuApp">
+        android:theme="@style/AppTheme">
         <activity
             android:name="org.secuso.privacyfriendlysudoku.ui.SplashActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name="org.secuso.privacyfriendlysudoku.ui.MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="org.secuso.privacyfriendlysudoku.ui.TutorialActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="org.secuso.privacyfriendlysudoku.ui.DailySudokuActivity"
+            android:label="@string/Sudoku"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="org.secuso.privacyfriendlysudoku.ui.CreateSudokuActivity"
+            android:label="@string/Sudoku"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="org.secuso.privacyfriendlysudoku.ui.SettingsActivity"
             android:label="@string/title_activity_settings"
@@ -37,7 +42,26 @@
         <activity
             android:name="org.secuso.privacyfriendlysudoku.ui.GameActivity"
             android:label="@string/title_activity_game_view"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:launchMode="singleTask"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="sudoku" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:host="sudoku.secuso.org"
+                    android:scheme="http" />
+                <data
+                    android:host="sudoku.secuso.org"
+                    android:scheme="https" />
+            </intent-filter>
+        </activity>
         <activity android:name="org.secuso.privacyfriendlysudoku.ui.AboutActivity" />
         <activity android:name="org.secuso.privacyfriendlysudoku.ui.LoadGameActivity" />
         <activity

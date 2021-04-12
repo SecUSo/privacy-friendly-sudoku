@@ -1,0 +1,113 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="BaseAppTheme" parent="Theme.AppCompat.DayNight">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowBackground">@color/darkgrey</item>
+        <item name="lightestBackGround">@color/darkgrey</item>
+        <item name="lightestFontColor">@color/white</item>
+        <item name="standardVectorGraphic">@color/white</item>
+        <item name="winScreenPedestalColor">@color/middleblue</item>
+        <item name="winScreenFontColor">@color/black</item>
+        <item name="backgroundSurroundingDialog">@color/transparent</item>
+        <item name="actionBarTheme">@style/ToolbarStyle</item>
+        <item name="rankingStarSelected">@color/lightblue</item>
+        <item name="rankingStarNotSelected">@color/middlegrey</item>
+        <item name="rankingCircleSelected">@color/lightblue</item>
+        <item name="rankingCircleNotSelected">@color/middlegrey</item>
+        <item name="activeButtonColor">@color/lightblue</item>
+        <item name="inactiveButtonColor">@color/middlegrey</item>
+        <item name="highlightedButtonBorder">@color/yellow</item>
+        <item name="completedButtonColor">@color/green</item>
+        <item name="completedButtonBorder">@color/yellow</item>
+        <item name="android:itemBackground">@color/cardview_dark_background</item>
+        <item name="backgroundTutorialSlide">@color/colorPrimaryDark</item>
+        <item name="backgroundTutorialStars">@color/colorPrimaryDark</item>
+        <item name="menuTextColor">@color/white</item>
+        <item name="blueHighlight">@color/colorAccent</item>
+
+        <item name="sudokuFieldGridColor">@color/vdarkgrey</item>
+        <item name="sudokuFieldSectionLineColor">@color/white</item>
+
+        <!-- SudokuCellView -->
+        <item name="sudokuCellBackgroundColor">@color/darkgrey</item>
+        <item name="sudokuCellBackgroundErrorColor">@color/vdarkgrey</item>
+        <item name="sudokuCellBackgroundSelectedColor">@color/darkgreen</item>
+        <item name="sudokuCellBackgroundConnectedOuterColor">@color/darkgrey</item>
+        <item name="sudokuCellBackgroundConnectedInnerColor">@color/yellow</item>
+        <item name="sudokuCellBackgroundValueHighlightedColor">@color/darkyellow</item>
+        <item name="sudokuCellBackgroundValueHighlightedSelectedColor">@color/darkcyan</item>
+        <item name="sudokuCellTextColor">@color/white</item>
+    </style>
+
+    <style name="AppTheme" parent="BaseAppTheme">
+
+    </style>
+
+    <style name="ToolbarStyle" parent="Widget.AppCompat.ActionBar">
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="colorControlNormal">@color/white</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.Dialog" parent="Theme.AppCompat.DayNight.Dialog.Alert">
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:windowBackground">@color/darkgrey</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Dark" />
+
+    <style name="WinDialog">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@color/transparent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <item name="android:windowSoftInputMode">adjustPan|stateUnspecified</item>
+    </style>
+
+
+    <style name="RatingBarStyle" parent="@android:style/Widget.RatingBar">
+        <item name="android:progressDrawable">@drawable/ratingbar</item>
+    </style>
+
+    <style name="RatingBar" parent="RatingBarStyle">
+        <item name="android:minHeight">50dp</item>
+        <item name="android:maxHeight">50dp</item>
+        <item name="android:layout_height">50dp</item>
+    </style>
+
+    <style name="CheckBoxStyle" parent="@style/Widget.AppCompat.CompoundButton.CheckBox"/>
+
+    <style name="CheckBox" parent="CheckBoxStyle">
+        <item name="android:layout_marginBottom">0dp</item>
+    </style>
+
+    <style name="SplashTheme" parent="@android:style/Theme.NoTitleBar.Fullscreen">
+        <item name="android:windowBackground">@drawable/splash_screen</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+
+
+    <!-- <style name="FontStyle">
+        <item name="android:fontFamily"></item>
+    </style> -->
+
+
+</resources>

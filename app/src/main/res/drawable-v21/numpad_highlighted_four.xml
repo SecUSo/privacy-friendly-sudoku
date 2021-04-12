@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <gradient
+        android:endColor="?attr/activeButtonColor"
+        android:startColor="?attr/activeButtonColor" />
+    <corners android:radius="6dp" />
+    <stroke
+        android:width="?attr/sudokuButtonBorderWidth"
+        android:color="?attr/standardVectorGraphic" />
+</shape>

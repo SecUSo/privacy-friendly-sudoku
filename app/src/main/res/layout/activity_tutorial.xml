@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:showIn="@layout/activity_tutorial">
 
-
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
@@ -26,7 +25,7 @@
         android:layout_height="1dp"
         android:alpha=".5"
         android:layout_above="@id/layoutDots"
-        android:background="@android:color/white" />
+        android:background="?attr/lightestBackGround" />
 
     <Button
         android:id="@+id/btn_next"
@@ -36,7 +35,7 @@
         android:layout_alignParentRight="true"
         android:background="@null"
         android:text="@string/next"
-        android:textColor="@android:color/white" />
+        android:textColor="?attr/lightestFontColor" />
 
     <Button
         android:id="@+id/btn_skip"
@@ -46,6 +45,6 @@
         android:layout_alignParentLeft="true"
         android:background="@null"
         android:text="@string/skip"
-        android:textColor="@android:color/white" />
+        android:textColor="?attr/lightestFontColor" />
 
 </RelativeLayout>

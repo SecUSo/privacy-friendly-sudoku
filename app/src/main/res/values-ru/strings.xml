@@ -84,7 +84,7 @@
     <string name="slide2_heading">Режим игры</string>
     <string name="slide2_text">Используйте стрелки слева и справа, либо пролистайте режимы для выбора режима игры.</string>
 
-    <string name="slide3_heading">Сложность</string>
+    <string name="slide3_heading">Сложность /</string>
     <string name="slide3_text">Коснитесь для изменения уровня сложности.</string>
 
     <string name="next">Next</string>

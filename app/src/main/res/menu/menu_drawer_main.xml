@@ -5,6 +5,10 @@
         android:checkableBehavior="all">
         <item android:id="@+id/nav_newgame_main" android:icon="@drawable/ic_menu_home"
             android:title="@string/menu_main" />
+        <item android:id="@+id/nav_dailySudoku_main" android:icon="@drawable/ic_menu_daily_sudoku"
+            android:title="@string/menu_daily_sudoku" />
+        <item android:id="@+id/nav_import_sudoku" android:icon="@android:drawable/ic_input_get"
+            android:title="@string/menu_import_custom_sudoku"/>
         <item android:id="@+id/nav_highscore_main" android:icon="@android:drawable/ic_menu_myplaces"
             android:title="@string/menu_highscore" />
         <item android:id="@+id/menu_tutorial_main" android:icon="@drawable/ic_school_black_24dp"

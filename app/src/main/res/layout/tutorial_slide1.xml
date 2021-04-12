@@ -2,8 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorAccent">
-
+    android:background="?attr/backgroundTutorialSlide">
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -11,23 +10,18 @@
         android:gravity="center_horizontal"
         android:layout_centerVertical="true"
         android:orientation="vertical">
-
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/slide1_heading"
-            android:textColor="@android:color/white"
+            android:textColor="?attr/lightestFontColor"
             android:textSize="@dimen/slide_title"
             android:textStyle="bold" />
-
         <ImageView
             android:layout_marginTop="25dp"
             android:layout_width="@dimen/img_width_height"
             android:layout_height="@dimen/img_width_height"
-            android:background="@drawable/splash_icon"
-            />
-
+            android:background="@drawable/splash_icon"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -37,8 +31,7 @@
             android:text="@string/slide1_text"
             android:textAlignment="center"
             android:gravity="center"
-            android:textColor="@android:color/white"
+            android:textColor="?attr/lightestFontColor"
             android:textSize="@dimen/slide_desc" />
-
     </LinearLayout>
 </RelativeLayout>
