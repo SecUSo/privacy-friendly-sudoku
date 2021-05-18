@@ -41,7 +41,6 @@ import org.secuso.privacyfriendlysudoku.game.listener.ITimerListener;
 import org.secuso.privacyfriendlysudoku.ui.GameActivity;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Timer;
@@ -157,7 +156,7 @@ public class GameController implements IModelChangedListener, Parcelable {
         int[] fixedValues = gic.getFixedValues();
         int[] setValues = gic.getSetValues();
         boolean[][] setNotes = gic.getSetNotes();
-        this.gameID = gic.getID();
+        this.gameID = gic.getId();
         this.difficulty = gic.getDifficulty();
         this.time = gic.getTimePlayed();
         this.usedHints = gic.getHintsUsed();
@@ -760,11 +759,11 @@ public class GameController implements IModelChangedListener, Parcelable {
     }
 
     public void ReDo() {
-        updateGameBoard(undoRedoManager.ReDo());
+        updateGameBoard(undoRedoManager.reDo());
     }
 
     public void UnDo() {
-        updateGameBoard(undoRedoManager.UnDo());
+        updateGameBoard(undoRedoManager.unDo());
     }
 
     public boolean isRedoAvailable() {

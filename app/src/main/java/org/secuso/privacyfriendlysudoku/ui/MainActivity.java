@@ -45,7 +45,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -319,7 +318,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         Button continueButton = (Button)findViewById(R.id.continueButton);
         GameStateManager fm = new GameStateManager(getBaseContext(), settings);
         List<GameInfoContainer> gic = fm.loadGameStateInfo();
-        if(gic.size() > 0 && !(gic.size() == 1 && gic.get(0).getID() == GameController.DAILY_SUDOKU_ID)) {
+        if(gic.size() > 0 && !(gic.size() == 1 && gic.get(0).getId() == GameController.DAILY_SUDOKU_ID)) {
             continueButton.setEnabled(true);
             continueButton.setBackgroundResource(R.drawable.button_standalone);
         } else {

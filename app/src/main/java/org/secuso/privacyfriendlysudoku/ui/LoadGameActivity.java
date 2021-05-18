@@ -45,11 +45,8 @@ import org.secuso.privacyfriendlysudoku.game.GameDifficulty;
 import org.secuso.privacyfriendlysudoku.ui.listener.IDeleteDialogFragmentListener;
 import org.secuso.privacyfriendlysudoku.ui.view.R;
 
-import java.text.DateFormat;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.TimeZone;
 
 public class LoadGameActivity extends BaseActivity implements IDeleteDialogFragmentListener {
 
@@ -89,7 +86,7 @@ public class LoadGameActivity extends BaseActivity implements IDeleteDialogFragm
         loadableGameList = gameStateManager.loadGameStateInfo();
 
         for (GameInfoContainer container : loadableGameList) {
-            if (container.getID() == GameController.DAILY_SUDOKU_ID) {
+            if (container.getId() == GameController.DAILY_SUDOKU_ID) {
                 loadableGameList.remove(container);
                 break;
             }
@@ -208,7 +205,7 @@ public class LoadGameActivity extends BaseActivity implements IDeleteDialogFragm
 
         @Override
         public long getItemId(int position) {
-            return loadableGameList.get(position).getID();
+            return loadableGameList.get(position).getId();
         }
 
         @Override
