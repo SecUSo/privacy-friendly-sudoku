@@ -142,6 +142,111 @@ public class GeneratorService extends IntentService {
         opts.needNow = true;
         opts.printSolution = false;
         opts.gameType = gameType;
+        setOptsSymmetry(gameType, gameDifficulty);
+
+        final AtomicInteger puzzleCount = new AtomicInteger(0);
+        final AtomicBoolean done = new AtomicBoolean(false);
+
+        Runnable generationRunnable = new Runnable() {
+            private boolean havePuzzle;
+            // Create a new puzzle board and set the options
+            private QQWing qqWing = createQQWing();
+
+            private QQWing createQQWing() {
+                QQWing ss = new QQWing(opts.gameType, opts.gameDifficulty);
+                ss.setRecordHistory(opts.printHistory || opts.printInstructions || opts.printStats || opts.gameDifficulty != GameDifficulty.Unspecified);
+                ss.setLogHistory(opts.logHistory);
+                ss.setPrintStyle(opts.printStyle);
+                return ss;
+            }
+
+            @Override
+            public void run() {
+                //android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_BACKGROUND);
+                try {
+
+                    // Solve puzzle or generate puzzles
+                    // until end of input for solving, or
+                    // until we have generated the specified number.
+                    while (!done.get()) {
+
+                        // Record whether the puzzle was possible or
+                        // not,
+                        // so that we don't try to solve impossible
+                        // givens.
+
+                        if (opts.action == Action.GENERATE) {
+                            // Generate a puzzle
+                            havePuzzle = qqWing.generatePuzzleSymmetry(opts.symmetry);
+
+                        } else {
+                            readNextPuzzle();
+                        }
+
+                        if(opts.gameDifficulty != GameDifficulty.Unspecified) {
+                            qqWing.solve();
+                        }
+
+                        if (havePuzzle) {
+                            // Bail out if it didn't meet the difficulty
+                            // standards for generation
+                            if (opts.action == Action.GENERATE) {
+                                standardGeneration();
+                            }
+                            if (havePuzzle) {
+                                generated.add(qqWing.getPuzzle());
+                            }
+                        }
+                    }
+                } catch (Exception e) {
+                    Log.e("QQWing", "Exception Occurred", e);
+                    return;
+                }
+                generationDone();
+            }
+
+            private void standardGeneration() {
+                // save the level anyways but keep going if the desired level is not yet generated
+                Level level = new Level();
+                level.setGameType(opts.gameType);
+                level.setDifficulty(qqWing.getDifficulty());
+                level.setPuzzle(qqWing.getPuzzle());
+                dbHelper.addLevel(level);
+                Log.d(TAG, "Generated: " + level.getGameType().name() + ",\t"+level.getDifficulty().name());
+
+                if (opts.gameDifficulty != GameDifficulty.Unspecified && opts.gameDifficulty != qqWing.getDifficulty()) {
+                    havePuzzle = false;
+                    // check if other threads have finished the job
+                    if (puzzleCount.get() >= opts.numberToGenerate)
+                        done.set(true);
+                } else {
+                    int numDone = puzzleCount.incrementAndGet();
+                    if (numDone >= opts.numberToGenerate) done.set(true);
+                    if (numDone > opts.numberToGenerate) havePuzzle = false;
+                }
+            }
+
+            private void readNextPuzzle() {
+                // Read the next puzzle on STDIN
+                int[] puzzle = new int[QQWing.BOARD_SIZE];
+                if (getPuzzleToSolve(puzzle)) {
+                    havePuzzle = qqWing.setPuzzle(puzzle);
+                    if (havePuzzle) {
+                        puzzleCount.getAndDecrement();
+                    }
+                } else {
+                    // Set loop to terminate when nothing is
+                    // left on STDIN
+                    havePuzzle = false;
+                    done.set(true);
+                }
+            }
+        };
+
+        generationRunnable.run();
+    }
+
+    private void setOptsSymmetry(GameType gameType, GameDifficulty gameDifficulty) {
         if(gameDifficulty == GameDifficulty.Easy && gameType == GameType.Default_9x9) {
             opts.symmetry = Symmetry.ROTATE90;
         } else {
@@ -150,106 +255,6 @@ public class GeneratorService extends IntentService {
         if(gameType == GameType.Default_12x12 && gameDifficulty != GameDifficulty.Challenge) {
             opts.symmetry = Symmetry.ROTATE90;
         }
-
-        final AtomicInteger puzzleCount = new AtomicInteger(0);
-        final AtomicBoolean done = new AtomicBoolean(false);
-
-        Runnable generationRunnable = new Runnable() {
-                // Create a new puzzle board
-                // and set the options
-                private QQWing ss = createQQWing();
-
-                private QQWing createQQWing() {
-                    QQWing ss = new QQWing(opts.gameType, opts.gameDifficulty);
-                    ss.setRecordHistory(opts.printHistory || opts.printInstructions || opts.printStats || opts.gameDifficulty != GameDifficulty.Unspecified);
-                    ss.setLogHistory(opts.logHistory);
-                    ss.setPrintStyle(opts.printStyle);
-                    return ss;
-                }
-
-                @Override
-                public void run() {
-                    //android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_BACKGROUND);
-                    try {
-
-                        // Solve puzzle or generate puzzles
-                        // until end of input for solving, or
-                        // until we have generated the specified number.
-                        while (!done.get()) {
-
-                            // Record whether the puzzle was possible or
-                            // not,
-                            // so that we don't try to solve impossible
-                            // givens.
-                            boolean havePuzzle;
-                            boolean solveImpossible;
-
-                            if (opts.action == Action.GENERATE) {
-                                // Generate a puzzle
-                                havePuzzle = ss.generatePuzzleSymmetry(opts.symmetry);
-
-                            } else {
-                                // Read the next puzzle on STDIN
-                                int[] puzzle = new int[QQWing.BOARD_SIZE];
-                                if (getPuzzleToSolve(puzzle)) {
-                                    havePuzzle = ss.setPuzzle(puzzle);
-                                    if (havePuzzle) {
-                                        puzzleCount.getAndDecrement();
-                                    } else {
-                                        // Puzzle to solve is impossible.
-                                        solveImpossible = true;
-                                    }
-                                } else {
-                                    // Set loop to terminate when nothing is
-                                    // left on STDIN
-                                    havePuzzle = false;
-                                    done.set(true);
-                                }
-                                puzzle = null;
-                            }
-
-                            if(opts.gameDifficulty != GameDifficulty.Unspecified) {
-                                ss.solve();
-                            }
-
-                            if (havePuzzle) {
-                                // Bail out if it didn't meet the difficulty
-                                // standards for generation
-                                if (opts.action == Action.GENERATE) {
-
-                                    // save the level anyways but keep going if the desired level is not yet generated
-                                    Level level = new Level();
-                                    level.setGameType(opts.gameType);
-                                    level.setDifficulty(ss.getDifficulty());
-                                    level.setPuzzle(ss.getPuzzle());
-                                    dbHelper.addLevel(level);
-                                    Log.d(TAG, "Generated: " + level.getGameType().name() + ",\t"+level.getDifficulty().name());
-
-                                    if (opts.gameDifficulty != GameDifficulty.Unspecified && opts.gameDifficulty != ss.getDifficulty()) {
-                                        havePuzzle = false;
-                                        // check if other threads have finished the job
-                                        if (puzzleCount.get() >= opts.numberToGenerate)
-                                            done.set(true);
-                                    } else {
-                                        int numDone = puzzleCount.incrementAndGet();
-                                        if (numDone >= opts.numberToGenerate) done.set(true);
-                                        if (numDone > opts.numberToGenerate) havePuzzle = false;
-                                    }
-                                }
-                                if (havePuzzle) {
-                                    generated.add(ss.getPuzzle());
-                                }
-                            }
-                        }
-                    } catch (Exception e) {
-                        Log.e("QQWing", "Exception Occured", e);
-                        return;
-                    }
-                    generationDone();
-                }
-            };
-
-        generationRunnable.run();
     }
 
     // this is called whenever a generation is done..
@@ -286,7 +291,7 @@ public class GeneratorService extends IntentService {
         }
     }
 
-    private int[] level;
+    private int[] puzzleLevel;
     private LinkedList<int[]> generated = new LinkedList<>();
 
     private static class QQWingOptions {
@@ -310,13 +315,13 @@ public class GeneratorService extends IntentService {
     }
 
     private boolean getPuzzleToSolve(int[] puzzle) {
-        if(level != null) {
-            if(puzzle.length == level.length) {
-                for(int i = 0; i < level.length; i++) {
-                    puzzle[i] = level[i];
+        if(puzzleLevel != null) {
+            if(puzzle.length == puzzleLevel.length) {
+                for(int i = 0; i < puzzleLevel.length; i++) {
+                    puzzle[i] = puzzleLevel[i];
                 }
             }
-            level = null;
+            puzzleLevel = null;
             return true;
         }
         return false;
