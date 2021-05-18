@@ -122,7 +122,7 @@ public class GeneratorService extends IntentService {
         buildGenerationList();
 
         // generate from the list
-        if(generationList.size() > 0) {
+        if(!generationList.isEmpty()) {
 
             // generate 1 level and wait for it to be done.
             Pair<GameType, GameDifficulty> dataPair = generationList.get(0);
@@ -260,7 +260,7 @@ public class GeneratorService extends IntentService {
     // this is called whenever a generation is done..
     private void generationDone() {
         // check if more can be generated
-        if(generationList.size() > 0) {
+        if(!generationList.isEmpty()) {
             generateLevels();
         } else {
             // we are done and can close this service
