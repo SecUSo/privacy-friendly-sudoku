@@ -429,21 +429,9 @@ public class QQWing {
 				// counting solutions to the puzzle
 				int savedValue = puzzle[position];
 				puzzle[position] = 0;
-				int savedSym1 = 0;
-				if (positionsym1 >= 0) {
-					savedSym1 = puzzle[positionsym1];
-					puzzle[positionsym1] = 0;
-				}
-				int savedSym2 = 0;
-				if (positionsym2 >= 0) {
-					savedSym2 = puzzle[positionsym2];
-					puzzle[positionsym2] = 0;
-				}
-				int savedSym3 = 0;
-				if (positionsym3 >= 0) {
-					savedSym3 = puzzle[positionsym3];
-					puzzle[positionsym3] = 0;
-				}
+				int savedSym1 = getSavedSym(positionsym1);
+				int savedSym2 = getSavedSym(positionsym2);
+				int savedSym3 = getSavedSym(positionsym3);
 				reset();
 				if (countSolutions(2, true) > 1) {
 					// Put it back in, it is needed
@@ -463,6 +451,15 @@ public class QQWing {
 		setLogHistory(lHistory);
 
 		return true;
+	}
+
+	private int getSavedSym(int positionsym) {
+		int savedSym = 0;
+		if (positionsym >= 0) {
+			savedSym = puzzle[positionsym];
+			puzzle[positionsym] = 0;
+		}
+		return savedSym;
 	}
 
 	private void rollbackNonGuesses() {
