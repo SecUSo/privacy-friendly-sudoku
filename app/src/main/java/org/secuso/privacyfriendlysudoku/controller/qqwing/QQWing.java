@@ -495,8 +495,6 @@ public class QQWing {
 		if (recordHistory) {
 			solveHistory.add(l); // ->push_back(l);
 			solveInstructions.add(l); // ->push_back(l);
-		} else {
-			l = null;
 		}
 	}
 
@@ -781,7 +779,7 @@ public class QQWing {
 					}
 				}
 				if (inOneBox && colBox != -1) {
-					if (doSomething(round, valIndex, col, colBox, "Column") == true) {
+					if (doSomething(round, valIndex, col, colBox, "Column")) {
 						if (logHistory || recordHistory) addHistoryItem(new LogItem(round, LogType.COLUMN_BOX, valIndex + 1, colStart));
 						return true;
 					}
@@ -812,7 +810,7 @@ public class QQWing {
 					}
 				}
 				if (inOneBox && rowBox != -1) {
-					if (doSomething(round, valIndex, row, rowBox, "Row") == true) {
+					if (doSomething(round, valIndex, row, rowBox, "Row")) {
 						if (logHistory || recordHistory) addHistoryItem(new LogItem(round, LogType.ROW_BOX, valIndex + 1, rowStart));
 						return true;
 					}
