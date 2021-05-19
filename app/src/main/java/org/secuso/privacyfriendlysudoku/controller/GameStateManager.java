@@ -37,11 +37,13 @@ public class GameStateManager {
     Context context;
     private SharedPreferences settings;
     private boolean includesDaily;
+    private FileInputOutput fileIO = new FileInputOutput();
 
     private static String FILE_EXTENSION = ".txt";
     private static String SAVE_PREFIX = "save_";
     private static String SAVES_DIR = "saves";
     private static final int MAX_NUM_OF_SAVED_GAMES = 10;
+    private static final String SAVES_CHANGED = "savesChanged";
 
     private static List<GameInfoContainer> list = new LinkedList<>();
 
@@ -74,12 +76,15 @@ public class GameStateManager {
                 // load file
                 byte[] bytes = new byte[(int)file.length()];
                 try {
+                    /*
                     FileInputStream stream = new FileInputStream(file);
                     try {
                         stream.read(bytes);
                     } finally {
                         stream.close();
                     }
+                    */
+                    fileIO.readFile(file,bytes);
                 } catch(IOException e) {
                     Log.e("File Manager", "Could not load game. IOException occured.");
                 }
@@ -93,17 +98,7 @@ public class GameStateManager {
                     }
 
                     // fill the container
-                    String id = file.getName().substring(5, file.getName().lastIndexOf("."));
-                    int i = 0;
-                    gic.setId(Integer.valueOf(id));    // save_x.txt
-                    gic.parseGameType(values[i++]);
-                    gic.parseTime(values[i++]);
-                    gic.parseDate(values[i++]);
-                    gic.parseDifficulty(values[i++]);
-                    gic.parseFixedValues(values[i++]);
-                    gic.parseSetValues(values[i++]);
-                    gic.parseNotes(values[i++]);
-                    gic.parseHintsUsed(values[i++]);
+                    int i = fillGic(file, gic, values);
 
                     if (values.length > i) {
                         gic.setCustom(true);
@@ -131,6 +126,12 @@ public class GameStateManager {
 
         list = sortListByLastPlayedDate(result);
 
+        removeGic();
+
+        return list;
+    }
+
+    private void removeGic() {
         LinkedList<GameInfoContainer> removeList = new LinkedList<>();
 
         for(int i = 0; i < list.size(); i++) {
@@ -143,8 +144,21 @@ public class GameStateManager {
         for(GameInfoContainer gic : removeList) {
             list.remove(gic);
         }
+    }
 
-        return list;
+    private int fillGic(File file, GameInfoContainer gic, String[] values) {
+        String id = file.getName().substring(5, file.getName().lastIndexOf("."));
+        int i = 0;
+        gic.setId(Integer.valueOf(id));    // save_x.txt
+        gic.parseGameType(values[i++]);
+        gic.parseTime(values[i++]);
+        gic.parseDate(values[i++]);
+        gic.parseDifficulty(values[i++]);
+        gic.parseFixedValues(values[i++]);
+        gic.parseSetValues(values[i++]);
+        gic.parseNotes(values[i++]);
+        gic.parseHintsUsed(values[i++]);
+        return i;
     }
 
     public void deleteGameStateFile(GameInfoContainer gic) {
@@ -216,12 +230,15 @@ public class GameStateManager {
         File file = new File(dir, SAVE_PREFIX+String.valueOf(controller.getGameID())+FILE_EXTENSION);
 
         try {
+            /*
             FileOutputStream stream = new FileOutputStream(file);
             try {
                 stream.write(level.getBytes());
             } finally {
                 stream.close();
             }
+            */
+            fileIO.writeFile(file,level);
         } catch(IOException e) {
             Log.e("File Manager", "Could not save game. IOException occured.");
         }
