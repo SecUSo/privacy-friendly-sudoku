@@ -110,6 +110,18 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
         return h + ":" + m + ":" + s;
     }
 
+    public static void setDarkMode(SharedPreferences settings) {
+        if (settings.getBoolean("pref_dark_mode_setting", false )) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else if (settings.getBoolean("pref_dark_mode_automatically_by_system", false)) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+        } else if(settings.getBoolean("pref_dark_mode_automatically_by_battery", false)){
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
+    }
+
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
@@ -135,16 +147,7 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
         If the app is started via a deeplink, the GameActivity is the first activity the user accesses,
         so we need to set the dark mode settings in this activity as well
          */
-        if (sharedPref.getBoolean("pref_dark_mode_setting", false )) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        } else if (sharedPref.getBoolean("pref_dark_mode_automatically_by_system", false)) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
-
-        } else if(sharedPref.getBoolean("pref_dark_mode_automatically_by_battery", false)){
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY);
-        } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        }
+        setDarkMode(sharedPref);
 
         if(sharedPref.getBoolean("pref_keep_screen_on", true)) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
