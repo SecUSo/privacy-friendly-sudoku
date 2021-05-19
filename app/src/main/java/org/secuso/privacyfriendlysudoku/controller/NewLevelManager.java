@@ -48,6 +48,7 @@ public class NewLevelManager {
 
     private static NewLevelManager instance;
     private DatabaseHelper dbHelper;
+    private FileInputOutput fileIO = new FileInputOutput();
 
     private static String FILE_EXTENSION = ".txt";
     private static String LEVEL_PREFIX = "level_";
@@ -158,12 +159,15 @@ public class NewLevelManager {
                     // load file
                     byte[] bytes = new byte[(int)file.length()];
                     try {
+                        /*
                         FileInputStream stream = new FileInputStream(file);
                         try {
                             stream.read(bytes);
                         } finally {
                             stream.close();
                         }
+                         */
+                        fileIO.readFile(file,bytes);
                     } catch(IOException e) {
                         Log.e("File Manager", "Could not load game. IOException occured.");
                     }
@@ -374,6 +378,7 @@ public class NewLevelManager {
 
         // save the file
         try {
+            /*
             FileOutputStream stream = new FileOutputStream(file);
 
             try {
@@ -381,6 +386,8 @@ public class NewLevelManager {
             } finally {
                 stream.close();
             }
+            */
+            fileIO.writeFile(file,puzzle);
         } catch (IOException e) {
             Log.e("File Manager", "Could not save game. IOException occured.");
         }
@@ -490,6 +497,7 @@ public class NewLevelManager {
 
                     // save the file
                     try {
+                        /*
                         FileOutputStream stream = new FileOutputStream(file);
 
                         try {
@@ -497,6 +505,8 @@ public class NewLevelManager {
                         } finally {
                             stream.close();
                         }
+                        */
+                        fileIO.writeFile(file,puzzleString.toString());
                     } catch (IOException e) {
                         Log.e("File Manager", "Could not save game. IOException occured.");
                     }
