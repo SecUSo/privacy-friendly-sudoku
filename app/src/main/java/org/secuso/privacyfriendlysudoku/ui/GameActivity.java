@@ -30,7 +30,6 @@ import android.content.res.Configuration;
 import android.graphics.Point;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import com.google.android.material.navigation.NavigationView;
 
@@ -38,17 +37,13 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -279,7 +274,7 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
                             gameController.loadLevel(loadableGames.get(loadLevelID));
                         } else if (loadLevelID == GameController.DAILY_SUDOKU_ID) {
                             for (GameInfoContainer container : loadableGames) {
-                                if (container.getID() == loadLevelID) {
+                                if (container.getId() == loadLevelID) {
                                     gameController.loadLevel(container);
                                     break;
                                 }

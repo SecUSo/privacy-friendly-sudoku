@@ -79,10 +79,10 @@ public class CreateSudokuSpecialButtonLayout extends LinearLayout implements IHi
                         impDialog.show(fragmentManager, "ImportDialogFragment");
                         break;
                     case Do:
-                        gameController.ReDo();
+                        gameController.reDo();
                         break;
                     case Undo:
-                        gameController.UnDo();
+                        gameController.unDo();
                         break;
                     case Finalize:
                         FinalizeConfirmationDialog dialog = new FinalizeConfirmationDialog();
