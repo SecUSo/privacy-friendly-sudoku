@@ -249,14 +249,7 @@ public class LoadGameActivity extends BaseActivity implements IDeleteDialogFragm
             customLabel.setVisibility(gic.isCustom() ? View.VISIBLE : View.GONE);
 
             int time = gic.getTimePlayed();
-            int seconds = time % 60;
-            int minutes = ((time -seconds)/60)%60 ;
-            int hours = (time - minutes - seconds)/(3600);
-            String h,m,s;
-            s = (seconds< 10)? "0"+String.valueOf(seconds):String.valueOf(seconds);
-            m = (minutes< 10)? "0"+String.valueOf(minutes):String.valueOf(minutes);
-            h = (hours< 10)? "0"+String.valueOf(hours):String.valueOf(hours);
-            playedTime.setText(h + ":" + m + ":" + s);
+            playedTime.setText(GameActivity.timeToString(time));
 
             long now = System.currentTimeMillis();
             long lastTimePlayedTimestamp = gic.getLastTimePlayed().getTime();

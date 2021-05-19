@@ -82,17 +82,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         settings = PreferenceManager.getDefaultSharedPreferences(this);
-        if (settings.getBoolean("pref_dark_mode_setting", false )) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-
-        } else if (settings.getBoolean("pref_dark_mode_automatically_by_system", false)) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
-
-        } else if(settings.getBoolean("pref_dark_mode_automatically_by_battery", false)){
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY);
-        } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        }
+        GameActivity.setDarkMode(settings);
 
         super.onCreate(savedInstanceState);
 
