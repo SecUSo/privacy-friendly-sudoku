@@ -30,7 +30,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.AttributeSet;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -82,10 +81,10 @@ public class SudokuSpecialButtonLayout extends LinearLayout implements IHighligh
                         onHighlightChanged();
                         break;
                     case Do:
-                        gameController.ReDo();
+                        gameController.reDo();
                         break;
                     case Undo:
-                        gameController.UnDo();
+                        gameController.unDo();
                         break;
                     case Hint:
                         if(gameController.isValidCellSelected()) {

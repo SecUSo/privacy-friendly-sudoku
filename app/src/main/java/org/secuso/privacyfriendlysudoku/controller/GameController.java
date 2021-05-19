@@ -41,7 +41,6 @@ import org.secuso.privacyfriendlysudoku.game.listener.ITimerListener;
 import org.secuso.privacyfriendlysudoku.ui.GameActivity;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Timer;
@@ -157,7 +156,7 @@ public class GameController implements IModelChangedListener, Parcelable {
         int[] fixedValues = gic.getFixedValues();
         int[] setValues = gic.getSetValues();
         boolean[][] setNotes = gic.getSetNotes();
-        this.gameID = gic.getID();
+        this.gameID = gic.getId();
         this.difficulty = gic.getDifficulty();
         this.time = gic.getTimePlayed();
         this.usedHints = gic.getHintsUsed();
@@ -627,12 +626,10 @@ public class GameController implements IModelChangedListener, Parcelable {
 
         if(gameBoard.isFilled()) {
             errorList = new CellConflictList();
-            if(gameBoard.isSolved(errorList)) {
-                if(!notifiedOnSolvedListeners) {
-                    notifiedOnSolvedListeners = true;
-                    notifySolvedListeners();
-                    resetSelects();
-                }
+            if(gameBoard.isSolved(errorList) && !notifiedOnSolvedListeners) {
+                notifiedOnSolvedListeners = true;
+                notifySolvedListeners();
+                resetSelects();
             }// else {
                 // errorList now holds all the errors => display errors
                 //notifyErrorListener(errorList);
@@ -765,12 +762,12 @@ public class GameController implements IModelChangedListener, Parcelable {
         timerRunning.set(false);
     }
 
-    public void ReDo() {
-        updateGameBoard(undoRedoManager.ReDo());
+    public void reDo() {
+        updateGameBoard(undoRedoManager.reDo());
     }
 
-    public void UnDo() {
-        updateGameBoard(undoRedoManager.UnDo());
+    public void unDo() {
+        updateGameBoard(undoRedoManager.unDo());
     }
 
     public boolean isRedoAvailable() {
@@ -786,28 +783,31 @@ public class GameController implements IModelChangedListener, Parcelable {
         }
         for(int i = 0; i < gameBoard.getSize(); i++) {
             for(int j = 0; j < gameBoard.getSize(); j++) {
-                GameCell other_c = gameBoard.getCell(i,j);
-                GameCell this_c = this.gameBoard.getCell(i,j);
-                if(other_c.isFixed()) {
+                GameCell otherC = gameBoard.getCell(i,j);
+                GameCell thisC = this.gameBoard.getCell(i,j);
+                if(otherC.isFixed()) {
                     continue;
                 }
-                if(other_c.hasValue()) {
-                    this_c.setValue(other_c.getValue());
+                if(otherC.hasValue()) {
+                    thisC.setValue(otherC.getValue());
                 } else {
-                    this_c.setValue(0);
-                    for(int k = 0; k < gameBoard.getSize(); k++) {
-                        if(other_c.getNotes()[k]) {
-                            this_c.setNote(k+1);
-                        } else {
-                            this_c.deleteNote(k+1);
-                        }
-                    }
+                    thisC.setValue(0);
+                    updateNotes(gameBoard, otherC, thisC);
                 }
             }
         }
 
         notifyHighlightChangedListeners();
-        return;
+    }
+
+    private void updateNotes(GameBoard gameBoard, GameCell otherC, GameCell thisC) {
+        for(int k = 0; k < gameBoard.getSize(); k++) {
+            if(otherC.getNotes()[k]) {
+                thisC.setNote(k+1);
+            } else {
+                thisC.deleteNote(k+1);
+            }
+        }
     }
 
     public int getValueCount(final int value) {
@@ -886,7 +886,7 @@ public class GameController implements IModelChangedListener, Parcelable {
         gameType = in.readParcelable(GameType.class.getClassLoader());
         difficulty = in.readParcelable(GameDifficulty.class.getClassLoader());
         gameBoard = in.readParcelable(GameBoard.class.getClassLoader());
-        undoRedoManager = new UndoRedoManager(gameBoard);//*/in.readParcelable(UndoRedoManager.class.getClassLoader());
+        undoRedoManager = new UndoRedoManager(gameBoard);//in.readParcelable(UndoRedoManager.class.getClassLoader());
 
         in.readTypedList(errorList, CellConflict.CREATOR);
 

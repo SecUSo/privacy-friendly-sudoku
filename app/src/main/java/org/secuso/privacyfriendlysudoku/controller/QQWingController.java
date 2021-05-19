@@ -16,14 +16,12 @@
  */
 package org.secuso.privacyfriendlysudoku.controller;
 
-import android.os.Parcelable;
 import android.util.Log;
 
 import java.util.LinkedList;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.Date;
 
 import org.secuso.privacyfriendlysudoku.controller.qqwing.Action;
 import org.secuso.privacyfriendlysudoku.controller.qqwing.PrintStyle;
@@ -199,10 +197,7 @@ public class QQWingController {
                                             havePuzzle = false;
                                             done.set(true);
                                         }
-                                        puzzle = null;
                                     }
-
-                                    int solutions = 0;
 
                                     if (havePuzzle) {
 
@@ -282,10 +277,6 @@ public class QQWingController {
         GameType gameType = GameType.Unspecified;
         Symmetry symmetry = Symmetry.NONE;
         int threads = Runtime.getRuntime().availableProcessors();
-    }
-
-    private static long getMicroseconds() {
-        return new Date().getTime() * 1000;
     }
 
     private boolean getPuzzleToSolve(int[] puzzle) {

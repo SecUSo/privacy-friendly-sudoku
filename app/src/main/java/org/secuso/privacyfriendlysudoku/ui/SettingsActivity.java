@@ -56,16 +56,7 @@ public class SettingsActivity extends AppCompatActivity {
                 settingsFragment.findPreference("pref_dark_mode_automatically_by_battery").setEnabled(!sharedPreferences.getBoolean("pref_dark_mode_automatically_by_system", false));
             }}
 
-        if (sharedPreferences.getBoolean("pref_dark_mode_setting", false )) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-
-        } else if (sharedPreferences.getBoolean("pref_dark_mode_automatically_by_system", false)) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
-        } else if(sharedPreferences.getBoolean("pref_dark_mode_automatically_by_battery", false)){
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY);
-        } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        }
+        GameActivity.setDarkMode(sharedPreferences);
     }
 
     static SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
