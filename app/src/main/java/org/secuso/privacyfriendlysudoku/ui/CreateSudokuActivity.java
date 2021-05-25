@@ -71,7 +71,8 @@ public class CreateSudokuActivity extends BaseActivity implements IFinalizeDialo
 
         if(savedInstanceState == null) {
 
-            gameController = new GameController(sharedPref, getApplicationContext());
+            //gameController = new GameController(sharedPref, getApplicationContext());
+            gameController = GameController.getInstance(sharedPref, getApplicationContext());
 
             Bundle extras = getIntent().getExtras();
             GameType gameType = GameType.valueOf(extras.getString("gameType", GameType.Default_9x9.name()));

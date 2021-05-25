@@ -99,13 +99,13 @@ public class GameController implements IModelChangedListener, Parcelable {
     private boolean noteStatus = false;
 
     // Constructors
-    public GameController() {
+    private GameController() {
         this(null, null);
     }
-    public GameController(SharedPreferences pref, Context context) {
+    private GameController(SharedPreferences pref, Context context) {
         this(GameType.Default_9x9, pref, context);
     }
-    public GameController(GameType type, SharedPreferences pref, Context context) {
+    private GameController(GameType type, SharedPreferences pref, Context context) {
         this.context = context;
         this.gameBoard = new GameBoard(type);
         this.gameIsCustom = false;
@@ -114,6 +114,27 @@ public class GameController implements IModelChangedListener, Parcelable {
         setSettings(pref);
 
         initTimer();
+    }
+
+    private static GameController gamecontroller=null;
+
+    public static GameController getInstance(){
+        if(gamecontroller == null) {
+            gamecontroller = new GameController();
+        }
+        return gamecontroller;
+    }
+    public static GameController getInstance(SharedPreferences pref, Context context){
+        if(gamecontroller == null) {
+            gamecontroller = new GameController(pref, context);
+        }
+        return gamecontroller;
+    }
+    public static GameController getInstance(GameType type, SharedPreferences pref, Context context){
+        if(gamecontroller == null) {
+            gamecontroller = new GameController(type,pref,context);
+        }
+        return gamecontroller;
     }
 
     public int getGameID() {

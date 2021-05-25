@@ -166,7 +166,8 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
             as a part of the getExtras() bundle. Instead, it needs to be saved as an URI object
              */
             Uri data = getIntent().getData();
-            gameController = new GameController(sharedPref, getApplicationContext());
+            //gameController = new GameController(sharedPref, getApplicationContext());
+            gameController = GameController.getInstance(sharedPref, getApplicationContext());
 
             // Intents coming from the LoadGameActivity and MainActivity can be identified based on the keys the getExtras() bundle contains
             boolean intentReceivedFromMainActivity = extras != null &&
