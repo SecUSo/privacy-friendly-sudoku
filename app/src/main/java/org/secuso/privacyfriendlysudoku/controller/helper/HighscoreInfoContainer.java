@@ -82,7 +82,7 @@ public class HighscoreInfoContainer {
             timeNoHints = parseTime(strings[7]);
 
         } catch (IllegalArgumentException e){
-            throw  new IllegalArgumentException("Could not set Infoprmation illegal Arguments");
+            throw  new IllegalArgumentException("Could not set Information illegal Arguments");
         }
     }
 
@@ -99,7 +99,6 @@ public class HighscoreInfoContainer {
     public int getNumberOfGamesNoHints(){   return numberOfGamesNoHints; }
     public int getTimeNoHints(){    return timeNoHints; }
 
-
     private GameType parseGameType(String s){
         return GameType.valueOf(s);
     }
@@ -107,27 +106,24 @@ public class HighscoreInfoContainer {
         return GameDifficulty.valueOf(s);
     }
 
-    private int parseTime(String s){
-        int ret = Integer.valueOf(s);
-        if (ret<0){
+    private int parse(String s) {
+        int ret = Integer.parseInt(s);
+        if (ret < 0) {
             throw new IllegalArgumentException("Parser Exception wrong Integer");
         }
         return ret;
     }
+
+    private int parseTime(String s){
+        return parse(s);
+    }
+
     private int parseHints(String s){
-        int ret = Integer.valueOf(s);
-        if (ret<0){
-            throw new IllegalArgumentException("Parser Exception wrong Integer");
-        }
-        return ret;
+        return parse(s);
 
     }
     private int parseNumberOfGames(String s) {
-        int ret = Integer.valueOf(s);
-        if (ret<0){
-            throw new IllegalArgumentException("Parser Exception wrong Integer");
-        }
-        return ret;
+        return parse(s);
     }
 
     public String getActualStats(){
@@ -147,7 +143,6 @@ public class HighscoreInfoContainer {
         sb.append(numberOfGamesNoHints);
         sb.append("/");
         sb.append(timeNoHints);
-
 
         return sb.toString();
     }

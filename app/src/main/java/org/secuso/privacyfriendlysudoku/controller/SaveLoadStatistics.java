@@ -137,13 +137,10 @@ public class SaveLoadStatistics implements ITimerListener, IHintListener {
             result.add(infos);
         }
 
-
-
         return result;
     }
 
     public static void resetStats(Context context) {
-
 
         File dir = context.getDir(SAVES_DIR, 0);
         File file;
@@ -160,8 +157,6 @@ public class SaveLoadStatistics implements ITimerListener, IHintListener {
         HighscoreInfoContainer infos = loadStats(gameType, gd);
         infos.incTime();
         saveContainer(infos,gd,gameType);
-
-
     }
     public void incHints(GameDifficulty gd, GameType gameType){
         HighscoreInfoContainer infos = loadStats(gameType,gd);
@@ -173,7 +168,6 @@ public class SaveLoadStatistics implements ITimerListener, IHintListener {
 
         File dir = context.getDir(SAVES_DIR, 0);
         File file = new File(dir, SAVE_PREFIX+t.name()+"_"+gd.name()+FILE_EXTENSION);
-
 
         String stats = infos.getActualStats();
         try {
@@ -187,7 +181,7 @@ public class SaveLoadStatistics implements ITimerListener, IHintListener {
             */
             fileIO.writeFile(file,stats);
         } catch(IOException e) {
-            Log.e("File Manager", "Could not save game. IOException occured.");
+            Log.e("File Manager", "Could not save game. IOException occurred.");
         }
     }
 
@@ -225,7 +219,7 @@ public class SaveLoadStatistics implements ITimerListener, IHintListener {
                 infoContainer.setInfosFromFile(fileStats);
 
             } catch (IllegalArgumentException e) {
-                Log.e("Parse Error","Illegal Atgumanet");
+                Log.e("Parse Error","Illegal Argument");
             }
         }
 */
@@ -247,7 +241,7 @@ public class SaveLoadStatistics implements ITimerListener, IHintListener {
             */
             fileIO.writeFile(file,stats);
         } catch(IOException e) {
-            Log.e("File Manager", "Could not save game. IOException occured.");
+            Log.e("File Manager", "Could not save game. IOException occurred.");
         }
     }
 

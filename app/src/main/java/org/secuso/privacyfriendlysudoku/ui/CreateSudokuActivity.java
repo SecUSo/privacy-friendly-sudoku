@@ -32,6 +32,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.util.Pair;
 
 import org.secuso.privacyfriendlysudoku.controller.GameController;
 import org.secuso.privacyfriendlysudoku.controller.Symbol;
@@ -214,15 +215,15 @@ public class CreateSudokuActivity extends BaseActivity implements IFinalizeDialo
         }
 
     }
-    public void onImportDialogPositiveClick(String input) {
+
+    private Pair<String, StringBuilder> checkUri(String input) {
         String inputSudoku = null;
-        String prefix;
         StringBuilder errorMessage = new StringBuilder();
 
         /*  remove the present prefix, or, if the input contains none of the valid prefixes, notify the user
          that their input is not valid */
         for (int i = 0; i < GameActivity.validUris.size(); i++) {
-            prefix = GameActivity.validUris.get(i).getHost().equals("") ?
+            String prefix = GameActivity.validUris.get(i).getHost().equals("") ?
                     GameActivity.validUris.get(i).getScheme() + "://" :
                     GameActivity.validUris.get(i).getScheme() + "://" + GameActivity.validUris.get(i).getHost() + "/";
             if (input.startsWith(prefix)) {
@@ -235,6 +236,28 @@ public class CreateSudokuActivity extends BaseActivity implements IFinalizeDialo
             errorMessage.append(endOfRecord);
         }
 
+        return new Pair(inputSudoku, errorMessage);
+    }
+
+    private boolean isValidInputSudoku(String inputSudoku) {
+        boolean validSize = Math.sqrt(inputSudoku.length()) == gameController.getSize();
+        if (!validSize)
+            return false;
+
+        //check whether or not the sudoku is valid and has a unique solution
+        boolean solvable = verify(gameController.getGameType(), inputSudoku);
+
+        if (!solvable) {
+            return false;
+        }
+
+        return true;
+    }
+    public void onImportDialogPositiveClick(String input) {
+        Pair<String, StringBuilder> importReult = checkUri(input);
+        String inputSudoku = importReult.first;
+        StringBuilder errorMessage = importReult.second;
+
         // the inputSudoku variable being null means the input did not match any of the valid prefixes
         if (inputSudoku == null) {
             Toast.makeText(CreateSudokuActivity.this,
@@ -242,19 +265,10 @@ public class CreateSudokuActivity extends BaseActivity implements IFinalizeDialo
             return;
         }
 
-        boolean validSize = Math.sqrt(inputSudoku.length()) == gameController.getSize();
-
-        if (!validSize) {
-            Toast.makeText(CreateSudokuActivity.this, R.string.failed_to_verify_custom_sudoku_toast, Toast.LENGTH_LONG).show();
-            return;
-        }
-
-        //check whether or not the sudoku is valid and has a unique solution
-        boolean solvable = verify(gameController.getGameType(), inputSudoku);
-
-        // if the encoded sudoku is solvable, sent the code directly to the GameActivity; if not, notify the user
-        if (solvable) {
-           int boardSize = gameController.getGameType().getSize() * gameController.getGameType().getSize();
+        boolean isValid = isValidInputSudoku(inputSudoku);
+        if(isValid) {
+            // if the encoded sudoku is solvable, sent the code directly to the GameActivity; if not, notify the user
+            int boardSize = gameController.getGameType().getSize() * gameController.getGameType().getSize();
             GameInfoContainer container = new GameInfoContainer(0, GameDifficulty.Unspecified,
                     gameController.getGameType(), new int [boardSize], new int [boardSize],
                     new boolean [boardSize][gameController.getGameType().getSize()]);
@@ -262,9 +276,9 @@ public class CreateSudokuActivity extends BaseActivity implements IFinalizeDialo
 
             gameController.loadLevel(container);
             setUpLayout();
-
         } else {
             Toast.makeText(CreateSudokuActivity.this, R.string.failed_to_verify_custom_sudoku_toast, Toast.LENGTH_LONG).show();
+            return;
         }
     }
 

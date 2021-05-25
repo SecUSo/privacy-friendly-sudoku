@@ -104,7 +104,7 @@ public class GameStateManager {
                         gic.setCustom(true);
                     }
 
-                    if (gic.getID() == GameController.DAILY_SUDOKU_ID) {
+                    if (gic.getId() == GameController.DAILY_SUDOKU_ID) {
                         includesDaily = true;
                     }
 
@@ -149,7 +149,7 @@ public class GameStateManager {
     private int fillGic(File file, GameInfoContainer gic, String[] values) {
         String id = file.getName().substring(5, file.getName().lastIndexOf("."));
         int i = 0;
-        gic.setID(Integer.valueOf(id));    // save_x.txt
+        gic.setId(Integer.valueOf(id));    // save_x.txt
         gic.parseGameType(values[i++]);
         gic.parseTime(values[i++]);
         gic.parseDate(values[i++]);
@@ -164,7 +164,7 @@ public class GameStateManager {
     public void deleteGameStateFile(GameInfoContainer gic) {
         File dir = context.getDir(SAVES_DIR, 0);
 
-        File file = new File(dir, SAVE_PREFIX+gic.getID()+FILE_EXTENSION);
+        File file = new File(dir, SAVE_PREFIX+gic.getId()+FILE_EXTENSION);
 
         file.delete();
 

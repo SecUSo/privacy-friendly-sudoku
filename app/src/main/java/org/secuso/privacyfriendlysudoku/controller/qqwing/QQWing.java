@@ -429,21 +429,9 @@ public class QQWing {
 				// counting solutions to the puzzle
 				int savedValue = puzzle[position];
 				puzzle[position] = 0;
-				int savedSym1 = 0;
-				if (positionsym1 >= 0) {
-					savedSym1 = puzzle[positionsym1];
-					puzzle[positionsym1] = 0;
-				}
-				int savedSym2 = 0;
-				if (positionsym2 >= 0) {
-					savedSym2 = puzzle[positionsym2];
-					puzzle[positionsym2] = 0;
-				}
-				int savedSym3 = 0;
-				if (positionsym3 >= 0) {
-					savedSym3 = puzzle[positionsym3];
-					puzzle[positionsym3] = 0;
-				}
+				int savedSym1 = getSavedSym(positionsym1);
+				int savedSym2 = getSavedSym(positionsym2);
+				int savedSym3 = getSavedSym(positionsym3);
 				reset();
 				if (countSolutions(2, true) > 1) {
 					// Put it back in, it is needed
@@ -463,6 +451,15 @@ public class QQWing {
 		setLogHistory(lHistory);
 
 		return true;
+	}
+
+	private int getSavedSym(int positionsym) {
+		int savedSym = 0;
+		if (positionsym >= 0) {
+			savedSym = puzzle[positionsym];
+			puzzle[positionsym] = 0;
+		}
+		return savedSym;
 	}
 
 	private void rollbackNonGuesses() {
@@ -498,8 +495,6 @@ public class QQWing {
 		if (recordHistory) {
 			solveHistory.add(l); // ->push_back(l);
 			solveInstructions.add(l); // ->push_back(l);
-		} else {
-			l = null;
 		}
 	}
 
@@ -784,24 +779,7 @@ public class QQWing {
 					}
 				}
 				if (inOneBox && colBox != -1) {
-					boolean doneSomething = false;
-					int row = GRID_SIZE_ROW * colBox;
-					int secStart = cellToSectionStartCell(rowColumnToCell(row, col));
-					int secStartRow = cellToRow(secStart);
-					int secStartCol = cellToColumn(secStart);
-					for (int i = 0; i < GRID_SIZE_COL; i++) {
-						for (int j = 0; j < GRID_SIZE_ROW; j++) {
-							int row2 = secStartRow + j;
-							int col2 = secStartCol + i;
-							int position = rowColumnToCell(row2, col2);
-							int valPos = getPossibilityIndex(valIndex, position);
-							if (col != col2 && possibilities[valPos] == 0) {
-								possibilities[valPos] = round;
-								doneSomething = true;
-							}
-						}
-					}
-					if (doneSomething) {
+					if (doSomething(round, valIndex, col, colBox, "Column")) {
 						if (logHistory || recordHistory) addHistoryItem(new LogItem(round, LogType.COLUMN_BOX, valIndex + 1, colStart));
 						return true;
 					}
@@ -810,7 +788,6 @@ public class QQWing {
 		}
 		return false;
 	}
-
 
 	private boolean rowBoxReduction(int round) {
 		for (int valIndex = 0; valIndex < ROW_COL_SEC_SIZE; valIndex++) {
@@ -833,24 +810,7 @@ public class QQWing {
 					}
 				}
 				if (inOneBox && rowBox != -1) {
-					boolean doneSomething = false;
-					int column = GRID_SIZE_COL * rowBox;
-					int secStart = cellToSectionStartCell(rowColumnToCell(row, column));
-					int secStartRow = cellToRow(secStart);
-					int secStartCol = cellToColumn(secStart);
-					for (int i = 0; i < GRID_SIZE_ROW; i++) {
-						for (int j = 0; j < GRID_SIZE_COL; j++) {
-							int row2 = secStartRow + i;
-							int col2 = secStartCol + j;
-							int position = rowColumnToCell(row2, col2);
-							int valPos = getPossibilityIndex(valIndex, position);
-							if (row != row2 && possibilities[valPos] == 0) {
-								possibilities[valPos] = round;
-								doneSomething = true;
-							}
-						}
-					}
-					if (doneSomething) {
+					if (doSomething(round, valIndex, row, rowBox, "Row")) {
 						if (logHistory || recordHistory) addHistoryItem(new LogItem(round, LogType.ROW_BOX, valIndex + 1, rowStart));
 						return true;
 					}
@@ -858,6 +818,36 @@ public class QQWing {
 			}
 		}
 		return false;
+	}
+
+	private boolean doSomething(int round, int valIndex, int block, int blockBox, String blockType) {
+		boolean doneSomething = false;
+		int row = GRID_SIZE_ROW * blockBox;
+		int secStart = cellToSectionStartCell(rowColumnToCell(row, block));
+		int secStartRow = cellToRow(secStart);
+		int secStartCol = cellToColumn(secStart);
+		for (int i = 0; i < GRID_SIZE_COL; i++) {
+			for (int j = 0; j < GRID_SIZE_ROW; j++) {
+				int row2 = secStartRow + j;
+				int col2 = secStartCol + i;
+				int position = rowColumnToCell(row2, col2);
+				int valPos = getPossibilityIndex(valIndex, position);
+
+				boolean isDoneSomething = false;
+				if (blockType == "Column") {
+					isDoneSomething = (block != col2 && possibilities[valPos] == 0);
+				}
+				else {
+					isDoneSomething = (block != row2 && possibilities[valPos] == 0);
+				}
+
+				if (isDoneSomething) {
+					possibilities[valPos] = round;
+					doneSomething = true;
+				}
+			}
+		}
+		return doneSomething;
 	}
 
     // CHECKED!
