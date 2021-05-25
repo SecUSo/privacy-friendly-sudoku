@@ -103,7 +103,7 @@ public class NewLevelManager {
         // create a seed from the current date
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         String toHash = "Sudoku/.PrivacyFriendly/." + dateFormat.format(new Date());
-        QQWingController controller = new QQWingController();
+        QQWingController controller = QQWingController.getInstance();
 
         // generate new sudoku using the previously computed seed
         return controller.generateFromSeed(toHash.hashCode(), CHALLENGE_GENERATION_PROBABILITY, CHALLENGE_ITERATIONS);
@@ -466,7 +466,7 @@ public class NewLevelManager {
                 }
 
                 int amount = c;
-                QQWingController qqWingController = new QQWingController();
+                QQWingController qqWingController = QQWingController.getInstance();
                 LinkedList<int[]> puzzleList = qqWingController.generateMultiple(gameType, gameDifficulty, amount);
 
                 for (int p = 0; p < puzzleList.size(); p++) {
