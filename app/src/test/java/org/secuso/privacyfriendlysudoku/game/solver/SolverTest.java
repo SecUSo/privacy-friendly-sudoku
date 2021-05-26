@@ -35,7 +35,8 @@ public class SolverTest {
 
     @Before
     public void init() {
-        controller = new GameController();
+        //controller = new GameController();
+        controller = GameController.getInstance();
         controller.loadLevel(new GameInfoContainer(0, GameDifficulty.Easy  ,GameType.Default_9x9,
                 new int[]{5, 0, 1, 9, 0, 0, 0, 0, 0,
                         2, 0, 0, 0, 0, 4, 9, 5, 0,

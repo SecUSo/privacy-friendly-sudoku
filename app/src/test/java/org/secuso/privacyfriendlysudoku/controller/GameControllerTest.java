@@ -35,7 +35,8 @@ public class GameControllerTest {
 
     @Before
     public void init() {
-        controller = new GameController();
+        //controller = new GameController();
+        controller = GameController.getInstance();
         controller.loadLevel(new GameInfoContainer(3, GameDifficulty.Easy, GameType.Default_9x9,
                 new int[]{5, 0, 1, 9, 0, 0, 0, 0, 0,
                         2, 0, 0, 0, 0, 4, 9, 5, 0,
@@ -47,7 +48,8 @@ public class GameControllerTest {
                         6, 4, 0, 0, 0, 0, 0, 0, 0,
                         7, 0, 0, 0, 1, 0, 3, 0, 5}
                 , null, null));
-        controller2 = new GameController();
+        //controller2 = new GameController();
+        controller2 = GameController.getInstance();
         controller2.loadLevel(new GameInfoContainer(2, GameDifficulty.Easy, GameType.Default_12x12,
                 new int[]{0, 2, 1, 0, 0, 6, 0, 0, 0, 8, 9, 0,
                         10, 0, 12, 0, 0, 2, 1, 11, 0, 0, 0, 6,
