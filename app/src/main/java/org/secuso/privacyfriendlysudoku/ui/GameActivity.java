@@ -62,6 +62,8 @@ import org.secuso.privacyfriendlysudoku.game.listener.ITimerListener;
 import org.secuso.privacyfriendlysudoku.ui.listener.IHintDialogFragmentListener;
 import org.secuso.privacyfriendlysudoku.ui.listener.IResetDialogFragmentListener;
 import org.secuso.privacyfriendlysudoku.ui.listener.IShareDialogFragmentListener;
+import org.secuso.privacyfriendlysudoku.ui.presenter.GamePresenter;
+import org.secuso.privacyfriendlysudoku.ui.presenter.gameContract;
 import org.secuso.privacyfriendlysudoku.ui.view.R;
 import org.secuso.privacyfriendlysudoku.ui.view.SudokuFieldLayout;
 import org.secuso.privacyfriendlysudoku.ui.view.SudokuKeyboardLayout;
@@ -74,15 +76,17 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-public class GameActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, IGameSolvedListener ,ITimerListener, IHintDialogFragmentListener, IResetDialogFragmentListener, IShareDialogFragmentListener {
+public class GameActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, IGameSolvedListener ,ITimerListener, IHintDialogFragmentListener, IResetDialogFragmentListener, IShareDialogFragmentListener, gameContract.View {
 
-     public static final List<Uri> validUris = Arrays.asList(
-             Uri.parse("https://sudoku.secuso.org"),
-             Uri.parse("http://sudoku.secuso.org"),
-             Uri.parse("sudoku://")
-     );
+    public static final List<Uri> validUris = Arrays.asList(
+            Uri.parse("https://sudoku.secuso.org"),
+            Uri.parse("http://sudoku.secuso.org"),
+            Uri.parse("sudoku://")
+    );
 
-    GameController gameController;
+    //GameController gameController;
+    private GamePresenter presenter;
+
     SudokuFieldLayout layout;
     SudokuKeyboardLayout keyboard;
     SudokuSpecialButtonLayout specialButtonLayout;
@@ -122,13 +126,13 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
         super.onPostCreate(savedInstanceState);
 
         if(gameSolved || !startGame) {
-            gameController.pauseTimer();
+            presenter.getGameController().pauseTimer();
         } else {
             // start the game
             mHandler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    gameController.startTimer();
+                    presenter.getGameController().startTimer();
                 }
             }, MAIN_CONTENT_FADEIN_DURATION);
         }
@@ -136,6 +140,10 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        presenter = new GamePresenter();
+        presenter.attachView(this);
+
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
 
         /*
@@ -150,12 +158,12 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
 
         super.onCreate(savedInstanceState);
 
-        GameType gameType = GameType.Unspecified;
-        GameDifficulty gameDifficulty = GameDifficulty.Unspecified;
-        int loadLevelID = 0;
-        boolean loadLevel = false;
+//        GameType gameType = GameType.Unspecified;
+//        GameDifficulty gameDifficulty = GameDifficulty.Unspecified;
+//        int loadLevelID = 0;
+//        boolean loadLevel = false;
 
-         if(savedInstanceState == null) {
+        if(savedInstanceState == null) {
 
             Bundle extras = getIntent().getExtras();
 
@@ -165,7 +173,7 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
              */
             Uri data = getIntent().getData();
             //gameController = new GameController(sharedPref, getApplicationContext());
-            gameController = GameController.getInstance(sharedPref, getApplicationContext());
+            presenter.init(sharedPref,getApplicationContext());
 
             // Intents coming from the LoadGameActivity and MainActivity can be identified based on the keys the getExtras() bundle contains
             boolean intentReceivedFromMainActivity = extras != null &&
@@ -177,61 +185,63 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
              */
             if (data != null && !intentReceivedFromMainActivity) {
                 // extract encoded sudoku board from the URI
-                String input = "";
 
-                for (int i = 0; i < validUris.size(); i++) {
-                    if (data.getScheme().equals(validUris.get(i).getScheme())) {
-                        if (validUris.get(i).getHost().equals("")) {
-                            input = data.getHost();
-                            break;
-                        }
-                        else if (data.getHost().equals(validUris.get(i).getHost())) {
-                            input = data.getPath();
-                            input = input.replace("/", "");
-                            break;
-                        }
-                    }
-                }
-
-                // Save all of the information that can be extracted from the encoded board in a GameInfoContainer object
-                int sectionSize = (int)Math.sqrt(input.length());
-                int boardSize = sectionSize * sectionSize;
-                QQWing difficultyCheck;
-                GameInfoContainer container = new GameInfoContainer(0, GameDifficulty.Unspecified,
-                        GameType.Unspecified, new int [boardSize], new int [boardSize], new boolean [boardSize][sectionSize]);
-                // always set custom sudokus as custom
-                // TODO: maybe introduce a setting in the settings page to let the user decide
-                container.setCustom(true);
-
-                try {
-                    container.parseGameType("Default_" + sectionSize + "x" + sectionSize);
-                    container.parseFixedValues(input);
-                    difficultyCheck = new QQWing(container.getGameType(), GameDifficulty.Unspecified);
-
-                    // calculate difficulty of the imported sudoku
-                    difficultyCheck.setRecordHistory(true);
-                    difficultyCheck.setPuzzle(container.getFixedValues());
-                    difficultyCheck.solve();
-
-                    container.parseDifficulty(difficultyCheck.getDifficulty().toString());
-
-                    // A sudoku is that does not have a unique solution is deemed 'unplayable' and may not be started
-                    startGame = difficultyCheck.hasUniqueSolution();
-
-
-                } catch (IllegalArgumentException e) {
-                    // If the imported code does not actually encode a valid sudoku, it needs to be rejected
-                    startGame = false;
-
-                    /*
-                     set up a blank sudoku field that can be displayed in the activity while the player is notified that
-                     the link they imported does not encode a valid sudoku
-                     */
-                    sectionSize = GameType.Default_9x9.getSize();
-                    boardSize = sectionSize * sectionSize;
-                    container = new GameInfoContainer(0, GameDifficulty.Unspecified,
-                            GameType.Default_9x9, new int [boardSize], new int [boardSize], new boolean [boardSize][sectionSize]);
-                }
+                startGame = presenter.setSudoku(startGame,validUris,data);
+//                String input = "";
+//
+//                for (int i = 0; i < validUris.size(); i++) {
+//                    if (data.getScheme().equals(validUris.get(i).getScheme())) {
+//                        if (validUris.get(i).getHost().equals("")) {
+//                            input = data.getHost();
+//                            break;
+//                        }
+//                        else if (data.getHost().equals(validUris.get(i).getHost())) {
+//                            input = data.getPath();
+//                            input = input.replace("/", "");
+//                            break;
+//                        }
+//                    }
+//                }
+//
+//                // Save all of the information that can be extracted from the encoded board in a GameInfoContainer object
+//                int sectionSize = (int)Math.sqrt(input.length());
+//                int boardSize = sectionSize * sectionSize;
+//                QQWing difficultyCheck;
+//                GameInfoContainer container = new GameInfoContainer(0, GameDifficulty.Unspecified,
+//                        GameType.Unspecified, new int [boardSize], new int [boardSize], new boolean [boardSize][sectionSize]);
+//                // always set custom sudokus as custom
+//                // TODO: maybe introduce a setting in the settings page to let the user decide
+//                container.setCustom(true);
+//
+//                try {
+//                    container.parseGameType("Default_" + sectionSize + "x" + sectionSize);
+//                    container.parseFixedValues(input);
+//                    difficultyCheck = new QQWing(container.getGameType(), GameDifficulty.Unspecified);
+//
+//                    // calculate difficulty of the imported sudoku
+//                    difficultyCheck.setRecordHistory(true);
+//                    difficultyCheck.setPuzzle(container.getFixedValues());
+//                    difficultyCheck.solve();
+//
+//                    container.parseDifficulty(difficultyCheck.getDifficulty().toString());
+//
+//                    // A sudoku is that does not have a unique solution is deemed 'unplayable' and may not be started
+//                    startGame = difficultyCheck.hasUniqueSolution();
+//
+//
+//                } catch (IllegalArgumentException e) {
+//                    // If the imported code does not actually encode a valid sudoku, it needs to be rejected
+//                    startGame = false;
+//
+//                    /*
+//                     set up a blank sudoku field that can be displayed in the activity while the player is notified that
+//                     the link they imported does not encode a valid sudoku
+//                     */
+//                    sectionSize = GameType.Default_9x9.getSize();
+//                    boardSize = sectionSize * sectionSize;
+//                    container = new GameInfoContainer(0, GameDifficulty.Unspecified,
+//                            GameType.Default_9x9, new int [boardSize], new int [boardSize], new boolean [boardSize][sectionSize]);
+//                }
 
                 // Notify the user if the sudoku they tried to import cannot be played and finish the activity
                 if (!startGame) {
@@ -247,18 +257,20 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
                     alert.show();
                 }
 
-                gameController.loadLevel(container);
+                //gameController.loadLevel(container);
+                presenter.loadLevel();
 
             } else {
                 boolean isDailySudoku = false;
                 if (extras != null) {
-                    gameType = GameType.valueOf(extras.getString("gameType", GameType.Default_9x9.name()));
-                    gameDifficulty = GameDifficulty.valueOf(extras.getString("gameDifficulty", GameDifficulty.Moderate.name()));
-                    isDailySudoku = extras.getBoolean("isDailySudoku", false);
-                    loadLevel = extras.getBoolean("loadLevel", false);
-                    if (loadLevel) {
-                        loadLevelID = extras.getInt("loadLevelID");
-                    }
+                    presenter.setFromExtras(isDailySudoku,extras);
+//                    gameType = GameType.valueOf(extras.getString("gameType", GameType.Default_9x9.name()));
+//                    gameDifficulty = GameDifficulty.valueOf(extras.getString("gameDifficulty", GameDifficulty.Moderate.name()));
+//                    isDailySudoku = extras.getBoolean("isDailySudoku", false);
+//                    loadLevel = extras.getBoolean("loadLevel", false);
+//                    if (loadLevel) {
+//                        loadLevelID = extras.getInt("loadLevelID");
+//                    }
                 }
 
                 /*
@@ -267,36 +279,38 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
                 'isDailySudoku' is true
                  */
                 if (isDailySudoku) {
-                    gameController.loadNewDailySudokuLevel();
+                    presenter.getGameController().loadNewDailySudokuLevel();
                 } else  {
 
                     List<GameInfoContainer> loadableGames = GameStateManager.getLoadableGameList();
 
-                    if (loadLevel) {
-                        if (loadableGames.size() > loadLevelID) {
-                            // load level from GameStateManager
-                            gameController.loadLevel(loadableGames.get(loadLevelID));
-                        } else if (loadLevelID == GameController.DAILY_SUDOKU_ID) {
-                            for (GameInfoContainer container : loadableGames) {
-                                if (container.getId() == loadLevelID) {
-                                    gameController.loadLevel(container);
-                                    break;
-                                }
-                            }
-                        }
-                    } else {
-                        // load a new level
-                        gameController.loadNewLevel(gameType, gameDifficulty);
-                    }
+                    presenter.loadLevel(loadableGames);
+//                    if (loadLevel) {
+//                        if (loadableGames.size() > loadLevelID) {
+//                            // load level from GameStateManager
+//                            gameController.loadLevel(loadableGames.get(loadLevelID));
+//                        } else if (loadLevelID == GameController.DAILY_SUDOKU_ID) {
+//                            for (GameInfoContainer container : loadableGames) {
+//                                if (container.getId() == loadLevelID) {
+//                                    gameController.loadLevel(container);
+//                                    break;
+//                                }
+//                            }
+//                        }
+//                    } else {
+//                        // load a new level
+//                        gameController.loadNewLevel(gameType, gameDifficulty);
+//                    }
                 }
             }
         } else {
-            gameController = savedInstanceState.getParcelable("gameController");
+            //gameController = savedInstanceState.getParcelable("gameController");
+            presenter.setGameController(savedInstanceState.getParcelable("gameController"));
             // in case we get the same object back
             // because parceling the Object does not always parcel it. Only if needed.
-            if(gameController != null) {
-                gameController.removeAllListeners();
-                gameController.setContextAndSettings(getApplicationContext(), sharedPref);
+            if(presenter.getGameController() != null) {
+                presenter.getGameController().removeAllListeners();
+                presenter.getGameController().setContextAndSettings(getApplicationContext(), sharedPref);
             } else {
                 // Error: no game could be restored. Go back to main menu.
                 Intent intent = new Intent(this, MainActivity.class);
@@ -320,16 +334,16 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
 
         //Create new GameField
         layout = (SudokuFieldLayout)findViewById(R.id.sudokuLayout);
-        gameController.registerGameSolvedListener(this);
-        gameController.registerTimerListener(this);
-        statistics.setGameController(gameController);
+        presenter.getGameController().registerGameSolvedListener(this);
+        presenter.getGameController().registerTimerListener(this);
+        statistics.setGameController(presenter.getGameController());
 
-        layout.setSettingsAndGame(sharedPref, gameController);
+        layout.setSettingsAndGame(sharedPref, presenter.getGameController());
 
         //set KeyBoard
         keyboard = (SudokuKeyboardLayout) findViewById(R.id.sudokuKeyboardLayout);
         keyboard.removeAllViews();
-        keyboard.setGameController(gameController);
+        keyboard.setGameController(presenter.getGameController());
         //keyboard.setColumnCount((gameController.getSize() / 2) + 1);
         //keyboard.setRowCount(2);
         Point p = new Point();
@@ -339,12 +353,12 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
         int orientation = getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT ?
                 LinearLayout.HORIZONTAL : LinearLayout.VERTICAL;
 
-        keyboard.setKeyBoard(gameController.getSize(), p.x,layout.getHeight()-p.y, orientation);
+        keyboard.setKeyBoard(presenter.getGameController().getSize(), p.x,layout.getHeight()-p.y, orientation);
 
 
         //set Special keys
         specialButtonLayout = (SudokuSpecialButtonLayout) findViewById(R.id.sudokuSpecialLayout);
-        specialButtonLayout.setButtons(p.x, gameController, keyboard, getFragmentManager(), orientation, GameActivity.this);
+        specialButtonLayout.setButtons(p.x, presenter.getGameController(), keyboard, getFragmentManager(), orientation, GameActivity.this);
 
         //set TimerView
         timerView = (TextView)findViewById(R.id.timerView);
@@ -352,7 +366,7 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
 
         //set GameName
         viewName = (TextView) findViewById(R.id.gameModeText);
-        viewName.setText(getString(gameController.getGameType().getStringResID()));
+        viewName.setText(getString(presenter.getGameController().getGameType().getStringResID()));
 
         //set Rating bar
         List<GameDifficulty> difficutyList = GameDifficulty.getValidDifficultyList();
@@ -360,9 +374,9 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
         ratingBar = (RatingBar) findViewById(R.id.gameModeStar);
         ratingBar.setMax(numberOfStarts);
         ratingBar.setNumStars(numberOfStarts);
-        ratingBar.setRating(difficutyList.indexOf(gameController.getDifficulty()) + 1);
+        ratingBar.setRating(difficutyList.indexOf(presenter.getGameController().getDifficulty()) + 1);
         TextView diffText = ((TextView)findViewById(R.id.difficultyText));
-        diffText.setText(getString(gameController.getDifficulty().getStringResID()));
+        diffText.setText(getString(presenter.getGameController().getDifficulty().getStringResID()));
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -380,11 +394,11 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
             specialButtonLayout.setButtonsEnabled(false);
         }
 
-        gameController.notifyHighlightChangedListeners();
-        gameController.notifyTimerListener(gameController.getTime());
+        presenter.getGameController().notifyHighlightChangedListeners();
+        presenter.getGameController().notifyTimerListener(presenter.getGameController().getTime());
 
         // run this so the error list gets build again.
-        gameController.onModelChange(null);
+        presenter.getGameController().onModelChange(null);
 
         overridePendingTransition(0, 0);
     }
@@ -395,9 +409,9 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
 
         // Do not save solved or unplayable sudokus
         if(!gameSolved && startGame) {
-            gameController.saveGame(this);
+            presenter.getGameController().saveGame(this);
         }
-        gameController.deleteTimer();
+        presenter.getGameController().deleteTimer();
     }
 
     @Override
@@ -416,13 +430,13 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
             mainContent.animate().alpha(1).setDuration(MAIN_CONTENT_FADEOUT_DURATION);
         }
 
-        gameController.initTimer();
+        presenter.getGameController().initTimer();
 
         if(!gameSolved && startGame) {
             mHandler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    gameController.startTimer();
+                    presenter.getGameController().startTimer();
                 }
             }, MAIN_CONTENT_FADEIN_DURATION);
         }
@@ -475,7 +489,7 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
                 String scheme = GameActivity.validUris.size() > 0 ? GameActivity.validUris.get(0).getScheme()
                         + "://" + GameActivity.validUris.get(0).getHost() : "";
                 if (!scheme.equals("") && !scheme.endsWith("/")) scheme = scheme + "/";
-                String codeForClipboard = scheme + gameController.getCodeOfField();
+                String codeForClipboard = scheme + presenter.getGameController().getCodeOfField();
 
                 // Create new ShareBoardDialog using the previously created links
                 ShareBoardDialog shareDialog = new ShareBoardDialog();
@@ -560,13 +574,13 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
     public void onSolved() {
         gameSolved = true;
 
-        gameController.pauseTimer();
-        gameController.deleteGame(this);
+        presenter.getGameController().pauseTimer();
+        presenter.getGameController().deleteGame(this);
         disableReset();
 
         //Save solved sudoku, if it happens to be a daily sudoku, to daily sudoku database
-        if(gameController.getGameID() == GameController.DAILY_SUDOKU_ID) {
-            gameController.saveDailySudoku(GameActivity.this);
+        if(presenter.getGameController().getGameID() == GameController.DAILY_SUDOKU_ID) {
+            presenter.getGameController().saveDailySudoku(GameActivity.this);
             SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
             SharedPreferences.Editor editor = sharedPref.edit();
             /*
@@ -580,20 +594,21 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
         //Don't save statistics if game is custom
         boolean isNewBestTime;
 
-        if (!gameController.gameIsCustom()) {
-            //Show time hints new plus old best time
-            statistics.saveGameStats();
-            isNewBestTime = gameController.getUsedHints() == 0
-                    && statistics.loadStats(gameController.getGameType(),gameController.getDifficulty()).getMinTime() >= gameController.getTime();
-
-        } else {
-            // cannot be best time if sudoku is custom
-            isNewBestTime = false;
-        }
+        isNewBestTime = presenter.checkNewBestTime(statistics);
+//        if (!presenter.getGameController().gameIsCustom()) {
+//            //Show time hints new plus old best time
+//            statistics.saveGameStats();
+//            isNewBestTime = presenter.getGameController().getUsedHints() == 0
+//                    && statistics.loadStats(presenter.getGameController().getGameType(),presenter.getGameController().getDifficulty()).getMinTime() >= presenter.getGameController().getTime();
+//
+//        } else {
+//            // cannot be best time if sudoku is custom
+//            isNewBestTime = false;
+//        }
 
         buildWinDialog(
-                timeToString(gameController.getTime()),
-                String.valueOf(gameController.getUsedHints()),
+                timeToString(presenter.getGameController().getTime()),
+                String.valueOf(presenter.getGameController().getUsedHints()),
                 isNewBestTime
         ).show(getSupportFragmentManager(), "WIN_DIALOG");;
 
@@ -626,17 +641,17 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
 
         if(gameSolved || !startGame) return;
         // save time
-        gameController.saveGame(this);
+        presenter.getGameController().saveGame(this);
     }
 
     @Override
     public void onHintDialogPositiveClick() {
-        gameController.hint();
+        presenter.getGameController().hint();
     }
 
     @Override
     public void onResetDialogPositiveClick() {
-        gameController.resetLevel();
+        presenter.getGameController().resetLevel();
     }
 
     @Override
@@ -661,7 +676,7 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
         super.onSaveInstanceState(savedInstanceState);
 
         // Save the user's current game state
-        savedInstanceState.putParcelable("gameController", gameController);
+        savedInstanceState.putParcelable("gameController", presenter.getGameController());
         savedInstanceState.putBoolean("gameSolved", gameSolved);
     }
 
@@ -669,7 +684,8 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
     public void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
 
-        gameController = savedInstanceState.getParcelable("gameController");
+        //gameController = savedInstanceState.getParcelable("gameController");
+        presenter.setGameController(savedInstanceState.getParcelable("gameController"));
         gameSolved = savedInstanceState.getBoolean("gameSolved");
     }
 
@@ -718,12 +734,12 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
             builder.setView(binding.getRoot());
 
             builder.setPositiveButton(R.string.share_confirmation_confirm, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            for(IShareDialogFragmentListener l : listeners) {
-                                l.onShareDialogPositiveClick(binding.ver3DisplaySudokuTextView.getText().toString());
-                            }
-                        }
-                    })
+                public void onClick(DialogInterface dialog, int id) {
+                    for(IShareDialogFragmentListener l : listeners) {
+                        l.onShareDialogPositiveClick(binding.ver3DisplaySudokuTextView.getText().toString());
+                    }
+                }
+            })
                     .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             // User cancelled the dialog
