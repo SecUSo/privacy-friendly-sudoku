@@ -45,7 +45,6 @@ public class CreateSudokuPresenter implements CreateSudokuContract.Presenter, II
 
     public void createGame(Bundle savedInstanceState, SharedPreferences sharedPref, Intent intent, Context context) {
         if(savedInstanceState == null) {
-
             gameController = new GameController(sharedPref, context);
 
             Bundle extras = intent.getExtras();
