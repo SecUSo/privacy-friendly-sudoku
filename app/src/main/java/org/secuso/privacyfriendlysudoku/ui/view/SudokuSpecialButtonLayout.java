@@ -37,7 +37,6 @@ import android.widget.Toast;
 import androidx.core.content.ContextCompat;
 
 import org.secuso.privacyfriendlysudoku.controller.GameController;
-import org.secuso.privacyfriendlysudoku.game.listener.IHighlightChangedListener;
 import org.secuso.privacyfriendlysudoku.ui.listener.IHintDialogFragmentListener;
 
 import java.util.LinkedList;
@@ -48,18 +47,9 @@ import static org.secuso.privacyfriendlysudoku.ui.view.SudokuButtonType.getSpeci
 /**
  * Created by TMZ_LToP on 17.11.2015.
  */
-public class SudokuSpecialButtonLayout extends LinearLayout implements IHighlightChangedListener {
-
+public class SudokuSpecialButtonLayout extends SpecialButtonLayout {
 
     SudokuSpecialButton[] fixedButtons;
-    public int fixedButtonsCount = getSpecialButtons().size();
-    GameController gameController;
-    SudokuKeyboardLayout keyboard;
-    Bitmap bitMap,bitResult;
-    Canvas canvas;
-    FragmentManager fragmentManager;
-    Context context;
-    float buttonMargin;
 
     OnClickListener listener = new OnClickListener() {
         @Override
@@ -109,19 +99,19 @@ public class SudokuSpecialButtonLayout extends LinearLayout implements IHighligh
         }
     };
 
-
     public SudokuSpecialButtonLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
-
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.SudokuSpecialButtonLayout);
-        buttonMargin = a.getDimension(R.styleable.SudokuSpecialButtonLayout_sudokuSpecialKeyboardMargin, 5f);
-        a.recycle();
-
-        setWeightSum(fixedButtonsCount);
-        this.context = context;
     }
 
-    public void setButtonsEnabled(boolean enabled) {
+    protected int[] getSudokuSpecialButtonLayout() {
+        return R.styleable.SudokuSpecialButtonLayout;
+    }
+
+    protected int getSudokuSpecialKeyboardMargin() {
+        return R.styleable.SudokuSpecialButtonLayout_sudokuSpecialKeyboardMargin;
+    }
+
+    protected void setFixedButtonsEnabled(boolean enabled) {
         for(SudokuSpecialButton b : fixedButtons) {
             b.setEnabled(enabled);
         }
@@ -200,18 +190,6 @@ public class SudokuSpecialButtonLayout extends LinearLayout implements IHighligh
                     break;
             }
         }
-    }
-
-    /*
-    Set up the vector drawables so that they can be properly displayed despite using theme attributes for their fill color
-     */
-    private void setUpVectorDrawable(Drawable drawable) {
-        drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
-        bitMap = Bitmap.createBitmap(drawable.getIntrinsicWidth(),
-                drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
-        bitResult = Bitmap.createBitmap(bitMap.getWidth(), bitMap.getHeight(), Bitmap.Config.ARGB_8888);
-
-        canvas = new Canvas(bitResult);
     }
 
     public static class HintConfirmationDialog extends DialogFragment {

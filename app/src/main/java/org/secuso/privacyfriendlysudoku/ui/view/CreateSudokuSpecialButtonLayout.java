@@ -47,19 +47,11 @@ import java.util.LinkedList;
 import static org.secuso.privacyfriendlysudoku.ui.view.CreateSudokuButtonType.Spacer;
 import static org.secuso.privacyfriendlysudoku.ui.view.CreateSudokuButtonType.getSpecialButtons;
 
-public class CreateSudokuSpecialButtonLayout extends LinearLayout implements IHighlightChangedListener {
+public class CreateSudokuSpecialButtonLayout extends SpecialButtonLayout {
 
     IFinalizeDialogFragmentListener finalizeDialogFragmentListener;
     IImportDialogFragmentListener importDialogFragmentListener;
     CreateSudokuSpecialButton[] fixedButtons;
-    public int fixedButtonsCount = getSpecialButtons().size();
-    GameController gameController;
-    SudokuKeyboardLayout keyboard;
-    Bitmap bitMap,bitResult;
-    Canvas canvas;
-    FragmentManager fragmentManager;
-    Context context;
-    float buttonMargin;
 
     OnClickListener listener = new OnClickListener() {
         @Override
@@ -94,19 +86,19 @@ public class CreateSudokuSpecialButtonLayout extends LinearLayout implements IHi
         }
     };
 
-
     public CreateSudokuSpecialButtonLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
-
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CreateSudokuSpecialButtonLayout);
-        buttonMargin = a.getDimension(R.styleable.CreateSudokuSpecialButtonLayout_createSudokuSpecialKeyboardMargin, 5f);
-        a.recycle();
-
-        setWeightSum(fixedButtonsCount);
-        this.context = context;
     }
 
-    public void setButtonsEnabled(boolean enabled) {
+    protected int[] getSudokuSpecialButtonLayout() {
+        return R.styleable.CreateSudokuSpecialButtonLayout;
+    }
+
+    protected int getSudokuSpecialKeyboardMargin() {
+        return R.styleable.CreateSudokuSpecialButtonLayout_createSudokuSpecialKeyboardMargin;
+    }
+
+    protected void setFixedButtonsEnabled(boolean enabled) {
         for(CreateSudokuSpecialButton b : fixedButtons) {
             b.setEnabled(enabled);
         }
@@ -131,9 +123,9 @@ public class CreateSudokuSpecialButtonLayout extends LinearLayout implements IHi
         for (CreateSudokuButtonType t : getSpecialButtons()){
             fixedButtons[i] = new CreateSudokuSpecialButton(getContext(),null);
             if(orientation == LinearLayout.HORIZONTAL) {
-                p = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1);
+                p = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1);
             } else {
-                p = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1);
+                p = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1);
                 fixedButtons[i].setPadding((int)buttonMargin*5, 0, (int)buttonMargin*5, 0);
             }
             p.setMargins((int)buttonMargin, (int)buttonMargin, (int)buttonMargin, (int)buttonMargin);
@@ -186,18 +178,6 @@ public class CreateSudokuSpecialButtonLayout extends LinearLayout implements IHi
                     break;
             }
         }
-    }
-
-    /*
-    Set up the vector drawables so that they can be properly displayed despite using theme attributes for their fill color
-     */
-    private void setUpVectorDrawable(Drawable drawable) {
-        drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
-        bitMap = Bitmap.createBitmap(drawable.getIntrinsicWidth(),
-                drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
-        bitResult = Bitmap.createBitmap(bitMap.getWidth(), bitMap.getHeight(), Bitmap.Config.ARGB_8888);
-
-        canvas = new Canvas(bitResult);
     }
 
     public static class FinalizeConfirmationDialog extends DialogFragment {

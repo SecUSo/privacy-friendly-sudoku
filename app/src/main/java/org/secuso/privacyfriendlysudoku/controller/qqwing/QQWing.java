@@ -822,8 +822,15 @@ public class QQWing {
 
 	private boolean doSomething(int round, int valIndex, int block, int blockBox, String blockType) {
 		boolean doneSomething = false;
-		int row = GRID_SIZE_ROW * blockBox;
-		int secStart = cellToSectionStartCell(rowColumnToCell(row, block));
+		int cell = 0, secStart = 0;
+		if (blockType == "Column") {
+			cell = GRID_SIZE_ROW * blockBox;
+			secStart = cellToSectionStartCell(rowColumnToCell(cell, block));
+		}
+		else {
+			cell = GRID_SIZE_COL * blockBox;
+			secStart = cellToSectionStartCell(rowColumnToCell(block, cell));
+		}
 		int secStartRow = cellToRow(secStart);
 		int secStartCol = cellToColumn(secStart);
 		for (int i = 0; i < GRID_SIZE_COL; i++) {
@@ -833,17 +840,17 @@ public class QQWing {
 				int position = rowColumnToCell(row2, col2);
 				int valPos = getPossibilityIndex(valIndex, position);
 
-				boolean isDoneSomething = false;
 				if (blockType == "Column") {
-					isDoneSomething = (block != col2 && possibilities[valPos] == 0);
+					if (block != col2 && possibilities[valPos] == 0) {
+						possibilities[valPos] = round;
+						doneSomething = true;
+					}
 				}
 				else {
-					isDoneSomething = (block != row2 && possibilities[valPos] == 0);
-				}
-
-				if (isDoneSomething) {
-					possibilities[valPos] = round;
-					doneSomething = true;
+					if (block != row2 && possibilities[valPos] == 0) {
+						possibilities[valPos] = round;
+						doneSomething = true;
+					}
 				}
 			}
 		}
@@ -1064,6 +1071,8 @@ public class QQWing {
 	private int getPosition(int block, int cell, String blockType) {
 		if (blockType == "Section")
 			return sectionToCell(block, cell);
+		else if (blockType == "Column")
+			return rowColumnToCell(cell, block);
 		else
 			return rowColumnToCell(block, cell);
 	}
