@@ -85,7 +85,7 @@ public class GameController implements IModelChangedListener, Parcelable {
     private UndoRedoManager undoRedoManager;
 
     // Solver / Generator
-    private QQWingController qqWingController = new QQWingController();
+    private QQWingController qqWingController = QQWingController.getInstance();
 
     // Timer
     private int time = 0;
