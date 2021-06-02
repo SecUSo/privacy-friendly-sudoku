@@ -21,7 +21,7 @@ Target SDK: 29
 
 Privacy Friendly Sudoku is lisenced under the GPLv3.<br /> 
 Copyright (C) 2016-2018 Christopher Beckmann and Timm Lippert<br />
-Copyright (C) 2018-2020 Christopher Beckmann<br />
+Copyright (C) 2018-2021 Christopher Beckmann<br />
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
