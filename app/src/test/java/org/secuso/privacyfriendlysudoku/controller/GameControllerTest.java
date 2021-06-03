@@ -237,4 +237,44 @@ public class GameControllerTest {
         assertEquals(1, controller.getSelectedCol());
         assertEquals(0, controller.getSelectedRow());
     }
+
+    /**
+     * Purpose: use hints for valid and invalid cells
+     * Input: (row, column)
+     * (0, 6), (2, 3)(fixed cell), (8, 5), (4, 1),
+     * (7, 3)(filled with 4 already), no cell selected
+     * Expected: (cell value, used hints)
+     * (7, 1), (, 1), (8, 2), (1, 3), (5, 4), (, 4)
+     */
+    @Test
+    public void hintTest() {
+        controller.selectCell(0, 6);
+        controller.hint();
+        assertEquals(7, controller.getValue(0, 6));
+        assertEquals(1, controller.getUsedHints());
+
+        controller.selectCell(2, 3);
+        controller.hint();
+        assertEquals(1, controller.getUsedHints());
+
+        controller.selectCell(8, 5);
+        controller.hint();
+        assertEquals(8, controller.getValue(8, 5));
+        assertEquals(2, controller.getUsedHints());
+
+        controller.selectCell(4, 1);
+        controller.hint();
+        assertEquals(1, controller.getValue(4, 1));
+        assertEquals(3, controller.getUsedHints());
+
+        controller.selectCell(7, 3);
+        controller.selectValue(4);
+        controller.hint();
+        assertEquals(5, controller.getValue(7, 3));
+        assertEquals(4, controller.getUsedHints());
+
+        controller.selectCell(7, 3);
+        controller.hint();
+        assertEquals(4, controller.getUsedHints());
+    }
 }
