@@ -22,6 +22,7 @@ import org.junit.Test;
 import org.secuso.privacyfriendlysudoku.controller.helper.GameInfoContainer;
 import org.secuso.privacyfriendlysudoku.game.GameDifficulty;
 import org.secuso.privacyfriendlysudoku.game.GameType;
+import org.secuso.privacyfriendlysudoku.ui.GameActivity;
 
 import static org.junit.Assert.*;
 
@@ -276,5 +277,17 @@ public class GameControllerTest {
         controller.selectCell(7, 3);
         controller.hint();
         assertEquals(4, controller.getUsedHints());
+    }
+
+    @Test
+    public void timeTest() {
+        String timeString = GameActivity.timeToString(100);
+        assertEquals(timeString, "00:01:40");
+        timeString = GameActivity.timeToString(606);
+        assertEquals(timeString, "00:10:06");
+        timeString = GameActivity.timeToString(3654);
+        assertEquals(timeString, "01:00:54");
+        timeString = GameActivity.timeToString(54727);
+        assertEquals(timeString, "15:12:07");
     }
 }
