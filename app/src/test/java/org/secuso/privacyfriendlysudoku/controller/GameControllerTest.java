@@ -281,13 +281,21 @@ public class GameControllerTest {
 
     @Test
     public void timeTest() {
-        String timeString = GameActivity.timeToString(100);
-        assertEquals(timeString, "00:01:40");
-        timeString = GameActivity.timeToString(606);
-        assertEquals(timeString, "00:10:06");
-        timeString = GameActivity.timeToString(3654);
-        assertEquals(timeString, "01:00:54");
-        timeString = GameActivity.timeToString(54727);
-        assertEquals(timeString, "15:12:07");
+        String timeString = GameActivity.timeToString(7205);
+        assertEquals(timeString, "02:00:05");
+        timeString = GameActivity.timeToString(10900);
+        assertEquals(timeString, "03:01:40");
+        timeString = GameActivity.timeToString(15006);
+        assertEquals(timeString, "04:10:06");
+        timeString = GameActivity.timeToString(29550);
+        assertEquals(timeString, "08:12:30");
+        timeString = GameActivity.timeToString(61269);
+        assertEquals(timeString, "17:01:09");
+        timeString = GameActivity.timeToString(100971);
+        assertEquals(timeString, "28:02:51");
+        timeString = GameActivity.timeToString(112503);
+        assertEquals(timeString, "31:15:03");
+        timeString = GameActivity.timeToString(145627);
+        assertEquals(timeString, "40:27:07");
     }
 }
