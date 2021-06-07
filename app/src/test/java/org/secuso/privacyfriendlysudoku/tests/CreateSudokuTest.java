@@ -91,4 +91,20 @@ public class CreateSudokuTest {
         boolean result = (boolean)method.invoke(presenter, sudoku);
         assertTrue(result);
     }
+
+    /**
+     * Purpose: Check if input sudoku is valid or not
+     * Input: isValidInputSudoku invalid size sudoku
+     * Expected:
+     *  return false
+     */
+    @Test
+    public void testValidSudoku2() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        Method method = presenter.getClass().getDeclaredMethod("isValidInputSudoku", String.class);
+        method.setAccessible(true);
+
+        String sudoku = "080209600000000901196080000004602050000090000020105";
+        boolean result = (boolean)method.invoke(presenter, sudoku);
+        assertFalse(result);
+    }
 }
