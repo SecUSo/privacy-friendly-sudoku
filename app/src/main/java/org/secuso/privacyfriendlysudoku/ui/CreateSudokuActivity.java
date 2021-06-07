@@ -54,7 +54,7 @@ import org.secuso.privacyfriendlysudoku.ui.view.SudokuKeyboardLayout;
  * IFinalizeDialogFragementListener. It is used to create custom sudokus, which are passed to the
  * GameActivity afterwards.
  */
-public class CreateSudokuActivity extends BaseActivity implements CreateSudokuContract.View, IFinalizeDialogFragmentListener {
+public class CreateSudokuActivity extends BaseActivity implements CreateSudokuContract.View, IFinalizeDialogFragmentListener, IImportDialogFragmentListener{
 
     private CreateSudokuPresenter presenter;
 
@@ -214,6 +214,11 @@ public class CreateSudokuActivity extends BaseActivity implements CreateSudokuCo
             Toast.makeText(CreateSudokuActivity.this, R.string.failed_to_verify_custom_sudoku_toast, Toast.LENGTH_LONG).show();
         }
 
+    }
+
+    @Override
+    public void onImportDialogPositiveClick(String input) {
+        presenter.onImportDialogPositiveClick(input);
     }
 
     /**
