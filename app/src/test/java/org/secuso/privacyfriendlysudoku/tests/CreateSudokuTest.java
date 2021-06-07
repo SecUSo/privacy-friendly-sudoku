@@ -75,4 +75,20 @@ public class CreateSudokuTest {
 
         assertNull(inputSudoku);
     }
+
+    /**
+     * Purpose: Check if input sudoku is valid or not
+     * Input: isValidInputSudoku valid sudoku
+     * Expected:
+     *  return true
+     */
+    @Test
+    public void testValidSudoku1() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        Method method = presenter.getClass().getDeclaredMethod("isValidInputSudoku", String.class);
+        method.setAccessible(true);
+
+        String sudoku = presenter.getGameController().getCodeOfField();
+        boolean result = (boolean)method.invoke(presenter, sudoku);
+        assertTrue(result);
+    }
 }
