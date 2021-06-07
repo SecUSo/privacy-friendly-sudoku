@@ -279,6 +279,10 @@ public class GameControllerTest {
         assertEquals(4, controller.getUsedHints());
     }
 
+    /**
+     * Purpose: test GameActivity.timeToString(int time)
+     * Expected: time format 00(hour):00(minute):00(second)
+     */
     @Test
     public void timeTest() {
         String timeString = GameActivity.timeToString(7205);
@@ -295,7 +299,7 @@ public class GameControllerTest {
         assertEquals(timeString, "28:02:51");
         timeString = GameActivity.timeToString(112503);
         assertEquals(timeString, "31:15:03");
-        timeString = GameActivity.timeToString(145627);
-        assertEquals(timeString, "40:27:07");
+        timeString = GameActivity.timeToString(145638);
+        assertEquals(timeString, "40:27:18");
     }
 }
