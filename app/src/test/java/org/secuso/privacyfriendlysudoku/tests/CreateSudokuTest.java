@@ -49,7 +49,8 @@ public class CreateSudokuTest {
         Method method = presenter.getClass().getDeclaredMethod("checkUri", String.class);
         method.setAccessible(true);
 
-        String inputUri = "https://sudoku.secuso.org/080209600000000901196080000004602050000090000020105800000030514307000000001508060";
+        String boardContent = presenter.getGameController().getCodeOfField();
+        String inputUri = "https://sudoku.secuso.org/" + boardContent;
         Pair<String, StringBuilder> importReult = (Pair<String, StringBuilder>) method.invoke(presenter, inputUri);
         String inputSudoku = importReult.first;
 
@@ -67,7 +68,8 @@ public class CreateSudokuTest {
         Method method = presenter.getClass().getDeclaredMethod("checkUri", String.class);
         method.setAccessible(true);
 
-        String inputUri = "https://080209600000000901196080000004602050000090000020105800000030514307000000001508060";
+        String boardContent = presenter.getGameController().getCodeOfField();
+        String inputUri = "https://" + boardContent;
         Pair<String, StringBuilder> importReult = (Pair<String, StringBuilder>) method.invoke(presenter, inputUri);
         String inputSudoku = importReult.first;
 
