@@ -5,6 +5,7 @@ import org.secuso.privacyfriendlysudoku.controller.qqwing.QQWing;
 import org.secuso.privacyfriendlysudoku.game.GameDifficulty;
 import org.secuso.privacyfriendlysudoku.game.GameType;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -148,5 +149,27 @@ public class QQWingTest {
         verifier.solve();
 
         assertFalse(verifier.hasUniqueSolution());
+    }
+
+    /**
+     * Purpose: Test getDifficulty when GameDifficulty is Easy.
+     * Input: Input puzzle whose GameDifficulty is Easy.
+     * Expected: GameDifficulty.Easy
+     */
+    @Test
+    public void testGetDifficultyEasy() {
+        int[] puzzle = {0, 0, 3, 0, 0, 0,
+                        0, 5, 1, 3, 0, 4,
+                        0, 0, 0, 0, 0, 1,
+                        0, 0, 0, 0, 0, 5,
+                        0, 0, 4, 0, 0, 0,
+                        0, 3, 6, 5, 0, 0};
+
+        QQWing qqwing = new QQWing(GameType.Default_6x6, GameDifficulty.Unspecified);
+        qqwing.setRecordHistory(true);
+        qqwing.setPuzzle(puzzle);
+        qqwing.solve();
+
+        assertEquals(GameDifficulty.Easy, qqwing.getDifficulty());
     }
 }
