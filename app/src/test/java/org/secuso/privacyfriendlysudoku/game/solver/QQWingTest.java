@@ -238,4 +238,29 @@ public class QQWingTest {
 
         assertEquals(GameDifficulty.Challenge, qqwing.getDifficulty());
     }
+
+    /**
+     * Purpose: Test getDifficulty when puzzle is none-solution.
+     * Input: Input puzzle whose solution is none.
+     * Expected: GameDifficulty.Unspecified
+     *
+     * I think that output is Unspecified when input is invalid.
+     * But, this function outputs Challenge.
+     */
+    @Test
+    public void testGetDifficultyInvalid() {
+        int[] puzzle = {6,6,6,6,6,6,
+                        6,6,6,6,6,6,
+                        6,6,6,6,6,6,
+                        6,6,6,6,6,6,
+                        6,6,6,6,6,6,
+                        6,6,6,6,6,6};
+
+        QQWing qqwing = new QQWing(GameType.Default_6x6, GameDifficulty.Unspecified);
+        qqwing.setRecordHistory(true);
+        qqwing.setPuzzle(puzzle);
+        qqwing.solve();
+
+        assertEquals(GameDifficulty.Unspecified, qqwing.getDifficulty());
+    }
 }
