@@ -131,4 +131,22 @@ public class QQWingTest {
 
         assertFalse(verifier.hasUniqueSolution());
     }
+
+    /**
+     * Purpose: When putting null puzzle in QQWing Class,
+     *          test hasUniqueSolution().
+     * Input: Input null puzzle.
+     * Expected: hasUniqueSolution() outputs False.
+     */
+    @Test
+    public void testHasUniqueSolutionNull() {
+        int[] nullSolution = null;
+
+        QQWing verifier = new QQWing(GameType.Default_6x6, GameDifficulty.Easy);
+        verifier.setRecordHistory(true);
+        verifier.setPuzzle(nullSolution);
+        verifier.solve();
+
+        assertFalse(verifier.hasUniqueSolution());
+    }
 }
