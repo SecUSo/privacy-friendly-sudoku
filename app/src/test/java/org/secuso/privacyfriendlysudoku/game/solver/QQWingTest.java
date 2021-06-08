@@ -87,7 +87,8 @@ public class QQWingTest {
 
     /**
      * Purpose: When putting a puzzle with the solution shorter than GameType
-     *          in QQWing class, test whether an exception is raised.
+     *          in QQWing class, test whether an exception is raised
+     *          in hasUniqueSolution().
      * Input: Input puzzle with the solution shorter than GameType.
      * Expected: ArrayIndexOutOfBoundsException is raised.
      */
@@ -100,6 +101,32 @@ public class QQWingTest {
         QQWing verifier = new QQWing(GameType.Default_6x6, GameDifficulty.Easy);
         verifier.setRecordHistory(true);
         verifier.setPuzzle(tooShort);
+        verifier.solve();
+
+        assertFalse(verifier.hasUniqueSolution());
+    }
+
+    /**
+     * Purpose: When putting a puzzle with the solution longer than GameType
+     *          in QQWing class, test hasUniqueSolution().
+     * Input: Input puzzle with the solution longer than GameType.
+     * Expected: hasUniqueSolution() outputs False.
+     */
+    @Test
+    public void testHasUniqueSolutionTooLong() {
+        int[] tooLong ={0,0,0,0,4,1,0,0,0,
+                        0,6,0,0,0,0,2,0,0,
+                        0,0,0,0,0,0,0,0,0,
+                        3,2,0,6,0,0,0,0,0,
+                        0,0,0,0,5,0,0,4,1,
+                        7,0,0,0,0,0,0,0,0,
+                        0,0,0,2,0,0,3,0,0,
+                        0,4,8,0,0,0,0,0,0,
+                        5,0,1,0,0,0,0,0,0};
+
+        QQWing verifier = new QQWing(GameType.Default_6x6, GameDifficulty.Easy);
+        verifier.setRecordHistory(true);
+        verifier.setPuzzle(tooLong);
         verifier.solve();
 
         assertFalse(verifier.hasUniqueSolution());
