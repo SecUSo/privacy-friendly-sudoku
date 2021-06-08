@@ -172,4 +172,26 @@ public class QQWingTest {
 
         assertEquals(GameDifficulty.Easy, qqwing.getDifficulty());
     }
+
+    /**
+     * Purpose: Test getDifficulty when GameDifficulty is Moderate.
+     * Input: Input puzzle whose GameDifficulty is Moderate.
+     * Expected: GameDifficulty.Moderate
+     */
+    @Test
+    public void testGetDifficultyModerate() {
+        int[] puzzle = {0,0,0,1,0,0,
+                        4,0,0,0,0,0,
+                        0,0,1,0,6,5,
+                        2,0,0,0,1,0,
+                        0,0,0,0,0,0,
+                        0,6,0,0,0,4};
+
+        QQWing qqwing = new QQWing(GameType.Default_6x6, GameDifficulty.Unspecified);
+        qqwing.setRecordHistory(true);
+        qqwing.setPuzzle(puzzle);
+        qqwing.solve();
+
+        assertEquals(GameDifficulty.Moderate, qqwing.getDifficulty());
+    }
 }
