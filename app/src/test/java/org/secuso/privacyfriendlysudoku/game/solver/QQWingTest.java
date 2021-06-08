@@ -5,6 +5,7 @@ import org.secuso.privacyfriendlysudoku.controller.qqwing.QQWing;
 import org.secuso.privacyfriendlysudoku.game.GameDifficulty;
 import org.secuso.privacyfriendlysudoku.game.GameType;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -36,5 +37,28 @@ public class QQWingTest {
         verifier.solve();
 
         assertTrue(verifier.hasUniqueSolution());
+    }
+
+    /**
+     * Purpose: When putting a puzzle with multiple solutions in QQWing class,
+     *          test hasUniqueSolution().
+     * Input: Input puzzle with multiple solutions.
+     * Expected: hasUniqueSolution() outputs False.
+     */
+    @Test
+    public void testHasUniqueSolutionMulti() {
+        int[] multiSolution = { 1,0,0,0,0,6,
+                4,0,6,1,0,0,
+                0,0,2,3,0,5,
+                0,4,0,0,1,0,
+                0,6,0,2,0,0,
+                0,3,0,5,0,1};
+
+        QQWing verifier = new QQWing(GameType.Default_6x6, GameDifficulty.Easy);
+        verifier.setRecordHistory(true);
+        verifier.setPuzzle(multiSolution);
+        verifier.solve();
+
+        assertFalse(verifier.hasUniqueSolution());
     }
 }
