@@ -61,4 +61,27 @@ public class QQWingTest {
 
         assertFalse(verifier.hasUniqueSolution());
     }
+
+    /**
+     * Purpose: When putting a puzzle with none solution in QQWing class,
+     *          test hasUniqueSolution().
+     * Input: Input puzzle with none solution.
+     * Expected: hasUniqueSolution() outputs False.
+     */
+    @Test
+    public void testHasUniqueSolutionNone() {
+        int[] noSolution = {1,2,0,0,0,6,
+                4,0,6,1,3,0,
+                0,0,2,3,0,5,
+                0,4,0,0,1,0,
+                0,5,0,2,0,0,
+                0,3,0,5,0,1};
+
+        QQWing verifier = new QQWing(GameType.Default_6x6, GameDifficulty.Easy);
+        verifier.setRecordHistory(true);
+        verifier.setPuzzle(noSolution);
+        verifier.solve();
+
+        assertFalse(verifier.hasUniqueSolution());
+    }
 }
