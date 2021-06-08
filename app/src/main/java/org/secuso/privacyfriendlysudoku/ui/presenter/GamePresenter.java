@@ -103,6 +103,7 @@ public class GamePresenter implements gameContract.Presenter{
         }
         return startGame;
     }
+
     public void loadLevel(List<GameInfoContainer> loadableGames) {
         if (loadLevel) {
             if (loadableGames.size() > loadLevelID) {

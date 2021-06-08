@@ -85,6 +85,7 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
     );
 
     //GameController gameController;
+
     private GamePresenter presenter;
 
     SudokuFieldLayout layout;
