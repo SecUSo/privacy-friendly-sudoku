@@ -22,6 +22,7 @@ import org.junit.Test;
 import org.secuso.privacyfriendlysudoku.controller.helper.GameInfoContainer;
 import org.secuso.privacyfriendlysudoku.game.GameDifficulty;
 import org.secuso.privacyfriendlysudoku.game.GameType;
+import org.secuso.privacyfriendlysudoku.ui.GameActivity;
 
 import static org.junit.Assert.*;
 
@@ -236,5 +237,69 @@ public class GameControllerTest {
         controller.selectCell(0, 1);
         assertEquals(1, controller.getSelectedCol());
         assertEquals(0, controller.getSelectedRow());
+    }
+
+    /**
+     * Purpose: use hints for valid and invalid cells
+     * Input: (row, column)
+     * (0, 6), (2, 3)(fixed cell), (8, 5), (4, 1),
+     * (7, 3)(filled with 4 already), no cell selected
+     * Expected: (cell value, used hints)
+     * (7, 1), (, 1), (8, 2), (1, 3), (5, 4), (, 4)
+     */
+    @Test
+    public void hintTest() {
+        controller.selectCell(0, 6);
+        controller.hint();
+        assertEquals(7, controller.getValue(0, 6));
+        assertEquals(1, controller.getUsedHints());
+
+        controller.selectCell(2, 3);
+        controller.hint();
+        assertEquals(1, controller.getUsedHints());
+
+        controller.selectCell(8, 5);
+        controller.hint();
+        assertEquals(8, controller.getValue(8, 5));
+        assertEquals(2, controller.getUsedHints());
+
+        controller.selectCell(4, 1);
+        controller.hint();
+        assertEquals(1, controller.getValue(4, 1));
+        assertEquals(3, controller.getUsedHints());
+
+        controller.selectCell(7, 3);
+        controller.selectValue(4);
+        controller.hint();
+        assertEquals(5, controller.getValue(7, 3));
+        assertEquals(4, controller.getUsedHints());
+
+        controller.selectCell(7, 3);
+        controller.hint();
+        assertEquals(4, controller.getUsedHints());
+    }
+
+    /**
+     * Purpose: test GameActivity.timeToString(int time)
+     * Expected: time format 00(hour):00(minute):00(second)
+     */
+    @Test
+    public void timeTest() {
+        String timeString = GameActivity.timeToString(7205);
+        assertEquals(timeString, "02:00:05");
+        timeString = GameActivity.timeToString(10900);
+        assertEquals(timeString, "03:01:40");
+        timeString = GameActivity.timeToString(15006);
+        assertEquals(timeString, "04:10:06");
+        timeString = GameActivity.timeToString(29550);
+        assertEquals(timeString, "08:12:30");
+        timeString = GameActivity.timeToString(61269);
+        assertEquals(timeString, "17:01:09");
+        timeString = GameActivity.timeToString(100971);
+        assertEquals(timeString, "28:02:51");
+        timeString = GameActivity.timeToString(112503);
+        assertEquals(timeString, "31:15:03");
+        timeString = GameActivity.timeToString(145638);
+        assertEquals(timeString, "40:27:18");
     }
 }
