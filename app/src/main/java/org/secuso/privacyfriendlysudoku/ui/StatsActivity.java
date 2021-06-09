@@ -216,14 +216,7 @@ public class StatsActivity extends BaseActivity {
 
         private String formatTime(int totalTime){
             if (totalTime==0) return "-";
-            int seconds = totalTime % 60;
-            int minutes = ((totalTime -seconds)/60)%60 ;
-            int hours = (totalTime - minutes - seconds)/(3600);
-            String h,m,s;
-            s = (seconds < 10)? "0"+String.valueOf(seconds):String.valueOf(seconds);
-            m = (minutes < 10)? "0"+String.valueOf(minutes):String.valueOf(minutes);
-            h = (hours < 10)? "0"+String.valueOf(hours):String.valueOf(hours);
-            return (h + ":" + m + ":" + s);
+            return GameActivity.timeToString(totalTime);
 
         }
         private void updateGeneralInfo(int time, int games, int hints){

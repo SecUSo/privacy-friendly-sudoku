@@ -32,8 +32,10 @@ import java.util.Date;
  */
 public class GameInfoContainer {
 
+    private static final String STRING_MUST_BE = "The string must be ";
+    private static final String CHARS_LONG = " characters long.";
     GameType gameType;
-    int ID;
+    int id;
     int timePlayed;
     Date lastTimePlayed;
     GameDifficulty difficulty;
@@ -44,11 +46,11 @@ public class GameInfoContainer {
     boolean isCustom;
 
     public GameInfoContainer() {}
-    public GameInfoContainer(int ID, GameDifficulty difficulty, GameType gameType, int[] fixedValues, int[] setValues, boolean[][] setNotes) {
-        this(ID, difficulty, new Date(), 0, gameType, fixedValues, setValues, setNotes, 0);
+    public GameInfoContainer(int id, GameDifficulty difficulty, GameType gameType, int[] fixedValues, int[] setValues, boolean[][] setNotes) {
+        this(id, difficulty, new Date(), 0, gameType, fixedValues, setValues, setNotes, 0);
     }
-    public GameInfoContainer(int ID, GameDifficulty difficulty, Date lastTimePlayed, int timePlayed, GameType gameType, int[] fixedValues, int[] setValues, boolean[][] setNotes, int hintsUsed) {
-        this.ID = ID;
+    public GameInfoContainer(int id, GameDifficulty difficulty, Date lastTimePlayed, int timePlayed, GameType gameType, int[] fixedValues, int[] setValues, boolean[][] setNotes, int hintsUsed) {
+        this.id = id;
         this.timePlayed = timePlayed;
         this.difficulty = difficulty;
         this.gameType = gameType;
@@ -60,8 +62,8 @@ public class GameInfoContainer {
         isCustom = false;
     }
 
-    public void setID(int ID) {
-        this.ID = ID;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void setCustom (boolean isCustom) { this.isCustom = isCustom; }
@@ -109,37 +111,36 @@ public class GameInfoContainer {
     }
 
     public void parseFixedValues(String s){
-        if(gameType != GameType.Unspecified && gameType != null) {
-            int size = gameType.getSize();
-            int sq = size*size;
-
-            if(s.length() != sq) {
-                throw new IllegalArgumentException("The string must be "+sq+" characters long.");
-            }
-        }
+        parseValues(s);
         fixedValues = new int[s.length()];
         for(int i = 0; i < s.length(); i++) {
-               fixedValues[i] = Symbol.getValue(Symbol.SaveFormat, String.valueOf(s.charAt(i)))+1;
-               if (gameType != GameType.Unspecified && gameType != null) {
-                   if (fixedValues[i] < 0 || fixedValues[i] > gameType.getSize()) {
-                       throw new IllegalArgumentException("Fixed values must each be smaller than " + gameType.getSize() + ".");
-                   }
-               }
+            fixedValues[i] = Symbol.getValue(Symbol.SaveFormat, String.valueOf(s.charAt(i)))+1;
+
+            boolean gameTypeValid = gameType != GameType.Unspecified && gameType != null;
+            boolean fixedValueInvalid = fixedValues[i] < 0 || fixedValues[i] > gameType.getSize();
+            if (gameTypeValid && fixedValueInvalid) {
+                throw new IllegalArgumentException("Fixed values must each be smaller than " + gameType.getSize() + ".");
+            }
         }
     }
 
     public void parseSetValues(String s) {
-        if(gameType != GameType.Unspecified && gameType != null) {
-            int size = gameType.getSize();
-            int sq = size*size;
-
-            if(s.length() != sq) {
-                throw new IllegalArgumentException("The string must be "+sq+" characters long.");
-            }
-        }
+        parseValues(s);
         setValues = new int[s.length()];
         for(int i = 0; i < s.length(); i++) {
             setValues[i] = Symbol.getValue(Symbol.SaveFormat, String.valueOf(s.charAt(i)))+1;
+        }
+    }
+
+    private void parseValues(String s) {
+        boolean gameTypeValid = gameType != GameType.Unspecified && gameType != null;
+        if (gameTypeValid) {
+            int size = gameType.getSize();
+            int sq = size * size;
+
+            if (s.length() != sq) {
+                throw new IllegalArgumentException(STRING_MUST_BE + sq + CHARS_LONG);
+            }
         }
     }
 
@@ -149,16 +150,14 @@ public class GameInfoContainer {
         int size = gameType.getSize();
         int sq = size*size;
 
-        if(gameType != GameType.Unspecified) {
-            if(strings.length != sq) {
-                throw new IllegalArgumentException("The string array must have "+sq+" entries.");
-            }
+        if(gameType != GameType.Unspecified && strings.length != sq) {
+            throw new IllegalArgumentException("The string array must have "+sq+" entries.");
         }
 
         setNotes = new boolean[strings.length][strings[0].length()];
         for(int i = 0; i < strings.length; i++) {
             if(strings[i].length() != size) {
-                throw new IllegalArgumentException("The string must be "+size+" characters long.");
+                throw new IllegalArgumentException(STRING_MUST_BE +size+ CHARS_LONG);
             }
             for(int k = 0; k < strings[i].length(); k++) {
                 setNotes[i][k] = (strings[i].charAt(k)) == '1';
@@ -186,8 +185,8 @@ public class GameInfoContainer {
         return difficulty;
     }
 
-    public int getID() {
-        return ID;
+    public int getId() {
+        return id;
     }
 
     public int getHintsUsed() { return hintsUsed; }
@@ -273,9 +272,4 @@ public class GameInfoContainer {
         sb.deleteCharAt(sb.lastIndexOf("-"));
         return sb.toString();
     }
-
-
-
-
-
 }
