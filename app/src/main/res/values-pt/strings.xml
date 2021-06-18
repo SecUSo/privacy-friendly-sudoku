@@ -1,0 +1,187 @@
+<resources>
+
+    <string name="cancel">Cancelar</string>
+
+    <!-- ###MAIN MENU### -->
+    <string name="new_game">Novo Jogo</string>
+    <string name="menu_main">Menu principal</string>
+    <string name="menu_settings">Configurações</string>
+    <string name="menu_highscore">Melhor resultado</string>
+    <string name="menu_help">Ajuda</string>
+    <string name="menu_about">Sobre</string>
+    <string name="menu_reset">Limpar quadro</string>
+    <string name="menu_share">Compartilhe quadro</string>
+    <string name="menu_continue_game">Continue um Jogo</string>
+    <string name="create_game">Criar jogo</string>    
+
+    <string name="generating">Gerando um novo nível em segundo plano&#8230;</string>
+
+    <string name="impossible_import_notice">O Sudoku que deseja importar não tem solução.</string>
+
+    <!-- ###SETTINGS### -->
+    <string name="title_activity_settings">Configurações</string>
+    <!-- #Highlight -->
+    <string name="pref_group_highlight_selection">Destacar a seleção</string>
+    <string name="pref_highlight_connected">Áreas conectadas</string>
+    <string name="pref_group_highlight_value">Destacar valor</string>
+    <string name="pref_highlight_vals">Valores iguais</string>
+    <string name="pref_highlight_notes">Anotações</string>
+
+    <!-- #Game -->
+    <string name="pref_header_game">Jogo</string>
+    <string name="pref_group_game">Configurações do jogo</string>
+    <string name="pref_symbols">Símbolos</string>
+    <array name="pref_symbols_list_titles">
+        <item>Padrão 1,2,3,..</item>
+        <item>Romano I,II,III,..</item>
+        <item>Decorativo ♪,♫,☼,..</item>
+        <item>Chinês 一,二,三,..</item>
+        <item>Grego α,β,γ,..</item>
+        <item>Indiano १,२,३,..</item>
+    </array>
+    <array name="pref_symbols_list_values">
+        <item>Padrão</item>
+        <item>Romano</item>
+        <item>Decorativo</item>
+        <item>Chinês</item>
+        <item>Grego</item>
+        <item>Indiano</item>
+    </array>
+    <string name="pref_automatic_note_deletion">Excluir anotações</string>
+    <string name="pref_automatic_note_deletion_summary">Excluir automaticamente as anotações ao colocar valores em células conectadas</string>
+    <string name="pref_timer_reset">Zerar o timer</string>
+    <string name="pref_timer_reset_summary">Também zerar o timer ao reiniciar o quadro do jogo.</string>
+    <string name="pref_dark_mode">Tema escuro</string>
+    <string name="pref_group_dark_theme">Configurar tema escuro</string>
+    <string name="pref_dark_mode_automatically_by_system">Autom. por sistema </string>
+    <string name="pref_dark_mode_automatically_by_battery">Autom. por bateria </string>
+
+    <string name="pref_dark_mode_setting">Tema escuro</string>
+    <string name="pref_dark_mode_summary">alternar entre o tema claro e escuro</string>
+
+    <!-- ###ABOUT### -->    
+    <string name="version_number">Versão:</string>
+    <string name="about_author">Devs:</string>    
+    <string name="about_author_contributors">e colaboradores.</string>
+    <string name="about_affiliation">Em afiliação com</string>
+    <string name="privacy_friendly">Este App pertence ao grupo Privacy Friendly Apps desenvolvido por Karlsruher Institute para Technology (KIT). Código fonte licenciado sob GPLv3. Direitos autorais das imagens KIT e Google Inc.</string>
+    <string name="more_info">Mais informações podem ser encontradas no:</string>    
+    <string name="about_qqwing">Este App usa uma versão modificada de QQWing v1.3.4</string>    
+
+    <!-- ###GameDifficulty### -->
+    <string name="difficulty_easy">Fácil</string>
+    <string name="difficulty_moderate">Moderado</string>
+    <string name="difficulty_hard">Difícil</string>
+    <string name="difficulty_custom">Personalizado</string>
+
+    <!--###GameActivity -->    
+    <string name="gametype_unspecified">Indefinido</string>    
+    <string name="hint_usage">Selecione um campo válido e depois clique no botão da dica para revelar a solução.</string>
+    <string name="hint_confirmation">Tem certeza de que quer usar esta dica? Ao usar as dicas você não melhorará seu resultado pessoal.</string>
+    <string name="hint_confirmation_confirm">Quero</string>
+    <string name="reset_confirmation">Tem certeza de que quer zerar o quadro do jogo?</string>
+    <string name="reset_confirmation_confirm">Zerar</string>
+    <string name="share_confirmation_confirm">Compartilhar</string>
+    <string name="copy_code_confirmation_toast">Copiado ao Clipboard</string>
+    <string name="copy_code_error_toast">Não foi possível acessar o Clipboard</string>
+
+    <!-- ### Welcome Dialog ### -->
+
+    <!-- ### Continue Game ### -->
+    <string name="loadgame_delete_confirmation">Tem certeza de que quer excluir este resultado?</string>
+    <string name="loadgame_delete_confirm">Excluir</string>
+
+    <!-- ### Stats ###-->
+    <string name="number_of_hints"># dicas usadas:</string>
+    <string name="number_of_games"># jogos concluídos:</string>
+    <string name="total_of_time">Tempo total jogado:</string>
+    <string name="average_time">Ø-tempo:</string>
+    <string name="min_time">Melhor tempo:</string>
+    <string name="reset_stats">Zerar tudo</string>
+
+    <!--### Win Strings -->
+    <string name="win_text">Parabéns!</string>
+    <string name="win_button_text">Continuar</string>
+    <string name="title_activity_help">Ajuda</string>
+    <string name="win_time">Tempo:</string>
+    <string name="win_hint">Dicas:</string>
+    <string name="win_show_game">Mostrar o quadro do jogo</string>
+    <string name="win_best_time">Novo recorde!</string>
+
+    <!-- ### HELP prefs ###-->
+    <string name="help_keyboard">Teclado</string>
+    <string name="help_keyhighlighted_summary">Indica que o valor é selecionado. Neste modo os valores são definidos diretamente ao tocar os campos, sem selecionar o campo.</string>
+    <string name="help_keyhighlighted_yellow_summary">Indica que foi colocado o número correto de valores para este número</string>
+
+    <!-- ### Special buttons description ###-->
+    <string name="help_do">Botão de refazer</string>
+    <string name="help_do_summary">Refazer a última ação</string>
+    <string name="help_undo">Botão de desfazer</string>
+    <string name="help_undo_summary">Desfazer a última ação</string>
+    <string name="help_hint">Botão da dica</string>
+    <string name="help_hint_summary">Revela o campo selecionado\nAviso: Se for usado, o jogo atual não poderá ser incluído num novo tempo recorde</string>
+    <string name="help_delete">Botão de excluir</string>
+    <string name="help_delete_summary">Exclua um campo selecionado</string>
+    <string name="help_notes">Modo de entrada no campo</string>
+    <string name="help_notes_summary">Defina modo padrão de entrada entre anotação e valor numérico para um campo</string>
+    <string name="finalize">Botão de finalizar</string>
+    <string name="finalize_summary">Confirma a entrada numérica em modo criado de jogo Sudoku</string>
+    <string name="help_import">Botão de importar</string>
+    <string name="help_import_summary">Importa um novo campo personalizado ao Sudoku em modo criado de jogo.\nAviso: isto anulará todo o quadro e os valores antigos não poderão ser recuperados.</string>
+    <string name="help_privacyInfo">Info sobre a privacidade</string>
+    <string name="help_permissions">Permissões</string>
+    <string name="help_permissions_summary">Privacy Friendly Sudoku não usa nenhuma permissão.</string>
+    <string name="okay">Okay</string>
+    <string name="difficulty_challenge">Desafio</string>
+    <string name="pref_highlightInputError">Destacar erros de entrada</string>
+    <string name="pref_keep_screen_on">Mantenha a tela ligada</string>
+    <string name="pref_keep_screen_on_summary">Não desligue a tela durante o jogo</string>
+
+    <!-- ### Tutorial ###-->
+    <string name="slide1_heading">Bem-vindo!</string>
+    <string name="slide1_text">Bem-vindo ao Privacy Friendly Sudoku!</string>
+
+    <string name="slide2_heading">Modo de jogo</string>
+    <string name="slide2_text">Deslize ou clique os botões das setas na esquerda ou direita para mudar o modo de jogo.</string>
+
+    <string name="slide3_heading">Dificuldade /</string>
+    <string name="slide3_heading2">sudoku personalizado</string>
+    <string name="slide3_text">Clique ou deslize as estrelas para mudar nível da dificuldade.
+        Clique no círculo para ativar o Modo Personalizado de jogo e criar seu próprio Sudoku.</string>
+
+    <string name="next">Próximo</string>
+    <string name="skip">Pular</string>
+    <string name="menu_tutorial">Tutorial</string>
+
+    <!-- ### DailySudokuActivity ###-->
+    <string name="menu_daily_sudoku">Sudoku de hoje</string>
+    <string name="finished_daily_sudoku">Você já resolveu o Sudoku de hoje</string>
+    <string name="daily_number_of_hints">Dicas usadas</string>
+    <string name="number_of_completed_games">Jogos concluídos</string>
+
+    <!-- ### Create custome sudoku ###-->
+    <string name="menu_import_custom_sudoku">Importar Sudoku</string>
+    <string name="menu_import_wrong_format_custom_sudoku">Seu arquivo precisa ter um dos seguintes prefixos:</string>
+    <string name="dialog_import_custom_sudoku">Importe o arquivo do Sudoku que você deseja usar:</string>
+    <string name="dialog_import_custom_sudoku_positive_button">Importar</string>
+    <string name="finalize_custom_sudoku_dialog">Você deseja finalizar este jogo do Sudoku?</string>
+    <string name="verify_custom_sudoku_process_toast">Verificando&#8230;</string>
+    <string name="finished_verifying_custom_sudoku_toast">Verificação concluída!</string>
+    <string name="failed_to_verify_custom_sudoku_toast">Verificação falhou: Seu Sudoku não pode ser resolvido.</string>
+    <string name="title_activity_settings_new">Configurações</string>
+
+    <!-- Preference Titles -->
+    <string name="messages_header">Mensagens</string>
+    <string name="sync_header">Sinc</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Sua assinatura</string>
+    <string name="reply_title">A ação de resposta padrão</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sinc e-mail periodicamente</string>
+    <string name="attachment_title">Baixar os anexos recebidos</string>
+    <string name="attachment_summary_on">Baixar automaticamente os anexos dos e-mails recebidos</string>
+    <string name="attachment_summary_off">Só baixe os anexos quando for solicitado manualmente</string>
+
+</resources>
