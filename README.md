@@ -43,18 +43,7 @@ The icons ic_trophy_award_black_48dp and ic_trophy_black_48dp are licensed under
 App-Icon:
 Markus Hau
 
-Github-Users: <br />
-Kamuno (Christopher Beckmann)<br />
-Gongxter (Timm Lippert)<br />
-uykek (Katharina Kaus)<br />
-ErikWaegerle (Erik Wägerle)<br />
-Yonjuni (Karola Marky)<br />
-sleep-yearning <br />
-Agmagor <br />
-brainyperfect <br />
-WaldiSt<br />
-naofum<br />
-lna91<br />
-xinxinxinxinxin<br />
-hype11<br />
+<a href="https://github.com/SecUSo/privacy-friendly-sudoku/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=SecUSo/privacy-friendly-sudoku&max=100&columns=20" />
+</a>
 
