@@ -217,7 +217,8 @@ public class NewLevelManager {
         Intent i = new Intent(context, GeneratorService.class);
         i.setAction(GeneratorService.ACTION_GENERATE);
         //i.putExtra(ProtocolService.EXTRA_PROTOCOL, current.componentName().flattenToString());
-        context.startService(i);
+        //context.startService(i);
+        GeneratorService.enqueueWork(context, i);
 
         //new AsyncGenerationTask().execute();
     }
