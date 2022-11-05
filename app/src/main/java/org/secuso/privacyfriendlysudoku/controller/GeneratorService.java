@@ -18,8 +18,10 @@ package org.secuso.privacyfriendlysudoku.controller;
 
 import android.app.IntentService;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import androidx.annotation.Nullable;
+import androidx.core.app.JobIntentService;
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 import android.util.Log;
@@ -49,7 +51,7 @@ import static org.secuso.privacyfriendlysudoku.controller.NewLevelManager.PRE_SA
  *
  * @author Christopher Beckmann
  */
-public class GeneratorService extends IntentService {
+public class GeneratorService extends JobIntentService {
 
     private static final String TAG = GeneratorService.class.getSimpleName();
     public static final String ACTION_GENERATE = TAG + " ACTION_GENERATE";
@@ -64,11 +66,11 @@ public class GeneratorService extends IntentService {
     //private Handler mHandler = new Handler();
 
 
-    public GeneratorService() {
-        super("Generator Service");
-    }
+    //public GeneratorService() {
+    //    super("Generator Service");
+    //}
 
-    public GeneratorService(String name) { super(name); }
+    //public GeneratorService(String name) { super(name); }
 
 
     private void buildGenerationList() {
@@ -120,12 +122,11 @@ public class GeneratorService extends IntentService {
         // if we start this service multiple times while we are already generating...
         // we ignore this call and just keep generating
         buildGenerationList();
-
         // generate from the list
         if(generationList.size() > 0) {
 
             // generate 1 level and wait for it to be done.
-            Pair<GameType, GameDifficulty> dataPair = generationList.get(0);
+            Pair<GameType, GameDifficulty> dataPair = generationList.remove(0);
             GameType type = dataPair.first;
             GameDifficulty diff = dataPair.second;
 
@@ -275,8 +276,13 @@ public class GeneratorService extends IntentService {
         builder.setSmallIcon(R.drawable.splash_icon);
         startForeground(50, builder.build());
     }
+
+    static void enqueueWork(Context context, Intent intent) {
+        enqueueWork(context, GeneratorService.class, 1000, intent);
+    }
+
     @Override
-    protected void onHandleIntent(@Nullable Intent intent) {
+    protected void onHandleWork(@Nullable Intent intent) {
         if (intent != null) {
 
             String action = intent.getAction();
