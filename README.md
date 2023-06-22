@@ -1,3 +1,8 @@
+[![Twitter](https://img.shields.io/badge/twitter-@SECUSOResearch-%231DA1F2.svg?&style=flat-square&logo=twitter&logoColor=1DA1F2)][Twitter]
+[![Mastodon](https://img.shields.io/badge/mastodon-@SECUSO__Research@baw%C3%BC.social-%233088D4.svg?&style=flat-square&logo=mastodon&logoColor=3088D4)][Mastodon]
+
+[Mastodon]: https://xn--baw-joa.social/@SECUSO_Research
+[Twitter]: https://twitter.com/SECUSOResearch
 # Privacy Friendly Sudoku
 
 [<img src="https://f-droid.org/badge/get-it-on.png" alt="Get it on F-Droid" height="60">](https://f-droid.org/repository/browse/?fdfilter=sudoku&fdid=org.secuso.privacyfriendlysudoku)<a href="https://play.google.com/store/apps/details?id=org.secuso.privacyfriendlysudoku"><img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" height="60"></a>
@@ -38,18 +43,7 @@ The icons ic_trophy_award_black_48dp and ic_trophy_black_48dp are licensed under
 App-Icon:
 Markus Hau
 
-Github-Users: <br />
-Kamuno (Christopher Beckmann)<br />
-Gongxter (Timm Lippert)<br />
-uykek (Katharina Kaus)<br />
-ErikWaegerle (Erik Wägerle)<br />
-Yonjuni (Karola Marky)<br />
-sleep-yearning <br />
-Agmagor <br />
-brainyperfect <br />
-WaldiSt<br />
-naofum<br />
-lna91<br />
-xinxinxinxinxin<br />
-hype11<br />
+<a href="https://github.com/SecUSo/privacy-friendly-sudoku/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=SecUSo/privacy-friendly-sudoku&max=100&columns=20" />
+</a>
 
