@@ -1,7 +1,8 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 33
 
     testOptions {
         unitTests.returnDefaultValues = true
@@ -10,7 +11,7 @@ android {
     defaultConfig {
         applicationId "org.secuso.privacyfriendlysudoku"
         minSdkVersion 16
-        targetSdkVersion 29
+        targetSdkVersion 33
         versionCode 12
         versionName "3.0.3"
         vectorDrawables.useSupportLibrary = true
