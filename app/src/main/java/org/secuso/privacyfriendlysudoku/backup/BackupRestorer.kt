@@ -5,11 +5,12 @@ import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import android.util.JsonReader
 import android.util.Log
-import androidx.annotation.NonNull
 import org.secuso.privacyfriendlybackup.api.backup.DatabaseUtil
 import org.secuso.privacyfriendlybackup.api.backup.FileUtil
+import org.secuso.privacyfriendlybackup.api.backup.FileUtil.readPath
 import org.secuso.privacyfriendlybackup.api.pfa.IBackupRestorer
 import org.secuso.privacyfriendlysudoku.controller.database.DatabaseHelper
+import java.io.File
 import java.io.IOException
 import java.io.InputStream
 import java.io.InputStreamReader
@@ -17,6 +18,23 @@ import kotlin.system.exitProcess
 
 
 class BackupRestorer : IBackupRestorer {
+
+    @Throws(IOException::class)
+    private fun readFiles(reader: JsonReader, context: Context) {
+        reader.beginObject()
+        while (reader.hasNext()) {
+            val name = reader.nextName()
+            when (name) {
+                "level", "saves", "stats" -> {
+                    val f = context.getDir(name, 0)
+                    readPath(reader, f)
+                }
+
+                else -> throw java.lang.RuntimeException("Unknown folder $name")
+            }
+        }
+        reader.endObject()
+    }
     @Throws(IOException::class)
     private fun readDatabase(reader: JsonReader, context: Context) {
         reader.beginObject()
@@ -73,26 +91,21 @@ class BackupRestorer : IBackupRestorer {
             val name: String = reader.nextName()
             Log.d("preference", name)
             when (name) {
-                "pref_schedule_exercise",
-                "pref_keep_screen_on_during_exercise",
-                "REPEAT_STATUS",
-                "pref_hide_default_exercise_sets",
-                "pref_schedule_exercise_daystrigger",
-                "pref_exercise_continuous",
-                "IsFirstTimeLaunch",
-                "pref_schedule_random_exercise",
-                "REPEAT_EXERCISES" -> preferences.putBoolean(name, reader.nextBoolean())
-                "pref_exercise_time" -> preferences.putString(name, reader.nextString())
-                "FirstLaunchManager.PREF_PICKER_SECONDS",
-                "FirstLaunchManager.PREF_PICKER_MINUTES",
-                "FirstLaunchManager.PREF_BREAK_PICKER_SECONDS",
-                "FirstLaunchManager.PREF_PICKER_HOURS",
-                "FirstLaunchManager.PREF_BREAK_PICKER_MINUTES" -> preferences.putInt(name, reader.nextInt())
-                "pref_schedule_exercise_days" -> preferences.putStringSet(name, readPreferenceSet(reader))
-                "WORK_TIME",
-                "PAUSE TIME",
-                "pref_schedule_exercise_time",
-                "DEFAULT_EXERCISE_SET" -> preferences.putLong(name, reader.nextLong())
+                "pref_timer_reset",
+                "pref_highlight_notes",
+                "savesChanged",
+                "pref_dark_mode_automatically_by_battery",
+                "pref_highlight_vals",
+                "pref_dark_mode_setting",
+                "pref_highlightInputError",
+                "pref_highlight_connected",
+                "pref_keep_screen_on",
+                "pref_automatic_note_deletion",
+                "pref_dark_mode_automatically_by_system" -> preferences.putBoolean(name, reader.nextBoolean())
+                "lastChosenDifficulty",
+                "pref_symbols",
+                "lastChosenGameType"-> preferences.putString(name, reader.nextString())
+                "lastGameID" -> preferences.putInt(name, reader.nextInt())
                 else -> throw RuntimeException("Unknown preference $name")
             }
         }
@@ -123,6 +136,7 @@ class BackupRestorer : IBackupRestorer {
                 when (type) {
                     "database" -> readDatabase(reader, context)
                     "preferences" -> readPreferences(reader, preferences)
+                    "files" -> readFiles(reader, context)
                     else -> throw RuntimeException("Can not parse type $type")
                 }
             }

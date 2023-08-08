@@ -25,6 +25,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.util.Xml;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -78,7 +79,7 @@ public class SudokuFieldLayout extends RelativeLayout implements IHighlightChang
         super(context, attrs);
         this.attrs=attrs;
 
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.SudokuFieldLayout);
+        TypedArray a = context.obtainStyledAttributes(this.attrs, R.styleable.SudokuFieldLayout);
         backgroundColor = a.getColor(R.styleable.SudokuFieldLayout_sudokuFieldGridColor, Color.argb(255, 200, 200, 200));
         errorColor = a.getColor(R.styleable.SudokuFieldLayout_sudokuFieldErrorColor, Color.RED);
         sectionLineColor = a.getColor(R.styleable.SudokuFieldLayout_sudokuFieldSectionLineColor, Color.BLACK);
