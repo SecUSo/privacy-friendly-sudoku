@@ -25,6 +25,7 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 
@@ -59,7 +60,7 @@ public class SudokuCellView extends View {
     int textColor;
 
     public SudokuCellView(Context context, AttributeSet attrs){
-        super(context, attrs);
+        super(context);
 
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.SudokuCellView);
         backgroundColor = a.getColor(R.styleable.SudokuCellView_sudokuCellBackgroundColor, Color.argb(255, 200, 200, 200));

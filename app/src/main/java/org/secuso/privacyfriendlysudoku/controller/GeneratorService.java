@@ -16,7 +16,6 @@
  */
 package org.secuso.privacyfriendlysudoku.controller;
 
-import android.app.IntentService;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -27,7 +26,7 @@ import androidx.core.content.ContextCompat;
 import android.util.Log;
 import android.util.Pair;
 
-import org.secuso.privacyfriendlysudoku.SudokuApp;
+import org.secuso.privacyfriendlysudoku.PFSudoku;
 import org.secuso.privacyfriendlysudoku.controller.database.DatabaseHelper;
 import org.secuso.privacyfriendlysudoku.controller.database.model.Level;
 import org.secuso.privacyfriendlysudoku.controller.qqwing.Action;
@@ -265,11 +264,11 @@ public class GeneratorService extends JobIntentService {
     }
 
     private void showNotification(GameType gameType, GameDifficulty gameDifficulty) {
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, SudokuApp.CHANNEL_ID);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, PFSudoku.CHANNEL_ID);
         builder.setContentTitle(getString(R.string.app_name));
         builder.setContentText(getString(R.string.generating));
         builder.setSubText(getString(gameType.getStringResID()) + ", " + getString(gameDifficulty.getStringResID()));
-        builder.setContentIntent(PendingIntent.getActivity(this, 0, new Intent(this, MainActivity.class), FLAG_UPDATE_CURRENT));
+        builder.setContentIntent(PendingIntent.getActivity(this, 0, new Intent(this, MainActivity.class), FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE));
         builder.setColor(ContextCompat.getColor(this, R.color.colorAccent));
         builder.setPriority(NotificationCompat.PRIORITY_HIGH);
         builder.setWhen(0);

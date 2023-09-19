@@ -1,7 +1,8 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 33
 
     testOptions {
         unitTests.returnDefaultValues = true
@@ -9,10 +10,10 @@ android {
 
     defaultConfig {
         applicationId "org.secuso.privacyfriendlysudoku"
-        minSdkVersion 16
-        targetSdkVersion 29
-        versionCode 12
-        versionName "3.0.3"
+        minSdkVersion 17
+        targetSdkVersion 33
+        versionCode 13
+        versionName "3.1"
         vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
@@ -43,4 +44,21 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-core-ui:1.0.0'
     implementation 'androidx.legacy:legacy-support-core-utils:1.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+
+    // Backup
+    implementation project(path: ':backup-api')
+    def work_version = "2.4.0"
+    implementation "androidx.work:work-runtime:$work_version"
+    implementation "androidx.work:work-runtime-ktx:$work_version"
+    androidTestImplementation "androidx.work:work-testing:$work_version"
+    implementation 'androidx.sqlite:sqlite-ktx:2.3.1'
+
+    constraints {
+        implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.8.0") {
+            because("kotlin-stdlib-jdk7 is now a part of kotlin-stdlib")
+        }
+        implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.0") {
+            because("kotlin-stdlib-jdk8 is now a part of kotlin-stdlib")
+        }
+    }
 }
