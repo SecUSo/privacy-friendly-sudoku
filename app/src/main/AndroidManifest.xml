@@ -4,6 +4,7 @@
     package="org.secuso.privacyfriendlysudoku.ui.view">
 
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:name="org.secuso.privacyfriendlysudoku.PFSudoku"
