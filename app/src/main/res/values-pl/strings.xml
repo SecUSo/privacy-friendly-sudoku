@@ -12,11 +12,18 @@
     <string name="menu_help">Pomoc</string>
     <string name="menu_about">O aplikacji</string>
     <string name="menu_reset">Zresetuj planszę</string>
+	<string name="menu_share">Udostępnij planszę</string>
     <string name="menu_continue_game">Kontynuuj grę</string>
+	<string name="create_game">Utwórz grę</string>
 
-    <string name="generating">Generowanie nowego poziomu w background&#8230;</string>
+    <string name="navigation_drawer_open" translatable="false">Otwórz szufladę nawigacji</string>
+    <string name="navigation_drawer_close" translatable="false">Zamknij szufladę nawigacji</string>
 
-    <!-- ###SETTINGS### -->
+	<string name="generating">Generowanie nowego poziomu w tle&#8230;</string>
+
+    <string name="impossible_import_notice">Sudoku, które chcesz zaimportować, nie ma rozwiązania.</string>
+
+	<!-- ###SETTINGS### -->
     <string name="title_activity_settings">Ustawienia</string>
     <!-- #Highlight -->
     <string name="pref_group_highlight_selection">Wyróżnij zaznaczenie</string>
@@ -24,6 +31,7 @@
     <string name="pref_group_highlight_value">Wyróżnij wartość</string>
     <string name="pref_highlight_vals">Te same wartości</string>
     <string name="pref_highlight_notes">Notatki</string>
+	
     <!-- #Game -->
     <string name="pref_header_game">Gra</string>
     <string name="pref_group_game">Ustawienia gry</string>
@@ -44,33 +52,55 @@
         <item>Greckie</item>
         <item>Indyjskie</item>
     </array>
-    <string name="pref_automatic_note_deletion">Skasuj notatkę</string>
+    <string name="pref_automatic_note_deletion">Usuń notatkę</string>
     <string name="pref_automatic_note_deletion_summary">Automatycznie usuwaj notatki podczas ustawiania wartości na połączonych komórkach</string>
     <string name="pref_timer_reset">Zresetuj zegar</string>
     <string name="pref_timer_reset_summary">Po zresetowaniu planszy, zresetuj także zegar.</string>
+    <string name="pref_dark_mode">Ciemny motyw</string>
+    <string name="pref_group_dark_theme">Ustawienia ciemnego motywu</string>
+    <string name="pref_dark_mode_automatically_by_system">Automatycznie zgodnie z systemem </string>
+    <string name="pref_dark_mode_automatically_by_battery">Automatycznie zgodnie z ustawieniami baterii </string>
+
+    <string name="pref_dark_mode_setting">Ciemny motyw</string>
+    <string name="pref_dark_mode_summary">przełącza między jasnym i ciemnym motywem</string>
 
     <!-- ###ABOUT### -->
+	<string name="app_name_long" translatable="false">Sudoku Przyjazne dla Prywatności</string>
     <string name="version_number">Wersja:</string>
     <string name="about_author">Autorzy:</string>
+	<string name="about_author_names" translatable="false">Christopher Beckmann, Timm Lippert,</string>
+    <string name="about_co_author_names" translatable="false">Katharina Kaus, Erik Waegerle</string>
     <string name="about_author_contributors">i współtwórcy.</string>
     <string name="about_affiliation">W powiązaniu z</string>
-    <string name="privacy_friendly">Ta aplikacja należy do grupy aplikacji Przyjaznych Prywatności opracowana przez Technische Universität Darmstadt. Kod na licencji GPLv3. Prawa autorskie do zdjęć TU Darmstadt i Google Inc..</string>
-    <string name="more_info">Więcej informacji można znaleźć na stronie:</string>
+    <string name="privacy_friendly">Ta aplikacja należy do grupy aplikacji Przyjaznych Prywatności opracowanej przez Karlsruher Institute for Technology (KIT). Kod źródłowy na licencji GPLv3. Prawa autorskie do zdjęć KIT i Google Inc.</string>
+    <string name="more_info">Więcej informacji można znaleźć na stronach:</string>
+    <string name="github" translatable="false"><a href="https://github.com/SecUSo/privacy-friendly-sudoku">Github-Repo</a></string>
+    <string name="url" translatable="false"><a href="https://www.secuso.org/pfa">SECUSO-Website</a></string>
     <string name="about_qqwing">Ta aplikacja używa zmodyfikowanej wersji QQWing v1.3.4</string>
+    <string name="about_qqwingLink" translatable="false"><a href="http://qqwing.com/download.html">http://qqwing.com/</a></string>
 
     <!-- ###GameDifficulty### -->
     <string name="difficulty_easy">Łatwy</string>
     <string name="difficulty_moderate">Umiarkowany</string>
     <string name="difficulty_hard">Trudny</string>
+    <string name="difficulty_custom">Dostosowany</string>
 
     <!--###GameActivity -->
     <string name="Sudoku" translatable="false">Sudoku</string>
+	<string name="gametype_default_9x9" translatable="false">Sudoku 9x9</string>
+    <string name="gametype_default_6x6" translatable="false">Sudoku 6x6</string>
     <string name="gametype_unspecified">Nieokreślony</string>
+	<string name="gametype_default_12x12" translatable="false">Sudoku 12x12</string>
+    <string name="gametype_x_9x9" translatable="false">X Sudoku 9x9</string>
+    <string name="gametype_hyper_9x9" translatable="false">Hyper Sudoku 9x9</string>
     <string name="hint_usage">Wybierz prawidłowe pole, a następnie naciśnij przycisk podpowiedzi, aby wyświetlić rozwiązanie.</string>
     <string name="hint_confirmation">Czy na pewno chcesz skorzystać z tej podpowiedzi? Korzystając z podpowiedzi, nie będziesz w stanie osiągnąć najlepszego osobistego czasu.</string>
     <string name="hint_confirmation_confirm">Użycie</string>
     <string name="reset_confirmation">Czy na pewno chcesz zresetować planszę?</string>
     <string name="reset_confirmation_confirm">Zresetuj</string>
+    <string name="share_confirmation_confirm">Udostępnij</string>
+    <string name="copy_code_confirmation_toast">Skopiowane do schowka</string>
+    <string name="copy_code_error_toast">Nie można uzyskać dostępu do schowka</string>
 
     <!-- ### Welcome Dialog ### -->
 
@@ -79,7 +109,7 @@
     <string name="loadgame_delete_confirm">Usuń</string>
 
     <!-- ### Stats ###-->
-    <string name="number_of_hints"># wykorzystane wskazówki:</string>
+    <string name="number_of_hints"># użytee wskazówki:</string>
     <string name="number_of_games"># zakończone gry:</string>
     <string name="total_of_time">Całkowity czas gry:</string>
     <string name="average_time">Ø-czas:</string>
@@ -97,8 +127,8 @@
 
     <!-- ### HELP prefs ###-->
     <string name="help_keyboard">Klawiatura</string>
-    <string name="help_keyhighlighted_summary">Wskazuje, że wybrano wartość. Wartości są ustawiane bezpośrednio podczas dotykania pól w tym trybie, bez wybierania pola.</string>
-    <string name="help_keyhighlighted_yellow_summary">Wskazuje, że została ustawiona prawidłowa liczba wartości dla tego numeru.</string>
+    <string name="help_keyhighlighted_summary">Pokazuje wartość wybranego przycisku. Dotknięcie pola spowoduje bezpośrednie wprowadzenie wartości.</string>
+    <string name="help_keyhighlighted_yellow_summary">Pokazuje, czy w polu jest ustawiona poprawna liczba użytych wartości.</string>
 
     <!-- ### Special buttons description ###-->
     <string name="help_do">Przycisk Ponów</string>
@@ -109,11 +139,15 @@
     <string name="help_hint_summary">Odsłania wybrane pole\nOstrzeżenie: Po użyciu aktualna gra nie może liczyć na nowy najlepszy czas.</string>
     <string name="help_delete">Przycisk usuwania</string>
     <string name="help_delete_summary">Usuwa wybrane pole</string>
-    <string name="help_notes">Uwaga przycisk przełączania</string>
-    <string name="help_notes_summary">Przełącza, czy liczby powinny być ustawione jako notatki lub jako wartości w polu</string>
+    <string name="help_notes">Przycisk przełączania notatek</string>
+    <string name="help_notes_summary">Przełączanie między liczbami, które są wyświetlane jako notatki lub jako wartości w polu</string>
+    <string name="finalize">Przycisk Finalizuj</string>
+    <string name="finalize_summary">Potwierdza dane liczbowe w trybie tworzenia sudoku </string>
+    <string name="help_import">Przycisk importu</string>
+    <string name="help_import_summary">Importuje nowe, konfigurowalne pole sudoku do trybu tworzenia sudoku.\nOstrzeżenie: spowoduje to zastąpienie całego pola a jego stare wartości będą niemożliwe odzyskania.</string>
     <string name="help_privacyInfo">Informacje o prywatności</string>
     <string name="help_permissions">Uprawnienia</string>
-    <string name="help_permissions_summary">Prywatność Przyjazna, Sudoku nie korzysta z żadnych uprawnień.</string>
+    <string name="help_permissions_summary">Sudoku Przyjazna dla Prywatności nie korzysta z żadnych uprawnień.</string>
     <string name="okay">Ok</string>
     <string name="difficulty_challenge">Wyzwanie</string>
     <string name="pref_highlightInputError">Wyróżnij błędy wprowadzania</string>
@@ -122,15 +156,50 @@
 
     <!-- ### Tutorial ###-->
     <string name="slide1_heading">Witaj!</string>
-    <string name="slide1_text">Witaj Przyjaznej Prywatności Sudoku!</string>
+    <string name="slide1_text">Witaj w Sudoku, aplikacji Przyjaznej Prywatności!</string>
 
     <string name="slide2_heading">Tryb gry</string>
     <string name="slide2_text">Przesuń palcem lub naciśnij przyciski strzałek po lewej lub prawej stronie, aby zmienić tryb gry.</string>
 
     <string name="slide3_heading">Poziom Trudności</string>
-    <string name="slide3_text">Naciśnij lub przesuń gwiazdki, aby zmienić poziom trudności.</string>
+	<string name="slide3_heading2">niestandardowe sudoku</string>
+    <string name="slide3_text">Naciśnij lub przesuń gwiazdki, aby zmienić poziom trudności.
+	    Naciśnij kółko, aby aktywować niestandardowy tryb gry Sudoku i utworzyć własne sudoku.</string>
 
     <string name="next">Następny</string>
     <string name="skip">Pomiń</string>
     <string name="menu_tutorial">Poradnik</string>
+	
+    <!-- ### DailySudokuActivity ###-->
+    <string name="menu_daily_sudoku">Dzienne Sudoku</string>
+    <string name="finished_daily_sudoku">Udało Ci się już rozwiązać sudoku dnia</string>
+    <string name="daily_number_of_hints">Użyte wskazówki</string>
+    <string name="number_of_completed_games">Ukończone gry</string>
+
+    <!-- ### Create custome sudoku ###-->
+    <string name="menu_import_custom_sudoku">Zaimportuj Sudoku</string>
+    <string name="menu_import_wrong_format_custom_sudoku">Twój link musi mieć jeden z następujących prefiksów:</string>
+    <string name="dialog_import_custom_sudoku">Wpisz link sudoku, które chcesz zaimportować:</string>
+    <string name="dialog_import_custom_sudoku_positive_button">Importuj</string>
+    <string name="finalize_custom_sudoku_dialog">Czy chcesz sfinalizować to sudoku?</string>
+    <string name="verify_custom_sudoku_process_toast">Weryfikacja&#8230;</string>
+    <string name="finished_verifying_custom_sudoku_toast">Weryfikacja zakończona!</string>
+    <string name="failed_to_verify_custom_sudoku_toast">Weryfikacja nie powiodła się: Nie można rozwiązać Twojego sudoku.</string>
+    <string name="title_activity_settings_new">Ustawienia</string>
+
+    <!-- Preference Titles -->
+    <string name="messages_header">Wiadomości</string>
+    <string name="sync_header">Synchronizacja</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Twój podpis</string>
+    <string name="reply_title">Domyślna odpowiedź</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Okresowo synchronizuj pocztę e-mail</string>
+    <string name="attachment_title">Pobierz przychodzące załączniki</string>
+    <string name="attachment_summary_on">Automatycznie pobieraj załączniki do przychodzących wiadomości e-mail
+    </string>
+    <string name="attachment_summary_off">Pobieraj załączniki tylko po ręcznym żądaniu</string>
+	
 </resources>
