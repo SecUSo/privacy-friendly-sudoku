@@ -51,7 +51,7 @@ public class UndoRedoManager implements Parcelable {
         return activeState < states.size()-1;
     }
 
-    public GameBoard UnDo() {
+    public GameBoard unDo() {
         if(isUnDoAvailable()) {
             return states.get(--activeState);
         } else {
@@ -59,7 +59,7 @@ public class UndoRedoManager implements Parcelable {
         }
     }
 
-    public GameBoard ReDo() {
+    public GameBoard reDo() {
         if(isRedoAvailable()) {
             return states.get(++activeState);
         } else {
@@ -125,5 +125,4 @@ public class UndoRedoManager implements Parcelable {
         activeState = in.readInt();
         in.readTypedList(states, GameBoard.CREATOR);
     }
-
 }

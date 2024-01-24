@@ -16,14 +16,12 @@
  */
 package org.secuso.privacyfriendlysudoku.controller;
 
-import android.os.Parcelable;
 import android.util.Log;
 
 import java.util.LinkedList;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.Date;
 
 import org.secuso.privacyfriendlysudoku.controller.qqwing.Action;
 import org.secuso.privacyfriendlysudoku.controller.qqwing.PrintStyle;
@@ -37,6 +35,14 @@ import org.secuso.privacyfriendlysudoku.game.GameType;
  * Created by Chris on 21.11.2015.
  */
 public class QQWingController {
+    private static QQWingController instance;
+    private QQWingController() {}
+    public static QQWingController getInstance() {
+        if (instance == null) {
+            instance = new QQWingController();
+        }
+        return instance;
+    }
 
     final QQWingOptions opts = new QQWingOptions();
 
@@ -150,7 +156,7 @@ public class QQWingController {
 
                         // Create a new puzzle board
                         // and set the options
-                        private QQWing ss = createQQWing();
+                        private QQWing qqWing = createQQWing();
 
                         private QQWing createQQWing() {
                             QQWing ss = new QQWing(opts.gameType, opts.gameDifficulty);
@@ -180,13 +186,13 @@ public class QQWingController {
 
                                     if (opts.action == Action.GENERATE) {
                                         // Generate a puzzle
-                                        havePuzzle = ss.generatePuzzleSymmetry(opts.symmetry);
+                                        havePuzzle = qqWing.generatePuzzleSymmetry(opts.symmetry);
 
                                     } else {
                                         // Read the next puzzle on STDIN
                                         int[] puzzle = new int[QQWing.BOARD_SIZE];
                                         if (getPuzzleToSolve(puzzle)) {
-                                            havePuzzle = ss.setPuzzle(puzzle);
+                                            havePuzzle = qqWing.setPuzzle(puzzle);
                                             if (havePuzzle) {
                                                 puzzleCount.getAndDecrement();
                                             } else {
@@ -199,10 +205,7 @@ public class QQWingController {
                                             havePuzzle = false;
                                             done.set(true);
                                         }
-                                        puzzle = null;
                                     }
-
-                                    int solutions = 0;
 
                                     if (havePuzzle) {
 
@@ -215,14 +218,14 @@ public class QQWingController {
 
                                         // Solve the puzzle
                                         if (opts.printSolution || opts.printHistory || opts.printStats || opts.printInstructions || opts.gameDifficulty != GameDifficulty.Unspecified) {
-                                            ss.solve();
-                                            solution = ss.getSolution();
+                                            qqWing.solve();
+                                            solution = qqWing.getSolution();
                                         }
 
                                         // Bail out if it didn't meet the difficulty
                                         // standards for generation
                                         if (opts.action == Action.GENERATE) {
-                                            if (opts.gameDifficulty != GameDifficulty.Unspecified && opts.gameDifficulty != ss.getDifficulty()) {
+                                            if (opts.gameDifficulty != GameDifficulty.Unspecified && opts.gameDifficulty != qqWing.getDifficulty()) {
                                                 havePuzzle = false;
                                                 // check if other threads have
                                                 // finished the job
@@ -234,12 +237,12 @@ public class QQWingController {
                                             }
                                         }
                                         if(havePuzzle) {
-                                            generated.add(ss.getPuzzle());
+                                            generated.add(qqWing.getPuzzle());
                                         }
                                     }
                                 }
                             } catch (Exception e) {
-                                Log.e("QQWing", "Exception Occured", e);
+                                Log.e("QQWing", "Exception Occurred", e);
                                 return;
                             }
                         }
@@ -284,10 +287,6 @@ public class QQWingController {
         int threads = Runtime.getRuntime().availableProcessors();
     }
 
-    private static long getMicroseconds() {
-        return new Date().getTime() * 1000;
-    }
-
     private boolean getPuzzleToSolve(int[] puzzle) {
         if(level != null) {
             if(puzzle.length == level.length) {
@@ -300,5 +299,4 @@ public class QQWingController {
         }
         return false;
     }
-
 }

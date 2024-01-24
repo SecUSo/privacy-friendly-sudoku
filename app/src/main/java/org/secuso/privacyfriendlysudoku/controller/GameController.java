@@ -41,7 +41,6 @@ import org.secuso.privacyfriendlysudoku.game.listener.ITimerListener;
 import org.secuso.privacyfriendlysudoku.ui.GameActivity;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Timer;
@@ -86,7 +85,7 @@ public class GameController implements IModelChangedListener, Parcelable {
     private UndoRedoManager undoRedoManager;
 
     // Solver / Generator
-    private QQWingController qqWingController = new QQWingController();
+    private QQWingController qqWingController = QQWingController.getInstance();
 
     // Timer
     private int time = 0;
@@ -125,9 +124,9 @@ public class GameController implements IModelChangedListener, Parcelable {
     public void loadNewLevel(GameType type, GameDifficulty difficulty) {
         NewLevelManager newLevelManager = NewLevelManager.getInstance(context, settings);
 
-        int[] level = newLevelManager.loadLevel(type, difficulty);
+        int[] puzzle = newLevelManager.loadLevel(type, difficulty);
 
-        loadLevel(new GameInfoContainer(0, difficulty, type, level, null, null));
+        loadLevel(new GameInfoContainer(0, difficulty, type, puzzle, null, null));
 
         newLevelManager.checkAndRestock();
     }
@@ -136,16 +135,16 @@ public class GameController implements IModelChangedListener, Parcelable {
         NewLevelManager newLevelManager = NewLevelManager.getInstance(context, settings);
 
         // generate the daily sudoku
-        int[] level = newLevelManager.loadDailySudoku();
+        int[] puzzle = newLevelManager.loadDailySudoku();
 
         // calculate the difficulty of the daily sudoku
         QQWing difficultyCheck = new QQWing(GameType.Default_9x9, GameDifficulty.Unspecified);
         difficultyCheck.setRecordHistory(true);
-        difficultyCheck.setPuzzle(level);
+        difficultyCheck.setPuzzle(puzzle);
         difficultyCheck.solve();
 
         loadLevel(new GameInfoContainer(DAILY_SUDOKU_ID, difficultyCheck.getDifficulty(),
-                GameType.Default_9x9, level, null, null));
+                GameType.Default_9x9, puzzle, null, null));
 
     }
 
@@ -157,14 +156,15 @@ public class GameController implements IModelChangedListener, Parcelable {
         int[] fixedValues = gic.getFixedValues();
         int[] setValues = gic.getSetValues();
         boolean[][] setNotes = gic.getSetNotes();
-        this.gameID = gic.getID();
+        this.gameID = gic.getId();
         this.difficulty = gic.getDifficulty();
         this.time = gic.getTimePlayed();
         this.usedHints = gic.getHintsUsed();
         this.gameIsCustom = gic.isCustom();
 
-        setGameType(gic.getGameType());
-        this.gameBoard = new GameBoard(gic.getGameType());
+        GameType gameTypeLocal = gic.getGameType();
+        setGameType(gameTypeLocal);
+        this.gameBoard = new GameBoard(gameTypeLocal);
 
         if(fixedValues == null) throw new IllegalArgumentException("fixedValues may not be null.");
 
@@ -288,20 +288,22 @@ public class GameController implements IModelChangedListener, Parcelable {
 
 
     private CellConflictList checkInputErrorList(GameCell cell, List<GameCell> list) {
-        CellConflictList errorList = new CellConflictList();
+        CellConflictList errorListLocal = new CellConflictList();
         for (int i = 0; i < list.size(); i++) {
             GameCell c2 = list.get(i);
 
-            if (!cell.equals(c2) && cell.getValue() != 0 && c2.getValue() != 0) {
+
+            boolean isCellConflict = !cell.equals(c2) && cell.getValue() != 0 && c2.getValue() != 0 && cell.getValue() == c2.getValue();
+            if (isCellConflict) {
 
                 // Same value in one set should not exist
-                if (cell.getValue() == c2.getValue()) {
+                //if (cell.getValue() == c2.getValue()) {
                     // we found an error..
-                    errorList.add(new CellConflict(cell, c2));
-                }
+                    errorListLocal.add(new CellConflict(cell, c2));
+                //}
             }
         }
-        return errorList;
+        return errorListLocal;
     }
 
     public LinkedList<GameCell> getConnectedCells(int row, int col) {
@@ -346,14 +348,15 @@ public class GameController implements IModelChangedListener, Parcelable {
         }
 
         if(gameID == 0) {
-            gameID = settings.getInt("lastGameID", 0)+1;
+            String LAST_GAME_ID = "lastGameID";
+            gameID = settings.getInt(LAST_GAME_ID, 0)+1;
 
             SharedPreferences.Editor editor = settings.edit();
             // is anyone ever gonna play so many levels? :)
             if(gameID == DAILY_SUDOKU_ID - 1) {
-                editor.putInt("lastGameID", 1);
+                editor.putInt(LAST_GAME_ID, 1);
             } else {
-                editor.putInt("lastGameID", gameID);
+                editor.putInt(LAST_GAME_ID, gameID);
             }
             editor.commit();
         }
@@ -379,8 +382,10 @@ public class GameController implements IModelChangedListener, Parcelable {
 
         // turn the current date into an id
         Calendar currentDate = Calendar.getInstance();
-        int id = currentDate.get(Calendar.DAY_OF_MONTH) * 1000000
-                + (currentDate.get(Calendar.MONTH) + 1) * 10000 + currentDate.get(Calendar.YEAR);
+        int day = currentDate.get(Calendar.DAY_OF_MONTH);
+        int month = currentDate.get(Calendar.MONTH);
+        int year = currentDate.get(Calendar.YEAR);
+        int id = day * 1000000 + (month + 1) * 10000 + year;
 
         // save the sudoku to the database using the previously calculated id
         DatabaseHelper db = new DatabaseHelper(context);
@@ -425,7 +430,7 @@ public class GameController implements IModelChangedListener, Parcelable {
 
         if(settings.getBoolean("pref_timer_reset", true)) {
             time = 0;
-            notifyTimerListener(0);
+            notifyTimerListener(time);
             undoRedoManager = new UndoRedoManager(gameBoard);
         } else {
             undoRedoManager.addState(gameBoard);
@@ -435,9 +440,9 @@ public class GameController implements IModelChangedListener, Parcelable {
     }
 
     public boolean deleteValue(int row, int col) {
-        GameCell c = gameBoard.getCell(row,col);
-        if(!c.isFixed()) {
-            c.setValue(0);
+        GameCell cell = gameBoard.getCell(row,col);
+        if(!cell.isFixed()) {
+            cell.setValue(0);
             //notifyListeners();
             return true;
         }
@@ -446,15 +451,15 @@ public class GameController implements IModelChangedListener, Parcelable {
 
     public void setNote(int row, int col, int value) {
         if(isValidNumber(value)) {
-            GameCell c = gameBoard.getCell(row, col);
-            c.setNote(value);
+            GameCell cell = gameBoard.getCell(row, col);
+            cell.setNote(value);
         }
         //notifyListeners();
     }
 
     public boolean[] getNotes(int row, int col) {
-        GameCell c = gameBoard.getCell(row,col);
-        return c.getNotes().clone();
+        GameCell cell = gameBoard.getCell(row,col);
+        return cell.getNotes().clone();
     }
 
     public GameDifficulty getDifficulty() {
@@ -462,17 +467,17 @@ public class GameController implements IModelChangedListener, Parcelable {
     }
 
     public void deleteNote(int row, int col, int value) {
-        GameCell c = gameBoard.getCell(row,col);
-        c.deleteNote(value);
+        GameCell cell = gameBoard.getCell(row,col);
+        cell.deleteNote(value);
         //notifyListeners();
     }
 
     public void toggleNote(int row, int col, int value) {
-        GameCell c = gameBoard.getCell(row,col);
-        if(c.hasValue()) {
-            c.setValue(0);
+        GameCell cell = gameBoard.getCell(row,col);
+        if(cell.hasValue()) {
+            cell.setValue(0);
         }
-        c.toggleNote(value);
+        cell.toggleNote(value);
         //notifyListeners();
     }
 
@@ -621,12 +626,10 @@ public class GameController implements IModelChangedListener, Parcelable {
 
         if(gameBoard.isFilled()) {
             errorList = new CellConflictList();
-            if(gameBoard.isSolved(errorList)) {
-                if(!notifiedOnSolvedListeners) {
-                    notifiedOnSolvedListeners = true;
-                    notifySolvedListeners();
-                    resetSelects();
-                }
+            if(gameBoard.isSolved(errorList) && !notifiedOnSolvedListeners) {
+                notifiedOnSolvedListeners = true;
+                notifySolvedListeners();
+                resetSelects();
             }// else {
                 // errorList now holds all the errors => display errors
                 //notifyErrorListener(errorList);
@@ -759,12 +762,12 @@ public class GameController implements IModelChangedListener, Parcelable {
         timerRunning.set(false);
     }
 
-    public void ReDo() {
-        updateGameBoard(undoRedoManager.ReDo());
+    public void reDo() {
+        updateGameBoard(undoRedoManager.reDo());
     }
 
-    public void UnDo() {
-        updateGameBoard(undoRedoManager.UnDo());
+    public void unDo() {
+        updateGameBoard(undoRedoManager.unDo());
     }
 
     public boolean isRedoAvailable() {
@@ -780,28 +783,31 @@ public class GameController implements IModelChangedListener, Parcelable {
         }
         for(int i = 0; i < gameBoard.getSize(); i++) {
             for(int j = 0; j < gameBoard.getSize(); j++) {
-                GameCell other_c = gameBoard.getCell(i,j);
-                GameCell this_c = this.gameBoard.getCell(i,j);
-                if(other_c.isFixed()) {
+                GameCell otherC = gameBoard.getCell(i,j);
+                GameCell thisC = this.gameBoard.getCell(i,j);
+                if(otherC.isFixed()) {
                     continue;
                 }
-                if(other_c.hasValue()) {
-                    this_c.setValue(other_c.getValue());
+                if(otherC.hasValue()) {
+                    thisC.setValue(otherC.getValue());
                 } else {
-                    this_c.setValue(0);
-                    for(int k = 0; k < gameBoard.getSize(); k++) {
-                        if(other_c.getNotes()[k]) {
-                            this_c.setNote(k+1);
-                        } else {
-                            this_c.deleteNote(k+1);
-                        }
-                    }
+                    thisC.setValue(0);
+                    updateNotes(gameBoard, otherC, thisC);
                 }
             }
         }
 
         notifyHighlightChangedListeners();
-        return;
+    }
+
+    private void updateNotes(GameBoard gameBoard, GameCell otherC, GameCell thisC) {
+        for(int k = 0; k < gameBoard.getSize(); k++) {
+            if(otherC.getNotes()[k]) {
+                thisC.setNote(k+1);
+            } else {
+                thisC.deleteNote(k+1);
+            }
+        }
     }
 
     public int getValueCount(final int value) {
@@ -880,7 +886,7 @@ public class GameController implements IModelChangedListener, Parcelable {
         gameType = in.readParcelable(GameType.class.getClassLoader());
         difficulty = in.readParcelable(GameDifficulty.class.getClassLoader());
         gameBoard = in.readParcelable(GameBoard.class.getClassLoader());
-        undoRedoManager = new UndoRedoManager(gameBoard);//*/in.readParcelable(UndoRedoManager.class.getClassLoader());
+        undoRedoManager = new UndoRedoManager(gameBoard);//in.readParcelable(UndoRedoManager.class.getClassLoader());
 
         in.readTypedList(errorList, CellConflict.CREATOR);
 
