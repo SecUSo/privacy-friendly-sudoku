@@ -363,7 +363,13 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
         ratingBar.setNumStars(numberOfStarts);
         ratingBar.setRating(difficutyList.indexOf(gameController.getDifficulty()) + 1);
         TextView diffText = ((TextView)findViewById(R.id.difficultyText));
-        diffText.setText(getString(gameController.getDifficulty().getStringResID()));
+
+        // TODO: Check how NPE is happening in this location/how the difficulty can be null
+        if (gameController.getDifficulty() == null) {
+            diffText.setText(getString(GameDifficulty.Unspecified.getStringResID()));
+        } else {
+            diffText.setText(getString(gameController.getDifficulty().getStringResID()));
+        }
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
