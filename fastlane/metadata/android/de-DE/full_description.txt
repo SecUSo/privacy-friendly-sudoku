@@ -1,19 +1,6 @@
-Privacy Friendly Sudoku ist ein Logikspiel. Ziel des Spiels ist es, das komplette Spielfeld mit Zahlen zu füllen, dass jede Zahl nur einmal in jeder Zeile, Spalte und Untersektion vorkommt.
 
-Privacy Friendly Sudoku hat drei verschiedene Spielmodi:
-- 6x6 Spielfeld mit 2x3 Untersektionen
-- 9x9 Spielfeld mit 3x3 Untersektionen
-- 12x12 Spielfeld mit 3x4 Untersektionen
 
-Pro Spielmodus existieren vier verschiedene Schwierigkeitsgrade, die sich nicht an der Anzahl der vorgegebenen Felder orientieren, sondern an den Lösungsstrategien, die benötigt werden um das Sudoku zu lösen. Der Level-Generator versucht immer die minimale Anzahl an Feldern vorzugeben, die für das Lösen des Spiels nötig sind. Außerdem können Benutzer für jeden Spielmodus eigene Sudokus beliebiger Schwierigkeit erstellen.
-
-Sudokus können mithilfe von Export- und Import-Funktionen mit anderen Benutzern der App geteilt werden. Weiterhin gibt es ein für alle Benutzer gleiches "Sudoku des Tages", welches täglich neu generiert wird.
-
-Die App kann sowohl im Light- als auch Dark-Mode verwendet werden.
-
-Die App unterscheidet sich von anderen Applikationen hinsichtlich zweier Aspekte:
-1. Die Privacy Friendly Sudoku App verzichtet auf Berechtigungen.
-2. Die Privacy Friendly Sudoku App verzichtet komplett auf das Einblenden von Werbung.
-Viele andere kostenlose Apps im Google Play Store blenden störende Werbung ein, die unter anderem auch die Akkulaufzeit verkürzt.
-
-Die App gehört zur Gruppe der Privacy Friendly Apps, die von der Forschungsgruppe SECUSO am Karlsruher Institut für Technologie entwickelt werden. Mehr Informationen unter: https://secuso.org/pfa
+Kontaktieren Sie uns gerne   ber:
+Twitter - @SECUSOResearch https://twitter.com/secusoresearc)
+Mastodon - @SECUSO_Research@baw  .social https://xn--baw-joa.social/@SECUSO_Research/
+Offene Stellen - https://secuso.aifb.kit.edu/83_1557.php
