@@ -1,5 +1,18 @@
 
 
+For each game mode there are four different difficulty levels that are not measured by the number of preset values, but rather by the solving strategies needed to solve the game. The generator always tries to provide a game that has the minimum amount of preset values needed to solve the game. Additionally, users can create their own custom sudokus of arbitrary difficulty for each of the three game modes.
+
+Sudokus can be shared with other users by using the available import and export functions. Another community feature is the 'daily sudoku', which is newly generated each day and the same for every user of the app.
+
+The app can be used in both light and dark mode.
+
+Our Privacy Friendly App differs from other applications with respect to two aspects:
+1. The Privacy Friendly Sudoku App does not use any permission.
+2. The Privacy Friendly Sudoku App completely relinquishes advertisement.
+Many other free apps in the Google Play Store dazzle annoying advertising and also shortens battery life.
+
+
+Feel free to contact us via:
 Twitter - @SECUSOResearch https://twitter.com/secusoresearch
-Mastodon - @SECUSO_Research@baw  .social https://xn--baw-joa.social/@SECUSO_Research/
+Mastodon - @SECUSO_Research@bawü.social https://xn--baw-joa.social/@SECUSO_Research/
 Job opening - https://secuso.aifb.kit.edu/english/Job_Offers_1557.php
