@@ -15,3 +15,9 @@ Our Privacy Friendly App differs from other applications with respect to two asp
 1. The Privacy Friendly Sudoku App does not use any permission.
 2. The Privacy Friendly Sudoku App completely relinquishes advertisement.
 Many other free apps in the Google Play Store dazzle annoying advertising and also shortens battery life.
+
+
+Feel free to contact us via:
+Twitter - @SECUSOResearch https://twitter.com/secusoresearch
+Mastodon - @SECUSO_Research@bawü.social https://xn--baw-joa.social/@SECUSO_Research/
+Job opening - https://secuso.aifb.kit.edu/english/Job_Offers_1557.php
