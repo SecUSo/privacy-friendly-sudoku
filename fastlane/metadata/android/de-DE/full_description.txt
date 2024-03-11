@@ -1,4 +1,4 @@
-rivacy Friendly Sudoku ist ein Logikspiel. Ziel des Spiels ist es, das komplette Spielfeld mit Zahlen zu füllen, dass jede Zahl nur einmal in jeder Zeile, Spalte und Untersektion vorkommt.
+Privacy Friendly Sudoku ist ein Logikspiel. Ziel des Spiels ist es, das komplette Spielfeld mit Zahlen zu füllen, dass jede Zahl nur einmal in jeder Zeile, Spalte und Untersektion vorkommt.
 
 Privacy Friendly Sudoku hat drei verschiedene Spielmodi:
 - 6x6 Spielfeld mit 2x3 Untersektionen
