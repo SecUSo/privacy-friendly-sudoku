@@ -429,21 +429,9 @@ public class QQWing {
 				// counting solutions to the puzzle
 				int savedValue = puzzle[position];
 				puzzle[position] = 0;
-				int savedSym1 = 0;
-				if (positionsym1 >= 0) {
-					savedSym1 = puzzle[positionsym1];
-					puzzle[positionsym1] = 0;
-				}
-				int savedSym2 = 0;
-				if (positionsym2 >= 0) {
-					savedSym2 = puzzle[positionsym2];
-					puzzle[positionsym2] = 0;
-				}
-				int savedSym3 = 0;
-				if (positionsym3 >= 0) {
-					savedSym3 = puzzle[positionsym3];
-					puzzle[positionsym3] = 0;
-				}
+				int savedSym1 = getSavedSym(positionsym1);
+				int savedSym2 = getSavedSym(positionsym2);
+				int savedSym3 = getSavedSym(positionsym3);
 				reset();
 				if (countSolutions(2, true) > 1) {
 					// Put it back in, it is needed
@@ -463,6 +451,15 @@ public class QQWing {
 		setLogHistory(lHistory);
 
 		return true;
+	}
+
+	private int getSavedSym(int positionsym) {
+		int savedSym = 0;
+		if (positionsym >= 0) {
+			savedSym = puzzle[positionsym];
+			puzzle[positionsym] = 0;
+		}
+		return savedSym;
 	}
 
 	private void rollbackNonGuesses() {
@@ -498,8 +495,6 @@ public class QQWing {
 		if (recordHistory) {
 			solveHistory.add(l); // ->push_back(l);
 			solveInstructions.add(l); // ->push_back(l);
-		} else {
-			l = null;
 		}
 	}
 
@@ -784,24 +779,7 @@ public class QQWing {
 					}
 				}
 				if (inOneBox && colBox != -1) {
-					boolean doneSomething = false;
-					int row = GRID_SIZE_ROW * colBox;
-					int secStart = cellToSectionStartCell(rowColumnToCell(row, col));
-					int secStartRow = cellToRow(secStart);
-					int secStartCol = cellToColumn(secStart);
-					for (int i = 0; i < GRID_SIZE_COL; i++) {
-						for (int j = 0; j < GRID_SIZE_ROW; j++) {
-							int row2 = secStartRow + j;
-							int col2 = secStartCol + i;
-							int position = rowColumnToCell(row2, col2);
-							int valPos = getPossibilityIndex(valIndex, position);
-							if (col != col2 && possibilities[valPos] == 0) {
-								possibilities[valPos] = round;
-								doneSomething = true;
-							}
-						}
-					}
-					if (doneSomething) {
+					if (doSomething(round, valIndex, col, colBox, "Column")) {
 						if (logHistory || recordHistory) addHistoryItem(new LogItem(round, LogType.COLUMN_BOX, valIndex + 1, colStart));
 						return true;
 					}
@@ -810,7 +788,6 @@ public class QQWing {
 		}
 		return false;
 	}
-
 
 	private boolean rowBoxReduction(int round) {
 		for (int valIndex = 0; valIndex < ROW_COL_SEC_SIZE; valIndex++) {
@@ -833,24 +810,7 @@ public class QQWing {
 					}
 				}
 				if (inOneBox && rowBox != -1) {
-					boolean doneSomething = false;
-					int column = GRID_SIZE_COL * rowBox;
-					int secStart = cellToSectionStartCell(rowColumnToCell(row, column));
-					int secStartRow = cellToRow(secStart);
-					int secStartCol = cellToColumn(secStart);
-					for (int i = 0; i < GRID_SIZE_ROW; i++) {
-						for (int j = 0; j < GRID_SIZE_COL; j++) {
-							int row2 = secStartRow + i;
-							int col2 = secStartCol + j;
-							int position = rowColumnToCell(row2, col2);
-							int valPos = getPossibilityIndex(valIndex, position);
-							if (row != row2 && possibilities[valPos] == 0) {
-								possibilities[valPos] = round;
-								doneSomething = true;
-							}
-						}
-					}
-					if (doneSomething) {
+					if (doSomething(round, valIndex, row, rowBox, "Row")) {
 						if (logHistory || recordHistory) addHistoryItem(new LogItem(round, LogType.ROW_BOX, valIndex + 1, rowStart));
 						return true;
 					}
@@ -858,6 +818,43 @@ public class QQWing {
 			}
 		}
 		return false;
+	}
+
+	private boolean doSomething(int round, int valIndex, int block, int blockBox, String blockType) {
+		boolean doneSomething = false;
+		int cell = 0, secStart = 0;
+		if (blockType == "Column") {
+			cell = GRID_SIZE_ROW * blockBox;
+			secStart = cellToSectionStartCell(rowColumnToCell(cell, block));
+		}
+		else {
+			cell = GRID_SIZE_COL * blockBox;
+			secStart = cellToSectionStartCell(rowColumnToCell(block, cell));
+		}
+		int secStartRow = cellToRow(secStart);
+		int secStartCol = cellToColumn(secStart);
+		for (int i = 0; i < GRID_SIZE_COL; i++) {
+			for (int j = 0; j < GRID_SIZE_ROW; j++) {
+				int row2 = secStartRow + j;
+				int col2 = secStartCol + i;
+				int position = rowColumnToCell(row2, col2);
+				int valPos = getPossibilityIndex(valIndex, position);
+
+				if (blockType == "Column") {
+					if (block != col2 && possibilities[valPos] == 0) {
+						possibilities[valPos] = round;
+						doneSomething = true;
+					}
+				}
+				else {
+					if (block != row2 && possibilities[valPos] == 0) {
+						possibilities[valPos] = round;
+						doneSomething = true;
+					}
+				}
+			}
+		}
+		return doneSomething;
 	}
 
     // CHECKED!
@@ -987,65 +984,7 @@ public class QQWing {
     // CHECKED!
 	private boolean hiddenPairInColumn(int round) {
 		for (int column = 0; column < ROW_COL_SEC_SIZE; column++) {
-			for (int valIndex = 0; valIndex < ROW_COL_SEC_SIZE; valIndex++) {
-				int r1 = -1;
-				int r2 = -1;
-				int valCount = 0;
-				for (int row = 0; row < ROW_COL_SEC_SIZE; row++) {
-					int position = rowColumnToCell(row, column);
-					int valPos = getPossibilityIndex(valIndex, position);
-					if (possibilities[valPos] == 0) {
-						if (r1 == -1 || r1 == row) {
-							r1 = row;
-						} else if (r2 == -1 || r2 == row) {
-							r2 = row;
-						}
-						valCount++;
-					}
-				}
-				if (valCount == 2) {
-					for (int valIndex2 = valIndex + 1; valIndex2 < ROW_COL_SEC_SIZE; valIndex2++) {
-						int r3 = -1;
-						int r4 = -1;
-						int valCount2 = 0;
-						for (int row = 0; row < ROW_COL_SEC_SIZE; row++) {
-							int position = rowColumnToCell(row, column);
-							int valPos = getPossibilityIndex(valIndex2, position);
-							if (possibilities[valPos] == 0) {
-								if (r3 == -1 || r3 == row) {
-									r3 = row;
-								} else if (r4 == -1 || r4 == row) {
-									r4 = row;
-								}
-								valCount2++;
-							}
-						}
-						if (valCount2 == 2 && r1 == r3 && r2 == r4) {
-							boolean doneSomething = false;
-							for (int valIndex3 = 0; valIndex3 < ROW_COL_SEC_SIZE; valIndex3++) {
-								if (valIndex3 != valIndex && valIndex3 != valIndex2) {
-									int position1 = rowColumnToCell(r1, column);
-									int position2 = rowColumnToCell(r2, column);
-									int valPos1 = getPossibilityIndex(valIndex3, position1);
-									int valPos2 = getPossibilityIndex(valIndex3, position2);
-									if (possibilities[valPos1] == 0) {
-										possibilities[valPos1] = round;
-										doneSomething = true;
-									}
-									if (possibilities[valPos2] == 0) {
-										possibilities[valPos2] = round;
-										doneSomething = true;
-									}
-								}
-							}
-							if (doneSomething) {
-								if (logHistory || recordHistory) addHistoryItem(new LogItem(round, LogType.HIDDEN_PAIR_COLUMN, valIndex + 1, rowColumnToCell(r1, column)));
-								return true;
-							}
-						}
-					}
-				}
-			}
+			if (hiddenPair(round, column, "Column")) return true;
 		}
 		return false;
 	}
@@ -1053,65 +992,7 @@ public class QQWing {
     // CHECKED!
 	private boolean hiddenPairInSection(int round) {
 		for (int section = 0; section < ROW_COL_SEC_SIZE; section++) {
-			for (int valIndex = 0; valIndex < ROW_COL_SEC_SIZE; valIndex++) {
-				int si1 = -1;
-				int si2 = -1;
-				int valCount = 0;
-				for (int secInd = 0; secInd < ROW_COL_SEC_SIZE; secInd++) {
-					int position = sectionToCell(section, secInd);
-					int valPos = getPossibilityIndex(valIndex, position);
-					if (possibilities[valPos] == 0) {
-						if (si1 == -1 || si1 == secInd) {
-							si1 = secInd;
-						} else if (si2 == -1 || si2 == secInd) {
-							si2 = secInd;
-						}
-						valCount++;
-					}
-				}
-				if (valCount == 2) {
-					for (int valIndex2 = valIndex + 1; valIndex2 < ROW_COL_SEC_SIZE; valIndex2++) {
-						int si3 = -1;
-						int si4 = -1;
-						int valCount2 = 0;
-						for (int secInd = 0; secInd < ROW_COL_SEC_SIZE; secInd++) {
-							int position = sectionToCell(section, secInd);
-							int valPos = getPossibilityIndex(valIndex2, position);
-							if (possibilities[valPos] == 0) {
-								if (si3 == -1 || si3 == secInd) {
-									si3 = secInd;
-								} else if (si4 == -1 || si4 == secInd) {
-									si4 = secInd;
-								}
-								valCount2++;
-							}
-						}
-						if (valCount2 == 2 && si1 == si3 && si2 == si4) {
-							boolean doneSomething = false;
-							for (int valIndex3 = 0; valIndex3 < ROW_COL_SEC_SIZE; valIndex3++) {
-								if (valIndex3 != valIndex && valIndex3 != valIndex2) {
-									int position1 = sectionToCell(section, si1);
-									int position2 = sectionToCell(section, si2);
-									int valPos1 = getPossibilityIndex(valIndex3, position1);
-									int valPos2 = getPossibilityIndex(valIndex3, position2);
-									if (possibilities[valPos1] == 0) {
-										possibilities[valPos1] = round;
-										doneSomething = true;
-									}
-									if (possibilities[valPos2] == 0) {
-										possibilities[valPos2] = round;
-										doneSomething = true;
-									}
-								}
-							}
-							if (doneSomething) {
-								if (logHistory || recordHistory) addHistoryItem(new LogItem(round, LogType.HIDDEN_PAIR_SECTION, valIndex + 1, sectionToCell(section, si1)));
-								return true;
-							}
-						}
-					}
-				}
-			}
+			if (hiddenPair(round, section, "Section")) return true;
 		}
 		return false;
 	}
@@ -1119,61 +1000,66 @@ public class QQWing {
     // CHECKED!
 	private boolean hiddenPairInRow(int round) {
 		for (int row = 0; row < ROW_COL_SEC_SIZE; row++) {
-			for (int valIndex = 0; valIndex < ROW_COL_SEC_SIZE; valIndex++) {
-				int c1 = -1;
-				int c2 = -1;
-				int valCount = 0;
-				for (int column = 0; column < ROW_COL_SEC_SIZE; column++) {
-					int position = rowColumnToCell(row, column);
-					int valPos = getPossibilityIndex(valIndex, position);
-					if (possibilities[valPos] == 0) {
-						if (c1 == -1 || c1 == column) {
-							c1 = column;
-						} else if (c2 == -1 || c2 == column) {
-							c2 = column;
-						}
-						valCount++;
+			if (hiddenPair(round, row, "Row")) return true;
+		}
+		return false;
+	}
+
+	private boolean hiddenPair(int round, int block, String blockType) {
+		for (int valIndex = 0; valIndex < ROW_COL_SEC_SIZE; valIndex++) {
+			int cell1 = -1;
+			int cell2 = -1;
+			int valCount = 0;
+			for (int cellIndex = 0; cellIndex < ROW_COL_SEC_SIZE; cellIndex++) {
+				int position = getPosition(block, cellIndex, blockType);
+				int valPos = getPossibilityIndex(valIndex, position);
+				if (possibilities[valPos] == 0) {
+					if (cell1 == -1 || cell1 == cellIndex) {
+						cell1 = cellIndex;
+					} else if (cell2 == -1 || cell2 == cellIndex) {
+						cell2 = cellIndex;
 					}
+					valCount++;
 				}
-				if (valCount == 2) {
-					for (int valIndex2 = valIndex + 1; valIndex2 < ROW_COL_SEC_SIZE; valIndex2++) {
-						int c3 = -1;
-						int c4 = -1;
-						int valCount2 = 0;
-						for (int column = 0; column < ROW_COL_SEC_SIZE; column++) {
-							int position = rowColumnToCell(row, column);
-							int valPos = getPossibilityIndex(valIndex2, position);
-							if (possibilities[valPos] == 0) {
-								if (c3 == -1 || c3 == column) {
-									c3 = column;
-								} else if (c4 == -1 || c4 == column) {
-									c4 = column;
+			}
+			if (valCount == 2) {
+				for (int valIndex2 = valIndex + 1; valIndex2 < ROW_COL_SEC_SIZE; valIndex2++) {
+					int cell3 = -1;
+					int cell4 = -1;
+					int valCount2 = 0;
+					for (int cellIndex = 0; cellIndex < ROW_COL_SEC_SIZE; cellIndex++) {
+						int position = getPosition(block, cellIndex, blockType);
+						int valPos = getPossibilityIndex(valIndex2, position);
+						if (possibilities[valPos] == 0) {
+							if (cell3 == -1 || cell3 == cellIndex) {
+								cell3 = cellIndex;
+							} else if (cell4 == -1 || cell4 == cellIndex) {
+								cell4 = cellIndex;
+							}
+							valCount2++;
+						}
+					}
+					if (valCount2 == 2 && cell1 == cell3 && cell2 == cell4) {
+						boolean doneSomething = false;
+						for (int valIndex3 = 0; valIndex3 < ROW_COL_SEC_SIZE; valIndex3++) {
+							if (valIndex3 != valIndex && valIndex3 != valIndex2) {
+								int position1 = getPosition(block, cell1, blockType);
+								int position2 = getPosition(block, cell2, blockType);
+								int valPos1 = getPossibilityIndex(valIndex3, position1);
+								int valPos2 = getPossibilityIndex(valIndex3, position2);
+								if (possibilities[valPos1] == 0) {
+									possibilities[valPos1] = round;
+									doneSomething = true;
 								}
-								valCount2++;
+								if (possibilities[valPos2] == 0) {
+									possibilities[valPos2] = round;
+									doneSomething = true;
+								}
 							}
 						}
-						if (valCount2 == 2 && c1 == c3 && c2 == c4) {
-							boolean doneSomething = false;
-							for (int valIndex3 = 0; valIndex3 < ROW_COL_SEC_SIZE; valIndex3++) {
-								if (valIndex3 != valIndex && valIndex3 != valIndex2) {
-									int position1 = rowColumnToCell(row, c1);
-									int position2 = rowColumnToCell(row, c2);
-									int valPos1 = getPossibilityIndex(valIndex3, position1);
-									int valPos2 = getPossibilityIndex(valIndex3, position2);
-									if (possibilities[valPos1] == 0) {
-										possibilities[valPos1] = round;
-										doneSomething = true;
-									}
-									if (possibilities[valPos2] == 0) {
-										possibilities[valPos2] = round;
-										doneSomething = true;
-									}
-								}
-							}
-							if (doneSomething) {
-								if (logHistory || recordHistory) addHistoryItem(new LogItem(round, LogType.HIDDEN_PAIR_ROW, valIndex + 1, rowColumnToCell(row, c1)));
-								return true;
-							}
+						if (doneSomething) {
+							addHistory(round, valIndex, getPosition(block, cell1, blockType), blockType);
+							return true;
 						}
 					}
 				}
@@ -1182,7 +1068,27 @@ public class QQWing {
 		return false;
 	}
 
-    // CHECKED!
+	private int getPosition(int block, int cell, String blockType) {
+		if (blockType == "Section")
+			return sectionToCell(block, cell);
+		else if (blockType == "Column")
+			return rowColumnToCell(cell, block);
+		else
+			return rowColumnToCell(block, cell);
+	}
+
+	private void addHistory(int round, int valIndex, int position, String blockType) {
+		if (logHistory || recordHistory) {
+			if (blockType == "Section")
+				addHistoryItem(new LogItem(round, LogType.HIDDEN_PAIR_SECTION, valIndex + 1, position));
+			else if (blockType == "Column")
+				addHistoryItem(new LogItem(round, LogType.HIDDEN_PAIR_COLUMN, valIndex + 1, position));
+			else
+				addHistoryItem(new LogItem(round, LogType.HIDDEN_PAIR_ROW, valIndex + 1, position));
+		}
+	}
+
+	// CHECKED!
 	private boolean handleNakedPairs(int round) {
 		for (int position = 0; position < BOARD_SIZE; position++) {
 			int possibilities = countPossibilities(position);

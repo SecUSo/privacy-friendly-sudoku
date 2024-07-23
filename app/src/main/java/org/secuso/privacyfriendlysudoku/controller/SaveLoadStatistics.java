@@ -37,13 +37,14 @@ import org.secuso.privacyfriendlysudoku.game.listener.ITimerListener;
  */
 public class SaveLoadStatistics implements ITimerListener, IHintListener {
 
+    private FileInputOutput fileIO = new FileInputOutput();
 
     private static String FILE_EXTENSION = ".txt";
     private static String SAVE_PREFIX = "stat";
     private static String SAVES_DIR = "stats";
     private GameController gc;
     Context context;
-    private int numberOfArguents = 2;
+    //private int numberOfArguents = 2;
 
     //GameDifficulty, time, gamemode, #hints, AvTime, amountOf Games per GameDifficulty,
     public SaveLoadStatistics(Context context){
@@ -59,29 +60,53 @@ public class SaveLoadStatistics implements ITimerListener, IHintListener {
         File dir = context.getDir(SAVES_DIR, 0);
         HighscoreInfoContainer infos;
         byte[] bytes;
-        FileInputStream inputStream;
+        //FileInputStream inputStream;
         File file;
         file = new File(dir,SAVE_PREFIX+t.name()+"_"+gd.name()+FILE_EXTENSION);
         bytes = new byte[(int)file.length()];
 
         try {
+            /*
             inputStream = new FileInputStream(file);
             try {
                 inputStream.read(bytes);
             }finally {
                 inputStream.close();
             }
+            */
+            fileIO.readFile(file,bytes);
         }  catch (IOException e) {
             Log.e("Failed to read file","File could not be read");
         }
-        infos = new HighscoreInfoContainer(t,gd);
+        infos = getHighscoreInfoContainer(t, gd, bytes, file);
+        return infos;
+
+    }
+
+    private HighscoreInfoContainer getHighscoreInfoContainer(GameType t, GameDifficulty gd, byte[] bytes, File file) {
+        HighscoreInfoContainer infos;
+        infos = new HighscoreInfoContainer(t, gd);
         try {
             infos.setInfosFromFile(new String(bytes));
-        } catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             file.delete();
         }
         return infos;
+    }
 
+    private HighscoreInfoContainer getHighscoreInfoContainer(byte[] bytes) {
+        HighscoreInfoContainer infoContainer;
+        infoContainer = new HighscoreInfoContainer();
+        String fileStats = new String(bytes);
+        if (!fileStats.isEmpty()) {
+            try {
+                infoContainer.setInfosFromFile(fileStats);
+
+            } catch (IllegalArgumentException e) {
+                Log.e("Parse Error","Illegal Atgumanet");
+            }
+        }
+        return infoContainer;
     }
 
     public List<HighscoreInfoContainer> loadStats(GameType t) {
@@ -90,37 +115,32 @@ public class SaveLoadStatistics implements ITimerListener, IHintListener {
         List<HighscoreInfoContainer> result = new ArrayList<>();
         HighscoreInfoContainer infos;
         byte[] bytes;
-        FileInputStream inputStream;
+        //FileInputStream inputStream;
         File file;
         for (GameDifficulty dif : difficulties){
             file = new File(dir,SAVE_PREFIX+t.name()+"_"+dif.name()+FILE_EXTENSION);
             bytes = new byte[(int)file.length()];
             try {
+                /*
                 inputStream = new FileInputStream(file);
                 try {
                     inputStream.read(bytes);
                 }finally {
                     inputStream.close();
                 }
+                */
+                fileIO.readFile(file,bytes);
             }  catch (IOException e) {
                 Log.e("Failed to read file","File could not be read");
             }
-            infos = new HighscoreInfoContainer(t,dif);
-            try {
-            infos.setInfosFromFile(new String(bytes));
-            } catch (IllegalArgumentException e){
-                file.delete();
-            }
-                result.add(infos);
+            infos = getHighscoreInfoContainer(t, dif, bytes, file);
+            result.add(infos);
         }
-
-
 
         return result;
     }
 
     public static void resetStats(Context context) {
-
 
         File dir = context.getDir(SAVES_DIR, 0);
         File file;
@@ -137,8 +157,6 @@ public class SaveLoadStatistics implements ITimerListener, IHintListener {
         HighscoreInfoContainer infos = loadStats(gameType, gd);
         infos.incTime();
         saveContainer(infos,gd,gameType);
-
-
     }
     public void incHints(GameDifficulty gd, GameType gameType){
         HighscoreInfoContainer infos = loadStats(gameType,gd);
@@ -151,17 +169,19 @@ public class SaveLoadStatistics implements ITimerListener, IHintListener {
         File dir = context.getDir(SAVES_DIR, 0);
         File file = new File(dir, SAVE_PREFIX+t.name()+"_"+gd.name()+FILE_EXTENSION);
 
-
         String stats = infos.getActualStats();
         try {
+            /*
             FileOutputStream stream = new FileOutputStream(file);
             try {
                 stream.write(stats.getBytes());
             } finally {
                 stream.close();
             }
+            */
+            fileIO.writeFile(file,stats);
         } catch(IOException e) {
-            Log.e("File Manager", "Could not save game. IOException occured.");
+            Log.e("File Manager", "Could not save game. IOException occurred.");
         }
     }
 
@@ -180,26 +200,30 @@ public class SaveLoadStatistics implements ITimerListener, IHintListener {
         if (file.isFile()){
             byte[] bytes = new byte[(int)file.length()];
             try {
+                /*
                 FileInputStream stream = new FileInputStream(file);
                 try {
                     stream.read(bytes);
                 } finally {
                     stream.close();
                 }
+                */
+                fileIO.readFile(file,bytes);
             }catch (IOException e) {
             Log.e("Stats load to save game","error while load old game Stats");
-        }
-
+            }
+/*
         String fileStats = new String(bytes);
         if (!fileStats.isEmpty()) {
             try {
                 infoContainer.setInfosFromFile(fileStats);
 
             } catch (IllegalArgumentException e) {
-                Log.e("Parse Error","Illegal Atgumanet");
+                Log.e("Parse Error","Illegal Argument");
             }
         }
-
+*/
+            getHighscoreInfoContainer(bytes);
         }
 
         //add stats of current game stats or create init stats
@@ -207,14 +231,17 @@ public class SaveLoadStatistics implements ITimerListener, IHintListener {
 
         String stats = infoContainer.getActualStats();
         try {
+            /*
             FileOutputStream stream = new FileOutputStream(file);
             try {
                 stream.write(stats.getBytes());
             } finally {
                 stream.close();
             }
+            */
+            fileIO.writeFile(file,stats);
         } catch(IOException e) {
-            Log.e("File Manager", "Could not save game. IOException occured.");
+            Log.e("File Manager", "Could not save game. IOException occurred.");
         }
     }
 

@@ -32,6 +32,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.util.Pair;
 
 import org.secuso.privacyfriendlysudoku.controller.GameController;
 import org.secuso.privacyfriendlysudoku.controller.Symbol;
@@ -41,6 +42,8 @@ import org.secuso.privacyfriendlysudoku.game.GameDifficulty;
 import org.secuso.privacyfriendlysudoku.game.GameType;
 import org.secuso.privacyfriendlysudoku.ui.listener.IFinalizeDialogFragmentListener;
 import org.secuso.privacyfriendlysudoku.ui.listener.IImportDialogFragmentListener;
+import org.secuso.privacyfriendlysudoku.ui.presenter.CreateSudokuContract;
+import org.secuso.privacyfriendlysudoku.ui.presenter.CreateSudokuPresenter;
 import org.secuso.privacyfriendlysudoku.ui.view.CreateSudokuSpecialButtonLayout;
 import org.secuso.privacyfriendlysudoku.ui.view.R;
 import org.secuso.privacyfriendlysudoku.ui.view.SudokuFieldLayout;
@@ -51,9 +54,10 @@ import org.secuso.privacyfriendlysudoku.ui.view.SudokuKeyboardLayout;
  * IFinalizeDialogFragementListener. It is used to create custom sudokus, which are passed to the
  * GameActivity afterwards.
  */
-public class CreateSudokuActivity extends BaseActivity implements IFinalizeDialogFragmentListener, IImportDialogFragmentListener {
+public class CreateSudokuActivity extends BaseActivity implements CreateSudokuContract.View, IFinalizeDialogFragmentListener, IImportDialogFragmentListener{
 
-    GameController gameController;
+    private CreateSudokuPresenter presenter;
+
     SharedPreferences sharedPref;
     SudokuFieldLayout layout;
     SudokuKeyboardLayout keyboard;
@@ -63,63 +67,48 @@ public class CreateSudokuActivity extends BaseActivity implements IFinalizeDialo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        presenter = new CreateSudokuPresenter();
+        presenter.attachView(this);
+
         sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
 
         if (sharedPref.getBoolean("pref_keep_screen_on", true)) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         }
 
-        if(savedInstanceState == null) {
-
-            gameController = new GameController(sharedPref, getApplicationContext());
-
-            Bundle extras = getIntent().getExtras();
-            GameType gameType = GameType.valueOf(extras.getString("gameType", GameType.Default_9x9.name()));
-            int sectionSize = gameType.getSize();
-            int boardSize = sectionSize * sectionSize;
-
-            GameInfoContainer container = new GameInfoContainer(0, GameDifficulty.Moderate,
-                    gameType, new int[boardSize], new int[boardSize], new boolean[boardSize][sectionSize]);
-            gameController.loadLevel(container);
-        } else {
-            gameController = savedInstanceState.getParcelable("gameController");
-            if(gameController != null) {
-                gameController.removeAllListeners();
-                gameController.setContextAndSettings(getApplicationContext(), sharedPref);
-            }
-        }
+        presenter.createGame(savedInstanceState, sharedPref, getIntent(), getApplicationContext());
 
         setUpLayout();
     }
 
-    private void setUpLayout() {
+    public void setUpLayout() {
 
         setContentView(R.layout.activity_create_sudoku);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(getString(gameController.getGameType().getStringResID()));
+        getSupportActionBar().setTitle(getString(presenter.getGameController().getGameType().getStringResID()));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         layout = (SudokuFieldLayout)findViewById(R.id.sudokuLayout);
-        layout.setSettingsAndGame(sharedPref, gameController);
+        layout.setSettingsAndGame(sharedPref, presenter.getGameController());
 
         keyboard = (SudokuKeyboardLayout) findViewById(R.id.sudokuKeyboardLayout);
         keyboard.removeAllViews();
-        keyboard.setGameController(gameController);
+        keyboard.setGameController(presenter.getGameController());
         Point p = new Point();
         getWindowManager().getDefaultDisplay().getSize(p);
 
         int orientation = getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT ?
                 LinearLayout.HORIZONTAL : LinearLayout.VERTICAL;
 
-        keyboard.setKeyBoard(gameController.getSize(), p.x,layout.getHeight()-p.y, orientation);
+        keyboard.setKeyBoard(presenter.getGameController().getSize(), p.x,layout.getHeight()-p.y, orientation);
 
         specialButtonLayout = (CreateSudokuSpecialButtonLayout) findViewById(R.id.createSudokuLayout);
-        specialButtonLayout.setButtons(p.x, gameController, keyboard, getFragmentManager(), orientation,
-                CreateSudokuActivity.this, this, this);
+        specialButtonLayout.setButtons(p.x, presenter.getGameController(), keyboard, getFragmentManager(), orientation,
+                CreateSudokuActivity.this, this, presenter);
 
-        gameController.notifyHighlightChangedListeners();
+        presenter.getGameController().notifyHighlightChangedListeners();
     }
 
     @Override
@@ -180,6 +169,19 @@ public class CreateSudokuActivity extends BaseActivity implements IFinalizeDialo
         return verifier.hasUniqueSolution();
     }
 
+    @Override
+    public void showToast() {
+        Toast.makeText(CreateSudokuActivity.this, R.string.failed_to_verify_custom_sudoku_toast, Toast.LENGTH_LONG).show();
+        return;
+    }
+
+    @Override
+    public void showToast(StringBuilder message) {
+        Toast.makeText(CreateSudokuActivity.this,
+                this.getString(R.string.menu_import_wrong_format_custom_sudoku) + " " + message.toString(), Toast.LENGTH_LONG).show();
+        return;
+    }
+
     /**
      * If the positive button of the FinalizeDialog is clicked, verify the sudoku. Immediately pass
      * it to the GameActivity, if the verification process is successful, and do nothing apart from
@@ -189,8 +191,8 @@ public class CreateSudokuActivity extends BaseActivity implements IFinalizeDialo
      */
     public void onFinalizeDialogPositiveClick() {
         Toast.makeText(CreateSudokuActivity.this, R.string.verify_custom_sudoku_process_toast, Toast.LENGTH_SHORT).show();
-        String boardContent = gameController.getCodeOfField();
-        boolean distinctlySolvable = verify(gameController.getGameType(), boardContent);
+        String boardContent = presenter.getGameController().getCodeOfField();
+        boolean distinctlySolvable = verify(presenter.getGameController().getGameType(), boardContent);
 
         if(distinctlySolvable) {
             Toast.makeText(CreateSudokuActivity.this, R.string.finished_verifying_custom_sudoku_toast, Toast.LENGTH_LONG).show();
@@ -213,58 +215,10 @@ public class CreateSudokuActivity extends BaseActivity implements IFinalizeDialo
         }
 
     }
+
+    @Override
     public void onImportDialogPositiveClick(String input) {
-        String inputSudoku = null;
-        String prefix;
-        StringBuilder errorMessage = new StringBuilder();
-
-        /*  remove the present prefix, or, if the input contains none of the valid prefixes, notify the user
-         that their input is not valid */
-        for (int i = 0; i < GameActivity.validUris.size(); i++) {
-            prefix = GameActivity.validUris.get(i).getHost().equals("") ?
-                    GameActivity.validUris.get(i).getScheme() + "://" :
-                    GameActivity.validUris.get(i).getScheme() + "://" + GameActivity.validUris.get(i).getHost() + "/";
-            if (input.startsWith(prefix)) {
-                inputSudoku = input.replace(prefix, "");
-                break;
-            }
-
-            String endOfRecord = (i == GameActivity.validUris.size() - 1) ? "" : ", ";
-            errorMessage.append(prefix);
-            errorMessage.append(endOfRecord);
-        }
-
-        // the inputSudoku variable being null means the input did not match any of the valid prefixes
-        if (inputSudoku == null) {
-            Toast.makeText(CreateSudokuActivity.this,
-                    this.getString(R.string.menu_import_wrong_format_custom_sudoku) + " " + errorMessage.toString(), Toast.LENGTH_LONG).show();
-            return;
-        }
-
-        boolean validSize = Math.sqrt(inputSudoku.length()) == gameController.getSize();
-
-        if (!validSize) {
-            Toast.makeText(CreateSudokuActivity.this, R.string.failed_to_verify_custom_sudoku_toast, Toast.LENGTH_LONG).show();
-            return;
-        }
-
-        //check whether or not the sudoku is valid and has a unique solution
-        boolean solvable = verify(gameController.getGameType(), inputSudoku);
-
-        // if the encoded sudoku is solvable, sent the code directly to the GameActivity; if not, notify the user
-        if (solvable) {
-           int boardSize = gameController.getGameType().getSize() * gameController.getGameType().getSize();
-            GameInfoContainer container = new GameInfoContainer(0, GameDifficulty.Unspecified,
-                    gameController.getGameType(), new int [boardSize], new int [boardSize],
-                    new boolean [boardSize][gameController.getGameType().getSize()]);
-            container.parseSetValues(inputSudoku);
-
-            gameController.loadLevel(container);
-            setUpLayout();
-
-        } else {
-            Toast.makeText(CreateSudokuActivity.this, R.string.failed_to_verify_custom_sudoku_toast, Toast.LENGTH_LONG).show();
-        }
+        presenter.onImportDialogPositiveClick(input);
     }
 
     /**
@@ -281,14 +235,13 @@ public class CreateSudokuActivity extends BaseActivity implements IFinalizeDialo
         super.onSaveInstanceState(savedInstanceState);
 
         // Save the user's current game state
-        savedInstanceState.putParcelable("gameController", gameController);
+        savedInstanceState.putParcelable("gameController", presenter.getGameController());
 
     }
 
     @Override
     public void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-
-        gameController = savedInstanceState.getParcelable("gameController");
+        presenter.setGameController(savedInstanceState.getParcelable("gameController"));
     }
 }
