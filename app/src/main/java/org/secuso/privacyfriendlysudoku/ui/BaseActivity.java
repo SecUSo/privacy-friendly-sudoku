@@ -22,7 +22,7 @@ import android.os.Handler;
 import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 
-import org.secuso.privacyfriendlysudoku.ui.view.R;
+import org.secuso.privacyfriendlysudoku.R;
 
 /**
  * Created by Chris on 15.10.2016.

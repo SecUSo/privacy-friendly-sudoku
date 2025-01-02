@@ -43,7 +43,7 @@ import androidx.appcompat.widget.Toolbar;
 import org.secuso.privacyfriendlysudoku.controller.qqwing.QQWing;
 import org.secuso.privacyfriendlysudoku.game.GameDifficulty;
 import org.secuso.privacyfriendlysudoku.game.GameType;
-import org.secuso.privacyfriendlysudoku.ui.view.R;
+import org.secuso.privacyfriendlysudoku.R;
 
 import java.text.DateFormat;
 import java.util.Calendar;

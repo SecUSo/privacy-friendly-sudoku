@@ -32,7 +32,7 @@ import androidx.preference.PreferenceGroup;
 import androidx.preference.PreferenceScreen;
 
 import org.secuso.privacyfriendlysudoku.ui.SettingsActivity;
-import org.secuso.privacyfriendlysudoku.ui.view.R;
+import org.secuso.privacyfriendlysudoku.R;
 
 public class SettingsActivity extends AppCompatActivity {
 

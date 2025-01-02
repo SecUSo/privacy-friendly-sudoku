@@ -42,7 +42,7 @@ import org.secuso.privacyfriendlysudoku.game.GameType;
 import org.secuso.privacyfriendlysudoku.ui.listener.IFinalizeDialogFragmentListener;
 import org.secuso.privacyfriendlysudoku.ui.listener.IImportDialogFragmentListener;
 import org.secuso.privacyfriendlysudoku.ui.view.CreateSudokuSpecialButtonLayout;
-import org.secuso.privacyfriendlysudoku.ui.view.R;
+import org.secuso.privacyfriendlysudoku.R;
 import org.secuso.privacyfriendlysudoku.ui.view.SudokuFieldLayout;
 import org.secuso.privacyfriendlysudoku.ui.view.SudokuKeyboardLayout;
 

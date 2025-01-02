@@ -67,12 +67,12 @@ import org.secuso.privacyfriendlysudoku.game.listener.ITimerListener;
 import org.secuso.privacyfriendlysudoku.ui.listener.IHintDialogFragmentListener;
 import org.secuso.privacyfriendlysudoku.ui.listener.IResetDialogFragmentListener;
 import org.secuso.privacyfriendlysudoku.ui.listener.IShareDialogFragmentListener;
-import org.secuso.privacyfriendlysudoku.ui.view.R;
+import org.secuso.privacyfriendlysudoku.R;
 import org.secuso.privacyfriendlysudoku.ui.view.SudokuFieldLayout;
 import org.secuso.privacyfriendlysudoku.ui.view.SudokuKeyboardLayout;
 import org.secuso.privacyfriendlysudoku.ui.view.SudokuSpecialButtonLayout;
 import org.secuso.privacyfriendlysudoku.ui.view.WinDialog;
-import org.secuso.privacyfriendlysudoku.ui.view.databinding.DialogFragmentShareBoardBinding;
+import org.secuso.privacyfriendlysudoku.databinding.DialogFragmentShareBoardBinding;
 
 
 import java.util.Arrays;

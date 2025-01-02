@@ -43,7 +43,7 @@ import org.secuso.privacyfriendlysudoku.controller.SaveLoadStatistics;
 import org.secuso.privacyfriendlysudoku.controller.helper.HighscoreInfoContainer;
 import org.secuso.privacyfriendlysudoku.game.GameDifficulty;
 import org.secuso.privacyfriendlysudoku.game.GameType;
-import org.secuso.privacyfriendlysudoku.ui.view.R;
+import org.secuso.privacyfriendlysudoku.R;
 
 import java.util.List;
 

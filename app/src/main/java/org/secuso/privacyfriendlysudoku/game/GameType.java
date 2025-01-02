@@ -21,7 +21,7 @@ import android.os.Parcelable;
 
 import java.util.LinkedList;
 
-import org.secuso.privacyfriendlysudoku.ui.view.R;
+import org.secuso.privacyfriendlysudoku.R;
 
 /**
  * Created by Chris on 09.11.2015.

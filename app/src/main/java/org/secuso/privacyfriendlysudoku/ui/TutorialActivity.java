@@ -35,7 +35,7 @@ import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import org.secuso.privacyfriendlysudoku.ui.view.R;
+import org.secuso.privacyfriendlysudoku.R;
 
 /**
  * Class structure taken from tutorial at http://www.androidhive.info/2016/05/android-build-intro-slider-app/

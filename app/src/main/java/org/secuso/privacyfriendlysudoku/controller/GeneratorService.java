@@ -36,7 +36,7 @@ import org.secuso.privacyfriendlysudoku.controller.qqwing.Symmetry;
 import org.secuso.privacyfriendlysudoku.game.GameDifficulty;
 import org.secuso.privacyfriendlysudoku.game.GameType;
 import org.secuso.privacyfriendlysudoku.ui.MainActivity;
-import org.secuso.privacyfriendlysudoku.ui.view.R;
+import org.secuso.privacyfriendlysudoku.R;
 
 import java.util.LinkedList;
 import java.util.List;

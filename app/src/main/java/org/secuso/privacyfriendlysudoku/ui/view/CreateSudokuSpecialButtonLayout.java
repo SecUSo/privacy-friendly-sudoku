@@ -36,6 +36,7 @@ import android.widget.LinearLayout;
 
 import androidx.core.content.ContextCompat;
 
+import org.secuso.privacyfriendlysudoku.R;
 import org.secuso.privacyfriendlysudoku.controller.GameController;
 import org.secuso.privacyfriendlysudoku.game.listener.IHighlightChangedListener;
 import org.secuso.privacyfriendlysudoku.ui.MainActivity;
