@@ -54,6 +54,8 @@
     </array>
     <string name="pref_automatic_note_deletion">Note deletion</string>
     <string name="pref_automatic_note_deletion_summary">Automatically remove notes when setting values on connected cells</string>
+    <string name="pref_deactivate_timer">Deactivate Timer</string>
+    <string name="pref_deactivate_timer_summary">If selected, the time needed to complete a sudoku won\'t be measured. Games played without an active timer won\'t be recorded in the stats.</string>
     <string name="pref_timer_reset">Timer Reset</string>
     <string name="pref_timer_reset_summary">Also reset the timer, when resetting the game board.</string>
     <string name="pref_dark_mode">Dark Theme</string>

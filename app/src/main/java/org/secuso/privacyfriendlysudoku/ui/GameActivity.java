@@ -113,6 +113,7 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
 
         if(gameSolved || !startGame) {
             gameController.pauseTimer();
@@ -121,7 +122,9 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
             mHandler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    gameController.startTimer();
+                    if (!sharedPref.getBoolean("pref_deactivate_timer", false)) {
+                        gameController.startTimer();
+                    }
                 }
             }, MAIN_CONTENT_FADEIN_DURATION);
         }
@@ -349,6 +352,9 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
 
         //set TimerView
         timerView = (TextView)findViewById(R.id.timerView);
+        if (sharedPref.getBoolean("pref_deactivate_timer", false)) {
+            timerView.setVisibility(View.GONE);
+        }
 
 
         //set GameName
@@ -417,18 +423,20 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
             mainContent.animate().alpha(1).setDuration(MAIN_CONTENT_FADEOUT_DURATION);
         }
 
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         gameController.initTimer();
 
         if(!gameSolved && startGame) {
             mHandler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    gameController.startTimer();
+                    if (!sharedPref.getBoolean("pref_deactivate_timer", false)) {
+                        gameController.startTimer();
+                    }
                 }
             }, MAIN_CONTENT_FADEIN_DURATION);
         }
 
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         Symbol s;
         try {
             s = Symbol.valueOf(sharedPref.getString("pref_symbols", Symbol.Default.name()));
@@ -578,10 +586,11 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
             editor.apply();
         }
 
-        //Don't save statistics if game is custom
+        //Don't save statistics if game is custom or timer is deactivated
         boolean isNewBestTime;
+        boolean saveTime = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("pref_deactivate_timer", false);
 
-        if (!gameController.gameIsCustom()) {
+        if (!gameController.gameIsCustom() && !saveTime) {
             //Show time hints new plus old best time
             statistics.saveGameStats();
             isNewBestTime = gameController.getUsedHints() == 0
@@ -605,9 +614,14 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
 
     private WinDialog buildWinDialog(String usedTime, String usedHints, boolean isNewBestTime) {
         Bundle dialogArguments = new Bundle();
-        dialogArguments.putString(WinDialog.ARG_TIME, usedTime);
+        boolean showTime = !PreferenceManager.getDefaultSharedPreferences(this).getBoolean("pref_deactivate_timer", false);
+        if (showTime) {
+            dialogArguments.putString(WinDialog.ARG_TIME, usedTime);
+        }
         dialogArguments.putString(WinDialog.ARG_HINT, usedHints);
-        dialogArguments.putBoolean(WinDialog.ARG_BEST, isNewBestTime);
+        if (showTime) {
+            dialogArguments.putBoolean(WinDialog.ARG_BEST, isNewBestTime);
+        }
 
         dialog = new WinDialog();
         dialog.setArguments(dialogArguments);
@@ -623,7 +637,9 @@ public class GameActivity extends BaseActivity implements NavigationView.OnNavig
     public void onTick(int time) {
 
         // display the time
-        timerView.setText(timeToString(time));
+        if (!PreferenceManager.getDefaultSharedPreferences(this).getBoolean("pref_deactivate_timer", false)) {
+            timerView.setText(timeToString(time));
+        }
 
         if(gameSolved || !startGame) return;
         // save time
