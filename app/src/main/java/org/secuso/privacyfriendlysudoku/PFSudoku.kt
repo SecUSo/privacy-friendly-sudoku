@@ -41,8 +41,8 @@ class PFSudoku : Application(), Configuration.Provider {
         }
     }
 
-    override fun getWorkManagerConfiguration(): Configuration {
-        return Configuration.Builder().setMinimumLoggingLevel(Log.INFO).build()
+    override val workManagerConfiguration by lazy {
+        Configuration.Builder().setMinimumLoggingLevel(Log.INFO).build()
     }
 
     companion object {

@@ -2,7 +2,8 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion 33
+    compileSdk 34
+    namespace "org.secuso.privacyfriendlysudoku"
 
     testOptions {
         unitTests.returnDefaultValues = true
@@ -11,9 +12,9 @@ android {
     defaultConfig {
         applicationId "org.secuso.privacyfriendlysudoku"
         minSdkVersion 17
-        targetSdkVersion 33
-        versionCode 14
-        versionName "3.1.1"
+        targetSdkVersion 34
+        versionCode 15
+        versionName "3.1.2"
         vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
@@ -22,9 +23,29 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    buildFeatures {
+        buildConfig true
+    }
+
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_17.toString()
+    }
+
+    kotlin {
+        jvmToolchain(17)
+    }
+
+    android.applicationVariants.configureEach { variant ->
+        variant.outputs.configureEach {
+            def appName = "pfa-sudoku"
+            outputFileName = appName + "-${variant.name}-v${variant.versionName}.apk"
+        }
     }
 
     dataBinding {
