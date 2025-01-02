@@ -30,6 +30,7 @@ public enum GameType implements Parcelable{
     Unspecified(1,1,1,R.string.gametype_unspecified,R.drawable.icon_default_6x6),
     Default_9x9(9,3,3,R.string.gametype_default_9x9,R.drawable.icon_default_9x9),
     Default_12x12(12,3,4,R.string.gametype_default_12x12,R.drawable.icon_default_12x12),
+    Default_16x16(16,4,4,R.string.gametype_default_16x16,R.drawable.icon_default_16x16),
     Default_6x6(6,2,3,R.string.gametype_default_6x6,R.drawable.icon_default_6x6),
     X_9x9(9,3,3,R.string.gametype_x_9x9,R.drawable.icon_default_9x9),
     Hyper_9x9(9,3,3,R.string.gametype_hyper_9x9,R.drawable.icon_default_9x9);
@@ -54,6 +55,7 @@ public enum GameType implements Parcelable{
         result.add(Default_6x6);
         result.add(Default_9x9);
         result.add(Default_12x12);
+        result.add(Default_16x16);
         return result;
     }
 
