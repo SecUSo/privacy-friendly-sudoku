@@ -290,7 +290,6 @@ public class StatsActivity extends BaseActivity {
             View rootView = inflater.inflate(R.layout.fragment_stats, container, false);
             this.rootView = rootView;
             resetGeneral();
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
 
             SaveLoadStatistics s = new SaveLoadStatistics(this.getContext());
             List<HighscoreInfoContainer> stats = s.loadStats(GameType.getValidGameTypes().get(getArguments().getInt(ARG_SECTION_NUMBER)));

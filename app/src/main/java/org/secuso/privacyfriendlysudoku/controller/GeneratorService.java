@@ -22,7 +22,11 @@ import android.content.Intent;
 import androidx.annotation.Nullable;
 import androidx.core.app.JobIntentService;
 import androidx.core.app.NotificationCompat;
+import androidx.core.app.ServiceCompat;
 import androidx.core.content.ContextCompat;
+
+import android.content.pm.ServiceInfo;
+import android.os.Build;
 import android.util.Log;
 import android.util.Pair;
 
@@ -273,7 +277,11 @@ public class GeneratorService extends JobIntentService {
         builder.setPriority(NotificationCompat.PRIORITY_HIGH);
         builder.setWhen(0);
         builder.setSmallIcon(R.drawable.splash_icon);
-        startForeground(50, builder.build());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            ServiceCompat.startForeground(this, 50, builder.build(), ServiceInfo.FOREGROUND_SERVICE_TYPE_SHORT_SERVICE);
+        } else {
+            startForeground(50, builder.build());
+        }
     }
 
     static void enqueueWork(Context context, Intent intent) {

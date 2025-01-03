@@ -52,6 +52,10 @@ android {
     dataBinding {
         enabled = true
     }
+
+    lint {
+        lintConfig = file("lint.xml")
+    }
 }
 
 dependencies {
