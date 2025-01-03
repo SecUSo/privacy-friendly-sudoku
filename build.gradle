@@ -2,13 +2,13 @@
 
 buildscript {
     repositories {
-        jcenter()
+        mavenCentral()
         google()
     }
 
-    ext.kotlin_version = "1.7.20"
+    ext.kotlin_version = "2.0.21"
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.4.2'
+        classpath 'com.android.tools.build:gradle:8.3.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 
         // NOTE: Do not place your application dependencies here; they belong
@@ -16,9 +16,13 @@ buildscript {
     }
 }
 
+plugins {
+    id 'com.google.devtools.ksp' version "$kotlin_version-1.0.26" apply false
+}
+
 allprojects {
     repositories {
-        jcenter()
+        mavenCentral()
         google()
     }
 }

@@ -22,7 +22,7 @@ import androidx.annotation.StringRes;
 
 import java.util.LinkedList;
 
-import org.secuso.privacyfriendlysudoku.ui.view.R;
+import org.secuso.privacyfriendlysudoku.R;
 
 /**
  * Created by Chris on 18.11.2015.

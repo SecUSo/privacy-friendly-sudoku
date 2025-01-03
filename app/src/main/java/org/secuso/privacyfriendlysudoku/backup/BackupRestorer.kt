@@ -101,6 +101,7 @@ class BackupRestorer : IBackupRestorer {
                 "pref_highlight_connected",
                 "pref_keep_screen_on",
                 "pref_automatic_note_deletion",
+                "pref_deactivate_timer",
                 "pref_dark_mode_automatically_by_system" -> preferences.putBoolean(name, reader.nextBoolean())
                 "lastChosenDifficulty",
                 "pref_symbols",

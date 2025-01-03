@@ -19,9 +19,11 @@ package org.secuso.privacyfriendlysudoku
 import android.app.Application
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.content.Context
 import android.os.Build
 import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.multidex.MultiDex
 import androidx.work.Configuration
 import org.secuso.privacyfriendlysudoku.backup.BackupCreator
 import org.secuso.privacyfriendlysudoku.backup.BackupRestorer
@@ -41,8 +43,13 @@ class PFSudoku : Application(), Configuration.Provider {
         }
     }
 
-    override fun getWorkManagerConfiguration(): Configuration {
-        return Configuration.Builder().setMinimumLoggingLevel(Log.INFO).build()
+    override val workManagerConfiguration by lazy {
+        Configuration.Builder().setMinimumLoggingLevel(Log.INFO).build()
+    }
+
+    override fun attachBaseContext(base: Context) {
+        super.attachBaseContext(base)
+        MultiDex.install(this)
     }
 
     companion object {

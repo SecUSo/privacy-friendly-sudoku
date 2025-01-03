@@ -7,11 +7,19 @@
         android:summary="@string/pref_automatic_note_deletion_summary"
         android:defaultValue="true"/>
 
+    <SwitchPreference android:id="@+id/pref_timer"
+        android:key="pref_deactivate_timer"
+        android:title="@string/pref_deactivate_timer"
+        android:summary="@string/pref_deactivate_timer_summary"
+        android:disableDependentsState="true"
+        android:defaultValue="false" />
+
     <SwitchPreference android:id="@+id/pref_timer_reset"
         android:key="pref_timer_reset"
         android:title="@string/pref_timer_reset"
         android:summary="@string/pref_timer_reset_summary"
-        android:defaultValue="true" />
+        android:defaultValue="true"
+        android:dependency="pref_deactivate_timer"/>
 
     <SwitchPreference android:id="@+id/pref_keep_screen_on"
         android:key="pref_keep_screen_on"

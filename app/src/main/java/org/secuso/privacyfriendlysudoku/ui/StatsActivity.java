@@ -43,7 +43,7 @@ import org.secuso.privacyfriendlysudoku.controller.SaveLoadStatistics;
 import org.secuso.privacyfriendlysudoku.controller.helper.HighscoreInfoContainer;
 import org.secuso.privacyfriendlysudoku.game.GameDifficulty;
 import org.secuso.privacyfriendlysudoku.game.GameType;
-import org.secuso.privacyfriendlysudoku.ui.view.R;
+import org.secuso.privacyfriendlysudoku.R;
 
 import java.util.List;
 
@@ -290,7 +290,6 @@ public class StatsActivity extends BaseActivity {
             View rootView = inflater.inflate(R.layout.fragment_stats, container, false);
             this.rootView = rootView;
             resetGeneral();
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
 
             SaveLoadStatistics s = new SaveLoadStatistics(this.getContext());
             List<HighscoreInfoContainer> stats = s.loadStats(GameType.getValidGameTypes().get(getArguments().getInt(ARG_SECTION_NUMBER)));
