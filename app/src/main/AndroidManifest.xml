@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
@@ -77,8 +78,13 @@
             android:name="org.secuso.privacyfriendlysudoku.controller.GeneratorService"
             android:enabled="true"
             android:permission="android.permission.BIND_JOB_SERVICE"
-            android:foregroundServiceType="shortService"
-            android:exported="false" />
+            android:foregroundServiceType="specialUse"
+            android:exported="false">
+            <property
+                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="This service generates sudoku levels in the background. The generation is done randomly and may end up taking a long time to generate the wished difficulty."
+                />
+        </service>
 
         <service
             android:name="org.secuso.privacyfriendlysudoku.backup.PFABackupService"

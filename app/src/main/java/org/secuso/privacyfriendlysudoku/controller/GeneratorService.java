@@ -278,7 +278,7 @@ public class GeneratorService extends JobIntentService {
         builder.setWhen(0);
         builder.setSmallIcon(R.drawable.splash_icon);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
-            ServiceCompat.startForeground(this, 50, builder.build(), ServiceInfo.FOREGROUND_SERVICE_TYPE_SHORT_SERVICE);
+            ServiceCompat.startForeground(this, 50, builder.build(), ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE);
         } else {
             startForeground(50, builder.build());
         }
