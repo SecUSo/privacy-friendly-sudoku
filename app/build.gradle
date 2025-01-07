@@ -15,8 +15,8 @@ android {
         applicationId "org.secuso.privacyfriendlysudoku"
         minSdkVersion 17
         targetSdkVersion 34
-        versionCode 15
-        versionName "3.2"
+        versionCode 16
+        versionName "3.2.1"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled = true
     }
