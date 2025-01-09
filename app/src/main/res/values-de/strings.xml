@@ -130,5 +130,6 @@
     <string name="failed_to_verify_custom_sudoku_toast">Verifizierung fehlgeschlagen: Dein Sudoku kann nicht gelöst werden.</string>
     <string name="pref_deactivate_timer">Zeit deaktivieren</string>
     <string name="game_config_unsupported">Diese Spielkombination ist momentan nicht unterstützt.</string>
+    <string name="levels_available">Levels verfügbar: %s</string>
 
 </resources>
