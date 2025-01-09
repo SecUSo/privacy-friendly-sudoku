@@ -204,5 +204,6 @@
     </string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
     <string name="gametype_default_16x16" translatable="false">Sudoku 16x16</string>
+    <string name="game_config_unsupported">This game combination is currently not supported.</string>
 
 </resources>

@@ -167,11 +167,23 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
                 createGameBar.setChecked(false);
-                ((Button) findViewById(R.id.playButton)).setText(R.string.new_game);
+                Button button = findViewById(R.id.playButton);
+                button.setText(R.string.new_game);
 
                 if (rating >= 1) {
+                    if (GameType.getValidGameTypes().get(mViewPager.getCurrentItem()) == GameType.Default_16x16 && rating <= 2) {
+                        button.setEnabled(false);
+                        button.setText(R.string.game_config_unsupported);
+                        button.setBackgroundResource(R.drawable.button_inactive);
+                    } else {
+                        button.setEnabled(true);
+                        button.setText(R.string.new_game);
+                        button.setBackgroundResource(R.drawable.button_standalone);
+                    }
                     difficultyText.setText(getString(difficultyList.get((int) ratingBar.getRating() - 1).getStringResID()));
                 } else {
+                    button.setEnabled(true);
+                    button.setBackgroundResource(R.drawable.button_standalone);
                     difficultyText.setText(R.string.difficulty_custom);
                     createGameBar.setChecked(true);
                     ((Button)findViewById(R.id.playButton)).setText(R.string.create_game);
