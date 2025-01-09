@@ -77,6 +77,9 @@ public class NewLevelManager {
     public boolean isLevelLoadable(GameType type, GameDifficulty diff) {
         return dbHelper.getLevels(diff, type).size() > 0;
     }
+    public int getCountAvailableLevels(GameType type, GameDifficulty diff) {
+        return dbHelper.getLevels(diff, type).size();
+    }
 
     @Deprecated
     public boolean isLevelLoadableOld(GameType type, GameDifficulty diff) {

@@ -147,6 +147,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             public void onPageSelected(int position) {
                 arrowLeft.setVisibility((position==0)?View.INVISIBLE:View.VISIBLE);
                 arrowRight.setVisibility((position==mSectionsPagerAdapter.getCount()-1)?View.INVISIBLE:View.VISIBLE);
+
+                GameType gameType = GameType.getValidGameTypes().get(mViewPager.getCurrentItem());
+                int index = difficultyBar.getProgress()-1;
+                GameDifficulty gameDifficulty = GameDifficulty.getValidDifficultyList().get(index < 0 ? 0 : index);
+                ((TextView) findViewById(R.id.level_count))
+                        .setText(String.format(getString(R.string.levels_available), newLevelManager.getCountAvailableLevels(gameType, gameDifficulty)));
             }
 
             @Override
@@ -167,17 +173,41 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
                 createGameBar.setChecked(false);
-                ((Button) findViewById(R.id.playButton)).setText(R.string.new_game);
+                Button button = findViewById(R.id.playButton);
+                button.setText(R.string.new_game);
 
                 if (rating >= 1) {
+                    GameType gameType = GameType.getValidGameTypes().get(mViewPager.getCurrentItem());
+                    int index = difficultyBar.getProgress()-1;
+                    GameDifficulty gameDifficulty = GameDifficulty.getValidDifficultyList().get(index < 0 ? 0 : index);
+                    if (gameType == GameType.Default_16x16 && rating <= 2) {
+                        button.setEnabled(false);
+                        button.setText(R.string.game_config_unsupported);
+                        button.setBackgroundResource(R.drawable.button_inactive);
+                    } else {
+                        button.setEnabled(true);
+                        button.setText(R.string.new_game);
+                        button.setBackgroundResource(R.drawable.button_standalone);
+                    }
+
+                    ((TextView) findViewById(R.id.level_count))
+                            .setText(String.format(getString(R.string.levels_available), newLevelManager.getCountAvailableLevels(gameType, gameDifficulty)));
+
                     difficultyText.setText(getString(difficultyList.get((int) ratingBar.getRating() - 1).getStringResID()));
                 } else {
+                    button.setEnabled(true);
+                    button.setBackgroundResource(R.drawable.button_standalone);
                     difficultyText.setText(R.string.difficulty_custom);
                     createGameBar.setChecked(true);
                     ((Button)findViewById(R.id.playButton)).setText(R.string.create_game);
                 }
             }
         });
+
+        GameType gameType = GameType.getValidGameTypes().get(mViewPager.getCurrentItem());
+        GameDifficulty gameDifficulty = GameDifficulty.getValidDifficultyList().get(index < 0 ? 0 : index);
+        ((TextView) findViewById(R.id.level_count))
+                .setText(String.format(getString(R.string.levels_available), newLevelManager.getCountAvailableLevels(gameType, gameDifficulty)));
 
         createGameBar.setOnClickListener(new View.OnClickListener() {
             @Override
