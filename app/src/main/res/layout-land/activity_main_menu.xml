@@ -142,6 +142,13 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
+                <TextView android:id="@+id/level_count"
+                    android:text="Levels available:"
+                    android:textStyle="bold"
+                    android:textSize="14dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
                 <Button
                     android:textColor="?attr/lightestFontColor"
                     android:layout_width="match_parent"
