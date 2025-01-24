@@ -1,79 +1,132 @@
-<?xml version="1.0" encoding="utf-8"?>
+<!-- File "app/src/main/res/values/arrays.xml" -->
+
+<!-- File "app/src/main/res/values/strings.xml" -->
 <resources>
-    <string name="win_time">时间：</string>
-    <string name="win_button_text">继续</string>
-    <string name="about_author">作者：</string>
-    <string name="average_time">平均时间：</string>
+
     <string name="cancel">退出</string>
-    <string name="difficulty_easy">简单</string>
-    <string name="difficulty_hard">难</string>
+
+    <!-- ###MAIN MENU### -->
+    <string name="new_game">新游戏</string>
+    <string name="menu_main">主页</string>
+    <string name="menu_settings">设置</string>
+    <string name="menu_highscore">统计</string>
+    <string name="menu_help">帮助</string>
+    <string name="menu_about">关于</string>
+    <string name="menu_reset">重置</string>
+    <string name="menu_share">分享</string>
+    <string name="menu_continue_game">继续游戏</string>
+    <string name="create_game">创建游戏</string>
+
+
+    <string name="generating">正在后台生成新的游戏…</string>
+
+    <string name="impossible_import_notice">您要导入的数独是无解的</string>
+
+    <!-- ###SETTINGS### -->
+    <string name="title_activity_settings">设置</string>
+    <!-- #Highlight -->
+    <string name="pref_group_highlight_selection">突出选择</string>
+    <string name="pref_highlight_connected">相连的空格</string>
+    <string name="pref_group_highlight_value">突出数字</string>
+    <string name="pref_highlight_vals">相同数字</string>
+    <string name="pref_highlight_notes">备注</string>
+
+    <!-- #Game -->
+    <string name="pref_header_game">游戏</string>
+    <string name="pref_group_game">游戏设置</string>
+    <string name="pref_symbols">符号</string>
+    <array name="pref_symbols_list_titles">
+    </array>
+    <array name="pref_symbols_list_values">
+    </array>
+    <string name="pref_automatic_note_deletion">删除备注</string>
+    <string name="pref_automatic_note_deletion_summary">自动删除备注信息如果数字连接成功</string>
+    <string name="pref_timer_reset">定时复位</string>
+    <string name="pref_timer_reset_summary">重置定时器时同时重置游戏</string>
+    <string name="pref_dark_mode">暗黑模式</string>
+    <string name="pref_group_dark_theme">暗黑主题设置</string>
+    <string name="pref_dark_mode_automatically_by_system">跟随系统调整</string>
+    <string name="pref_dark_mode_automatically_by_battery">根据电池状态调整</string>
+
+    <string name="pref_dark_mode_setting">暗黑主题</string>
+    <string name="pref_dark_mode_summary">在浅色和深色主题之间切换</string>
+
+    <!-- ###ABOUT### -->
+    <string name="version_number">Version</string>
+    <string name="about_author">作者：</string>
+    <string name="about_author_contributors">" "</string>
+    <string name="about_affiliation">合作方:</string>
+    <string name="privacy_friendly">这个软件是Privacy Friendly Apps中的一员.</string>
+    <string name="more_info">更多信息:</string>
+    <string name="about_qqwing">这个软件并需要使用修缮后的QQwing v1.3.4版本</string>
+
+    <!-- ###GameDifficulty### -->
+    <string name="difficulty_easy">简单的</string>
     <string name="difficulty_moderate">普通</string>
-    <string name="difficulty_challenge">挑战</string>
-    <string name="gametype_unspecified">未详细说明的</string>
-    <string name="help_delete">删除</string>
+    <string name="difficulty_hard">困难的</string>
+    <string name="difficulty_custom">定制</string>
+
+    <!--###GameActivity -->
+    <string name="gametype_unspecified">未详细说明</string>
+    <string name="hint_usage">选择空格，按提示可显示答案</string>
+    <string name="hint_confirmation">确定使用提示? 如果使用提示 可能会在游戏中错过最佳时间.</string>
+    <string name="hint_confirmation_confirm">使用</string>
+    <string name="reset_confirmation">你确定想要重置游戏吗？</string>
+    <string name="reset_confirmation_confirm">重置</string>
+    <string name="share_confirmation_confirm">分享</string>
+    <string name="copy_code_confirmation_toast">复制到剪切板</string>
+    <string name="copy_code_error_toast">无法写入剪切板</string>
+
+    <!-- ### Welcome Dialog ### -->
+
+    <!-- ### Continue Game ### -->
+    <string name="loadgame_delete_confirmation">你确定要删除这个保存吗？</string>
+    <string name="loadgame_delete_confirm">删除</string>
+
+    <!-- ### Stats ###-->
+    <string name="number_of_hints">使用提示的次数:</string>
+    <string name="number_of_games">玩的次数:</string>
+    <string name="total_of_time">总玩的时间:</string>
+    <string name="average_time">平均时间：</string>
+    <string name="min_time">最快时间:</string>
+    <string name="reset_stats">全部重置</string>
+
+    <!--### Win Strings -->
     <string name="win_text">祝贺！</string>
+    <string name="win_button_text">继续</string>
+    <string name="title_activity_help">帮助</string>
+    <string name="win_time">时间：</string>
     <string name="win_hint">提示：</string>
     <string name="win_show_game">显示游戏版</string>
     <string name="win_best_time">新纪录！</string>
-    <string name="new_game">开局</string>
-    <string name="menu_settings">设置</string>
-    <string name="menu_highscore">统计</string>
-    <string name="menu_main">主页</string>
-    <string name="menu_help">帮助</string>
-    <string name="menu_about">关于</string>
-    <string name="title_activity_settings">设置</string>
-    <string name="privacy_friendly">这个软件是Privacy Friendly Apps中的一员.</string>
-    <string name="more_info">更多信息:</string>
-    <string name="about_affiliation">合作方:</string>
-    <string name="about_qqwing">这个软件并需要使用修缮后的QQwing v1.3.4版本</string>
-    <string name="generating">在后台做一个新的游戏领域&#8230;</string>
-    <string name="hint_confirmation">确定使用提示? 如果使用提示 可能会在游戏中错过最佳时间.</string>
-    <string name="hint_confirmation_confirm">使用</string>
-    <string name="loadgame_delete_confirm">删除</string>
-    <string name="hint_usage">选择空格，按提示可显示答案</string>
-    <string name="loadgame_delete_confirmation">你确定要删除当前游戏吗？</string>
-    <string name="menu_continue_game">继续游戏</string>
-    <string name="menu_reset">重置</string>
-    <string name="min_time">最快时间:</string>
-    <string name="number_of_games">玩的次数:</string>
-    <string name="number_of_hints">请求帮助的次数:</string>
-    <string name="pref_automatic_note_deletion">删除备注</string>
-    <string name="pref_automatic_note_deletion_summary">自动删除备注信息如果数字连接成功</string>
-    <string name="pref_group_game">游戏设置</string>
-    <string name="pref_group_highlight_selection">突出选择</string>
-    <string name="pref_group_highlight_value">突出数字</string>
-    <string name="pref_header_game">游戏</string>
-    <string name="pref_highlight_notes">备注ƒ</string>
-    <string name="pref_highlight_vals">相同数字</string>
-    <string name="pref_highlightInputError">输入错误</string>
-    <string name="pref_symbols">符号</string>
-    <string name="reset_stats">全部重置</string>
-    <string name="reset_confirmation_confirm">重置</string>
-    <string name="reset_confirmation">你确定想要重置游戏领域吗？</string>
-    <string name="total_of_time">总玩的时间:</string>
-    <string name="title_activity_help">帮助</string>
-    <string name="pref_highlight_connected">相连的空格</string>
-    <string name="help_undo_summary">撤消最后一步</string>
-    <string name="help_undo">撤消</string>
-    <string name="help_permissions_summary">Privacy Friendly Suduko 不使用权限</string>
-    <string name="help_permissions">许可</string>
-    <string name="help_notes_summary">切换页面</string>
-    <string name="help_notes">备注</string>
-    <string name="help_keyhighlighted_yellow_summary">显示正确的号码是否出现在空格里</string>
-    <string name="help_keyhighlighted_summary">显示已选数字.数字会直接写到空格里.</string>
-    <string name="help_keyboard">键盘</string>
-    <string name="help_hint_summary">显示选择空格的答案</string>
-    <string name="help_hint">提示</string>
-    <string name="help_do_summary">恢复删除的选择</string>
-    <string name="help_do">恢复</string>
-    <string name="help_delete_summary">删除你选择的数字</string>
-    <string name="help_privacyInfo">私人信息</string>
-    <string name="pref_timer_reset">定时复位</string>
-    <string name="pref_timer_reset_summary">定时复位如果重置领域</string>
-    <string name="about_author_contributors">" "</string>
-    <string name="okay">Ok</string>
-    <string name="version_number">Version</string>
 
+    <!-- ### HELP prefs ###-->
+    <string name="help_keyboard">键盘</string>
+    <string name="help_keyhighlighted_summary">显示已选数字.数字会直接写到空格里.</string>
+    <string name="help_keyhighlighted_yellow_summary">显示正确的号码是否出现在空格里</string>
+
+    <!-- ### Special buttons description ###-->
+    <string name="help_do">恢复</string>
+    <string name="help_do_summary">恢复删除的选择</string>
+    <string name="help_undo">撤消</string>
+    <string name="help_undo_summary">撤消最后一步</string>
+    <string name="help_hint">提示</string>
+    <string name="help_hint_summary">显示选择空格的答案</string>
+    <string name="help_delete">删除</string>
+    <string name="help_delete_summary">删除你选择的数字</string>
+    <string name="help_notes">备注</string>
+    <string name="help_notes_summary">切换页面</string>
+    <string name="finalize">完成按钮</string>
+    <string name="finalize_summary">确认创建数独游戏模式中的数字输入</string>
+    <string name="help_import">导入</string>
+    <string name="help_import_summary">将一个新的、可定制的数独描述导入到创建数独游戏模式中。\n
+  警告：这将覆盖原本的描述，其旧值无法恢复。</string>
+    <string name="help_privacyInfo">隐私信息</string>
+    <string name="help_permissions">许可</string>
+    <string name="help_permissions_summary">Privacy Friendly Sudoku 不使用权限</string>
+    <string name="okay">好的</string>
+    <string name="difficulty_challenge">挑战</string>
+    <string name="pref_highlightInputError">输入错误</string>
     <string name="pref_keep_screen_on">Keep Screen On</string>
     <string name="pref_keep_screen_on_summary">Don\'t turn the screen off while playing</string>
 
@@ -85,10 +138,43 @@
     <string name="slide2_text">扫或者点击左边箭头或者右边肩头换游戏模式.</string>
 
     <string name="slide3_heading">难度 /</string>
-    <string name="slide3_text">扫或者点击星星换难度.</string>
+    <string name="slide3_heading2">自定义数独</string>
+    <string name="slide3_text">按下或者点击星星更改难度。按圆圈激活自定义数独模式，创建自己的数独</string>
 
     <string name="next">Next</string>
-    <string name="skip">Skip</string>
-
+    <string name="skip">跳过</string>
     <string name="menu_tutorial">教程</string>
+
+    <!-- ### DailySudokuActivity ###-->
+    <string name="menu_daily_sudoku">每日数独</string>
+    <string name="finished_daily_sudoku">你已经解决了今天的数独!</string>
+    <string name="daily_number_of_hints">使用提示</string>
+    <string name="number_of_completed_games">已完成的游戏</string>
+
+    <!-- ### Create custome sudoku ###-->
+    <string name="menu_import_custom_sudoku">导入数独</string>
+    <string name="menu_import_wrong_format_custom_sudoku">您的链接需要有以下前缀之一:</string>
+    <string name="dialog_import_custom_sudoku">输入要导入的数独链接：</string>
+    <string name="dialog_import_custom_sudoku_positive_button">导入</string>
+    <string name="finalize_custom_sudoku_dialog">你想完成这个数独游戏吗?</string>
+    <string name="verify_custom_sudoku_process_toast">正在验证...</string>
+    <string name="finished_verifying_custom_sudoku_toast">验证完毕!</string>
+    <string name="failed_to_verify_custom_sudoku_toast">验证失败:您的数独是无解的</string>
+    <string name="title_activity_settings_new">设置</string>
+
+    <!-- Preference Titles -->
+    <string name="messages_header">消息</string>
+    <string name="sync_header">同步</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">您的签名</string>
+    <string name="reply_title">默认回复操作</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">定期同步电子邮件</string>
+    <string name="attachment_title">下载收到的附件</string>
+    <string name="attachment_summary_on">自动下载收到电子邮件的附件</string>
+    <string name="attachment_summary_off">仅在手动请求时下载附件</string>
+
 </resources>
+
