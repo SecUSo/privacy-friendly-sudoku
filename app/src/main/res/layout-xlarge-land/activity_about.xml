@@ -117,7 +117,7 @@
             android:adjustViewBounds="true"
             android:paddingEnd="200dp"
             android:paddingStart="200dp"
-            app:srcCompat="@drawable/secuso_logo_blau_blau" />
+            app:srcCompat="?attr/secusoLogoDrawable" />
 
         <TextView
             android:layout_width="wrap_content"
