@@ -1,5 +1,17 @@
 # Changelog
 
+<a id="v3.2.1"></a>
+## [Sudoku (Privacy Friendly) v3.2.1](https://github.com/SecUSo/privacy-friendly-sudoku/releases/tag/v3.2.1) - 2025-01-09
+
+## What's Changed
+* [fix] changes foreground service type to special use. by [@coderPaddyS](https://github.com/coderPaddyS) in [#128](https://github.com/SecUSo/privacy-friendly-sudoku/pull/128)
+
+
+**Full Changelog**: https://github.com/SecUSo/privacy-friendly-sudoku/compare/v3.2.0...v3.2.1
+
+[Changes][v3.2.1]
+
+
 <a id="v3.2.0"></a>
 ## [Sudoku (Privacy Friendly) v3.2.0](https://github.com/SecUSo/privacy-friendly-sudoku/releases/tag/v3.2.0) - 2025-01-03
 
@@ -166,6 +178,7 @@ Furthermore there is a help function, that will reveal the selected field. If th
 [Changes][v1.0]
 
 
+[v3.2.1]: https://github.com/SecUSo/privacy-friendly-sudoku/compare/v3.2.0...v3.2.1
 [v3.2.0]: https://github.com/SecUSo/privacy-friendly-sudoku/compare/v3.1.1...v3.2.0
 [v3.1.1]: https://github.com/SecUSo/privacy-friendly-sudoku/compare/v3.1.0...v3.1.1
 [v3.1.0]: https://github.com/SecUSo/privacy-friendly-sudoku/compare/v3.0.3...v3.1.0
