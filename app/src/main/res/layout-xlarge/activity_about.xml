@@ -118,7 +118,7 @@
             android:layout_marginEnd="100dp"
             android:layout_marginStart="100dp"
             android:adjustViewBounds="true"
-            app:srcCompat="@drawable/secuso_logo_blau_blau" />
+            app:srcCompat="?attr/secusoLogoDrawable" />
 
         <TextView
             android:layout_width="wrap_content"

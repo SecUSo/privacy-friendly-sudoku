@@ -44,6 +44,7 @@
     </style>
 
     <style name="AppTheme" parent="BaseAppTheme">
+		<item name="secusoLogoDrawable">@drawable/secuso_logo_white</item>
 
     </style>
 

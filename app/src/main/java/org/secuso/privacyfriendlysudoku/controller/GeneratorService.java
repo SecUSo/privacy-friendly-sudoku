@@ -81,6 +81,10 @@ public class GeneratorService extends JobIntentService {
 
         for(GameType validType : GameType.getValidGameTypes()) {
             for(GameDifficulty validDifficulty : GameDifficulty.getValidDifficultyList()) {
+                // currently it's extremely unlikely to generate 16x16 easier than hard
+                if (validType.equals(GameType.Default_16x16) && (validDifficulty.equals(GameDifficulty.Easy) || validDifficulty.equals(GameDifficulty.Moderate))) {
+                    continue;
+                }
                 int levelCount = dbHelper.getLevels(validDifficulty, validType).size();
                 Log.d(TAG, "\tType: "+ validType.name() + " Difficulty: " + validDifficulty.name() + "\t: " + levelCount);
                 // add the missing levels to the list
