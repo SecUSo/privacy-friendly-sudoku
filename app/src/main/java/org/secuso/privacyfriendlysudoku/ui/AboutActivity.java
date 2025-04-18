@@ -24,8 +24,8 @@ import android.text.method.LinkMovementMethod;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import org.secuso.privacyfriendlysudoku.ui.view.BuildConfig;
-import org.secuso.privacyfriendlysudoku.ui.view.R;
+import org.secuso.privacyfriendlysudoku.BuildConfig;
+import org.secuso.privacyfriendlysudoku.R;
 
 /**
  * The AboutActivity is extended by the BaseActivity and is responsible for the content of the AboutActivity.

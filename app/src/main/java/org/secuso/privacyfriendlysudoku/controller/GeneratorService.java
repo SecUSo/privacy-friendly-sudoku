@@ -16,16 +16,21 @@
  */
 package org.secuso.privacyfriendlysudoku.controller;
 
-import android.app.IntentService;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import androidx.annotation.Nullable;
+import androidx.core.app.JobIntentService;
 import androidx.core.app.NotificationCompat;
+import androidx.core.app.ServiceCompat;
 import androidx.core.content.ContextCompat;
+
+import android.content.pm.ServiceInfo;
+import android.os.Build;
 import android.util.Log;
 import android.util.Pair;
 
-import org.secuso.privacyfriendlysudoku.SudokuApp;
+import org.secuso.privacyfriendlysudoku.PFSudoku;
 import org.secuso.privacyfriendlysudoku.controller.database.DatabaseHelper;
 import org.secuso.privacyfriendlysudoku.controller.database.model.Level;
 import org.secuso.privacyfriendlysudoku.controller.qqwing.Action;
@@ -35,7 +40,7 @@ import org.secuso.privacyfriendlysudoku.controller.qqwing.Symmetry;
 import org.secuso.privacyfriendlysudoku.game.GameDifficulty;
 import org.secuso.privacyfriendlysudoku.game.GameType;
 import org.secuso.privacyfriendlysudoku.ui.MainActivity;
-import org.secuso.privacyfriendlysudoku.ui.view.R;
+import org.secuso.privacyfriendlysudoku.R;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -49,7 +54,7 @@ import static org.secuso.privacyfriendlysudoku.controller.NewLevelManager.PRE_SA
  *
  * @author Christopher Beckmann
  */
-public class GeneratorService extends IntentService {
+public class GeneratorService extends JobIntentService {
 
     private static final String TAG = GeneratorService.class.getSimpleName();
     public static final String ACTION_GENERATE = TAG + " ACTION_GENERATE";
@@ -64,11 +69,11 @@ public class GeneratorService extends IntentService {
     //private Handler mHandler = new Handler();
 
 
-    public GeneratorService() {
-        super("Generator Service");
-    }
+    //public GeneratorService() {
+    //    super("Generator Service");
+    //}
 
-    public GeneratorService(String name) { super(name); }
+    //public GeneratorService(String name) { super(name); }
 
 
     private void buildGenerationList() {
@@ -76,6 +81,10 @@ public class GeneratorService extends IntentService {
 
         for(GameType validType : GameType.getValidGameTypes()) {
             for(GameDifficulty validDifficulty : GameDifficulty.getValidDifficultyList()) {
+                // currently it's extremely unlikely to generate 16x16 easier than hard
+                if (validType.equals(GameType.Default_16x16) && (validDifficulty.equals(GameDifficulty.Easy) || validDifficulty.equals(GameDifficulty.Moderate))) {
+                    continue;
+                }
                 int levelCount = dbHelper.getLevels(validDifficulty, validType).size();
                 Log.d(TAG, "\tType: "+ validType.name() + " Difficulty: " + validDifficulty.name() + "\t: " + levelCount);
                 // add the missing levels to the list
@@ -120,12 +129,11 @@ public class GeneratorService extends IntentService {
         // if we start this service multiple times while we are already generating...
         // we ignore this call and just keep generating
         buildGenerationList();
-
         // generate from the list
         if(generationList.size() > 0) {
 
             // generate 1 level and wait for it to be done.
-            Pair<GameType, GameDifficulty> dataPair = generationList.get(0);
+            Pair<GameType, GameDifficulty> dataPair = generationList.remove(0);
             GameType type = dataPair.first;
             GameDifficulty diff = dataPair.second;
 
@@ -264,19 +272,28 @@ public class GeneratorService extends IntentService {
     }
 
     private void showNotification(GameType gameType, GameDifficulty gameDifficulty) {
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, SudokuApp.CHANNEL_ID);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, PFSudoku.CHANNEL_ID);
         builder.setContentTitle(getString(R.string.app_name));
         builder.setContentText(getString(R.string.generating));
         builder.setSubText(getString(gameType.getStringResID()) + ", " + getString(gameDifficulty.getStringResID()));
-        builder.setContentIntent(PendingIntent.getActivity(this, 0, new Intent(this, MainActivity.class), FLAG_UPDATE_CURRENT));
+        builder.setContentIntent(PendingIntent.getActivity(this, 0, new Intent(this, MainActivity.class), FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE));
         builder.setColor(ContextCompat.getColor(this, R.color.colorAccent));
         builder.setPriority(NotificationCompat.PRIORITY_HIGH);
         builder.setWhen(0);
         builder.setSmallIcon(R.drawable.splash_icon);
-        startForeground(50, builder.build());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            ServiceCompat.startForeground(this, 50, builder.build(), ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE);
+        } else {
+            startForeground(50, builder.build());
+        }
     }
+
+    static void enqueueWork(Context context, Intent intent) {
+        enqueueWork(context, GeneratorService.class, 1000, intent);
+    }
+
     @Override
-    protected void onHandleIntent(@Nullable Intent intent) {
+    protected void onHandleWork(@Nullable Intent intent) {
         if (intent != null) {
 
             String action = intent.getAction();

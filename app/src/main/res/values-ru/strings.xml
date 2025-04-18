@@ -3,12 +3,12 @@
     <string name="about_affiliation">Совместно с:</string>
     <string name="about_author">Авторы：</string>
     <string name="about_qqwing">Данное приложение использует модифицированную версию QQWing v1.3.4.</string>
-    <string name="average_time">Ø-время:</string>
+    <string name="average_time">Среднее время:</string>
     <string name="cancel">Отмена</string>
     <string name="difficulty_easy">Легкий</string>
     <string name="difficulty_hard">Сложный</string>
     <string name="difficulty_moderate">Средний</string>
-    <string name="difficulty_challenge">вызов</string>
+    <string name="difficulty_challenge">Профи</string>
     <string name="gametype_unspecified">Необычный</string>
     <string name="generating">Генерирую новый уровень на заднем плане…</string>
     <string name="help_delete">Удалить</string>
@@ -22,21 +22,21 @@
     <string name="help_keyhighlighted_yellow_summary">Показывает правильное ли количество данного значение установлено на поле.</string>
     <string name="help_notes">Заметки</string>
     <string name="win_time">Время:</string>
-    <string name="win_text">Поздравления!</string>
+    <string name="win_text">Поздравляем!</string>
     <string name="win_show_game">Показать поле</string>
     <string name="win_hint">Подсказки:</string>
-    <string name="win_button_text">продолжить</string>
+    <string name="win_button_text">Продолжить</string>
     <string name="win_best_time">Новый рекорд!</string>
     <string name="help_notes_summary">Переключает между заметками и вводом значений.</string>
     <string name="help_permissions">Права</string>
-    <string name="help_permissions_summary">Это прилажение не использует дополнительных прав.</string>
+    <string name="help_permissions_summary">Это приложение не использует дополнительных разрешений.</string>
     <string name="help_undo">Назад</string>
     <string name="help_undo_summary">Отменяет последнее действие.</string>
     <string name="hint_confirmation">Ты уверен?</string>
     <string name="hint_confirmation_confirm">Использовать</string>
     <string name="hint_usage">Выбери поле которое должно быть решено.</string>
     <string name="loadgame_delete_confirm">Удалить</string>
-    <string name="loadgame_delete_confirmation">Ты уверен что хочеш удалить эту игру?</string>
+    <string name="loadgame_delete_confirmation">Ты уверен, что хочешь удалить эту игру?</string>
     <string name="menu_about">О нас</string>
     <string name="menu_continue_game">Продолжить игру</string>
     <string name="total_of_time">Общее время:</string>
@@ -44,13 +44,13 @@
     <string name="title_activity_help">Помощь</string>
     <string name="reset_stats">Сбросить всё.</string>
     <string name="reset_confirmation_confirm">Сброс</string>
-    <string name="reset_confirmation">Ты уверен что хочеш сбросить поле?</string>
+    <string name="reset_confirmation">Ты уверен, что хочешь сбросить поле?</string>
     <string name="privacy_friendly">Это приложение пренадлежит группе Privacy Friendly Apps.</string>
-    <string name="pref_symbols">Симболы</string>
+    <string name="pref_symbols">Символы</string>
     <string name="pref_highlight_vals">Одинаковые значения</string>
     <string name="pref_highlight_notes">Заметки</string>
     <string name="pref_highlight_connected">Связанные поля</string>
-    <string name="pref_highlightInputError">ошибки ввода</string>
+    <string name="pref_highlightInputError">Ошибки ввода</string>
     <string name="pref_header_game">Игра</string>
     <string name="pref_group_highlight_value">Выделить поле</string>
     <string name="new_game">Новая игра</string>
@@ -74,8 +74,8 @@
     <string name="version_number">Версия:</string>
     <string name="okay">Ok</string>
 
-    <string name="pref_keep_screen_on">Keep Screen On</string>
-    <string name="pref_keep_screen_on_summary">Don\'t turn the screen off while playing</string>
+    <string name="pref_keep_screen_on">Не выключать экран</string>
+    <string name="pref_keep_screen_on_summary">Не выключать экран во время игры</string>
 
     <!-- ### Tutorial ###-->
     <string name="slide1_heading">Добро пожаловать!</string>
@@ -87,8 +87,8 @@
     <string name="slide3_heading">Сложность /</string>
     <string name="slide3_text">Коснитесь для изменения уровня сложности.</string>
 
-    <string name="next">Next</string>
-    <string name="skip">Skip</string>
+    <string name="next">Дальше</string>
+    <string name="skip">Пропустить</string>
 
     <string name="menu_tutorial">Руководство</string>
 </resources>

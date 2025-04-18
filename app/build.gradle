@@ -1,7 +1,11 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'com.google.devtools.ksp'
 
 android {
-    compileSdkVersion 29
+    compileSdk 34
+    namespace "org.secuso.privacyfriendlysudoku"
 
     testOptions {
         unitTests.returnDefaultValues = true
@@ -9,11 +13,12 @@ android {
 
     defaultConfig {
         applicationId "org.secuso.privacyfriendlysudoku"
-        minSdkVersion 16
-        targetSdkVersion 29
-        versionCode 11
-        versionName "3.2.0"
+        minSdkVersion 17
+        targetSdkVersion 34
+        versionCode 19
+        versionName "3.2.4"
         vectorDrawables.useSupportLibrary = true
+        multiDexEnabled = true
     }
     buildTypes {
         release {
@@ -21,13 +26,37 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    buildFeatures {
+        buildConfig true
+    }
+
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_17.toString()
+    }
+
+    kotlin {
+        jvmToolchain(17)
+    }
+
+    android.applicationVariants.configureEach { variant ->
+        variant.outputs.configureEach {
+            def appName = "pfa-sudoku"
+            outputFileName = appName + "-${variant.name}-v${variant.versionName}.apk"
+        }
     }
 
     dataBinding {
         enabled = true
+    }
+
+    lint {
+        lintConfig = file("lint.xml")
     }
 }
 
@@ -43,4 +72,24 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-core-ui:1.0.0'
     implementation 'androidx.legacy:legacy-support-core-utils:1.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+
+    // Backup
+    implementation project(path: ':backup-api')
+    def work_version = "2.4.0"
+    implementation "androidx.work:work-runtime:$work_version"
+    implementation "androidx.work:work-runtime-ktx:$work_version"
+    androidTestImplementation "androidx.work:work-testing:$work_version"
+    implementation 'androidx.sqlite:sqlite-ktx:2.3.1'
+
+    def multidexVersion = "2.0.1"
+    implementation("androidx.multidex:multidex:$multidexVersion")
+
+    constraints {
+        implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.8.0") {
+            because("kotlin-stdlib-jdk7 is now a part of kotlin-stdlib")
+        }
+        implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.0") {
+            because("kotlin-stdlib-jdk8 is now a part of kotlin-stdlib")
+        }
+    }
 }

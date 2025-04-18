@@ -100,6 +100,12 @@
                     android:layout_width="wrap_content"
                     android:text="@string/difficulty_easy"
                     android:textSize="@dimen/main_text_difficulty"/>
+                <TextView android:id="@+id/level_count"
+                    android:text="Levels available:"
+                    android:textStyle="bold"
+                    android:textSize="14dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="wrap_content"

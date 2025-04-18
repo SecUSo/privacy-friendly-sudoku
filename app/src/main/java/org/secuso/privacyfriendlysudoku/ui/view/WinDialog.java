@@ -30,6 +30,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
+import org.secuso.privacyfriendlysudoku.R;
 import org.secuso.privacyfriendlysudoku.ui.MainActivity;
 
 /**

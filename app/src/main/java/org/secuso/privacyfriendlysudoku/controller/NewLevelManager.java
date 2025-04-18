@@ -77,6 +77,9 @@ public class NewLevelManager {
     public boolean isLevelLoadable(GameType type, GameDifficulty diff) {
         return dbHelper.getLevels(diff, type).size() > 0;
     }
+    public int getCountAvailableLevels(GameType type, GameDifficulty diff) {
+        return dbHelper.getLevels(diff, type).size();
+    }
 
     @Deprecated
     public boolean isLevelLoadableOld(GameType type, GameDifficulty diff) {
@@ -217,7 +220,8 @@ public class NewLevelManager {
         Intent i = new Intent(context, GeneratorService.class);
         i.setAction(GeneratorService.ACTION_GENERATE);
         //i.putExtra(ProtocolService.EXTRA_PROTOCOL, current.componentName().flattenToString());
-        context.startService(i);
+        //context.startService(i);
+        GeneratorService.enqueueWork(context, i);
 
         //new AsyncGenerationTask().execute();
     }

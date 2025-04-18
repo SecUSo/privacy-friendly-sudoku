@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="AppTheme">
+		<attr name="secusoLogoDrawable" format="reference"/>
         <attr name="lightestBackGround" format="color"/>
         <attr name="lightestFontColor" format="color"/>
         <attr name="standardVectorGraphic" format="color"/>

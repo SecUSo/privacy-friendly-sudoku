@@ -54,9 +54,8 @@ public class HighscoreInfoContainer {
         numberOfGames++;
         // min time is only minTime of games without hints used
         minTime = (gc.getUsedHints() == 0 && gc.getTime()< minTime) ? gc.getTime() : minTime;
-        numberOfGamesNoHints = (gc.getUsedHints() == 0) ? numberOfGamesNoHints + 1 : numberOfGamesNoHints;
         timeNoHints = (gc.getUsedHints() == 0) ? timeNoHints + gc.getTime() : timeNoHints;
-
+        numberOfGamesNoHints = (gc.getUsedHints() == 0) ? numberOfGamesNoHints + 1 : numberOfGamesNoHints;
     }
     public void incHints(){
         numberOfHintsUsed++;
