@@ -151,6 +151,16 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 GameType gameType = GameType.getValidGameTypes().get(mViewPager.getCurrentItem());
                 int index = difficultyBar.getProgress()-1;
                 GameDifficulty gameDifficulty = GameDifficulty.getValidDifficultyList().get(index < 0 ? 0 : index);
+                Button button = findViewById(R.id.playButton);
+                if (gameType == GameType.Default_16x16 && index <= 2) {
+                    button.setEnabled(false);
+                    button.setText(R.string.game_config_unsupported);
+                    button.setBackgroundResource(R.drawable.button_inactive);
+                } else {
+                    button.setEnabled(true);
+                    button.setText(R.string.new_game);
+                    button.setBackgroundResource(R.drawable.button_standalone);
+                }
                 ((TextView) findViewById(R.id.level_count))
                         .setText(String.format(getString(R.string.levels_available), newLevelManager.getCountAvailableLevels(gameType, gameDifficulty)));
             }
