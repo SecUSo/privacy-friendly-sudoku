@@ -14,7 +14,7 @@
 
 # Privacy Friendly Sudoku
 
-[<img src="https://f-droid.org/badge/get-it-on.png" alt="Get it on F-Droid" height="60">](https://f-droid.org/repository/browse/?fdfilter=sudoku&fdid=org.secuso.privacyfriendlysudoku)<a href="https://play.google.com/store/apps/details?id=org.secuso.privacyfriendlysudoku"><img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" height="60"></a>
+[<img src="https://f-droid.org/badge/get-it-on.png" alt="Get it on F-Droid" height="60">](https://f-droid.org/repository/browse/?fdfilter=sudoku&fdid=org.secuso.privacyfriendlysudoku)
 
 Privacy Friendly Sudoku is a logic based game. This app belongs to the group of [Privacy Friendly Apps](https://secuso.org/pfa) developed by the [SECUSO](https://secuso.org/) Group at [Karlsruher Institute for Technology (KIT)](https://www.kit.edu). It is optimized regarding the user's privacy. It doesn't use any tracking mechanisms, neither it displays any advertisement. Also it does not use any permission, as the app can provide its full functionality without the usage of permissions. 
 
