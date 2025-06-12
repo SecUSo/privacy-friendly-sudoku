@@ -51,6 +51,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.secuso.privacyfriendlysudoku.GoodbyeGoogleHelperKt;
 import org.secuso.privacyfriendlysudoku.controller.GameController;
 import org.secuso.privacyfriendlysudoku.controller.GameStateManager;
 import org.secuso.privacyfriendlysudoku.controller.NewLevelManager;
@@ -264,6 +265,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         selectNavigationItem(R.id.nav_newgame_main);
 
         overridePendingTransition(0, 0);
+        GoodbyeGoogleHelperKt.checkGoodbyeGoogle(this, getLayoutInflater());
     }
 
     public void callFragment(View view){
