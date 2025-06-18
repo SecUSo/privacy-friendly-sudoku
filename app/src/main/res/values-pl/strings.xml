@@ -51,7 +51,7 @@
     <string name="about_author_contributors">i współtwórcy.</string>
     <string name="about_affiliation">We współpracy z</string>
     <string name="privacy_friendly">Ta aplikacja należy do grupy aplikacji Przyjaznych Prywatności opracowana przez Karlsruhe Institute of Technology. Kod na licencji GPLv3. Prawa autorskie do zdjęć KIT i Google Inc..</string>
-    <string name="more_info">Więcej informacji można znaleźć na stronie:</string>
+    <string name="more_info">Więcej informacji można znaleźć na:</string>
     <string name="about_qqwing">Ta aplikacja używa zmodyfikowanej wersji QQWing v1.3.4</string>
     <!-- ###GameDifficulty### -->
     <string name="difficulty_easy">Łatwy</string>
@@ -103,7 +103,7 @@
     <string name="help_privacyInfo">Informacje o prywatności</string>
     <string name="help_permissions">Uprawnienia</string>
     <string name="help_permissions_summary">Prywatność Przyjazna, Sudoku nie korzysta z żadnych uprawnień.</string>
-    <string name="okay">Ok</string>
+    <string name="okay">OK</string>
     <string name="difficulty_challenge">Wyzwanie</string>
     <string name="pref_highlightInputError">Wyróżnij błędy wprowadzania</string>
     <string name="pref_keep_screen_on">Zachowaj ekran włączony</string>
