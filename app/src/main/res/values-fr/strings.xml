@@ -72,11 +72,11 @@
     <string name="pref_timer_reset_summary">Réinitialiser également le minuteur en réinitialisant le jeu en cours.</string>
     <string name="about_author_contributors">et contributeurs/-trices.</string>
     <string name="version_number">Version :</string>
-    <string name="okay">Ok</string>
+    <string name="okay">Okay</string>
     <string name="pref_keep_screen_on">Garder l\'écran allumé</string>
     <string name="pref_keep_screen_on_summary">Ne pas éteindre l\'écran durant une partie</string>
     <!-- ### Tutorial ###-->
-    <string name="slide1_heading">Bienvenu.e !</string>
+    <string name="slide1_heading">Bienvenue !</string>
     <string name="slide1_text">Bienvenue dans Privacy Friendly Sudoku !</string>
     <string name="slide2_heading">Mode de jeu</string>
     <string name="slide2_text">Faites glisser ou appuyez sur les boutons flèches à gauche et à droite pour changer le mode de jeu.</string>
