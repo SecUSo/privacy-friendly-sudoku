@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="about_affiliation">Совместно с:</string>
+    <string name="about_affiliation">В сотрудничестве с</string>
     <string name="about_author">Авторы：</string>
-    <string name="about_qqwing">Данное приложение использует модифицированную версию QQWing v1.3.4.</string>
+    <string name="about_qqwing">Данное приложение использует модифицированную версию QQWing v1.3.4</string>
     <string name="average_time">Среднее время:</string>
-    <string name="cancel">Отмена</string>
-    <string name="difficulty_easy">Легкий</string>
+    <string name="cancel">Отменить</string>
+    <string name="difficulty_easy">Лёгкий</string>
     <string name="difficulty_hard">Сложный</string>
     <string name="difficulty_moderate">Средний</string>
     <string name="difficulty_challenge">Профи</string>
@@ -16,7 +16,7 @@
     <string name="help_do">Вернуть</string>
     <string name="help_do_summary">Возвращает отменённое действие</string>
     <string name="help_hint">Подсказка</string>
-    <string name="help_hint_summary">Показывает правильное решение для указанного поля</string>
+    <string name="help_hint_summary">Показывает правильное решение для указанного поля\nВнимание: При использовании подсказок текущая игра не учитывается в лучших результатах.</string>
     <string name="help_keyboard">Клавиатура</string>
     <string name="help_keyhighlighted_summary">Показывает что значение выбрано. Последущий выбор поля устанавливает значение поля.</string>
     <string name="help_keyhighlighted_yellow_summary">Показывает правильное ли количество данного значение установлено на поле.</string>
@@ -25,14 +25,14 @@
     <string name="win_text">Поздравляем!</string>
     <string name="win_show_game">Показать поле</string>
     <string name="win_hint">Подсказки:</string>
-    <string name="win_button_text">Продолжить</string>
+    <string name="win_button_text">Далее</string>
     <string name="win_best_time">Новый рекорд!</string>
-    <string name="help_notes_summary">Переключает между заметками и вводом значений.</string>
+    <string name="help_notes_summary">Переключает между заметками и вводом значений</string>
     <string name="help_permissions">Права</string>
     <string name="help_permissions_summary">Это приложение не использует дополнительных разрешений.</string>
     <string name="help_undo">Назад</string>
-    <string name="help_undo_summary">Отменяет последнее действие.</string>
-    <string name="hint_confirmation">Ты уверен?</string>
+    <string name="help_undo_summary">Отменяет последнее действие</string>
+    <string name="hint_confirmation">Вы уверены, что хотите использовать эту подсказку? При использовании подсказок вы не сможете достичь личного лучшего времени.</string>
     <string name="hint_confirmation_confirm">Использовать</string>
     <string name="hint_usage">Выбери поле которое должно быть решено.</string>
     <string name="loadgame_delete_confirm">Удалить</string>
@@ -42,7 +42,7 @@
     <string name="total_of_time">Общее время:</string>
     <string name="title_activity_settings">Настройки</string>
     <string name="title_activity_help">Помощь</string>
-    <string name="reset_stats">Сбросить всё.</string>
+    <string name="reset_stats">Сбросить всё</string>
     <string name="reset_confirmation_confirm">Сброс</string>
     <string name="reset_confirmation">Ты уверен, что хочешь сбросить поле?</string>
     <string name="privacy_friendly">Это приложение пренадлежит группе Privacy Friendly Apps.</string>
@@ -57,8 +57,8 @@
     <string name="number_of_games">Оконченые игры:</string>
     <string name="number_of_hints">Использованные подсказки:</string>
     <string name="pref_automatic_note_deletion">Удаление заметок</string>
-    <string name="pref_automatic_note_deletion_summary">Автоматическое удаление заметок при вводе поля.</string>
-    <string name="pref_group_game">Настройки</string>
+    <string name="pref_automatic_note_deletion_summary">Автоматическое удаление заметок при вводе поля</string>
+    <string name="pref_group_game">Настройки игры</string>
     <string name="pref_group_highlight_selection">Выделить выбор</string>
     <string name="menu_help">Помощь</string>
     <string name="menu_highscore">Статистика</string>
@@ -70,25 +70,62 @@
     <string name="help_privacyInfo">Информация конфиденциальности</string>
     <string name="pref_timer_reset">Сброс таймера</string>
     <string name="pref_timer_reset_summary">Сброс таймера при сбросе доски.</string>
-    <string name="about_author_contributors">" "</string>
+    <string name="about_author_contributors">и другие участники.</string>
     <string name="version_number">Версия:</string>
-    <string name="okay">Ok</string>
-
+    <string name="okay">Хорошо</string>
     <string name="pref_keep_screen_on">Не выключать экран</string>
     <string name="pref_keep_screen_on_summary">Не выключать экран во время игры</string>
-
     <!-- ### Tutorial ###-->
     <string name="slide1_heading">Добро пожаловать!</string>
-    <string name="slide1_text">Добро пожаловать в Privacy Friendly Sudoku.</string>
-
+    <string name="slide1_text">Добро пожаловать в Судоку (PFA)!</string>
     <string name="slide2_heading">Режим игры</string>
     <string name="slide2_text">Используйте стрелки слева и справа, либо пролистайте режимы для выбора режима игры.</string>
-
     <string name="slide3_heading">Сложность /</string>
     <string name="slide3_text">Коснитесь для изменения уровня сложности.</string>
-
-    <string name="next">Дальше</string>
+    <string name="next">Далее</string>
     <string name="skip">Пропустить</string>
-
     <string name="menu_tutorial">Руководство</string>
+    <string name="create_game">Создать игру</string>
+    <string name="impossible_import_notice">Судоку, которую вы хотите импортировать, не имеет решения.</string>
+    <string name="pref_deactivate_timer">Отключить таймер</string>
+    <string name="pref_dark_mode">Тёмная тема</string>
+    <string name="pref_group_dark_theme">Настройки тёмной темы</string>
+    <string name="pref_dark_mode_automatically_by_system">Автоматически как в системе</string>
+    <string name="difficulty_custom">Своя</string>
+    <string name="finalize">Кнопка завершения</string>
+    <string name="finalize_summary">Подтверждает цифровой ввод в режиме создания игры судоку</string>
+    <string name="help_import">Кнопки импорта</string>
+    <string name="help_import_summary">Импортирует новое, настраиваемое поле судоку в режим создания игры судоку.\nПредупреждение: это переопределит все поле, и его старые значения не могут быть восстановлены.</string>
+    <string name="slide3_heading2">своя судоку</string>
+    <string name="finished_daily_sudoku">Вы уже решили судоку дня</string>
+    <string name="menu_daily_sudoku">Судоку дня</string>
+    <string name="daily_number_of_hints">Использованные подсказки</string>
+    <string name="number_of_completed_games">Завершённые игры</string>
+    <string name="menu_import_custom_sudoku">Импорт судоку</string>
+    <string name="dialog_import_custom_sudoku">Введите ссылку судоку, которую вы хотите импортировать:</string>
+    <string name="dialog_import_custom_sudoku_positive_button">Импорт</string>
+    <string name="finalize_custom_sudoku_dialog">Желаете ли вы завершить этот судоку?</string>
+    <string name="finished_verifying_custom_sudoku_toast">Проверка закончена!</string>
+    <string name="failed_to_verify_custom_sudoku_toast">Проверка провалилась: Ваш судоку не может быть решён.</string>
+    <string name="title_activity_settings_new">Настройки</string>
+    <string name="messages_header">Сообщения</string>
+    <string name="signature_title">Ваша подпись</string>
+    <string name="reply_title">Действия по ответу</string>
+    <string name="sync_title">Синхронизировать почту периодически</string>
+    <string name="attachment_title">Скачать входящие вложения</string>
+    <string name="attachment_summary_on">Автоматически скачать вложения для входящих электронных писем</string>
+    <string name="attachment_summary_off">Скачать только вложения по запросу вручную</string>
+    <string name="game_config_unsupported">Эта игровая комбинация в настоящее время не поддерживается.</string>
+    <string name="levels_available">Доступные уровни: %d</string>
+    <string name="copy_code_confirmation_toast">Скопировано в буфер обмена</string>
+    <string name="pref_dark_mode_summary">переключатель между светлой и тёмной темой</string>
+    <string name="share_confirmation_confirm">Поделиться</string>
+    <string name="sync_header">Синхронизировать</string>
+    <string name="menu_import_wrong_format_custom_sudoku">Ваша ссылка должна иметь один из следующих префиксов:</string>
+    <string name="pref_deactivate_timer_summary">Если выбрано, то время необходимое для завершения судоку не будет измеряться. Игры сыгранные без включённого таймера, не будут учитываться в статистике.</string>
+    <string name="menu_share">Поделиться доской</string>
+    <string name="pref_dark_mode_automatically_by_battery">Автоматически по заряду батареи</string>
+    <string name="verify_custom_sudoku_process_toast">Проверка…</string>
+    <string name="copy_code_error_toast">Нет доступа к буферу обмена</string>
+    <string name="pref_dark_mode_setting">Тёмная тема</string>
 </resources>
