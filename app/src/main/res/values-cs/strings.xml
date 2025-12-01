@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- ### Tutorial ###-->
+    <string name="slide1_heading">Vítejte!</string>
+    <string name="slide1_text">Vítejte v Sudoku šetrnému vůči soukromí!</string>
+
+    <string name="slide2_heading">Herní mód</string>
+    <string name="slide2_text">Pro změnu herního módu přejeďte prstem doleva nebo doprava nebo klepněte na jednu z šipek.</string>
+
+    <string name="slide3_heading">Obtížnost /</string>
+    <string name="slide3_heading2">vlastní sudoku</string>
+    <string name="slide3_text">Pro změnu obtížnosti přejeďte prstem po hvězdách nebo na ně klepněte.
+        Pro aktivaci módu Vlastní sudoku klepněte na kruh a vytvořte si vlastní sudoku.</string>
+
+    <string name="next">Další</string>
+    <string name="skip">Přeskočit</string>
+
+    <!-- ###MAIN MENU### -->
+    <string name="new_game">Nová hra</string>
+    <string name="menu_continue_game">Pokračovat ve hře</string>
+    <string name="create_game">Vytvořit hru</string>
+
+    <!-- # Sidebar -->
+    <string name="menu_main">Hlavní menu</string>
+    <string name="menu_daily_sudoku">Denní sudoku</string>
+    <string name="menu_import_custom_sudoku">Importování Sudoku</string>
+    <string name="menu_highscore">Nejvyšší skóre</string>
+    <string name="menu_tutorial">Tutoriál</string>
+    <!-- _______________________________________________________________ -->
+    <string name="menu_settings">Nastavení</string>
+    <string name="menu_help">Nápověda</string>
+    <string name="menu_about">Informace</string>
+    <!-- Ingame menu -->
+    <string name="menu_reset">Resetovat herní pole</string>
+    <string name="menu_share">Sdílet herní pole</string>
+
+
+    <!-- Other -->
+    <string name="generating">Na pozadí se generuje nová úroveň&#8230;</string>
+    <string name="impossible_import_notice">Sudoku, které se snažíte naimportovat, nemá řešení.</string>
+    <string name="cancel">Zrušit</string>
+
+    <!-- ###SETTINGS### -->
+    <string name="title_activity_settings">Nastavení</string>
+    <!-- #Game -->
+    <string name="pref_group_game">Nastavení hry</string>
+    <string name="pref_header_game">Hra</string>
+    <string name="pref_symbols">Symboly</string>
+    <array name="pref_symbols_list_titles">
+        <item>Výchozí 1, 2, 3, ...</item>
+        <item>Římské I, II, III, ...</item>
+        <item>Ozdobné ♪, ♫, ☼, ...</item>
+        <item>Čínské 一, 二, 三, ...</item>
+        <item>Řecké α, β, γ, ...</item>
+        <item>Indické १, २, ३, ...</item>
+    </array>
+    <array name="pref_symbols_list_values">
+        <item>Výchozí</item>
+        <item>Římské</item>
+        <item>Ozdobné</item>
+        <item>Čínské</item>
+        <item>Řecké</item>
+        <item>Indické</item>
+    </array>
+    <string name="pref_automatic_note_deletion">Odstranění poznámek</string>
+    <string name="pref_automatic_note_deletion_summary">Automaticky odstraní poznámky, když nastavíte hodnoty závislých buněk.</string>
+    <string name="pref_timer_reset">Resetování časovače</string>
+    <string name="pref_timer_reset_summary">Když se resetuje herní pole, resetovat také časovač.</string>
+    <string name="pref_keep_screen_on">Zabraňovat vypnutí obrazovky</string>
+    <string name="pref_keep_screen_on_summary">Nevypíná obrazovku během hraní.</string>
+
+    <!-- #Dark Theme settings -->
+    <string name="pref_group_dark_theme">Nastavení tmavého motivu</string>
+    <string name="pref_dark_mode">Tmavý motiv</string>
+    <string name="pref_dark_mode_setting">Tmavý motiv</string>
+    <string name="pref_dark_mode_summary">Přepnutí mezi světlým a tmavým motivem</string>
+    <string name="pref_dark_mode_automatically_by_system">Automaticky podle systému</string>
+    <string name="pref_dark_mode_automatically_by_battery">Automaticky podle baterie</string>
+
+    <!-- #Selection highlight -->
+    <string name="pref_group_highlight_selection">Zvýraznění výběrů</string>
+    <string name="pref_highlight_connected">Závislá pole</string>
+
+    <!-- #Value highlight -->
+    <string name="pref_group_highlight_value">Zvýraznění hodnot</string>
+    <string name="pref_highlight_vals">Shodné hodnoty</string>
+    <string name="pref_highlight_notes">Poznámky</string>
+    <string name="pref_highlightInputError">Zvýraznění zadaných chyb</string>
+
+    <!-- ###ABOUT### -->
+    <string name="version_number">Verze:</string>
+    <string name="about_author">Autoři:</string>
+    <string name="about_author_contributors">a přispěvovatelé.</string>
+    <string name="about_affiliation">Ve spolupráci s</string>
+    <string name="privacy_friendly">Tato aplikace patří do skupiny aplikací šetrných k soukromí vyvíjených Karlsruherovým Institutem pro Technologie (KIT). Zdrojové kódy jsou licencovány pod GPLv3. Práva na obrázky spadají pod KIT a Google Inc.</string>
+    <string name="more_info">Více informací můžete nalézt na:</string>
+    <string name="about_qqwing">Tato aplikace využívá upravenou verzi QQWing v1.3.4</string>
+
+    <!-- ###GameDifficulty### -->
+    <string name="difficulty_custom">Vlastní</string>
+    <string name="difficulty_easy">Lehká</string>
+    <string name="difficulty_moderate">Střední</string>
+    <string name="difficulty_hard">Obtížná</string>
+    <string name="difficulty_challenge">Výzva</string>
+
+    <!--###GameActivity -->
+    <string name="gametype_unspecified">Nespecifikováno</string>
+    <string name="hint_usage">Pro zobrazení řešení vyberte vhodné pole a klepněte na tlačítko nápovědy.</string>
+    <string name="hint_confirmation">Opravdu si přejete použít nápovědu? Když používáte nápovědu, nebudete schopni dosáhnout osobního časového rekordu.</string>
+    <string name="hint_confirmation_confirm">Použít</string>
+    <string name="reset_confirmation">Opravdu si přejete resetovat herní pole?</string>
+    <string name="reset_confirmation_confirm">Resetovat</string>
+    <string name="share_confirmation_confirm">Sdílet</string>
+    <string name="copy_code_confirmation_toast">Zkopírováno do schránky</string>
+    <string name="copy_code_error_toast">Není možné přistoupit do schánky</string>
+
+    <!-- ### Welcome Dialog ### -->
+
+    <!-- ### Continue Game ### -->
+    <string name="loadgame_delete_confirmation">Opravdu si přejete odstranit tuto uloženou hru?</string>
+    <string name="loadgame_delete_confirm">Odstranit</string>
+
+    <!-- ### Stats ###-->
+    <string name="number_of_hints"># použité nápovědy:</string>
+    <string name="number_of_games"># dokončené hry:</string>
+    <string name="total_of_time">Celkový odehraný čas:</string>
+    <string name="average_time">Ø-čas:</string>
+    <string name="min_time">Nejlepší čas:</string>
+    <string name="reset_stats">Resetovat vše</string>
+
+    <!--### Win Strings -->
+    <string name="win_text">Gratulace!</string>
+    <string name="win_button_text">Pokračovat</string>
+    <string name="title_activity_help">Nápověda</string>
+    <string name="win_time">Čas:</string>
+    <string name="win_hint">Nápovědy:</string>
+    <string name="win_show_game">Zobrazit herní pole</string>
+    <string name="win_best_time">Nový rekord!</string>
+
+    <!-- ### HELP prefs ###-->
+    <string name="help_keyboard">Klávesnice</string>
+    <string name="help_keyhighlighted_summary">Označuje, že je vybraná hodnota. V tomto módu jsou hodnoty nastaveny přímo, když se dotýkáte herního pole, bez vybírání pole.</string>
+    <string name="help_keyhighlighted_yellow_summary">Označuje, že již byl vložen správný počet daných číselných hodnot.</string>
+
+    <!-- ### Special buttons description ###-->
+    <string name="help_do">Tlačítko zopakuj</string>
+    <string name="help_do_summary">Znovu vykoná vrácenou akci</string>
+    <string name="help_undo">Tlačítko vrať</string>
+    <string name="help_undo_summary">Vrátí poslední akci</string>
+    <string name="help_hint">Tlačítko nápovědy</string>
+    <string name="help_hint_summary">Odhaluje vybrané pole\nUpozornění: Pokud je použito, aktuální hra nebude započítána mezi rekordy.</string>
+    <string name="help_delete">Tlačítko odstranění</string>
+    <string name="help_delete_summary">Odstraní hodnotu vybraného pole</string>
+    <string name="help_notes">Tlačítko přepnutí poznámkového módu</string>
+    <string name="help_notes_summary">Přepíná, zda mají být čísla vkládána jako poznámky nebo jako hodnoty pole</string>
+    <string name="finalize">Tlačítko dokončení</string>
+    <string name="finalize_summary">Potvrzuje zadaný číselný vstup v módu vlastní tvorby sudoku</string>
+    <string name="help_import">Tlačítko importu</string>
+    <string name="help_import_summary">Importuje nové upravitelné sudoku do módu pro tvorbu vlasního sudoku.\nVarování: tato operace přepíše celé herní pole a původní hodnoty nebude možné obnovit.</string>
+    <string name="help_privacyInfo">Informace o soukromí</string>
+    <string name="help_permissions">Oprávnění</string>
+    <string name="help_permissions_summary">Privacy Friendly Sudoku nevyžaduje žádná oprávnění.</string>
+    <string name="okay">Buďiž</string>
+
+    <!-- ### DailySudokuActivity ###-->
+    <string name="finished_daily_sudoku">Sudoku pro dnešní den jste již vyřešili</string>
+    <string name="daily_number_of_hints">Použité nápovědy</string>
+    <string name="number_of_completed_games">Dokončené hry</string>
+
+    <!-- ### Create custom sudoku ###-->
+    <string name="dialog_import_custom_sudoku">Zadejte odkaz na sudoku, které si přejete importovat:</string>
+    <string name="dialog_import_custom_sudoku_positive_button">Importovat</string>
+    <string name="menu_import_wrong_format_custom_sudoku">Váš odkaz musí začínat jedním z těchto řetězců:</string>
+    <string name="finalize_custom_sudoku_dialog">Opravdu si přejete dokončit toto sudoku?</string>
+    <string name="verify_custom_sudoku_process_toast">Ověřování&#8230;</string>
+    <string name="finished_verifying_custom_sudoku_toast">Ověřování dokončeno!</string>
+    <string name="failed_to_verify_custom_sudoku_toast">Ověřování selhalo: Vaše sudoku není řešitelné.</string>
+    <string name="title_activity_settings_new">Nastavení</string>
+</resources>
