@@ -1,0 +1,23 @@
+Sudoku con Privacidade é un xogo tipo quebracabezas. O obxectivo é completar o taboleiro con números. Cada número só pode aparecer unha vez en cada columna, fila ou subsección.
+
+Sudoku con Privacidade ten tres modos de xogo diferentes:
+1. taboleiro 6x6 campos e 2x3 subseccións
+2. taboleiro 9x9 campos e 3x3 subseccións
+3. taboleiro 12x12 campos con 3x4 subseccións
+
+En cada modo de xogo hai catro niveis de dificultade, que non están medidos en función do número de valores iniciais mostrados, se non polo número de estratexias posibles para resolver a partida. O xerador sempre intenta proporcionar unha partida que teña o mínimo número de valores prestablecidos necesarios para resolver a partida. Ademais, a persoa que xoga pode crear os seus propios sudokus con niveis arbitrarios de dificultade para cada un dos tres modos de xogo.
+
+Os sudokus poden compartirse con outras xogadoras usando a función de importación e exportación. Outra ferramenta da comunidade é o «sudoku diario», que se crea cada día e para todas usuarias da app.
+
+A aplicación permite escoller entre un decorado con fondo claro ou escuro.
+
+A nosa Aplicación Privada diferénciase doutras aplicacións en dous aspectos:
+1. a app Sudoku con Privacidade non require conceder ningún permiso.
+2. a app Sudoku con Privacidade renuncia a ter publicidade.
+Moitas das outras aplicacións gratuítas na Google Play Store están cheas de publicidade molesta e acurtan a duración da batería.
+
+
+Se o precisas contacta con nós en:
+Bluesky - @secusoresearch.bsky.social https://bsky.app/profile/secusoresearch.bsky.social
+Mastodon - @SECUSO_Research@bawü.social https://xn--baw-joa.social/@SECUSO_Research/
+Ofertas de traballo - https://secuso.aifb.kit.edu/english/Job_Offers.php
