@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="about_affiliation">Affilié à</string>
-    <string name="about_author">Auteur(e)s :</string>
+    <string name="about_affiliation">En partenariat avec</string>
+    <string name="about_author">Auteurs :</string>
     <string name="about_qqwing">Cette application utilise une version modifiée de QQWing v1.3.4</string>
     <string name="average_time">Ø-Temps:</string>
     <string name="cancel">Annuler</string>
@@ -40,7 +40,7 @@
     <string name="menu_reset">Refaire le tableau</string>
     <string name="menu_settings">Paramètres</string>
     <string name="min_time">Meilleur temps :</string>
-    <string name="more_info">Plus d\'informations peuvent être consultées depuis :</string>
+    <string name="more_info">Des informations complémentaires sont disponibles sur :</string>
     <string name="new_game">Nouveau jeu</string>
     <string name="number_of_games">Jeux completés :</string>
     <string name="number_of_hints">Conseils utilisés :</string>
@@ -70,9 +70,9 @@
     <string name="win_time">Temps :</string>
     <string name="pref_timer_reset">Réinitialiser le minuteur</string>
     <string name="pref_timer_reset_summary">Réinitialiser également le minuteur en réinitialisant le jeu en cours.</string>
-    <string name="about_author_contributors">et contributeurs/-trices.</string>
+    <string name="about_author_contributors">et les autres contributeurs.</string>
     <string name="version_number">Version :</string>
-    <string name="okay">Okay</string>
+    <string name="okay">D\'accord</string>
     <string name="pref_keep_screen_on">Garder l\'écran allumé</string>
     <string name="pref_keep_screen_on_summary">Ne pas éteindre l\'écran durant une partie</string>
     <!-- ### Tutorial ###-->
@@ -83,6 +83,21 @@
     <string name="slide3_heading">Difficulté /</string>
     <string name="slide3_text">Appuyez ou faites glisser les étoiles pour changer la difficulté.</string>
     <string name="next">Suivant</string>
-    <string name="skip">Passer</string>
+    <string name="skip">Ignorer</string>
     <string name="menu_tutorial">Didacticiel</string>
+    <string name="menu_share">Partager la grille</string>
+    <string name="create_game">Créer une grille</string>
+    <string name="impossible_import_notice">La grille de sudoku que vous souhaitez importer n\'a pas de solution.</string>
+    <string name="pref_deactivate_timer">Désactiver le minuteur</string>
+    <string name="pref_deactivate_timer_summary">En sélectionnant cette option, le temps nécessaire pour résoudre un sudoku ne sera pas mesuré. Les parties jouées sans un minuteur actif ne seront pas enregistrées dans les statistiques.</string>
+    <string name="pref_dark_mode">Thème sombre</string>
+    <string name="pref_group_dark_theme">Paramètres du thème sombre</string>
+    <string name="pref_dark_mode_automatically_by_system">Déterminé par le système</string>
+    <string name="pref_dark_mode_automatically_by_battery">Déterminé par la batterie</string>
+    <string name="pref_dark_mode_setting">Thème sombre</string>
+    <string name="pref_dark_mode_summary">Choisir entre thème clair ou sombre</string>
+    <string name="difficulty_custom">Personnalisé</string>
+    <string name="share_confirmation_confirm">Partager</string>
+    <string name="copy_code_confirmation_toast">Copié dans le presse-papier</string>
+    <string name="copy_code_error_toast">Accès refusé au presse-papier</string>
 </resources>
