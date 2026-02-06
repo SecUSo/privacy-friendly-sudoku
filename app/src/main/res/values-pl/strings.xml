@@ -1,9 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name" translatable="false">Sudoku</string>
     <string name="title_activity_game_view" translatable="false">Sudoku</string>
-
     <string name="cancel">Anuluj</string>
-
     <!-- ###MAIN MENU### -->
     <string name="new_game">Nowa gra</string>
     <string name="menu_main">Menu Główne</string>
@@ -13,9 +12,7 @@
     <string name="menu_about">O aplikacji</string>
     <string name="menu_reset">Zresetuj planszę</string>
     <string name="menu_continue_game">Kontynuuj grę</string>
-
-    <string name="generating">Generowanie nowego poziomu w background&#8230;</string>
-
+    <string name="generating">Generowanie nowego poziomu w background…</string>
     <!-- ###SETTINGS### -->
     <string name="title_activity_settings">Ustawienia</string>
     <!-- #Highlight -->
@@ -48,21 +45,18 @@
     <string name="pref_automatic_note_deletion_summary">Automatycznie usuwaj notatki podczas ustawiania wartości na połączonych komórkach</string>
     <string name="pref_timer_reset">Zresetuj zegar</string>
     <string name="pref_timer_reset_summary">Po zresetowaniu planszy, zresetuj także zegar.</string>
-
     <!-- ###ABOUT### -->
     <string name="version_number">Wersja:</string>
     <string name="about_author">Autorzy:</string>
     <string name="about_author_contributors">i współtwórcy.</string>
-    <string name="about_affiliation">W powiązaniu z</string>
+    <string name="about_affiliation">We współpracy z</string>
     <string name="privacy_friendly">Ta aplikacja należy do grupy aplikacji Przyjaznych Prywatności opracowana przez Karlsruhe Institute of Technology. Kod na licencji GPLv3. Prawa autorskie do zdjęć KIT i Google Inc..</string>
     <string name="more_info">Więcej informacji można znaleźć na stronie:</string>
     <string name="about_qqwing">Ta aplikacja używa zmodyfikowanej wersji QQWing v1.3.4</string>
-
     <!-- ###GameDifficulty### -->
     <string name="difficulty_easy">Łatwy</string>
     <string name="difficulty_moderate">Umiarkowany</string>
     <string name="difficulty_hard">Trudny</string>
-
     <!--###GameActivity -->
     <string name="Sudoku" translatable="false">Sudoku</string>
     <string name="gametype_unspecified">Nieokreślony</string>
@@ -71,13 +65,11 @@
     <string name="hint_confirmation_confirm">Użycie</string>
     <string name="reset_confirmation">Czy na pewno chcesz zresetować planszę?</string>
     <string name="reset_confirmation_confirm">Zresetuj</string>
-
     <!-- ### Welcome Dialog ### -->
 
     <!-- ### Continue Game ### -->
     <string name="loadgame_delete_confirmation">Czy na pewno chcesz usunąć ten zapis?</string>
     <string name="loadgame_delete_confirm">Usuń</string>
-
     <!-- ### Stats ###-->
     <string name="number_of_hints"># wykorzystane wskazówki:</string>
     <string name="number_of_games"># zakończone gry:</string>
@@ -85,7 +77,6 @@
     <string name="average_time">Ø-czas:</string>
     <string name="min_time">Najlepszy czas:</string>
     <string name="reset_stats">Zresetuj wszystko</string>
-
     <!--### Win Strings -->
     <string name="win_text">Gratulacje!</string>
     <string name="win_button_text">Kontynuuj</string>
@@ -94,12 +85,10 @@
     <string name="win_hint">Wskazówki:</string>
     <string name="win_show_game">Pokaż pole gry</string>
     <string name="win_best_time">Nowy rekord!</string>
-
     <!-- ### HELP prefs ###-->
     <string name="help_keyboard">Klawiatura</string>
     <string name="help_keyhighlighted_summary">Wskazuje, że wybrano wartość. Wartości są ustawiane bezpośrednio podczas dotykania pól w tym trybie, bez wybierania pola.</string>
     <string name="help_keyhighlighted_yellow_summary">Wskazuje, że została ustawiona prawidłowa liczba wartości dla tego numeru.</string>
-
     <!-- ### Special buttons description ###-->
     <string name="help_do">Przycisk Ponów</string>
     <string name="help_do_summary">Przywraca ostatnią cofniętą akcję</string>
@@ -119,18 +108,17 @@
     <string name="pref_highlightInputError">Wyróżnij błędy wprowadzania</string>
     <string name="pref_keep_screen_on">Zachowaj ekran włączony</string>
     <string name="pref_keep_screen_on_summary">Nie wyłączaj ekranu podczas gry</string>
-
     <!-- ### Tutorial ###-->
-    <string name="slide1_heading">Witaj!</string>
+    <string name="slide1_heading">Witamy!</string>
     <string name="slide1_text">Witaj Przyjaznej Prywatności Sudoku!</string>
-
     <string name="slide2_heading">Tryb gry</string>
     <string name="slide2_text">Przesuń palcem lub naciśnij przyciski strzałek po lewej lub prawej stronie, aby zmienić tryb gry.</string>
-
     <string name="slide3_heading">Poziom Trudności</string>
     <string name="slide3_text">Naciśnij lub przesuń gwiazdki, aby zmienić poziom trudności.</string>
-
-    <string name="next">Następny</string>
+    <string name="next">Dalej</string>
     <string name="skip">Pomiń</string>
     <string name="menu_tutorial">Poradnik</string>
+    <string name="create_game">Utwórz Grę</string>
+    <string name="menu_share">Udostępnij tablicę</string>
+    <string name="pref_deactivate_timer">Dezaktywuj Timer</string>
 </resources>
