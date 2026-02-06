@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="about_affiliation">En partenariat avec</string>
+    <string name="about_affiliation">En collaboration avec</string>
     <string name="about_author">Auteurs :</string>
     <string name="about_qqwing">Cette application utilise une version modifiée de QQWing v1.3.4</string>
     <string name="average_time">Ø-Temps:</string>
@@ -40,7 +40,7 @@
     <string name="menu_reset">Refaire le tableau</string>
     <string name="menu_settings">Paramètres</string>
     <string name="min_time">Meilleur temps :</string>
-    <string name="more_info">Des informations complémentaires sont disponibles sur :</string>
+    <string name="more_info">Plus d\'informations :</string>
     <string name="new_game">Nouveau jeu</string>
     <string name="number_of_games">Jeux completés :</string>
     <string name="number_of_hints">Conseils utilisés :</string>
@@ -70,9 +70,9 @@
     <string name="win_time">Temps :</string>
     <string name="pref_timer_reset">Réinitialiser le minuteur</string>
     <string name="pref_timer_reset_summary">Réinitialiser également le minuteur en réinitialisant le jeu en cours.</string>
-    <string name="about_author_contributors">et les autres contributeurs.</string>
+    <string name="about_author_contributors">et contributeurs.</string>
     <string name="version_number">Version :</string>
-    <string name="okay">D\'accord</string>
+    <string name="okay">Ok</string>
     <string name="pref_keep_screen_on">Garder l\'écran allumé</string>
     <string name="pref_keep_screen_on_summary">Ne pas éteindre l\'écran durant une partie</string>
     <!-- ### Tutorial ###-->
