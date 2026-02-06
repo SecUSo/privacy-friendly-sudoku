@@ -16,10 +16,8 @@ Die App unterscheidet sich von anderen Applikationen hinsichtlich zweier Aspekte
 2. Die Privacy Friendly Sudoku App verzichtet komplett auf das Einblenden von Werbung.
 Viele andere kostenlose Apps im Google Play Store blenden störende Werbung ein, die unter anderem auch die Akkulaufzeit verkürzt.
 
-Die App gehört zur Gruppe der Privacy Friendly Apps, die von der Forschungsgruppe SECUSO am Karlsruher Institut für Technologie entwickelt werden. Mehr Informationen unter: https://secuso.org/pfa
-
 
 Kontaktieren Sie uns gerne über:
 Bluesky - @secusoresearch.bsky.social https://bsky.app/profile/secusoresearch.bsky.social
 Mastodon - @SECUSO_Research@bawü.social https://xn--baw-joa.social/@SECUSO_Research/
-Offene Stellen - https://secuso.aifb.kit.edu/83.php
+Offene Stellen - https://secuso.aifb.kit.edu/english/Job_Offers.php
