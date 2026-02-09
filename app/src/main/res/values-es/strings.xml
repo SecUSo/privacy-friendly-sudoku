@@ -75,19 +75,57 @@
     <string name="okay">Ok</string>
     <string name="pref_keep_screen_on">Keep Screen On</string>
     <string name="pref_keep_screen_on_summary">Don\'t turn the screen off while playing</string>
-
     <!-- ### Tutorial ###-->
     <string name="slide1_heading">Willommen!</string>
     <string name="slide1_text">Willommen zu Privacy Friendly Sudoku!</string>
-
     <string name="slide2_heading">Modo de juego</string>
     <string name="slide2_text">Deslice o aprete el boton de la flecha a la izquierda o a la derecha para cambiar el modo de juego.</string>
-
     <string name="slide3_heading">Dificultad /</string>
     <string name="slide3_text">Presione o deslice para comenzar a cambiar la dificultad.</string>
-
     <string name="next">Próximo</string>
     <string name="skip">Skip</string>
-
     <string name="menu_tutorial">Tutorial</string>
+    <string name="menu_share">Compartir tablero</string>
+    <string name="create_game">Crear partida</string>
+    <string name="impossible_import_notice">El sudoku que intentas importar no tiene solución.</string>
+    <string name="pref_deactivate_timer">Desactivar temporizador</string>
+    <string name="pref_deactivate_timer_summary">Si se activa, el tiempo necesario para completar un sudoku no se medirá. Las partidas jugadas sin temporizador no se registrarán en las estadísticas.</string>
+    <string name="pref_dark_mode">Tema oscuro</string>
+    <string name="pref_group_dark_theme">Ajustes del tema oscuro</string>
+    <string name="pref_dark_mode_automatically_by_system">Automáticamente según el sistema</string>
+    <string name="pref_dark_mode_automatically_by_battery">Automáticamente según la batería</string>
+    <string name="pref_dark_mode_setting">Tema oscuro</string>
+    <string name="pref_dark_mode_summary">cambiar entre el tema claro y el tema oscuro</string>
+    <string name="difficulty_custom">Personalizado</string>
+    <string name="share_confirmation_confirm">Compartir</string>
+    <string name="copy_code_confirmation_toast">Copiado al portapapeles</string>
+    <string name="copy_code_error_toast">No se puede acceder al portapapeles</string>
+    <string name="finalize">Botón finalizar</string>
+    <string name="finalize_summary">Confirma la entrada numérica en el modo de creación de sudoku</string>
+    <string name="help_import">Botón importar</string>
+    <string name="help_import_summary">Importa un nuevo campo de sudoku personalizable en el modo de creación.\nAdvertencia: esto sobrescribirá todo el campo y los valores anteriores no podrán recuperarse.</string>
+    <string name="slide3_heading2">sudoku personalizado</string>
+    <string name="menu_daily_sudoku">Sudoku diario</string>
+    <string name="finished_daily_sudoku">Ya has resuelto el sudoku del día</string>
+    <string name="daily_number_of_hints">Pistas usadas</string>
+    <string name="number_of_completed_games">Partidas completadas</string>
+    <string name="menu_import_custom_sudoku">Importar sudoku</string>
+    <string name="menu_import_wrong_format_custom_sudoku">El enlace debe tener uno de los siguientes prefijos:</string>
+    <string name="dialog_import_custom_sudoku">Introduce el enlace del sudoku que deseas importar:</string>
+    <string name="dialog_import_custom_sudoku_positive_button">Importar</string>
+    <string name="finalize_custom_sudoku_dialog">¿Deseas finalizar este sudoku?</string>
+    <string name="verify_custom_sudoku_process_toast">Verificando…</string>
+    <string name="finished_verifying_custom_sudoku_toast">¡Verificación completada!</string>
+    <string name="failed_to_verify_custom_sudoku_toast">Error de verificación: tu sudoku no se puede resolver.</string>
+    <string name="title_activity_settings_new">Ajustes</string>
+    <string name="messages_header">Mensajes</string>
+    <string name="sync_header">Sincronización</string>
+    <string name="signature_title">Tu firma</string>
+    <string name="reply_title">Acción de respuesta predeterminada</string>
+    <string name="sync_title">Sincronizar el correo periódicamente</string>
+    <string name="attachment_title">Descargar archivos adjuntos entrantes</string>
+    <string name="attachment_summary_on">Descargar automáticamente los adjuntos de los correos entrantes</string>
+    <string name="attachment_summary_off">Descargar adjuntos solo cuando se solicite manualmente</string>
+    <string name="game_config_unsupported">Esta combinación de juego no es compatible actualmente.</string>
+    <string name="levels_available">Niveles disponibles: %d</string>
 </resources>

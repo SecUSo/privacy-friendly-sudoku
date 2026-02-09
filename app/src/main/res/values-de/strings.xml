@@ -3,36 +3,33 @@
     <!-- Strings related to Menu -->
     <string name="new_game">Neues Spiel</string>
     <string name="menu_settings">Einstellungen</string>
-    <string name="menu_highscore">Statistik</string>
+    <string name="menu_highscore">Highscore</string>
     <string name="menu_main">Hauptmenü</string>
     <string name="menu_help">Hilfe</string>
     <string name="menu_about">Über</string>
     <string name="create_game">Spiel erstellen</string>
-
     <!-- Strings related to Settings -->
     <string name="title_activity_settings">Einstellungen</string>
     <string name="pref_dark_mode">Nachtmodus</string>
-    <string name="pref_dark_mode_setting">Nachtmodus</string>
-    <string name="pref_dark_mode_summary">Wechsel zwischen Tages- und Nacht-Modus</string>
-
+    <string name="pref_dark_mode_setting">Dunkles Thema</string>
+    <string name="pref_dark_mode_summary">Wechsel zwischen hellem und dunklem Thema</string>
     <!-- About Page -->
-    <string name="about_affiliation">In Zusammenarbeit mit:</string>
+    <string name="about_affiliation">In Zusammenarbeit mit</string>
     <string name="about_author">Autoren:</string>
     <string name="version_number">Version:</string>
     <string name="about_author_contributors">und Mitwirkende.</string>
-    <string name="privacy_friendly">Diese App gehört zur Gruppe der Privacy Friendly Apps entwickelt von dem Karlsruher Institut für Technologie (KIT). Quelltext lizenziert unter GPLv3. Bilder copyright KIT und Google Inc.</string>
+    <string name="privacy_friendly">Diese App gehört zur Gruppe der Privacy Friendly Apps entwickelt vom Karlsruher Institut für Technologie (KIT). Der Quellcode ist unter der GPLv3-Lizenz lizenziert. Bilder sind urheberrechtlich geschützt (KIT und Google Inc.).</string>
     <string name="more_info">Weitere Infos unter:</string>
-
     <!-- ###GameDifficulty### -->
     <string name="difficulty_easy">Leicht</string>
     <string name="difficulty_moderate">Normal</string>
     <string name="difficulty_hard">Schwer</string>
     <string name="difficulty_custom">Benutzerdefiniert</string>
-    <string name="about_qqwing">Diese App benutzt eine modifizierte Version des QQWing v1.3.4.</string>
+    <string name="about_qqwing">Diese App benutzt eine modifizierte Version des QQWing v1.3.4</string>
     <string name="average_time">Ø-Zeit:</string>
     <string name="cancel">Abbrechen</string>
     <string name="gametype_unspecified">Unspezifiziert</string>
-    <string name="generating">Generiere neue Level im Hintergrund&#8230;</string>
+    <string name="generating">Generiere neue Level im Hintergrund…</string>
     <string name="hint_confirmation">Bist du sicher, dass du einen Hinweis verwenden möchtest? Wenn Hinweise benutzt wurden, kann in dem Spiel keine Bestzeit mehr erreicht werden.</string>
     <string name="hint_confirmation_confirm">Benutzen</string>
     <string name="loadgame_delete_confirm">Löschen</string>
@@ -40,16 +37,16 @@
     <string name="impossible_import_notice">Das Sudoku, das du importieren möchtest, hat keine Lösung.</string>
     <string name="loadgame_delete_confirmation">Bist du sicher, dass du den Spielstand löschen möchtest?</string>
     <string name="menu_continue_game">Spiel Fortsetzen</string>
-    <string name="menu_reset">Zurücksetzen</string>
+    <string name="menu_reset">Sudoku zurücksetzen</string>
     <string name="menu_share">Sudoku teilen</string>
     <string name="copy_code_confirmation_toast">In Zwischenablage gespeichert</string>
     <string name="copy_code_error_toast">Kein Zugriff auf Zwischenablage möglich</string>
     <string name="min_time">Beste Zeit:</string>
     <string name="number_of_games">Abgeschlossene Spiele:</string>
     <string name="number_of_hints">Benutzte Hinweise:</string>
-    <string name="pref_automatic_note_deletion">Notizen Löschung</string>
-    <string name="pref_automatic_note_deletion_summary">Automatisches löschen von Notizen, wenn Zahlen in verbundenen Feldern gesetzt werden</string>
-    <string name="pref_group_game">Spiel Einstellungen</string>
+    <string name="pref_automatic_note_deletion">Notizenlöschung</string>
+    <string name="pref_automatic_note_deletion_summary">Automatisches Löschen von Notizen, wenn Zahlen in verbundenen Feldern gesetzt werden</string>
+    <string name="pref_group_game">Spieleinstellungen</string>
     <string name="pref_group_highlight_selection">Auswahl hervorheben</string>
     <string name="pref_group_highlight_value">Wert hervorheben</string>
     <string name="pref_header_game">Spiel</string>
@@ -65,7 +62,7 @@
     <string name="win_text">Glückwunsch!</string>
     <string name="win_best_time">Neue Bestzeit!</string>
     <string name="win_hint">Hinweise:</string>
-    <string name="win_show_game">Zeige Spielfeld</string>
+    <string name="win_show_game">Spielfeld anzeigen</string>
     <string name="win_time">Zeit:</string>
     <string name="title_activity_help">Hilfe</string>
     <string name="pref_highlight_connected">Verbundene Felder</string>
@@ -74,7 +71,7 @@
     <string name="help_permissions_summary">Privacy Friendly Sudoku verwendet keine Berechtigungen.</string>
     <string name="help_permissions">Berechtigungen</string>
     <string name="help_notes_summary">Schaltet zwischen Notizen- und Werteingabe hin und her</string>
-    <string name="help_notes">Notizen</string>
+    <string name="help_notes">Notizumschaltknopf</string>
     <string name="finalize">Fertigstellen</string>
     <string name="finalize_summary">Bestätigt die Zahleneingabe beim Erstellen eines benutzerdefinierten Sudokus </string>
     <string name="help_import">Importieren</string>
@@ -82,54 +79,59 @@
     <string name="help_keyhighlighted_yellow_summary">Zeigt an, ob die korrekte Anzahl des Wertes im Spielfeld vorkommt.</string>
     <string name="help_keyhighlighted_summary">Zeigt an, dass der Wert ausgewählt ist. Jede Berührung eines Feldes setzt in diesem Modus die Zahl direkt, ohne das Feld vorher auszuwählen.</string>
     <string name="help_keyboard">Tastatur</string>
-    <string name="help_hint_summary">Zeige die korrekte Lösung für das ausgewählte Feld</string>
+    <string name="help_hint_summary">Zeigt das ausgewählte Feld an\nWarnung: Wenn diese Funktion verwendet wird, kann das aktuelle Spiel nicht für eine neue Bestzeit angerechnet werden.</string>
     <string name="help_hint">Hinweis</string>
     <string name="help_do_summary">Stellt die letzte rückgängig gemachte Aktion wieder her</string>
     <string name="help_do">Wiederherstellen</string>
     <string name="help_delete_summary">Löscht das ausgewählte Feld</string>
-    <string name="help_delete">Löschen</string>
+    <string name="help_delete">Löschknopf</string>
     <string name="help_privacyInfo">Privatsphäre Information</string>
-    <string name="pref_deactivate_timer_summary">Deaktiviere die Zeitmessung beim Spielen. Spiele ohne Zeitmessung werden nicht in die Statistiken aufgenommen.</string>
+    <string name="pref_deactivate_timer_summary">Wenn diese Option aktiviert ist, wird die Zeit, die zum Lösen eines Sudokus benötigt wird, nicht gemessen. Spiele, die ohne aktiven Timer gespielt werden, werden nicht in die Statistik aufgenommen.</string>
     <string name="pref_timer_reset">Zeit zurücksetzen</string>
-    <string name="pref_timer_reset_summary">Beim zurücksetzen des Spielfeldes wird die Zeit auch zurückgesetzt.</string>
+    <string name="pref_timer_reset_summary">Beim Zurücksetzen des Spielfeldes wird die Zeit auch zurückgesetzt.</string>
     <string name="okay">Okay</string>
     <string name="difficulty_challenge">Profi</string>
     <string name="pref_highlightInputError">Eingabefehler</string>
-
     <string name="pref_keep_screen_on">Bildschirm dauerhaft an</string>
-    <string name="pref_keep_screen_on_summary">Der Bildschirm bleibt während des Spielens an.</string>
-
+    <string name="pref_keep_screen_on_summary">Der Bildschirm bleibt während des Spielens an</string>
     <!-- ### Tutorial ###-->
     <string name="slide1_heading">Willkommen!</string>
     <string name="slide1_text">Willkommen zu Privacy Friendly Sudoku!</string>
-
     <string name="slide2_heading">Spielmodus</string>
-    <string name="slide2_text">Wischen oder drücken Sie auf die Pfeile auf der linken und rechten Seite um den Spielmodus zu ändern.</string>
-
+    <string name="slide2_text">Wische oder drücke auf die Pfeile auf der linken und rechten Seite um den Spielmodus zu ändern.</string>
     <string name="slide3_heading">Schwierigkeit /</string>
     <string name="slide3_heading2">eigene Sudokus</string>
-    <string name="slide3_text">Drücken oder wischen Sie über die Sterne um den Schwierigkeitsgrad zu ändern.
-        Durch Auswahl des Kreises können Sie den Modus zum Erstellen benutzerdefinierter Sudokus aktivieren.</string>
+    <string name="slide3_text">Drücke oder wische über die Sterne um den Schwierigkeitsgrad zu ändern. Durch Auswahl des Kreises kannst du den Modus zum Erstellen benutzerdefinierter Sudokus aktivieren.</string>
     <string name="next">Weiter</string>
-    <string name="skip">Skip</string>
+    <string name="skip">Überspringen</string>
     <string name="menu_tutorial">Tutorial</string>
-
     <!-- ### DailySudokuActivity ###-->
     <string name="menu_daily_sudoku">Sudoku des Tages</string>
-    <string name="finished_daily_sudoku">Du hast das Sudoku des Tages bereits gelöst.</string>
+    <string name="finished_daily_sudoku">Du hast das Sudoku des Tages bereits gelöst</string>
     <string name="daily_number_of_hints">Benutzte Hinweise</string>
-    <string name="number_of_completed_games">Abgeschlossene <br>Spiele</br></string>
+    <string name="number_of_completed_games">Abgeschlossene Spiele</string>
     <!-- ### Create custome sudoku ###-->
     <string name="menu_import_custom_sudoku">Sudoku importieren</string>
     <string name="menu_import_wrong_format_custom_sudoku">Dein Link muss mit einem dieser Präfixe beginnen: </string>
     <string name="dialog_import_custom_sudoku">Gib den Link des Sudokus, das du importieren möchtest, ein: </string>
     <string name="dialog_import_custom_sudoku_positive_button">Importieren</string>
     <string name="finalize_custom_sudoku_dialog">Möchtest du dieses Sudoku fertigstellen?</string>
-    <string name="verify_custom_sudoku_process_toast">Verifiziere Level&#8230;</string>
+    <string name="verify_custom_sudoku_process_toast">Verifiziere Level…</string>
     <string name="finished_verifying_custom_sudoku_toast">Verifizierung abgeschlossen!</string>
     <string name="failed_to_verify_custom_sudoku_toast">Verifizierung fehlgeschlagen: Dein Sudoku kann nicht gelöst werden.</string>
     <string name="pref_deactivate_timer">Zeit deaktivieren</string>
     <string name="game_config_unsupported">Diese Spielkombination ist momentan nicht unterstützt.</string>
-    <string name="levels_available">Levels verfügbar: %d</string>
-
+    <string name="levels_available">Level verfügbar: %d</string>
+    <string name="pref_group_dark_theme">Dunkles Thema Einstellungen</string>
+    <string name="pref_dark_mode_automatically_by_system">Automatisch durchs System</string>
+    <string name="pref_dark_mode_automatically_by_battery">Automatisch durch Akki</string>
+    <string name="reply_title">Standard-Antwortaktion</string>
+    <string name="attachment_summary_on">Anhänge für eingehende E-Mails automatisch herunterladen</string>
+    <string name="messages_header">Nachrichten</string>
+    <string name="attachment_summary_off">Anhänge nur herunterladen, wenn sie manuell angefordert werden</string>
+    <string name="attachment_title">Eingehende Anhänge herunterladen</string>
+    <string name="signature_title">Deine Signatur</string>
+    <string name="title_activity_settings_new">Einstellungen</string>
+    <string name="sync_header">Sync</string>
+    <string name="sync_title">E-Mails regelmäßig synchronisieren</string>
 </resources>
