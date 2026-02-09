@@ -106,6 +106,8 @@ class BackupRestorer : IBackupRestorer {
                 "lastChosenDifficulty",
                 "pref_symbols",
                 "lastChosenGameType"-> preferences.putString(name, reader.nextString())
+                "dailyDifficultyIndex",
+                "lastCalculated",
                 "lastGameID" -> preferences.putInt(name, reader.nextInt())
                 else -> throw RuntimeException("Unknown preference $name")
             }
