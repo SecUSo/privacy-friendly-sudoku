@@ -100,4 +100,12 @@
     <string name="share_confirmation_confirm">Partager</string>
     <string name="copy_code_confirmation_toast">Copié dans le presse-papier</string>
     <string name="copy_code_error_toast">Accès refusé au presse-papier</string>
+    <string name="menu_daily_sudoku">Sudoku quotidien</string>
+    <string name="dialog_import_custom_sudoku_positive_button">Importer</string>
+    <string name="verify_custom_sudoku_process_toast">Vérification …</string>
+    <string name="finished_verifying_custom_sudoku_toast">Vérification terminée</string>
+    <string name="title_activity_settings_new">Paramètres</string>
+    <string name="sync_header">Sync</string>
+    <string name="signature_title">Votre signature</string>
+    <string name="levels_available">Niveaux disponibles : %d</string>
 </resources>
