@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- File "app/src/main/res/values/arrays.xml" --><!-- File "app/src/main/res/values/strings.xml" --><resources>
-    <string name="cancel">退出</string>
+    <string name="cancel">取消</string>
     <!-- ###MAIN MENU### -->
     <string name="new_game">新游戏</string>
     <string name="menu_main">主页</string>
@@ -44,9 +44,9 @@
     <string name="version_number">版本：</string>
     <string name="about_author">作者：</string>
     <string name="about_author_contributors">以及贡献者。</string>
-    <string name="about_affiliation">合作方:</string>
-    <string name="privacy_friendly">这个软件是Privacy Friendly Apps中的一员.</string>
-    <string name="more_info">更多信息:</string>
+    <string name="about_affiliation">隶属于</string>
+    <string name="privacy_friendly">本应用属于卡尔斯鲁厄理工学院开发的“隐私友好型应用”系列。源代码采用 GPLv3 许可。图像版权归卡尔斯鲁厄理工学院和 Google Inc. 所有。</string>
+    <string name="more_info">更多信息请访问：</string>
     <string name="about_qqwing">这个软件并需要使用修缮后的QQwing v1.3.4版本</string>
     <!-- ###GameDifficulty### -->
     <string name="difficulty_easy">简单的</string>
@@ -71,7 +71,7 @@
     <!-- ### Stats ###-->
     <string name="number_of_hints">使用提示的次数:</string>
     <string name="number_of_games">玩的次数:</string>
-    <string name="total_of_time">总玩的时间:</string>
+    <string name="total_of_time">总游戏时间：</string>
     <string name="average_time">平均时间：</string>
     <string name="min_time">最快时间:</string>
     <string name="reset_stats">全部重置</string>
@@ -106,20 +106,20 @@
     <string name="help_privacyInfo">隐私信息</string>
     <string name="help_permissions">许可</string>
     <string name="help_permissions_summary">Privacy Friendly Sudoku 不使用权限。</string>
-    <string name="okay">好的</string>
+    <string name="okay">确定</string>
     <string name="difficulty_challenge">挑战</string>
     <string name="pref_highlightInputError">输入错误</string>
     <string name="pref_keep_screen_on">保持屏幕常亮</string>
     <string name="pref_keep_screen_on_summary">玩游戏时不要关闭屏幕</string>
     <!-- ### Tutorial ###-->
-    <string name="slide1_heading">欢迎!</string>
-    <string name="slide1_text">欢迎来到隐私友好数独游戏！</string>
+    <string name="slide1_heading">欢迎！</string>
+    <string name="slide1_text">欢迎使用 Privacy Friendly Sudoku！</string>
     <string name="slide2_heading">游戏模式</string>
     <string name="slide2_text">扫或者点击左边箭头或者右边肩头换游戏模式.</string>
     <string name="slide3_heading">难度 /</string>
     <string name="slide3_heading2">自定义数独</string>
     <string name="slide3_text">按下或滑动星星以更改难度。按圆圈激活自定义数独游戏模式，创建自己的数独。</string>
-    <string name="next">Next</string>
+    <string name="next">继续</string>
     <string name="skip">跳过</string>
     <string name="menu_tutorial">教程</string>
     <!-- ### DailySudokuActivity ###-->
