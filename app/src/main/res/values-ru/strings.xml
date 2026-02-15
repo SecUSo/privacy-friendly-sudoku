@@ -4,7 +4,7 @@
     <string name="about_author">Авторы：</string>
     <string name="about_qqwing">Данное приложение использует модифицированную версию QQWing v1.3.4</string>
     <string name="average_time">Среднее время:</string>
-    <string name="cancel">Отмена</string>
+    <string name="cancel">Отменить</string>
     <string name="difficulty_easy">Лёгкий</string>
     <string name="difficulty_hard">Сложный</string>
     <string name="difficulty_moderate">Средний</string>
