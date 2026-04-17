@@ -60,7 +60,7 @@
     <string name="about_author_names" translatable="false">Christopher Beckmann, Timm Lippert</string>
     <string name="about_author_contributors">e contribuidores.</string>
     <string name="about_affiliation">Em afiliação com:</string>
-    <string name="privacy_friendly">Essa aplicação pertence ao grupo Privacy Friendly Apps desenvolvido pela Technische Universität Darmstadt. Código fonte licenciado sobre GPLv3. Direito autoral das imagens TU Darmstadt e Google Inc.</string>
+    <string name="privacy_friendly">Essa aplicação pertence ao grupo Privacy Friendly Apps desenvolvido pela Karlsruhe Institute of Technology. Código fonte licenciado sobre GPLv3. Direito autoral das imagens SECUSO e Google Inc.</string>
     <string name="more_info">Mais informações podem ser encontradas em:</string>
     <string name="github" translatable="false"><a href="https://github.com/SecUSo/privacy-friendly-sudoku">Github-Repo</a></string>
     <string name="url" translatable="false"><a href="https://www.secuso.org/pfa">SECUSO-Website</a></string>
