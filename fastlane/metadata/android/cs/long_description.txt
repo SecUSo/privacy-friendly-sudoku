@@ -1,0 +1,17 @@
+Privacy Friendly Sudoku je logická hra. Cílem je vyplnit celé herní pole čísly. Každé číslo se může objevit pouze jednou v rámci každého sloupce, řádku a skupiny.
+
+Privacy Friendly Sudoku má tři různé herní módy:
+1. Herní pole 6x6 se skupinami 2x3
+2. Herní pole 9x9 se skupinami 3x3
+3. Herní pole 12x12 se skupinami 3x4
+
+Pro každý herní mód jsou k dispozici 4 úrovně obtížnosti, které nejsou měřeny podle počtu předvyplněných hodnot, ale podle strategií potřebných k jejich vyřešení. Generátor se vždy snaží vytvořit hru s minimem předvyplněných hodnot potřebných k vyřešení hry. Navíc si mohou uživatelé vytvořit své vlastní sudoku s libovolnou obtížností pro jakýkoliv ze tří herních módů.
+
+Sudoku je možné sdílet s ostatními uživateli pomocí dostupných funkcí pro import a export. Další komunitní funkce je "denní sudoku", které se znovu generuje každý den a je stejné pro každého uživatele aplikace.
+
+Aplikaci je možné používat ve světlém i tmavém motivu.
+
+Naše aplikace šetrná k soukromí se od jiných aplikací liší tím, že hledí na tyto dva aspekty:
+1. Aplikace Sudoku (Privacy Friendly) nepoužívá žádná oprávnění.
+2. Aplikace Sudoku (Privacy Friendly) se kompletně vzdává reklam.
+Mnoho ostatních aplikací dostupných zdarma v obchodě Google Pay oslepuje otravnými reklamami a rovněž zkracuje výdrž baterie.
