@@ -234,4 +234,36 @@ public class GameControllerTest {
         assertEquals(1, controller.getSelectedCol());
         assertEquals(0, controller.getSelectedRow());
     }
+
+    @Test
+    public void errorListIsRestoredOnRedoTest() {
+        controller.setSettings(new FakeSharedPreferences().put("pref_highlightInputError", true));
+
+        // a 5 on (1|2) collides with the fixed 5 on (0|0) and the fixed 5 on (1|7)
+        controller.selectCell(1, 2);
+        controller.selectValue(5);
+        assertEquals(2, controller.getErrorList().size());
+
+        controller.UnDo();
+        assertEquals(0, controller.getValue(1, 2));
+        assertEquals(0, controller.getErrorList().size());
+
+        controller.ReDo();
+        assertEquals(5, controller.getValue(1, 2));
+        assertEquals(2, controller.getErrorList().size());
+    }
+
+    @Test
+    public void errorListStaysEmptyOnRedoIfHighlightingIsDisabledTest() {
+        controller.setSettings(new FakeSharedPreferences().put("pref_highlightInputError", false));
+
+        controller.selectCell(1, 2);
+        controller.selectValue(5);
+        assertEquals(0, controller.getErrorList().size());
+
+        controller.UnDo();
+        controller.ReDo();
+        assertEquals(5, controller.getValue(1, 2));
+        assertEquals(0, controller.getErrorList().size());
+    }
 }

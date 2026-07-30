@@ -287,6 +287,26 @@ public class GameController implements IModelChangedListener, Parcelable {
     }
 
 
+    /**
+     * Rebuilds the conflict list from the current state of the whole board.
+     * This is needed whenever cells are written without going through
+     * {@link #setValue(int, int, int)}, because only that method feeds
+     * {@link #checkInputError(int, int)} with the cells that changed.
+     */
+    private void rebuildErrorList() {
+        if(settings == null || !settings.getBoolean("pref_highlightInputError", true)) {
+            return;
+        }
+
+        if (errorList == null) {
+            errorList = new CellConflictList();
+        }
+
+        // isSolved() clears the list and refills it with every conflict on the board
+        gameBoard.isSolved(errorList);
+    }
+
+
     private CellConflictList checkInputErrorList(GameCell cell, List<GameCell> list) {
         CellConflictList errorList = new CellConflictList();
         for (int i = 0; i < list.size(); i++) {
@@ -799,6 +819,10 @@ public class GameController implements IModelChangedListener, Parcelable {
                 }
             }
         }
+
+        // the cells above were written directly, so the conflicts of the
+        // restored board have to be determined again
+        rebuildErrorList();
 
         notifyHighlightChangedListeners();
         return;
