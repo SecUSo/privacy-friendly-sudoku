@@ -1,0 +1,23 @@
+Sudoku amb privadesa és un joc de trencaclosques lògic. L'objectiu és omplir el tauler complet amb nombres. Cada nombre només pot ocórrer una vegada a cada columna, fila i subsecció.
+
+Sudoku amb privadesa té tres modes de joc diferents:
+1. un camp de joc de 6x6 amb 2x3 subseccions
+2. un camp de joc de 9x9 amb 3x3 subseccions
+3. un camp de joc de 12x12 amb 3x4 subseccions
+
+Per a cada mode de joc hi ha quatre nivells de dificultat diferents que no es mesuren pel nombre de valors predefinits, sinó per les estratègies de resolució necessàries per resoldre el joc. El generador sempre intenta proporcionar un joc que tingui la quantitat mínima de valors predefinits necessaris per resoldre el joc. A més, els usuaris poden crear els seus sudokus propis personalitzats de dificultat arbitrària per a cadascun dels tres modes de joc.
+
+Els sudokus es poden compartir amb altres usuaris utilitzant les funcions d'importació i exportació disponibles. Una altra característica de la comunitat és el «sudoku diari», que es genera cada dia i és el mateix per a tots els usuaris de l'aplicació.
+
+L'aplicació es pot utilitzar tant en mode clar com en mode fosc.
+
+La nostra aplicació amb privadesa es diferencia d'altres aplicacions pel que fa a dos aspectes:
+1. L'aplicació Sudoku amb privadesa no utilitza cap permís.
+2. L'aplicació Sudoku amb privadesa renuncia completament a la publicitat.
+Moltes altres aplicacions gratuïtes a Google Play Store enlluernen amb publicitat molesta i també escurcen la durada de la bateria.
+
+
+No dubteu a contactar amb nosaltres a través de:
+Bluesky - @secusoresearch.bsky.social https://bsky.app/profile/secusoresearch.bsky.social
+Mastodon - @SECUSO_Research@bawü.social https://xn--baw-joa.social/@SECUSO_Research/
+Ofertes de feina - https://secuso.aifb.kit.edu/english/Job_Offers.php

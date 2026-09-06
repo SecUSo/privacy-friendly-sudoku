@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="about_affiliation">En conjunción con:</string>
+    <string name="about_affiliation">En colaboración con</string>
     <string name="about_author">Autor:</string>
     <string name="about_qqwing">Está Aplicación utiliza una versión modificada de QQWing v1.3.4</string>
     <string name="average_time">Tiempo promedio:</string>
@@ -20,10 +20,10 @@
     <string name="help_keyboard">Teclado</string>
     <string name="help_keyhighlighted_summary">Indica el valor de botón seleccionado. Al tocar en el campo se pondra el valor directamente.</string>
     <string name="help_keyhighlighted_yellow_summary">Indica el número correcto de valores que se ha utilizado.</string>
-    <string name="help_notes">Notas</string>
+    <string name="help_notes">Botón para alternar notas</string>
     <string name="help_notes_summary">Cambia, si los números se muestran como notas o valores en el campo</string>
     <string name="help_permissions">Permisos</string>
-    <string name="help_permissions_summary">Privacy Friendly Sudoku no utiliza permisos</string>
+    <string name="help_permissions_summary">Privacy Friendly Sudoku no utiliza permisos.</string>
     <string name="help_undo">Deshacer</string>
     <string name="help_undo_summary">Deshacer la acción pasada</string>
     <string name="hint_confirmation">Está seguro que quiere utilizar este consejo? Si lo utiliza no sera posible mejorar su tiempo personal.</string>
@@ -44,10 +44,10 @@
     <string name="number_of_games">Juego completados:</string>
     <string name="number_of_hints">Consejos utilizados:</string>
     <string name="pref_automatic_note_deletion">Borrar nota</string>
-    <string name="pref_automatic_note_deletion_summary">Borrado automático de notas, cuando se ponen los valores las celdas conectadas.</string>
+    <string name="pref_automatic_note_deletion_summary">Eliminar automáticamente las notas al introducir valores en las celdas conectadas</string>
     <string name="pref_group_game">Configuraciones de juego</string>
-    <string name="pref_group_highlight_selection">Resaltar de las celdas conectadas.</string>
-    <string name="pref_group_highlight_value">Resaltar de los valores.</string>
+    <string name="pref_group_highlight_selection">Resaltar la selección</string>
+    <string name="pref_group_highlight_value">Resaltar el valor</string>
     <string name="pref_header_game">Juego</string>
     <string name="pref_highlight_connected">Celdas conectadas</string>
     <string name="pref_highlight_notes">Notas</string>
@@ -71,10 +71,10 @@
     <string name="pref_timer_reset">Resetear Tiempo</string>
     <string name="pref_timer_reset_summary">El tiempo se resetea tambien, cuando el tablero se resetea.</string>
     <string name="version_number">Versión:</string>
-    <string name="about_author_contributors">" "</string>
+    <string name="about_author_contributors">y colaboradores.</string>
     <string name="okay">Ok</string>
-    <string name="pref_keep_screen_on">Keep Screen On</string>
-    <string name="pref_keep_screen_on_summary">Don\'t turn the screen off while playing</string>
+    <string name="pref_keep_screen_on">Mantener la pantalla encendida</string>
+    <string name="pref_keep_screen_on_summary">No apagar la pantalla mientras se juega</string>
     <!-- ### Tutorial ###-->
     <string name="slide1_heading">Willommen!</string>
     <string name="slide1_text">Willommen zu Privacy Friendly Sudoku!</string>
@@ -83,7 +83,7 @@
     <string name="slide3_heading">Dificultad /</string>
     <string name="slide3_text">Presione o deslice para comenzar a cambiar la dificultad.</string>
     <string name="next">Próximo</string>
-    <string name="skip">Skip</string>
+    <string name="skip">Omitir</string>
     <string name="menu_tutorial">Tutorial</string>
     <string name="menu_share">Compartir tablero</string>
     <string name="create_game">Crear partida</string>
