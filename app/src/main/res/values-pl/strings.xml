@@ -48,7 +48,7 @@
     <!-- ###ABOUT### -->
     <string name="version_number">Wersja:</string>
     <string name="about_author">Autorzy:</string>
-    <string name="about_author_contributors">i współtwórcy.</string>
+    <string name="about_author_contributors">i współtwórcy.</string>
     <string name="about_affiliation">We współpracy z</string>
     <string name="privacy_friendly">Ta aplikacja należy do grupy aplikacji Przyjaznych Prywatności opracowana przez Karlsruhe Institute of Technology. Kod na licencji GPLv3. Prawa autorskie do zdjęć KIT i Google Inc..</string>
     <string name="more_info">Więcej informacji można znaleźć na:</string>
