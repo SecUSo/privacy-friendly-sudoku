@@ -103,7 +103,7 @@
     <string name="help_privacyInfo">Informacje o prywatności</string>
     <string name="help_permissions">Uprawnienia</string>
     <string name="help_permissions_summary">Prywatność Przyjazna, Sudoku nie korzysta z żadnych uprawnień.</string>
-    <string name="okay">Ok</string>
+    <string name="okay">OK</string>
     <string name="difficulty_challenge">Wyzwanie</string>
     <string name="pref_highlightInputError">Wyróżnij błędy wprowadzania</string>
     <string name="pref_keep_screen_on">Zachowaj ekran włączony</string>
